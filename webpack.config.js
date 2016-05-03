@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        main:['./app/src/main.js']
+        app:['./app/src/app.js']
     },
     output: {
         path: './app/tmp',

@@ -1,3 +1,6 @@
+import Menu from './widget/menu.js';
+import Page from './page.js';
+
 var MainView = React.createClass({
 	getInitialState: function() {
         return {
@@ -5,7 +8,14 @@ var MainView = React.createClass({
         }
     },
     render: function() {
-    	return (<div>Hello world!</div>);
+    	return (
+    		<div>
+				<Menu/>
+				<Page/>
+    		</div>
+    		
+
+		);
     }
 });
 
