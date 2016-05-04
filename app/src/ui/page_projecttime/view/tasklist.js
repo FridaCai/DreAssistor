@@ -1,4 +1,4 @@
-var SubProjectList = React.createClass({
+var TaskList = React.createClass({
 	getInitialState: function() {
         return {
         }
@@ -7,7 +7,7 @@ var SubProjectList = React.createClass({
         
     },
     render: function() {
-        return (<div className='subProjectList leftlist'>
+        return (<div className='taskList leftlist'>
 	    	<div className="panel panel-default">
 			  <div className="panel-heading">时间包列表</div>
 			  <table className="table">
@@ -36,4 +36,4 @@ var SubProjectList = React.createClass({
     }
 });
 
-module.exports = SubProjectList;
+module.exports = TaskList;

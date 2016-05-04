@@ -342,11 +342,11 @@ export default class Item extends React.Component {
            ref='item'
            className={classNames}
            title={this.itemTitle}
-           onMouseDown={this.onMouseDown}
-           onMouseUp={this.onMouseUp}
-           onTouchStart={this.onTouchStart}
-           onTouchEnd={this.onTouchEnd}
-           onDoubleClick={this.handleDoubleClick}
+           onMouseDown={this.onMouseDown.bind(this)}
+           onMouseUp={this.onMouseUp.bind(this)}
+           onTouchStart={this.onTouchStart.bind(this)}
+           onTouchEnd={this.onTouchEnd.bind(this)}
+           onDoubleClick={this.handleDoubleClick.bind(this)}
            style={style}>
         <div className='rct-item-overflow'>
           <div className='rct-item-content'>

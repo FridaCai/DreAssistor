@@ -4,7 +4,7 @@
   "description": "Floorplan design tool app",
   "main": "index.js",
   "scripts": {
-    "build": "cnpm install && webpack -p ",
+    "build": "npm install && webpack -p ",
     "start": "(npm run start-httpserver &) && (npm run start-webpack &)",
     "stop": "killall node",
     "start-httpserver": "http-server -p 8000 -c-1 ./",

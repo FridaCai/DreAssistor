@@ -187,6 +187,9 @@ $weekend: rgba(250, 246, 225, 0.5);
       &.rct-sidebar-row-even {
         background: $row-background-even;
       }
+      &.sub {
+        padding-left: 20px;
+      }
     }
   }
 
