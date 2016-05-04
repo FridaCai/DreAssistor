@@ -19,6 +19,11 @@ module.exports = {
               test: /\.less$/,
               loader: 'style!css!less',
             },
+
+            {
+              test: /\.scss$/,
+              loader: 'style!css!sass',
+            },
         ],
     },
     devtool: 'source-map',

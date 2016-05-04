@@ -10,7 +10,7 @@ var ProjectList = React.createClass({
     render: function() {
         var pageHeader = "Project Name";
         return (
-            <div className="panel panel-default">
+            <div className="panel panel-default" style={{marginLeft: '3px', width: '20%'}}>
               <div className="panel-heading">{pageHeader}</div>
               <ul className="list-group">
                 <li className="list-group-item">Cras justo odio

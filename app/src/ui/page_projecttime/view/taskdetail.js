@@ -7,7 +7,7 @@ var TaskDetail = React.createClass({
         
     },
     render: function() {
-        return ('');
+        return (<div></div>);
     }
 });
 

@@ -1,5 +1,5 @@
 import ProjectList from './view/projectlist.js';
-import TimeLine from './view/timeline.js';
+import CTimeLine from './view/timeline.js';
 import SubProjectList from './view/subprojectlist.js';
 import TaskDetail from './view/taskdetail.js';
 import API from './api.js';
@@ -13,12 +13,21 @@ var PageProjectTime = React.createClass({
         }
     },
     componentDidMount: function() {
-        API.getData().then(function(param) {
+        API.getData().then(
+
+
+        (function(param) {
+            
+
             this.setState({
                 isLoading: false,
                 data: param,
-            });
-        });
+            })
+
+
+
+        }).bind(this)
+        );
     },
     render: function() {
         if(this.state.isLoading) {
@@ -26,7 +35,7 @@ var PageProjectTime = React.createClass({
         }else{
             return (<div>
                         <ProjectList data={this.state.data}/>
-                        <TimeLine data={this.state.data}/>
+                        <CTimeLine data={this.state.data}/>
                         <SubProjectList/>
                         <TaskDetail/>
                     </div>);    

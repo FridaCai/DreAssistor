@@ -7,7 +7,7 @@ var SubProjectList = React.createClass({
         
     },
     render: function() {
-        return ('');
+        return (<div></div>);
     }
 });
 

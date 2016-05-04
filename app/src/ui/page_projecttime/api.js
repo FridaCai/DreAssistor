@@ -2,7 +2,7 @@ import Util from '../../util.js';
 
 var API = {
 	getData: function() {
-		return Util.getData();
+		return Util.getData('res/mockupapi/getdata.json');
 	}
 
 }
