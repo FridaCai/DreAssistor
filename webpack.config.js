@@ -1,9 +1,5 @@
 var path = require('path');
 
-if (global.Promise == null) {
-    global.Promise = require('es6-promise')
-}
-
 module.exports = {
     entry: {
         app:['./app/src/app.js'],
