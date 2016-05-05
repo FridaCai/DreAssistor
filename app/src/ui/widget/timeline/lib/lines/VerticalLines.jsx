@@ -1,3 +1,4 @@
+import React from 'react';
 import { iterateTimes } from '../utils.js'
 
 export default class VerticalLines extends React.Component {

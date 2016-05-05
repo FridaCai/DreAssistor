@@ -1,3 +1,5 @@
+import React from 'react';
+
 var TaskList = React.createClass({
 	getInitialState: function() {
         return {

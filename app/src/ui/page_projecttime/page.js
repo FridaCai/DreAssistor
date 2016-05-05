@@ -1,9 +1,12 @@
+import React from 'react';
 import CTimeLine from './view/timeline.js';
 import SubProjectList from './view/subprojectlist.js';
 import TaskDetail from './view/taskdetail.js';
 import TaskList from './view/tasklist.js';
 import API from './api.js';
 import './page.less';
+
+
 
 var PageProjectTime = React.createClass({
 	getInitialState: function() {

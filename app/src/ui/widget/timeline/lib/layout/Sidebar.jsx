@@ -1,3 +1,4 @@
+import React from 'react';
 import { _get, arraysEqual } from '../utils.js'
 
 export default class Sidebar extends React.Component {

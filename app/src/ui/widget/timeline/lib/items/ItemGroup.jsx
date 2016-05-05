@@ -1,3 +1,4 @@
+import React from 'react';
 import Item from './Item.jsx'
 
 import { _get, arraysEqual } from '../utils.js'

@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        app:['./app/src/app.js']
+        app:['./app/src/app.js'],
     },
     output: {
         path: './app/tmp',
@@ -16,16 +16,21 @@ module.exports = {
                 loaders: ['babel-loader'],
             },
             {
-              test: /\.less$/,
-              loader: 'style!css!less',
+                test: /\.less$/,
+                loader: 'style!css!less',
             },
 
             {
-              test: /\.scss$/,
-              loader: 'style!css!sass',
+                test: /\.scss$/,
+                loader: 'style!css!sass',
+            },
+            { 
+                test: /\.css$/, 
+                loader: 'style!css'
             },
         ],
     },
     devtool: 'source-map',
     plugins: [],
+    cache: false,
 };

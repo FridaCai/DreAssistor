@@ -1,3 +1,4 @@
+import React from 'react';
 export default class HorizontalLines extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return !(nextProps.canvasWidth === this.props.canvasWidth &&

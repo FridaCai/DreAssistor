@@ -1,4 +1,8 @@
-import Datetime from '../../widget/datetime/DateTime.js';
+import React from 'react';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
+import ColorPicker from 'react-colors-picker';
+import 'react-colors-picker/assets/index.css';
 
 var TaskDetail = React.createClass({
 	getInitialState: function() {
@@ -11,6 +15,7 @@ var TaskDetail = React.createClass({
 
     onStartTimeChange: function() {},
     onEndTimeChange: function() {},
+    onColorChange:function(){},
 
     render: function() {
     	var desc = 'fdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfj';
@@ -34,15 +39,18 @@ var TaskDetail = React.createClass({
 							</div>
 						  	<div className="line">
 							    <label>开始日期</label>
-							    <Datetime  />
+							    <Datetime/>
 							</div>
 							<div className="line">
 							    <label>结束日期</label>
-							    <Datetime  />
+							    <Datetime/>
 							</div>
 							<div className="line">
 							    <label>颜色</label>
-							    <input type="text"/>
+								<ColorPicker
+							      animation="slide-up"
+							      color={'#36c'}
+							      onChange={this.onColorChange}/>
 							</div>
 						</div>
 

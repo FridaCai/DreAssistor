@@ -1,3 +1,5 @@
+import React from 'react';
+
 var SubProjectList = React.createClass({
 	getInitialState: function() {
         return {

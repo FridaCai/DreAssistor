@@ -1,3 +1,5 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import MainView from './ui/mainview.js';
 import API from './api.js';
 

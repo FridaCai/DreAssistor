@@ -1,3 +1,4 @@
+import React from 'react';
 import Timeline from '../../widget/timeline/index.js';
 import moment from 'moment';
 
