@@ -39,11 +39,15 @@ var TaskDetail = React.createClass({
 							</div>
 						  	<div className="line">
 							    <label>开始日期</label>
-							    <Datetime/>
+							    <div className='datetime'>
+									<Datetime/>
+							    </div>
 							</div>
 							<div className="line">
 							    <label>结束日期</label>
-							    <Datetime/>
+							    <div className='datetime'>
+									<Datetime/>
+							    </div>
 							</div>
 							<div className="line">
 							    <label>颜色</label>
