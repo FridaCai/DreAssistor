@@ -4,7 +4,7 @@ import MainView from './ui/mainview.js';
 import API from './api.js';
 
 debugger;
-if(!Promise){
+if(Promise != undefined){
 	window.Promise = require('es6-promise').Promise;
 }
 
