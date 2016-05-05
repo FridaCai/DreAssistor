@@ -5,7 +5,7 @@ import API from './api.js';
 
 debugger;
 if(!Promise){
-	Promise = require('es6-promise');
+	window.Promise = require('es6-promise').Promise;
 }
 
 
