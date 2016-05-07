@@ -4,12 +4,11 @@
   "description": "Floorplan design tool app",
   "main": "index.js",
   "scripts": {
-    "build": "npm install && webpack -p ",
-    "start": "(npm run start-httpserver &) && (npm run start-webpack &)",
-    "stop": "killall node",
-    "start-httpserver": "http-server -p 8000 -c-1 ./",
-    "start-webpack": "webpack -d --watch",
-    "webpack-d": "webpack -d"
+    "build-frida-box": "cnpm install && webpack -d --watch",
+    "build-pai-box": "cnpm install && webpack -d --watch",
+    "build-ec2": "npm install && webpack -p",
+    "deploy": "http-server -p 8000 -c-1 ./",
+    "stop": "killall node"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,6 @@
     "browser-saveas": "^1.0.0",
     "crypto-js": "^3.1.4",
     "css-loader": "^0.23.0",
-    "dotdotdot": "^1.7.0",
     "es6-promise": "^3.1.2",
     "interact.js": "^1.2.6",
     "jquery": "^1.11.3",
