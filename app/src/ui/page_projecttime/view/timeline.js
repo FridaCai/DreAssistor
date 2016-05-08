@@ -10,11 +10,21 @@ var AddOn = React.createClass({
     componentDidMount: function() {
         
     },
+    onSort: function() {
+
+    },
+    onFilter: function() {
+
+    },
+    onAdd: function() {
+        console.log('show add project popup.');
+    },
     render: function() {
         return (<div>
             项目名称
-            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}}>sort</span>
-            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}}>filter</span>
+            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}} onClick={this.onSort}>sort</span>
+            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onFilter}>filter</span>
+            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onAdd}>+</span>
         </div>
         )
     }
@@ -85,7 +95,6 @@ var CTimeLine = React.createClass({
         var sidebarWidth = $(window).width() * 0.2;
 
 
-//<div style={{width: '80%', height: '150px', overflowY: 'scroll', overflowX:'hidden'}}> //what about overflow-y???
         return (<div>
 		    <Timeline groups={groups}
 		              items={items}

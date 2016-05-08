@@ -115,12 +115,22 @@ export default class Sidebar extends React.Component {
         lineHeight: `${groupHeights[index] - 1}px`
       }
 
-      
-      groupLines.push(
-        <div key={_get(group, groupIdKey)} className={'rct-sidebar-row ' + (_get(group, 'isSub') ? 'sub ' : '') + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} style={elementStyle}>
-          {_get(group, groupTitleKey)}
+      var isSub = _get(group, 'isSub');
+      var dom = (
+        <div key={_get(group, groupIdKey)} className={'rct-sidebar-row ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} style={elementStyle}>
+          <span>{_get(group, groupTitleKey)}</span>
+          <span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}}>-</span>
         </div>
-      )
+      );
+      if(isSub){
+        dom = (
+          <div key={_get(group, groupIdKey)} className={'rct-sidebar-row sub ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} style={elementStyle}>
+            <span>{_get(group, groupTitleKey)}</span>
+          </div>
+          );
+      }
+      
+      groupLines.push(dom);
       i += 1
     })
 

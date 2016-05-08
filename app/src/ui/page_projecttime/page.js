@@ -1,10 +1,12 @@
 import React from 'react';
 import CTimeLine from './view/timeline.js';
-import SubProjectList from './view/subprojectlist.js';
-import TaskDetail from './view/taskdetail.js';
-import TaskList from './view/tasklist.js';
+import SubProjectList from './view/list_subproject.js';
+import TaskDetail from './view/panel_taskdetail.js';
+import TaskList from './view/list_task.js';
 import API from './api.js';
+import CreateProjectPopup from './view/popup_createproject.js';
 import './page.less';
+
 
 
 
@@ -44,6 +46,7 @@ var PageProjectTime = React.createClass({
                             <TaskList/>
                         </div>
                         <TaskDetail/>
+                        <CreateProjectPopup/>
                     </div>);    
         }
     }

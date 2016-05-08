@@ -4,6 +4,9 @@
   "description": "Floorplan design tool app",
   "main": "index.js",
   "scripts": {
+    "start-webpack": "webpack -d --watch",
+
+
     "build-frida-box": "cnpm install && webpack -d --watch",
     "build-pai-box": "cnpm install && webpack -d --watch",
     "build-ec2": "npm install && webpack -p",
