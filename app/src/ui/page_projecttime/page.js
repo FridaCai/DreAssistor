@@ -20,19 +20,12 @@ var PageProjectTime = React.createClass({
     },
     componentDidMount: function() {
         API.getData().then(
-
-
-        (function(param) {
-            
-
-            this.setState({
-                isLoading: false,
-                data: param,
-            })
-
-
-
-        }).bind(this)
+            (function(param) {
+                this.setState({
+                    isLoading: false,
+                    data: param,
+                })
+            }).bind(this)
         );
     },
     render: function() {
@@ -46,7 +39,7 @@ var PageProjectTime = React.createClass({
                             <TaskList/>
                         </div>
                         <TaskDetail/>
-                        <CreateProjectPopup/>
+                        <CreateProjectPopup data={this.state.data}/>
                     </div>);    
         }
     }

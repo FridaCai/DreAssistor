@@ -1,7 +1,7 @@
 import React from 'react';
 import Timeline from '../../widget/timeline/index.js';
 import moment from 'moment';
-
+import API from '../api.js';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -17,7 +17,7 @@ var AddOn = React.createClass({
 
     },
     onAdd: function() {
-        console.log('show add project popup.');
+        API.signal_appProjectPopup_show.dispatch();
     },
     render: function() {
         return (<div>
@@ -32,8 +32,6 @@ var AddOn = React.createClass({
 });
 
 var CTimeLine = React.createClass({
-
-	
 	getInitialState: function() {
         return {
         	data: this.props.data,
