@@ -69,7 +69,7 @@ var CreateProjectPopup = React.createClass({
         if(!this.state.isShow) 
             return null;
 
-        var projects = this.props.data.allprojects;
+        var projects = this.props.data;
         return (<div className="createProjectPopup" data-reactid=".0.1.3">
                     <div className="mask" onClick={this.onMaskClk}></div>
                     <div className="panel panel-default">
@@ -81,9 +81,9 @@ var CreateProjectPopup = React.createClass({
                             <ul>
                                 {
                                     projects.map(project => {
-                                        var projId = project.id;
+                                        var projId = project.projectId;
                                         var projLabel = project.label;
-                                        var years = project.children;
+                                        var years = project.mobileYears;
 
                                         return (<li key={projId}>
                                             <span>{projLabel}</span>

@@ -41,12 +41,12 @@ var CTimeLine = React.createClass({
         
     },
     render: function() {
-    	var projects = this.state.data.projects;
+    	var projects = this.state.data;
 
 		var groups = [];
     	projects.forEach(function(project){
     		groups.push({
-    			id: project.id,
+    			id: project.projectId + '_' + project.mobileYearId,
     			title: project.name,
     			isSub: false,
     		});
