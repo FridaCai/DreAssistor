@@ -14,8 +14,8 @@ class Signal{
 	    $('body').unbind(this.key, listener);    
 	};
 
-	dispatch(){
-	    $('body').trigger(this.event);    
+	dispatch(param){
+	    $('body').trigger(this.event, [param]);    
 	};
 }
 

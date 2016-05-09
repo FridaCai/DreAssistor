@@ -34,14 +34,19 @@ var AddOn = React.createClass({
 var CTimeLine = React.createClass({
 	getInitialState: function() {
         return {
-        	data: this.props.data,
+        	projectList: this.props.projectList,
         }
     },
     componentDidMount: function() {
-        
+
+    },
+    componentWillReceiveProps: function(newProps) {
+        this.setState({
+            projectList: newProps.projectList,
+        })
     },
     render: function() {
-    	var projects = this.state.data;
+    	var projects = this.state.projectList;
 
 		var groups = [];
     	projects.forEach(function(project){
