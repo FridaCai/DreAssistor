@@ -1,5 +1,5 @@
 import React from 'react';
-import Timeline from '../../widget/timeline/index.js';
+import Timeline from './timeline/index.js';
 import moment from 'moment';
 import API from '../api.js';
 
@@ -52,6 +52,8 @@ var CTimeLine = React.createClass({
     	projects.forEach(function(project){
     		groups.push({
     			id: project.projectId + '_' + project.mobileYearId,
+                projectId: project.projectId,
+                mobileYearId: project.mobileYearId,
     			title: project.name,
     			isSub: false,
     		});

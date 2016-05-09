@@ -1,5 +1,6 @@
-import React from 'react';
 import { _get, arraysEqual } from '../utils.js'
+import API from '../../../../api.js'
+
 
 export default class Sidebar extends React.Component {
   constructor (props) {
@@ -62,6 +63,23 @@ export default class Sidebar extends React.Component {
     this.setComponentTop()
   }
 
+  onProjectClk(projectId, mobileYearId) {
+    //update sub project panel.
+    /*API.signal_project_selectchange.dispatch({
+      projectId: projectId,
+      mobileYearId: mobileYearId,
+    })*/
+  }
+
+  onProjectDelete(projectId, mobileYearId) {
+    API.signal_project_delete.dispatch({
+      projectId: projectId, 
+      mobileYearId: mobileYearId,
+    });
+
+    event.stopPropagation();
+  }
+
   render () {
     const {
       fixedHeader, width, lineHeight, zIndex, groupHeights, height, headerHeight
@@ -116,12 +134,22 @@ export default class Sidebar extends React.Component {
       }
 
       var isSub = _get(group, 'isSub');
+      var projectId = _get(group, 'projectId');
+      var mobileYearId = _get(group, 'mobileYearId');
+
       var dom = (
-        <div key={_get(group, groupIdKey)} className={'rct-sidebar-row ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} style={elementStyle}>
+        <div key={_get(group, groupIdKey)} 
+            className={'rct-sidebar-row ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} 
+            style={elementStyle} 
+            onClick={this.onProjectClk.bind(this, projectId, mobileYearId)}>
           <span>{_get(group, groupTitleKey)}</span>
-          <span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}}>-</span>
+          <span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
+              onClick={this.onProjectDelete.bind(this, projectId, mobileYearId)}>-</span>
         </div>
       );
+
+
+
       if(isSub){
         dom = (
           <div key={_get(group, groupIdKey)} className={'rct-sidebar-row sub ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} style={elementStyle}>

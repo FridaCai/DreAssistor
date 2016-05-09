@@ -4,6 +4,8 @@ import Signal from '../../signal.js';
 var API = {
 	signal_appProjectPopup_show: new Signal(),
 	signal_projects_add: new Signal(),
+	signal_project_delete: new Signal(),
+	signal_project_selectchange: new Signal(),
 	
 	
 	getData: function() {

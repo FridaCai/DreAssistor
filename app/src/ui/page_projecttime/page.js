@@ -17,20 +17,26 @@ var PageProjectTime = React.createClass({
         }
     },
 
+    onProjectsAdd: function(event, param) {
+        var addedProjects = param.projects;
+        var newProjects = addedProjects.concat(this.state.projects);
+
+        this.setState({
+            projects: newProjects,
+        })
+    },
+    onProjectDelete: function(event, param) {
+        var newProjects = this.state.projects.filter((project) => {
+            return !(project.projectId === param.projectId && project.mobileYearId === param.mobileYearId);
+        });
+        this.setState({
+            projects: newProjects
+        })
+    },
+
     componentDidMount: function() {
-        API.signal_projects_add.listen(((event, param) => {
-            var addedProjects = param.projects;
-
-            var projects = addedProjects.concat(this.state.projects);
-            var projectTemplateList = this.state.projectTemplateList;
-
-            this.setState({
-                projects: projects,
-                projectTemplateList: projectTemplateList,
-            })
-        }).bind(this));
-
-
+        API.signal_projects_add.listen(this.onProjectsAdd);
+        API.signal_project_delete.listen(this.onProjectDelete);
 
         API.getData().then(
             (function(param) {
@@ -45,6 +51,11 @@ var PageProjectTime = React.createClass({
                 })
             }).bind(this)
         );
+    },
+
+    componentDidUnMount: function() {
+        API.signal_projects_add.unlisten(this.onProjectsAdd);
+        API.siganl_project_delete.unlisten(this.onProjectDelete);
     },
 
 
