@@ -10,7 +10,7 @@ var API = {
 		return Util.getData('res/mockupapi/getdata.json');
 	},
 
-	getFilteredProjectList: function(projectList, templateList){
+	getFilteredProjects: function(projects, templateList){
         //process templates for project creation purpose.
         //remove already added project.
 
@@ -18,8 +18,8 @@ var API = {
         //if(projectId, mobileYearId) exists in projectList
         //marked as deprecated.
 
-        var existInProjectList = function(projectId, mobileYearId) {
-            var found = projectList.find(function(project){
+        var existInProjects = function(projectId, mobileYearId) {
+            var found = projects.find(function(project){
                 return (project.projectId === projectId && project.mobileYearId === mobileYearId);
             })
 
@@ -31,7 +31,7 @@ var API = {
         var templates = [].concat(templateList);
         templates.map(function(template) {
             template.mobileYears.map(function(mobileYear){
-                if (existInProjectList(template.projectId, mobileYear.id)) {
+                if (existInProjects(template.projectId, mobileYear.id)) {
                     mobileYear.isdeprecated = true;
                 }
             })

@@ -99,7 +99,7 @@ var CreateProjectPopup = React.createClass({
         if(!this.state.isShow) 
             return null;
 
-        this.projects = API.getFilteredProjectList(this.props.projectList, this.props.projectTemplateList);
+        this.projects = API.getFilteredProjects(this.props.projects, this.props.projectTemplateList);
         return (
             <div className="createProjectPopup" data-reactid=".0.1.3">
                 <div className="mask" onClick={this.onMaskClk}></div>

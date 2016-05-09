@@ -12,7 +12,7 @@ var PageProjectTime = React.createClass({
         return {
             isLoading: true,
             selectedProject: undefined,
-            projectList: undefined,
+            projects: undefined,
             projectTemplateList: undefined,
         }
     },
@@ -21,11 +21,11 @@ var PageProjectTime = React.createClass({
         API.signal_projects_add.listen(((event, param) => {
             var addedProjects = param.projects;
 
-            var projectList = addedProjects.concat(this.state.projectList);
+            var projects = addedProjects.concat(this.state.projects);
             var projectTemplateList = this.state.projectTemplateList;
 
             this.setState({
-                projectList: projectList,
+                projects: projects,
                 projectTemplateList: projectTemplateList,
             })
         }).bind(this));
@@ -35,12 +35,12 @@ var PageProjectTime = React.createClass({
         API.getData().then(
             (function(param) {
                 var isLoading = false;
-                var projectList = param.projects;
+                var projects = param.projects;
                 var projectTemplateList = param.allprojects;
                 
                 this.setState({
                     isLoading: false,
-                    projectList: projectList,
+                    projects: projects,
                     projectTemplateList: projectTemplateList
                 })
             }).bind(this)
@@ -53,7 +53,7 @@ var PageProjectTime = React.createClass({
             return (<div>Loading...</div>);
         }else{
             return (<div className='pageProjectTime'>
-                        <CTimeLine projectList={this.state.projectList}/>
+                        <CTimeLine projects={this.state.projects}/>
                         <div className='leftContainer'>
                             <SubProjectList/>
                             <TaskList/>
@@ -61,7 +61,7 @@ var PageProjectTime = React.createClass({
                         <TaskDetail/>
                         <CreateProjectPopup 
                             projectTemplateList={this.state.projectTemplateList} 
-                            projectList={this.state.projectList}/>
+                            projects={this.state.projects}/>
                     </div>);    
         }
     }
