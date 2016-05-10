@@ -5,6 +5,7 @@ import TaskDetail from './view/panel_taskdetail.js';
 import TaskList from './view/list_task.js';
 import API from './api.js';
 import CreateProjectPopup from './view/popup_createproject.js';
+import MessageBox from '../widget/messagebox.js';
 import './page.less';
 
 var PageProjectTime = React.createClass({
@@ -18,36 +19,43 @@ var PageProjectTime = React.createClass({
     },
 
     onProjectsAdd: function(event, param) {
-        var addedProjects = param.projects;
-        var newProjects = addedProjects.concat(this.state.projects);
-
+        API.addProjects(param.projects);
         this.setState({
-            projects: newProjects,
+            projects: API.getProjects(),
         })
     },
-    onProjectDelete: function(event, param) {
-        var newProjects = this.state.projects.filter((project) => {
-            return !(project.projectId === param.projectId && project.mobileYearId === param.mobileYearId);
+
+    onMessageBoxShow: function(event, param) {
+        param = Object.assign({isShow: true}, param);
+        this.refs.messageBox.setState(param);
+    },
+
+    onPageRefresh: function(event, param) {
+        this.setState(param);
+    },
+
+    onAddProjectPopupShow: function(event, param) {
+        this.refs.createprojectpopup.setState({
+            isShow: true,
+            selectedData: []
         });
-        this.setState({
-            projects: newProjects
-        })
     },
-
     componentDidMount: function() {
         API.signal_projects_add.listen(this.onProjectsAdd);
-        API.signal_project_delete.listen(this.onProjectDelete);
+        API.signal_msgbox_show.listen(this. onMessageBoxShow);
+        API.signal_page_refresh.listen(this.onPageRefresh);
+        API.signal_appProjectPopup_show.listen(this.onAddProjectPopupShow);
 
         API.getData().then(
             (function(param) {
                 var isLoading = false;
-                var projects = param.projects;
-                var projectTemplateList = param.allprojects;
+                API.setProjects(param.projects);
+                API.setProjectTemplates(param.allprojects);
                 
                 this.setState({
                     isLoading: false,
-                    projects: projects,
-                    projectTemplateList: projectTemplateList
+                    projects: param.projects,
+                    projectTemplateList: param.projectTemplateList
                 })
             }).bind(this)
         );
@@ -55,7 +63,9 @@ var PageProjectTime = React.createClass({
 
     componentDidUnMount: function() {
         API.signal_projects_add.unlisten(this.onProjectsAdd);
-        API.siganl_project_delete.unlisten(this.onProjectDelete);
+        API.signal_msgbox_show.unlisten(this.onProjectDelete);
+        API.signal_page_refresh.unlisten(this.onPageRefresh);
+        API.signal_appProjectPopup_show.unlisten(this.onAddProjectPopupShow);
     },
 
 
@@ -70,9 +80,8 @@ var PageProjectTime = React.createClass({
                             <TaskList/>
                         </div>
                         <TaskDetail/>
-                        <CreateProjectPopup 
-                            projectTemplateList={this.state.projectTemplateList} 
-                            projects={this.state.projects}/>
+                        <CreateProjectPopup ref='createprojectpopup'/>
+                        <MessageBox ref='messageBox'/>
                     </div>);    
         }
     }

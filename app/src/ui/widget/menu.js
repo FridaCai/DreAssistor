@@ -1,4 +1,3 @@
-import React from 'react';
 var Menu = React.createClass({
   getInitialState: function() {
         return {

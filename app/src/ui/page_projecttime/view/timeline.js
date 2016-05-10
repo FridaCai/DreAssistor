@@ -21,10 +21,13 @@ var AddOn = React.createClass({
     },
     render: function() {
         return (<div>
-            项目名称
-            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}} onClick={this.onSort}>sort</span>
-            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onFilter}>filter</span>
-            <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onAdd}>+</span>
+            <span>项目名称</span>
+            <span className='btns'>
+                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}} onClick={this.onSort} className='sortBtn'>sort</span>
+                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onFilter} className='filterBtn'>filter</span>
+                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onAdd} className='addBtn'>+</span>    
+            </span>
+            
         </div>
         )
     }

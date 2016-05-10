@@ -71,10 +71,17 @@ export default class Sidebar extends React.Component {
     })*/
   }
 
-  onProjectDelete(projectId, mobileYearId) {
-    API.signal_project_delete.dispatch({
-      projectId: projectId, 
-      mobileYearId: mobileYearId,
+  onProjectDeleteBtnClk(projectId, mobileYearId) {
+    var msg = '确定删除？';
+ 
+    API.signal_msgbox_show.dispatch({
+      msg: msg,
+      okHandler: function() {
+        API.deleteProjects(projectId, mobileYearId);
+        API.refreshPage({
+          projects: API.getProjects(),
+        });
+      }
     });
 
     event.stopPropagation();
@@ -144,7 +151,7 @@ export default class Sidebar extends React.Component {
             onClick={this.onProjectClk.bind(this, projectId, mobileYearId)}>
           <span>{_get(group, groupTitleKey)}</span>
           <span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
-              onClick={this.onProjectDelete.bind(this, projectId, mobileYearId)}>-</span>
+              onClick={this.onProjectDeleteBtnClk.bind(this, projectId, mobileYearId)}>-</span>
         </div>
       );
 

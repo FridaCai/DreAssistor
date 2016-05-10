@@ -1,8 +1,6 @@
 import API from '../api.js';
 
 var CreateProjectPopup = React.createClass({
-    projects: undefined,
-
 	getInitialState: function() {
         return {
             isShow: false,
@@ -18,12 +16,7 @@ var CreateProjectPopup = React.createClass({
     },
 
     componentDidMount: function() {
-        API.signal_appProjectPopup_show.listen((function(){
-            this.setState({
-                isShow: true,
-                selectedData: [],
-            })
-        }).bind(this));
+       
     },
 
     hide: function() {
@@ -64,7 +57,7 @@ var CreateProjectPopup = React.createClass({
         var creator = 'pai'; //hardcode now.
 
         var getProjectName = (function(rawProjectId, mobileYearId) {
-            var project = this.projects.find((project) => {
+            var project = API.getProjectTemplates().find((project) => {
                 return (project.projectId === rawProjectId);
             })
 
@@ -99,7 +92,7 @@ var CreateProjectPopup = React.createClass({
         if(!this.state.isShow) 
             return null;
 
-        this.projects = API.getFilteredProjects(this.props.projects, this.props.projectTemplateList);
+        var projects = API.getFilteredProjects(API.getProjects(), API.getProjectTemplates());
         return (
             <div className="createProjectPopup" data-reactid=".0.1.3">
                 <div className="mask" onClick={this.onMaskClk}></div>
@@ -111,7 +104,7 @@ var CreateProjectPopup = React.createClass({
                     <div className="panel-body">
                         <ul>
                             {
-                                this.projects.map(project => {
+                                projects.map(project => {
                                     var projId = project.projectId;
                                     var projLabel = project.label;
                                     var years = project.mobileYears;
