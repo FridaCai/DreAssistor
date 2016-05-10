@@ -36,20 +36,16 @@ var AddOn = React.createClass({
 
 var CTimeLine = React.createClass({
 	getInitialState: function() {
-        return {
-        	projects: this.props.projects,
-        }
+        return {};
     },
     componentDidMount: function() {
 
     },
     componentWillReceiveProps: function(newProps) {
-        this.setState({
-            projects: newProps.projects,
-        })
+       
     },
     render: function() {
-    	var projects = this.state.projects;
+    	var projects = API.getProjects();
 
 		var groups = [];
     	projects.forEach(function(project){
@@ -72,7 +68,7 @@ var CTimeLine = React.createClass({
 
     	var items = [];
     	projects.forEach(function(project){
-    		project.task.forEach(function(task){
+    		project.tasks.forEach(function(task){
     			var itm = {
     				id: task.id,
     				group: project.id,
@@ -84,7 +80,7 @@ var CTimeLine = React.createClass({
     		});
 
     		project.children.forEach(function(subproject) {
-    			subproject.task.forEach(function(task){
+    			subproject.tasks.forEach(function(task){
     				var itm = {
 	    				id: task.id,
 	    				group: subproject.id,

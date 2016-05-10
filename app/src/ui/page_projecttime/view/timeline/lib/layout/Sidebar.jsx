@@ -64,11 +64,10 @@ export default class Sidebar extends React.Component {
   }
 
   onProjectClk(projectId, mobileYearId) {
-    //update sub project panel.
-    /*API.signal_project_selectchange.dispatch({
+    API.signal_project_selectchange.dispatch({
       projectId: projectId,
       mobileYearId: mobileYearId,
-    })*/
+    })
   }
 
   onProjectDeleteBtnClk(projectId, mobileYearId) {

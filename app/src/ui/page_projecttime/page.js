@@ -13,16 +13,12 @@ var PageProjectTime = React.createClass({
         return {
             isLoading: true,
             selectedProject: undefined,
-            projects: undefined,
-            projectTemplateList: undefined,
         }
     },
 
     onProjectsAdd: function(event, param) {
         API.addProjects(param.projects);
-        this.setState({
-            projects: API.getProjects(),
-        })
+        this.forceUpdate();
     },
 
     onMessageBoxShow: function(event, param) {
@@ -40,11 +36,24 @@ var PageProjectTime = React.createClass({
             selectedData: []
         });
     },
+    
+
+
+
+    onProjectSelectChange: function(event, param) {
+        //todo: update subproject
+    },
+
+
+
+
+
     componentDidMount: function() {
         API.signal_projects_add.listen(this.onProjectsAdd);
         API.signal_msgbox_show.listen(this. onMessageBoxShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
         API.signal_appProjectPopup_show.listen(this.onAddProjectPopupShow);
+        API.signal_project_selectchange.listen(this.onProjectSelectChange);
 
         API.getData().then(
             (function(param) {
@@ -54,8 +63,6 @@ var PageProjectTime = React.createClass({
                 
                 this.setState({
                     isLoading: false,
-                    projects: param.projects,
-                    projectTemplateList: param.projectTemplateList
                 })
             }).bind(this)
         );
@@ -73,16 +80,18 @@ var PageProjectTime = React.createClass({
         if(this.state.isLoading) {
             return (<div>Loading...</div>);
         }else{
-            return (<div className='pageProjectTime'>
-                        <CTimeLine projects={this.state.projects}/>
-                        <div className='leftContainer'>
-                            <SubProjectList/>
-                            <TaskList/>
-                        </div>
-                        <TaskDetail/>
-                        <CreateProjectPopup ref='createprojectpopup'/>
-                        <MessageBox ref='messageBox'/>
-                    </div>);    
+            return (
+                <div className='pageProjectTime'>
+                    <CTimeLine/>
+                    <div className='leftContainer'>
+                        <SubProjectList/>
+                        <TaskList/>
+                    </div>
+                    <TaskDetail/>
+                    <CreateProjectPopup ref='createprojectpopup'/>
+                    <MessageBox ref='messageBox'/>
+                </div>
+            );    
         }
     }
 });

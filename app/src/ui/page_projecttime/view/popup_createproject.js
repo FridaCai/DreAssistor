@@ -1,4 +1,5 @@
 import API from '../api.js';
+import Project from '../data/project.js';
 
 var CreateProjectPopup = React.createClass({
 	getInitialState: function() {
@@ -73,14 +74,17 @@ var CreateProjectPopup = React.createClass({
             var projectId = selectedData.projectId;
             var yearId = selectedData.yearId;
 
-            addedProjects.push({
+            var project = new Project();
+            project.init({
                 projectId: projectId,
                 mobileYearId: yearId,
                 name: getProjectName(projectId, yearId),
                 children: [],
-                task: [],
+                tasks: [],
                 creator: creator,
             });
+
+            addedProjects.push(project);
         });
 
         API.signal_projects_add.dispatch({projects: addedProjects});

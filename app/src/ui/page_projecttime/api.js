@@ -1,10 +1,11 @@
 import Util from '../../util.js';
 import Signal from '../../signal.js';
+import Projects from './data/projects.js';
 
 var API = {
 	signal_appProjectPopup_show: new Signal(),
 	signal_projects_add: new Signal(),
-    
+
     signal_msgbox_show: new Signal(),
     signal_page_refresh: new Signal(),
 
@@ -15,25 +16,29 @@ var API = {
 
 
 
-    _projects: undefined,
+    _projects: new Projects(),
+    
     setProjects: function(value) {
-        this._projects = value;
+        this._projects.init(value);
     },
+
     getProjects: function() {
-        return this._projects;
+        return this._projects.arr;
     },
 
     addProjects: function(newProjects) {
-        this._projects = newProjects.concat(this._projects);
+        this._projects.batchAdd(newProjects);
     },
     deleteProjects: function(projectId, mobileYearId) {
-        this._projects = this._projects.filter((project) => {
-            return !(project.projectId === projectId && project.mobileYearId === mobileYearId);
-        });
+        this._projects.delete(projectId, mobileYearId);
     },
     refreshPage: function(param) {
         this.signal_page_refresh.dispatch(param);
     },
+
+
+
+
 
 
 
@@ -58,6 +63,7 @@ var API = {
 	getData: function() {
 		return Util.getData('res/mockupapi/getdata.json');
 	},
+
 
 	getFilteredProjects: function(projects, templateList){
         //process templates for project creation purpose.

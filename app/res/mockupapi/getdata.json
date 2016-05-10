@@ -7,7 +7,7 @@
 			"children": [
 
 			],
-			"task": [
+			"tasks": [
 				{
 					"id": "1",
 					"name": "DSI",
@@ -41,7 +41,7 @@
 					"children": [
 
 					],
-					"task": [
+					"tasks": [
 						{
 							"id": "4",
 							"name": "task",
@@ -60,7 +60,7 @@
 					"children": [
 
 					],
-					"task": [
+					"tasks": [
 						{
 							"id": "6",
 							"name": "test2",
@@ -75,7 +75,7 @@
 					"creator": "pai"
 				}
 			],
-			"task": [
+			"tasks": [
 				{
 					"id": "7",
 					"name": "PFI",
