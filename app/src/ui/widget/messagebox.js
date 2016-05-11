@@ -16,18 +16,13 @@ var MessageBox = React.createClass({
              contentsSelectable: false,
              tabindex: 0,
              msg: '',
-             
-             content: this.props.content || undefined,
              okHandler: this.props.okHandler || function(){},
-             
-
              isShow: false,
         }
     },
-    show: function(content) {
+    show: function() {
         this.setState({
             isShow: true,
-            content: content,
         })
     },
     onOKBtnClk: function() {
@@ -41,11 +36,10 @@ var MessageBox = React.createClass({
         })
     },
     getContent: function(){
-        debugger;
-        if(this.state.content){
-            return (this.state.content);
+        if(this.props.children){
+            return this.props.children;
         }
-        return (
+        return(
             <p className='msgContentclassNamees'>{this.state.msg}</p>
         )
     },
@@ -62,8 +56,8 @@ var MessageBox = React.createClass({
         var okBtnLabel = '确定';
         var cancelBtnLabel = '取消';
 
-        var content = this.props.children;
-        
+        var content = this.getContent();
+
         return (
             <div id='MsgBoxWrapper' className='MsgBox'>
                 <div id='MsgBoxOverLay' className='MsgBoxOverLay' onClick={this.hide}></div>
