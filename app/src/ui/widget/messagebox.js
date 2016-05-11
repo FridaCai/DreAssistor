@@ -6,17 +6,29 @@
     msgBox.show(callback);
 ***/
 import './messagebox.css';
+import CreateProjectPopup from '../page_projecttime/view/popup_createproject.js'
+
 var MessageBox = React.createClass({
   getInitialState: function() {
         return {
-             msg: '',
              title: '',
              disablemask: false,
              contentsSelectable: false,
              tabindex: 0,
-             okHandler: function(){},
+             msg: '',
+             
+             content: this.props.content || undefined,
+             okHandler: this.props.okHandler || function(){},
+             
+
              isShow: false,
         }
+    },
+    show: function(content) {
+        this.setState({
+            isShow: true,
+            content: content,
+        })
     },
     onOKBtnClk: function() {
         this.state.okHandler();
@@ -25,14 +37,23 @@ var MessageBox = React.createClass({
 
     hide: function() {
         this.setState({
-            isShow: false,
+          isShow: false,
         })
     },
+    getContent: function(){
+        debugger;
+        if(this.state.content){
+            return (this.state.content);
+        }
+        return (
+            <p className='msgContentclassNamees'>{this.state.msg}</p>
+        )
+    },
+
     render: function() {
         if(!this.state.isShow)
             return null;
 
-        var msg = this.state.msg;
         var title = this.state.title;
         var disablemask = this.state.disablemask;
         var contentsSelectable = this.state.contentsSelectable;
@@ -41,6 +62,8 @@ var MessageBox = React.createClass({
         var okBtnLabel = '确定';
         var cancelBtnLabel = '取消';
 
+        var content = this.props.children;
+        
         return (
             <div id='MsgBoxWrapper' className='MsgBox'>
                 <div id='MsgBoxOverLay' className='MsgBoxOverLay' onClick={this.hide}></div>
@@ -52,7 +75,7 @@ var MessageBox = React.createClass({
                         </span>
                     </div>
                     <div className='MsgBoxContent'>
-                        <p className='msgContentclassNamees'>{msg}</p>
+                        {content}
                     </div>
                     <div className='MsgBoxBtns'>
                         <button className='btn btn-primary msgboxactive' onClick={this.onOKBtnClk}>{okBtnLabel}</button>

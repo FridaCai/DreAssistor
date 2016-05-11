@@ -2,6 +2,7 @@ import React from 'react';
 import Timeline from './timeline/index.js';
 import moment from 'moment';
 import API from '../api.js';
+import CreateProjectPopup from './popup_createproject.js';
 
 var AddOn = React.createClass({
     getInitialState: function() {

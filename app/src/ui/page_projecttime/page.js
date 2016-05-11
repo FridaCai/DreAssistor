@@ -5,7 +5,6 @@ import TaskDetail from './view/panel_taskdetail.js';
 import TaskList from './view/list_task.js';
 import API from './api.js';
 import CreateProjectPopup from './view/popup_createproject.js';
-import MessageBox from '../widget/messagebox.js';
 import './page.less';
 
 var PageProjectTime = React.createClass({
@@ -21,10 +20,10 @@ var PageProjectTime = React.createClass({
         this.forceUpdate();
     },
 
-    onMessageBoxShow: function(event, param) {
+/*    onMessageBoxShow: function(event, param) {
         param = Object.assign({isShow: true}, param);
         this.refs.messageBox.setState(param);
-    },
+    },*/
 
     onPageRefresh: function(event, param) {
         if(param)
@@ -34,10 +33,7 @@ var PageProjectTime = React.createClass({
     },
 
     onAddProjectPopupShow: function(event, param) {
-        this.refs.createprojectpopup.setState({
-            isShow: true,
-            selectedData: []
-        });
+        this.refs.createprojectpopup.show();
     },
     
 
@@ -56,10 +52,11 @@ var PageProjectTime = React.createClass({
 
 
     componentDidMount: function() {
-        API.signal_projects_add.listen(this.onProjectsAdd);
-        API.signal_msgbox_show.listen(this. onMessageBoxShow);
-        API.signal_page_refresh.listen(this.onPageRefresh);
         API.signal_appProjectPopup_show.listen(this.onAddProjectPopupShow);
+        API.signal_projects_add.listen(this.onProjectsAdd);
+        //API.signal_msgbox_show.listen(this. onMessageBoxShow);
+        API.signal_page_refresh.listen(this.onPageRefresh);
+        
         API.signal_project_selectchange.listen(this.onProjectSelectChange);
 
         API.getData().then(
@@ -98,8 +95,8 @@ var PageProjectTime = React.createClass({
                         <TaskList/>
                     </div>
                     <TaskDetail/>
+                    
                     <CreateProjectPopup ref='createprojectpopup'/>
-                    <MessageBox ref='messageBox'/>
                 </div>
             );    
         }
