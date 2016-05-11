@@ -17,6 +17,9 @@ var SubProjectList = React.createClass({
 		API.toggleSubprojectVisbility(subproject);
 		API.signal_page_refresh.dispatch();
 	},	
+	onAdd: function(){
+		//show popup;
+	},
     render: function() {
 
     	var subprojects = this.state.project.children;
@@ -24,7 +27,17 @@ var SubProjectList = React.createClass({
 
         return (<div className='subProjectList leftlist'>
 	    	<div className="panel panel-default">
-			  <div className="panel-heading">时间包列表</div>
+			  <div className="panel-heading">
+				<span>时间包列表</span>
+	            <span className='hearderBtns'>
+	                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}} 
+	                		onClick={this.onSort} className='sortBtn'>sort</span>
+	                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
+	                		onClick={this.onFilter} className='filterBtn'>filter</span>
+	                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
+	                		onClick={this.onAdd} className='addBtn'>+</span>    
+	            </span>
+			  </div>
 			  <table className="table">
 			  	<thead> 
 			  		<tr> 
