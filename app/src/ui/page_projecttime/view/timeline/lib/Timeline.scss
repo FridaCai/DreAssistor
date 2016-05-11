@@ -180,6 +180,7 @@ $weekend: rgba(250, 246, 225, 0.5);
       box-sizing: content-box;
       margin: 0;
       border-bottom: $border-width solid $border-color;
+      cursor: pointer;
 
       &.rct-sidebar-row-odd {
         background: $row-background-odd;
@@ -189,6 +190,7 @@ $weekend: rgba(250, 246, 225, 0.5);
       }
       &.sub {
         padding-left: 20px;
+        cursor: default;
       }
     }
   }

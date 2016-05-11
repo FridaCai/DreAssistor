@@ -27,7 +27,10 @@ var PageProjectTime = React.createClass({
     },
 
     onPageRefresh: function(event, param) {
-        this.setState(param);
+        if(param)
+            this.setState(param);
+        else
+            this.forceUpdate();
     },
 
     onAddProjectPopupShow: function(event, param) {
@@ -42,6 +45,10 @@ var PageProjectTime = React.createClass({
 
     onProjectSelectChange: function(event, param) {
         //todo: update subproject
+        var project = API.findProject(param.projectId, param.mobileYearId);
+        this.refs.subprojectlist.setState({
+            project: project,
+        });
     },
 
 
@@ -60,9 +67,11 @@ var PageProjectTime = React.createClass({
                 var isLoading = false;
                 API.setProjects(param.projects);
                 API.setProjectTemplates(param.allprojects);
+                var selectedProject = API.getProjects()[0];
                 
                 this.setState({
                     isLoading: false,
+                    selectedProject: selectedProject,
                 })
             }).bind(this)
         );
@@ -73,6 +82,7 @@ var PageProjectTime = React.createClass({
         API.signal_msgbox_show.unlisten(this.onProjectDelete);
         API.signal_page_refresh.unlisten(this.onPageRefresh);
         API.signal_appProjectPopup_show.unlisten(this.onAddProjectPopupShow);
+        API.signal_project_selectchange.unlisten(this.onProjectSelectChange);
     },
 
 
@@ -84,7 +94,7 @@ var PageProjectTime = React.createClass({
                 <div className='pageProjectTime'>
                     <CTimeLine/>
                     <div className='leftContainer'>
-                        <SubProjectList/>
+                        <SubProjectList ref='subprojectlist' project={this.state.selectedProject}/>
                         <TaskList/>
                     </div>
                     <TaskDetail/>

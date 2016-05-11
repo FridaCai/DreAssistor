@@ -20,9 +20,14 @@ module.exports = class Projects{
 	}
 
 	delete(projectId, mobileYearId){
-		debugger; //work?
 		this.arr = this.arr.filter((project) => {
 			return !(project.projectId === projectId && project.mobileYearId === mobileYearId);
 		});
+	}
+
+	find(projectId, mobileYearId) {
+		return this.arr.find((project) => {
+			return (project.projectId === projectId && project.mobileYearId === mobileYearId);
+		})		
 	}
 }

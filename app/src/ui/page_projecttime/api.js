@@ -32,9 +32,17 @@ var API = {
     deleteProjects: function(projectId, mobileYearId) {
         this._projects.delete(projectId, mobileYearId);
     },
-    refreshPage: function(param) {
-        this.signal_page_refresh.dispatch(param);
+    findProject: function(projectId, mobileYearId) {
+        return this._projects.find(projectId, mobileYearId)
     },
+
+
+
+    toggleSubprojectVisbility: function(subproject) {
+        subproject.toggleVisibility();
+    },
+
+ 
 
 
 

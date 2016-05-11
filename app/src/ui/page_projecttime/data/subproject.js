@@ -14,5 +14,11 @@ module.exports = class SubProject {
 			task.init(taskObj);
 			return task;
 		})
+		this.isShow = true; //not property of subproject, but user preference.
+	}
+
+	toggleVisibility() {
+		this.isShow = !this.isShow;
+		
 	}
 }

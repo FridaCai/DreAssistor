@@ -58,11 +58,13 @@ var CTimeLine = React.createClass({
     		});
 
     		project.children.forEach(function(subproject){
-    			groups.push({
-    				id: subproject.id,
-    				title: subproject.name,
-    				isSub: true,
-    			})
+                if(subproject.isShow){
+                    groups.push({
+                        id: subproject.id,
+                        title: subproject.name,
+                        isSub: true,
+                    })    
+                }
     		});
     	});
 

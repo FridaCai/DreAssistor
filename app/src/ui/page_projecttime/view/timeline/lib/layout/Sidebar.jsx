@@ -77,9 +77,7 @@ export default class Sidebar extends React.Component {
       msg: msg,
       okHandler: function() {
         API.deleteProjects(projectId, mobileYearId);
-        API.refreshPage({
-          projects: API.getProjects(),
-        });
+        API.signal_page_refresh.dispatch();
       }
     });
 

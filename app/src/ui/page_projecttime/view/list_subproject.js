@@ -1,12 +1,27 @@
+import API from '../api.js';
+
 var SubProjectList = React.createClass({
 	getInitialState: function() {
         return {
+        	project: this.props.project,
         }
     },
     componentDidMount: function() {
         
     },
+
+    componentWillReceiveProps: function() {
+
+    },
+	onShowCheckboxChange: function(subproject) {
+		API.toggleSubprojectVisbility(subproject);
+		API.signal_page_refresh.dispatch();
+	},	
     render: function() {
+
+    	var subprojects = this.state.project.children;
+
+
         return (<div className='subProjectList leftlist'>
 	    	<div className="panel panel-default">
 			  <div className="panel-heading">时间包列表</div>
@@ -19,16 +34,18 @@ var SubProjectList = React.createClass({
 		  			</tr> 
 	  			</thead> 
 	  			<tbody> 
-	  				<tr> 
-	  					<td><input type='checkbox'/></td> 
-  						<td>Otto</td> 
-  						<td>@mdo</td> 
-					</tr> 
-					<tr> 
-						<td><input type='checkbox'/></td> 
-						<td>Thornton</td> 
-						<td>@fat</td>
-					</tr> 
+	  				{
+	  					subprojects.map(((subproject) => {
+	  						return (
+	  							<tr key={subproject.id}> 
+				  					<td><input type='checkbox' checked={subproject.isShow} 
+				  							onChange={this.onShowCheckboxChange.bind(this, subproject)}/></td> 
+			  						<td>{subproject.name}</td> 
+			  						<td>{subproject.creator}</td> 
+								</tr> 
+  							)
+	  					}).bind(this))
+	  				}
 				</tbody>
 			  </table>
 			</div>
