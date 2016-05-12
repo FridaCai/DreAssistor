@@ -18,8 +18,15 @@ var SubProjectList = React.createClass({
 		API.signal_page_refresh.dispatch();
 	},	
 	onAdd: function(){
+		API.signal_addSubProjectPopup_show.dispatch();
+	},
+	onSubProjectDeleteBtnClk: function(project) {
 		//show popup;
 	},
+
+
+
+
     render: function() {
 
     	var subprojects = this.state.project.children;
@@ -55,6 +62,11 @@ var SubProjectList = React.createClass({
 				  							onChange={this.onShowCheckboxChange.bind(this, subproject)}/></td> 
 			  						<td>{subproject.name}</td> 
 			  						<td>{subproject.creator}</td> 
+
+			  						<td>
+			  							<span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
+              								onClick={this.onSubProjectDeleteBtnClk.bind(this, subproject)}>-</span>
+      								</td>
 								</tr> 
   							)
 	  					}).bind(this))

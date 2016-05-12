@@ -13,13 +13,7 @@ var CreateProjectPopup = React.createClass({
         this.setState({
             selectedData: [],
         });
-        this.refs.msgbox.show({
-            isShow: true,
-        });
-    },
-
-    shouldComponentUpdate: function(nextProps, nextState) {
-        return true;
+        this.refs.msgbox.show();
     },
     
     onProjctItemClk: function(projectId, yearId) {
@@ -117,7 +111,7 @@ var CreateProjectPopup = React.createClass({
     },
     render: function() {
         var content = this.getContent();
-        return (<MessageBox okHandler={this.onAdd} ref='msgbox' children={content}/>);
+        return (<MessageBox title='添加项目' okHandler={this.onAdd} ref='msgbox' children={content}/>);
     }
 });
 

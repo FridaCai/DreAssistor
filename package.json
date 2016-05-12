@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start-webpack": "webpack -d --watch",
-
-
     "build-frida-box": "cnpm install && webpack -d --watch",
     "build-pai-box": "cnpm install && webpack -d --watch",
     "build-ec2": "npm install && webpack -p",
@@ -29,6 +27,7 @@
     "interact.js": "^1.2.6",
     "jquery": "^1.11.3",
     "jquery.cookie": "^1.4.1",
+    "jquery.ui.widget": "^1.10.3",
     "ladda": "^0.9.8",
     "less": "~2.5.3",
     "less-loader": "^2.2.1",

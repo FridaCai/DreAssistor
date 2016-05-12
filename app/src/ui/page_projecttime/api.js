@@ -4,6 +4,8 @@ import Projects from './data/projects.js';
 
 var API = {
 	signal_appProjectPopup_show: new Signal(),
+    signal_addSubProjectPopup_show: new Signal(),
+    
 	signal_projects_add: new Signal(),
 
     signal_msgbox_show: new Signal(),

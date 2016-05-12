@@ -5,6 +5,7 @@ import TaskDetail from './view/panel_taskdetail.js';
 import TaskList from './view/list_task.js';
 import API from './api.js';
 import CreateProjectPopup from './view/popup_createproject.js';
+import CreateSubProjectPopup from './view/popup_createsubproject.js';
 import './page.less';
 import MessageBox from '../widget/messagebox.js';
 
@@ -36,7 +37,9 @@ var PageProjectTime = React.createClass({
     onAddProjectPopupShow: function(event, param) {
         this.refs.createprojectpopup.show();
     },
-    
+    onAddSubProjectPopupShow: function(event, param) {
+        this.refs.createsubprojectpopup.show();
+    },
 
 
 
@@ -54,6 +57,9 @@ var PageProjectTime = React.createClass({
 
     componentDidMount: function() {
         API.signal_appProjectPopup_show.listen(this.onAddProjectPopupShow);
+        API.signal_addSubProjectPopup_show.listen(this.onAddSubProjectPopupShow)
+
+
         API.signal_projects_add.listen(this.onProjectsAdd);
         API.signal_msgbox_show.listen(this. onMessageBoxShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
@@ -98,6 +104,7 @@ var PageProjectTime = React.createClass({
                     <TaskDetail/>
                     <MessageBox ref='messagebox'/>
                     <CreateProjectPopup ref='createprojectpopup'/>
+                    <CreateSubProjectPopup ref='createsubprojectpopup'/>
                 </div>
             );    
         }

@@ -1,9 +1,35 @@
 {
+	"role": [
+		{
+			"id": "0", 
+			"desc": "管理员"
+		},{
+			"id": "1",
+			"desc": "普通员工"
+		}
+	],
+	"people": [
+		{
+			"id": "0",
+			"name": "刘军",
+			"role": "0"
+		},{
+			"id": "1",
+			"name": "刘湃",
+			"role": "1"
+		},{
+			"id": "2",
+			"name": "Frida",
+			"role": "0"
+		}
+	],
 	"projects": [
 		{
 			"projectId": "0",
 			"mobileYearId": "0",
 			"name": "A10-MY15",
+			"creator": "1",
+			"people": ["1", "2"],
 			"children": [
 
 			],
@@ -16,7 +42,8 @@
 					"desc": "desc of DSI task",
 					"markColor": 16711680,
 					"attachFiles": [],
-					"creator": "pai"
+					"creator": "1",
+					"people": ["1", "2"]
 				},
 				{
 					"id": "100",
@@ -26,18 +53,22 @@
 					"desc": "desc of DSI task",
 					"markColor": 16711680,
 					"attachFiles": [],
-					"creator": "pai"
+					"creator": "1",
+					"people": ["1", "2"]
 				}
-			],
-			"creator": "pai"
+			]
 		},{
 			"projectId": "1",
 			"mobileYearId": "0",
 			"name": "C140-MY13",
+			"creator": "2",
+			"people": ["0", "2"],
 			"children": [
 				{
 					"id": "3",
 					"name": "pdtmeeting2",
+					"creator": "1",
+					"people": ["1", "2"],
 					"children": [
 
 					],
@@ -50,13 +81,15 @@
 							"desc": "desc of DSI task",
 							"markColor": 16711680,
 							"attachFiles": [],
-							"creator": "pai"
+							"creator": "1",
+							"people": ["1", "2"]
 						}
-					],
-					"creator": "pai"
+					]
 				},{
 					"id": "5",
 					"name": "PDT meeting",
+					"creator": "1",
+					"people": ["1", "2"],
 					"children": [
 
 					],
@@ -69,10 +102,10 @@
 							"desc": "desc of test2",
 							"markColor": 16711680,
 							"attachFiles": [],
-							"creator": "pai"
+							"creator": "1",
+							"people": ["1", "2"]
 						}
-					],
-					"creator": "pai"
+					]
 				}
 			],
 			"tasks": [
@@ -84,10 +117,11 @@
 					"desc": "desc of PFI task",
 					"markColor": 16711680,
 					"attachFiles": [],
-					"creator": "pai"
+					"creator": "1",
+					"people": ["1", "2"]
 				}
-			],
-			"creator": "pai"
+			]
+			
 		}
 	],
 
