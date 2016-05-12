@@ -22,8 +22,20 @@ var SubProjectList = React.createClass({
 	onAdd: function(){
 		API.signal_addSubProjectPopup_show.dispatch();
 	},
-	onSubProjectDeleteBtnClk: function() {
-		//show popup;
+	onDelete: function(subproject) {
+		debugger;
+		var msg = '确定删除？';
+
+	    API.signal_msgbox_show.dispatch({
+	      msg: msg,
+	      okHandler: function() {
+	        API.deleteSubProject(subproject);
+	        API.signal_page_refresh.dispatch();
+	      }
+	    });
+	},
+	onEdit: function(subproject) {
+
 	},
 
 
@@ -67,9 +79,9 @@ var SubProjectList = React.createClass({
 
 			  						<td>
 			  							<span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
-              								onClick={this.onSubProjectDeleteBtnClk.bind(this, subproject)}>-</span>
+              								onClick={this.onDelete.bind(this, subproject)}>-</span>
           								<span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
-              								onClick={this.onSubProjectEditBtnClk.bind(this, subproject)}>E</span>
+              								onClick={this.onEdit.bind(this, subproject)}>E</span>
       								</td>
 								</tr> 
   							)

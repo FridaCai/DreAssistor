@@ -115,8 +115,9 @@ var API = {
 
 
 
-
-
+    deleteSubProject: function(subproject) {
+        subproject.getParent().deleteChild(subproject);
+    },
     toggleSubprojectVisbility: function(subproject) {
         subproject.toggleVisibility();
     },

@@ -10,11 +10,18 @@ module.exports = class Project {
 		this.projectId = param.projectId;
 		this.mobileYearId = param.mobileYearId;
 		this.name = param.name;
-		this.children = param.children.map((subprojectObj) => {
+		
+		this.children = param.children.map(((subprojectObj) => {
 			var subproject = new SubProject();
-			subproject.init(subprojectObj);
+
+			var param = Object.assign({parent: this}, subprojectObj);
+			subproject.init(param);
+
+
 			return subproject;
-		});
+		}).bind(this));
+
+
 		this.tasks = param.tasks.map((taskObj) => {
 			var task = new Task();
 			task.init(taskObj);
@@ -25,5 +32,11 @@ module.exports = class Project {
 
 	addChild(subproject){
 		this.children.unshift(subproject);
+	}
+
+	deleteChild(subproject){
+		this.children = this.children.filter(function(_supproject) {
+			return !(subproject.id === _supproject.id);
+		})
 	}
 }
