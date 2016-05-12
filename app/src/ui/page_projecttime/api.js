@@ -1,20 +1,91 @@
 import Util from '../../util.js';
 import Signal from '../../signal.js';
 import Projects from './data/projects.js';
+import People from './data/people.js';
+
+//import AppApi from 
 
 var API = {
 	signal_appProjectPopup_show: new Signal(),
     signal_addSubProjectPopup_show: new Signal(),
-    
 	signal_projects_add: new Signal(),
-
     signal_msgbox_show: new Signal(),
     signal_page_refresh: new Signal(),
-
-
     signal_project_selectchange: new Signal(),
 
+
+    getCreator: function(){
+        //return AppApi.getCreator();
+        return 'pai';
+    },
+
+
+
+
+
+
+
+
+
+
+    _selectedProject: undefined,
+    getSelectedProject: function() {
+        return this._selectedProject;
+    },
+    setSelectedProject: function(value) {
+        this._selectedProject = value;
+    },
+    initSelectedProject: function() {
+        this._selectedProject = this.getProjects().length ? this.getProjects()[0] : undefined;
+    },
+
+
+
+
+
+
+    _selectedSubProject: undefined,
+    getSelectedSubProject: function() {
+        return this._selectedSubProject;
+    },
+    setSelectedSubProject: function(value) {
+        this._selectedSubProject = value;
+    },
+
+
+
+
+
+    _selectedTask: undefined,
+    getSelectedTask: function() {
+        return this._selectedTask;
+    },
+    setSelectedTask: function(value) {
+        this._selectedTask = value;
+    },
+
+
 	
+
+
+
+
+
+
+
+    _people: new People(),
+    getPeople: function() {
+        return this._people.arr;
+    },
+    setPeople: function(value) {
+        this._people.init(value);
+    },
+
+
+
+
+
+
 
 
 
@@ -31,12 +102,18 @@ var API = {
     addProjects: function(newProjects) {
         this._projects.batchAdd(newProjects);
     },
-    deleteProjects: function(projectId, mobileYearId) {
+    deleteProject: function(projectId, mobileYearId) {
         this._projects.delete(projectId, mobileYearId);
+
+        this.initSelectedProject();
     },
     findProject: function(projectId, mobileYearId) {
-        return this._projects.find(projectId, mobileYearId)
+        return this._projects.find(projectId, mobileYearId);
     },
+
+
+
+
 
 
 

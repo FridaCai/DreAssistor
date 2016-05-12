@@ -1,3 +1,4 @@
+import Person from './ui/page_projecttime/data/person.js'; //todo: Person should not be the data model of page_projecttime;
 var API = {
 
 
@@ -10,11 +11,15 @@ var API = {
 
 
 
-
-
-
-	isLogin: function() {
-		return true;
+	getLoginUser: function() {
+		var person = new Person();
+		var param = {
+			"id": "1",
+			"name": "刘湃",
+			"role": "1",
+		}
+		person.init(param)
+		return person;
 	}
 
 }

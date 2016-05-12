@@ -10,8 +10,10 @@ var SubProjectList = React.createClass({
         
     },
 
-    componentWillReceiveProps: function() {
-
+    componentWillReceiveProps: function(newProps) {
+		this.setState({
+			project: newProps.project,
+		});	
     },
 	onShowCheckboxChange: function(subproject) {
 		API.toggleSubprojectVisbility(subproject);
@@ -20,7 +22,7 @@ var SubProjectList = React.createClass({
 	onAdd: function(){
 		API.signal_addSubProjectPopup_show.dispatch();
 	},
-	onSubProjectDeleteBtnClk: function(project) {
+	onSubProjectDeleteBtnClk: function() {
 		//show popup;
 	},
 
@@ -28,8 +30,8 @@ var SubProjectList = React.createClass({
 
 
     render: function() {
-
-    	var subprojects = this.state.project.children;
+    	var project = this.state.project;
+    	var subprojects = project.children;
 
 
         return (<div className='subProjectList leftlist'>
@@ -66,6 +68,8 @@ var SubProjectList = React.createClass({
 			  						<td>
 			  							<span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
               								onClick={this.onSubProjectDeleteBtnClk.bind(this, subproject)}>-</span>
+          								<span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
+              								onClick={this.onSubProjectEditBtnClk.bind(this, subproject)}>E</span>
       								</td>
 								</tr> 
   							)

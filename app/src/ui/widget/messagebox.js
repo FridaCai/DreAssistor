@@ -20,6 +20,13 @@ var MessageBox = React.createClass({
              isShow: false,
         }
     },
+    componentWillReceiveProps: function(newProps) {
+        this.setState({
+            title: newProps.title,
+            okHandler: newProps.okHandler,
+        }); 
+    },
+
     show: function() {
         this.setState({
             isShow: true,

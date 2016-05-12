@@ -125,7 +125,7 @@
 		}
 	],
 
-	"allprojects": [
+	"projectTemplates": [
 		{
 			"projectId": "0",
 			"label": "A10",

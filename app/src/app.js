@@ -39,7 +39,8 @@ if(Promise != undefined){
 })(jQuery);
 
 (function() {
-	var isLogin = API.isLogin();
+	var loginUser = API.getLoginUser();
+    var isLogin = loginUser ? true: false;
 	ReactDOM.render(<MainView isLogin = {isLogin}/>, $("#domContainer")[0]);
 })();
 

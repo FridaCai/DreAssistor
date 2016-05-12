@@ -20,6 +20,10 @@ module.exports = class Project {
 			task.init(taskObj);
 			return task;
 		});
-		this.creator = "";
+		this.creator = param.creator;
+	}
+
+	addChild(subproject){
+		this.children.unshift(subproject);
 	}
 }

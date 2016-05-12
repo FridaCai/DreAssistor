@@ -13,7 +13,6 @@ var PageProjectTime = React.createClass({
 	getInitialState: function() {
         return {
             isLoading: true,
-            selectedProject: undefined,
         }
     },
 
@@ -38,7 +37,9 @@ var PageProjectTime = React.createClass({
         this.refs.createprojectpopup.show();
     },
     onAddSubProjectPopupShow: function(event, param) {
-        this.refs.createsubprojectpopup.show();
+        this.refs.createsubprojectpopup.show({
+            selectedProject: API.getSelectedProject()
+        });
     },
 
 
@@ -46,9 +47,8 @@ var PageProjectTime = React.createClass({
     onProjectSelectChange: function(event, param) {
         //todo: update subproject
         var project = API.findProject(param.projectId, param.mobileYearId);
-        this.refs.subprojectlist.setState({
-            project: project,
-        });
+        API.setSelectedProject(project);
+        this.refs.subprojectlist.setState({project: API.getSelectedProject()})
     },
 
 
@@ -70,12 +70,13 @@ var PageProjectTime = React.createClass({
             (function(param) {
                 var isLoading = false;
                 API.setProjects(param.projects);
-                API.setProjectTemplates(param.allprojects);
-                var selectedProject = API.getProjects()[0];
-                
+                API.setProjectTemplates(param.projectTemplates);
+                API.setPeople(param.people);
+
+                API.initSelectedProject();
+
                 this.setState({
                     isLoading: false,
-                    selectedProject: selectedProject,
                 })
             }).bind(this)
         );
@@ -98,13 +99,17 @@ var PageProjectTime = React.createClass({
                 <div className='pageProjectTime'>
                     <CTimeLine/>
                     <div className='leftContainer'>
-                        <SubProjectList ref='subprojectlist' project={this.state.selectedProject}/>
+                        <SubProjectList ref='subprojectlist' project={API.getSelectedProject()}/>
                         <TaskList/>
                     </div>
                     <TaskDetail/>
                     <MessageBox ref='messagebox'/>
                     <CreateProjectPopup ref='createprojectpopup'/>
-                    <CreateSubProjectPopup ref='createsubprojectpopup'/>
+                    <CreateSubProjectPopup ref='createsubprojectpopup' 
+                        projects = {API.getProjects()}
+                        people = {API.getPeople()}
+                        selectedProject={API.getSelectedProject()}
+                        creator = {API.getCreator()}/>
                 </div>
             );    
         }
