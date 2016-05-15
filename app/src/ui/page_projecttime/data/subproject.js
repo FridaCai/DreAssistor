@@ -8,14 +8,18 @@ module.exports = class SubProject {
 	init(param){
 		this.id = param.id;
 		this.name = param.name;
-		this.creator = param.creator;
+
 		this.tasks = param.tasks.map((taskObj) => {
 			var task = new Task();
 			task.init(taskObj);
 			return task;
 		})
+
 		this.isShow = true; //not property of subproject, but user preference.
 		this.parent = param.parent;
+
+		this.creatorId = param.creatorId;
+		this.peopleIds = param.peopleIds;
 	}
 
 	toggleVisibility() {
@@ -25,5 +29,9 @@ module.exports = class SubProject {
 
 	getParent(){
 		return this.parent;
+	}
+
+	setParent(parent){
+		this.parent = parent;
 	}
 }

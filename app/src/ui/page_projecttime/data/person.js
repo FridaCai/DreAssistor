@@ -2,11 +2,9 @@ module.exports = class Person {
 	constructor(){
 	}
 
-	init(personObj){	
-		this.id = personObj.id;
-		this.name = personObj.name;
-		this.role = personObj.role;
+	init(param){
+		this.id = param.id;
+		this.name = param.name;
+		this.role = param.role;
 	}
-
-	
 }

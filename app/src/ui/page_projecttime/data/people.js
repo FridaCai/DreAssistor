@@ -12,6 +12,4 @@ module.exports = class People {
 			this.arr.push(person);
 		}).bind(this));
 	}
-
-	
 }

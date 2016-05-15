@@ -2,6 +2,7 @@ import Util from '../../util.js';
 import Signal from '../../signal.js';
 import Projects from './data/projects.js';
 import People from './data/people.js';
+import AppAPI from '../../api.js';
 
 //import AppApi from 
 
@@ -12,16 +13,12 @@ var API = {
     signal_msgbox_show: new Signal(),
     signal_page_refresh: new Signal(),
     signal_project_selectchange: new Signal(),
+    signal_editSubProjectPopup_show: new Signal(),
 
 
-    getCreator: function(){
-        //return AppApi.getCreator();
-        return 'pai';
+    getLoginUser: function() {
+        return AppAPI.getLoginUser();
     },
-
-
-
-
 
 
 
@@ -36,7 +33,11 @@ var API = {
         this._selectedProject = value;
     },
     initSelectedProject: function() {
-        this._selectedProject = this.getProjects().length ? this.getProjects()[0] : undefined;
+        var projects = this.getProjects();
+        this._selectedProject = projects.length ? projects[0] : undefined;
+
+        this.initSelectedSubproject();
+        this.initSelectedTask();
     },
 
 
@@ -51,6 +52,16 @@ var API = {
     setSelectedSubProject: function(value) {
         this._selectedSubProject = value;
     },
+    initSelectedSubproject: function() {
+        var project = this.getSelectedProject();
+        if(!project){
+            this._selectedSubProject = undefined;
+            return;
+        }
+
+        var subprojects = project.children;
+        this._selectedSubProject = subprojects.length ? subprojects[0] : undefined;
+    },
 
 
 
@@ -62,6 +73,16 @@ var API = {
     },
     setSelectedTask: function(value) {
         this._selectedTask = value;
+    },
+    initSelectedTask: function() {
+        var subproject = this.getSelectedSubProject();
+        if(!subproject){
+            this._selectedTask = undefined;
+            return;
+        } 
+
+        var tasks = subproject.tasks;
+        this._selectedTask = tasks.length ? tasks[0] : undefined;
     },
 
 
@@ -79,6 +100,11 @@ var API = {
     },
     setPeople: function(value) {
         this._people.init(value);
+    },
+    findPersonById: function(id) {
+        return this.getPeople().find(function(person){
+            return (person.id === id);
+        });
     },
 
 
@@ -117,6 +143,13 @@ var API = {
 
     deleteSubProject: function(subproject) {
         subproject.getParent().deleteChild(subproject);
+    },
+    addSubproject: function(project, subproject){
+        project.addChild(subproject);
+    },
+    editSubproject: function(subproject, oldProject, newProject) {
+        oldProject.deleteChild(subproject);
+        newProject.addChild(subproject);
     },
     toggleSubprojectVisbility: function(subproject) {
         subproject.toggleVisibility();

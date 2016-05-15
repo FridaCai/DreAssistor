@@ -1,4 +1,6 @@
 var Util = {
+	
+	SEPERATOR: '___sep___',
 
 	generateUUID: function () {
 		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );

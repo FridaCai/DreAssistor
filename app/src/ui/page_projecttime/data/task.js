@@ -11,6 +11,7 @@ module.exports = class Task {
 		this.desc = param.desc;
 		this.markColor = param.markColor;
 		this.attachedFiles = param.attachedFiles;
-		this.creator = param.creator;
+		this.creatorId = param.creatorId;
+		this.peopleIds = param.peopleIds;
 	}
 }

@@ -38,7 +38,7 @@ var CreateProjectPopup = React.createClass({
 
     onAdd:function() {
         var addedProjects = [];
-        var creator = 'pai'; //hardcode now.
+        var creator = API.getLoginUser();
 
         var getProjectName = (function(rawProjectId, mobileYearId) {
             var project = API.getProjectTemplates().find((project) => {
@@ -64,7 +64,8 @@ var CreateProjectPopup = React.createClass({
                 name: getProjectName(projectId, yearId),
                 children: [],
                 tasks: [],
-                creator: creator,
+                creatorId: creator.id,
+                peopleIds: [],
             });
 
             addedProjects.push(project);

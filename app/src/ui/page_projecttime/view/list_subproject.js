@@ -23,28 +23,25 @@ var SubProjectList = React.createClass({
 		API.signal_addSubProjectPopup_show.dispatch();
 	},
 	onDelete: function(subproject) {
-		debugger;
 		var msg = '确定删除？';
 
 	    API.signal_msgbox_show.dispatch({
 	      msg: msg,
 	      okHandler: function() {
 	        API.deleteSubProject(subproject);
+	        API.initSelectedSubproject();
 	        API.signal_page_refresh.dispatch();
 	      }
 	    });
 	},
 	onEdit: function(subproject) {
-
+		API.setSelectedSubProject(subproject);
+		API.signal_editSubProjectPopup_show.dispatch({subproject: subproject});
 	},
-
-
-
 
     render: function() {
     	var project = this.state.project;
     	var subprojects = project.children;
-
 
         return (<div className='subProjectList leftlist'>
 	    	<div className="panel panel-default">
@@ -70,12 +67,13 @@ var SubProjectList = React.createClass({
 	  			<tbody> 
 	  				{
 	  					subprojects.map(((subproject) => {
+	  						var creator = API.findPersonById(subproject.creatorId);
 	  						return (
 	  							<tr key={subproject.id}> 
 				  					<td><input type='checkbox' checked={subproject.isShow} 
 				  							onChange={this.onShowCheckboxChange.bind(this, subproject)}/></td> 
 			  						<td>{subproject.name}</td> 
-			  						<td>{subproject.creator}</td> 
+			  						<td>{creator.name}</td> 
 
 			  						<td>
 			  							<span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
