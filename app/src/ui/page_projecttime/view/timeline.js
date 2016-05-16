@@ -74,7 +74,7 @@ var CTimeLine = React.createClass({
     		project.tasks.forEach(function(task){
     			var itm = {
     				id: task.id,
-    				group: project.id,
+    				group: project.projectId + "_" + project.mobileYearId,
     				title: task.name,
     				start_time: task.startTime,
     				end_time: task.endTime, 

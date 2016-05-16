@@ -13,5 +13,6 @@ module.exports = class Task {
 		this.attachedFiles = param.attachedFiles;
 		this.creatorId = param.creatorId;
 		this.peopleIds = param.peopleIds;
+		this.priority = param.priority;
 	}
 }
