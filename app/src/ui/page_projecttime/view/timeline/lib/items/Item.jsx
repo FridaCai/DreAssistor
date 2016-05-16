@@ -1,4 +1,3 @@
-import React from 'react';
 import interact from 'interact.js'
 
 import { _get } from '../utils'

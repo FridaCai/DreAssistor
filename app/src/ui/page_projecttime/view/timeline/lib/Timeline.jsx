@@ -481,8 +481,7 @@ export default class ReactCalendarTimeline extends React.Component {
                  lineHeight={this.props.lineHeight}
                  lineCount={_length(this.props.groups)}
                  height={height}
-                 headerHeight={headerHeight}
-      />
+                 headerHeight={headerHeight}/>
     )
   }
 
@@ -496,8 +495,7 @@ export default class ReactCalendarTimeline extends React.Component {
                      minUnit={minUnit}
                      fixedHeader={this.props.fixedHeader}
                      height={height}
-                     headerHeight={headerHeight}
-      />
+                     headerHeight={headerHeight}/>
     )
   }
 
