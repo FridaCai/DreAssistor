@@ -1,4 +1,3 @@
-import React from 'react';
 import CTimeLine from './view/timeline.js';
 import SubProjectList from './view/list_subproject.js';
 import TaskDetail from './view/panel_taskdetail.js';
