@@ -24,6 +24,11 @@ $weekend: rgba(250, 246, 225, 0.5);
   * {
     box-sizing: border-box;
   }
+  
+  .dropdown-menu{
+    position: absolute;
+    z-index: 100;
+  }
 
   .rct-outer {
     display: block;
@@ -39,6 +44,13 @@ $weekend: rgba(250, 246, 225, 0.5);
 
   .rct-canvas {
     position: relative;
+  }
+
+  .rct-block{
+    background: red;
+    position:absolute;
+    z-index: 1;
+    opacity: 0.2;
   }
 
   .rct-items {

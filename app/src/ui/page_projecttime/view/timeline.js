@@ -18,7 +18,7 @@ var AddOn = React.createClass({
 
     },
     onAdd: function() {
-        API.signal_appProjectPopup_show.dispatch();
+        API.signal_addProjectPopup_show.dispatch();
     },
     render: function() {
         return (<div>
@@ -52,8 +52,6 @@ var CTimeLine = React.createClass({
     	projects.forEach(function(project){
     		groups.push({
     			id: project.projectId + '_' + project.mobileYearId,
-                projectId: project.projectId,
-                mobileYearId: project.mobileYearId,
     			title: project.name,
     			isSub: false,
     		});
@@ -103,19 +101,19 @@ var CTimeLine = React.createClass({
 
 
         return (<div>
-		    <Timeline groups={groups}
-		              items={items}
-		              defaultTimeStart={moment().add(-12, 'hour')}
-		              defaultTimeEnd={moment().add(12, 'hour')}
-                      canMove={true}
-                      canResize={true}
-                      canChangeGroup={true}
-                      useResizeHandle={true}
-                      stackItems={true}
-                      fixedHeader={'fixed'}
-                      sidebarWidth={sidebarWidth}
-                      children={filter}/>
-                      </div>
+	               <Timeline groups={groups}
+                        items={items}
+                        defaultTimeStart={moment().add(-12, 'hour')}
+                        defaultTimeEnd={moment().add(12, 'hour')}
+                        canMove={true}
+                        canResize={true}
+                        canChangeGroup={true}
+                        useResizeHandle={true}
+                        stackItems={true}
+                        fixedHeader={'fixed'}
+                        sidebarWidth={sidebarWidth}
+                        children={filter}/>
+                </div>
 		);
     }
 });

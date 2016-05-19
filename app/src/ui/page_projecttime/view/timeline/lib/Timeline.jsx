@@ -1,4 +1,3 @@
-import React from 'react';
 import moment from 'moment'
 import './Timeline.scss'
 
@@ -9,6 +8,8 @@ import Header from './layout/Header.jsx'
 import VerticalLines from './lines/VerticalLines.jsx'
 import HorizontalLines from './lines/HorizontalLines.jsx'
 import TodayLine from './lines/TodayLine.jsx'
+import Block from './block.jsx'
+import ContextMenu from './contextmenu.jsx'
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
@@ -291,9 +292,14 @@ export default class ReactCalendarTimeline extends React.Component {
       newState.height = height
       newState.groupHeights = groupHeights
       newState.groupTops = groupTops
+
+
+      this.refs.block.hide();
     }
 
     this.setState(newState)
+
+
   }
 
   onWheel (e) {
@@ -388,14 +394,29 @@ export default class ReactCalendarTimeline extends React.Component {
   }
 
   rowAndTimeFromEvent (e) {
-    const { lineHeight, dragSnap } = this.props
-    const { width, visibleTimeStart, visibleTimeEnd } = this.state
+    const { lineHeight, dragSnap} = this.props
+    const { width, visibleTimeStart, visibleTimeEnd, groupHeights } = this.state
 
     const parentPosition = getParentPosition(e.currentTarget)
     const x = e.clientX - parentPosition.x
     const y = e.clientY - parentPosition.y
 
-    const row = Math.floor((y - (lineHeight * 2)) / lineHeight)
+
+    var row;
+    var totalHeight = lineHeight * 2;
+    if(y<totalHeight){
+      row = -1;
+    }else{
+      for(var key in groupHeights){
+        var value = groupHeights[key];
+        totalHeight += value;
+        if(totalHeight > y){
+          row = key;
+          break;
+        }
+      }  
+    }
+
     let time = Math.round(visibleTimeStart + x / width * (visibleTimeEnd - visibleTimeStart))
     time = Math.floor(time / dragSnap) * dragSnap
 
@@ -408,14 +429,48 @@ export default class ReactCalendarTimeline extends React.Component {
     if (!hasSomeParentTheClass(e.target, 'rct-item')) {
       if (this.state.selectedItem) {
         this.selectItem(null)
-      } else if (this.props.onCanvasClick) {
+      } else {
         const [row, time] = this.rowAndTimeFromEvent(e)
         if (row >= 0 && row < this.props.groups.length) {
           const groupId = _get(this.props.groups[row], this.props.keys.groupIdKey)
-          this.props.onCanvasClick(groupId, time, e)
+
+
+          this.props.onCanvasClick && this.props.onCanvasClick(groupId, time, e)
+          
         }
       }
     }
+  }
+
+  onBlockClk(row, time) {
+    var re = /.*\$line-(\d*)/;
+    var vBlock = (function(){
+      var returnObj;
+      $('.rct-vertical-lines .rct-vl').each(function(){
+        var id = this.dataset.reactid
+        var m = re.exec(id);
+        var t = m[1];
+        if(t > time){
+          returnObj = $(this).prev();
+          return false;
+        }
+      })
+      return returnObj;
+    })();
+    
+    var l = vBlock.position().left;
+    var w = vBlock.width() + 2;
+
+    var hBlock = $(`.rct-horizontal-lines div[data-reactid$=horizontal-line-${row}]`);
+    var t = hBlock.position().top;
+    var h = hBlock.height();
+
+    this.refs.block.show({
+      left: l,
+      top: t,
+      width: w,
+      height: h,
+    })
   }
 
   dragItem (item, dragTime, newGroupOrder) {
@@ -465,12 +520,22 @@ export default class ReactCalendarTimeline extends React.Component {
   handleMouseMove (e) {
     if (this.state.isDragging && !this.state.draggingItem && !this.state.resizingItem) {
       this.refs.scrollComponent.scrollLeft += this.state.dragStartPosition - e.pageX
-      this.setState({dragStartPosition: e.pageX})
+      this.setState({dragStartPosition: e.pageX, mouseDownAndMove:true,})
     }
   }
 
   handleMouseUp (e) {
-    this.setState({isDragging: false, dragStartPosition: null})
+    if (!this.state.mouseDownAndMove && !hasSomeParentTheClass(e.target, 'rct-item')) {
+      if (!this.state.selectedItem) {
+        const [row, time] = this.rowAndTimeFromEvent(e)
+        if (row >= 0 && row < this.props.groups.length) {
+          this.onBlockClk(row, time);
+        }
+      }
+    }
+
+
+    this.setState({isDragging: false, dragStartPosition: null, mouseDownAndMove:false})
   }
 
   todayLine (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight) {
@@ -506,11 +571,15 @@ export default class ReactCalendarTimeline extends React.Component {
                        lineCount={_length(this.props.groups)}
                        groups={this.props.groups}
                        groupHeights={groupHeights}
-                       headerHeight={headerHeight}
-      />
+                       headerHeight={headerHeight}/>
     )
   }
 
+  block () {
+    return (
+      <Block ref='block'/>
+    )
+  }
   items (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops) {
     return (
       <Items canvasTimeStart={canvasTimeStart}
@@ -701,11 +770,16 @@ export default class ReactCalendarTimeline extends React.Component {
     return (
       <div style={this.props.style} ref='container' className='react-calendar-timeline'>
         <div style={outerComponentStyle} className='rct-outer'>
+          <ContextMenu ref='contextmenu'/>
+
+
           {sidebarWidth > 0 ? this.sidebar(height, groupHeights, headerHeight) : null}
           <div ref='scrollComponent'
                className='rct-scroll'
                style={scrollComponentStyle}
                onClick={this.scrollAreaClick.bind(this)}
+
+
                onScroll={this.onScroll.bind(this)}
                onWheel={this.onWheel.bind(this)}
                onMouseDown={this.handleMouseDown.bind(this)}
@@ -717,6 +791,7 @@ export default class ReactCalendarTimeline extends React.Component {
                  style={canvasComponentStyle}
                  onDoubleClick={ this.handleDoubleClick.bind(this) }
             >
+              {this.block()}
               {this.items(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops)}
               {this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight)}
               {this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight)}

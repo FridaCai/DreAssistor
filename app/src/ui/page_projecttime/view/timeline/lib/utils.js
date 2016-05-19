@@ -173,13 +173,28 @@ export function stack (items, groupOrders, lineHeight, headerHeight, force) {
     }
   }
 
-  for (var url of Object.keys(groupOrders)) {
-    var key = groupOrders[url]
-    // calculate new, non-overlapping positions
+  var sortArr = (function sortItemByGroupOrder(_groupOrders){
+    //create arr. each element is obj{key:'', value:''}
+    var tmpArr = [];
+    
+    for(var key in _groupOrders) {
+      var value = _groupOrders[key];
+      tmpArr.push({key: key, value: value});
+    }
+
+    tmpArr.sort(function(obj1, obj2){
+      return obj1.value - obj2.value;
+    })
+
+    return tmpArr;
+  })(groupOrders);
+
+
+  for(var index = 0; index < sortArr.length; index ++ ){
+    var key = sortArr[index].value;
     var group = groupedItems[key] || []
 
     groupTops[key] = totalHeight
-
     var groupHeight = 0
     var verticalMargin = 0
     for (i = 0, iMax = group.length; i < iMax; i++) {

@@ -7,23 +7,18 @@ import AppAPI from '../../api.js';
 //import AppApi from 
 
 var API = {
-	signal_appProjectPopup_show: new Signal(),
+	signal_addProjectPopup_show: new Signal(),
     signal_addSubProjectPopup_show: new Signal(),
 	signal_projects_add: new Signal(),
     signal_msgbox_show: new Signal(),
     signal_page_refresh: new Signal(),
     signal_project_selectchange: new Signal(),
     signal_editSubProjectPopup_show: new Signal(),
-
+    signal_timelineContextmenu_show: new Signal(),
 
     getLoginUser: function() {
         return AppAPI.getLoginUser();
     },
-
-
-
-
-
 
     _selectedProject: undefined,
     getSelectedProject: function() {

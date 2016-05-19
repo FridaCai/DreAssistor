@@ -73,34 +73,42 @@ export default class Items extends React.Component {
 
     return (
       <div className='rct-items'>
-        {visibleItems.map(item => <Item key={_get(item, itemIdKey)}
-                                        item={item}
-                                        keys={this.props.keys}
-                                        order={groupOrders[_get(item, itemGroupKey)]}
-                                        dimensions={sortedDimensionItems[_get(item, itemIdKey)].dimensions}
-                                        selected={this.props.selectedItem === _get(item, itemIdKey)}
-                                        canChangeGroup={_get(item, 'canChangeGroup') !== undefined ? _get(item, 'canChangeGroup') : this.props.canChangeGroup}
-                                        canMove={_get(item, 'canMove') !== undefined ? _get(item, 'canMove') : this.props.canMove}
-                                        canResize={_get(item, 'canResize') !== undefined ? _get(item, 'canResize') : this.props.canResize}
-                                        useResizeHandle={this.props.useResizeHandle}
-                                        topOffset={this.props.topOffset}
-                                        groupHeights={this.props.groupHeights}
-                                        groupTops={this.props.groupTops}
-                                        canvasTimeStart={this.props.canvasTimeStart}
-                                        canvasTimeEnd={this.props.canvasTimeEnd}
-                                        canvasWidth={this.props.canvasWidth}
-                                        lineHeight={this.props.lineHeight}
-                                        dragSnap={this.props.dragSnap}
-                                        minResizeWidth={this.props.minResizeWidth}
-                                        onResizing={this.props.itemResizing}
-                                        onResized={this.props.itemResized}
-                                        moveResizeValidator={this.props.moveResizeValidator}
-                                        onDrag={this.props.itemDrag}
-                                        onDrop={this.props.itemDrop}
-                                        onItemDoubleClick={this.props.onItemDoubleClick}
-                                        onSelect={this.props.itemSelect}/>)}
+        {
+          visibleItems.map(
+            (function(item) {
+              return (<Item key={_get(item, itemIdKey)}
+                                          item={item}
+                                          keys={this.props.keys}
+                                          order={groupOrders[_get(item, itemGroupKey)]}
+                                          dimensions={sortedDimensionItems[_get(item, itemIdKey)].dimensions}
+                                          selected={this.props.selectedItem === _get(item, itemIdKey)}
+                                          canChangeGroup={_get(item, 'canChangeGroup') !== undefined ? _get(item, 'canChangeGroup') : this.props.canChangeGroup}
+                                          canMove={_get(item, 'canMove') !== undefined ? _get(item, 'canMove') : this.props.canMove}
+                                          canResize={_get(item, 'canResize') !== undefined ? _get(item, 'canResize') : this.props.canResize}
+                                          useResizeHandle={this.props.useResizeHandle}
+                                          topOffset={this.props.topOffset}
+                                          groupHeights={this.props.groupHeights}
+                                          groupTops={this.props.groupTops}
+                                          canvasTimeStart={this.props.canvasTimeStart}
+                                          canvasTimeEnd={this.props.canvasTimeEnd}
+                                          canvasWidth={this.props.canvasWidth}
+                                          lineHeight={this.props.lineHeight}
+                                          dragSnap={this.props.dragSnap}
+                                          minResizeWidth={this.props.minResizeWidth}
+                                          onResizing={this.props.itemResizing}
+                                          onResized={this.props.itemResized}
+                                          moveResizeValidator={this.props.moveResizeValidator}
+                                          onDrag={this.props.itemDrag}
+                                          onDrop={this.props.itemDrop}
+                                          onItemDoubleClick={this.props.onItemDoubleClick}
+                                          onSelect={this.props.itemSelect}/>)
+            }).bind(this)
+          ) 
+        }
       </div>
     )
+  }
+          
 
     // NB: itemgroups commented out for now as they made performacne horrible when zooming in/out
     //
@@ -113,7 +121,6 @@ export default class Items extends React.Component {
     //     ))}
     //   </div>
     // )
-  }
 }
 
 Items.propTypes = {
