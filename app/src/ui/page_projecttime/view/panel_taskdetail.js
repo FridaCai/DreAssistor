@@ -13,54 +13,64 @@ var TaskDetail = React.createClass({
         
     },
 
-    onStartTimeChange: function() {},
-    onEndTimeChange: function() {},
-    onColorChange:function(){},
-
     render: function() {
-    	var desc = 'fdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfjfdaffjas;fjdasl;fjadsf;kjdaslfj';
-    	var startTime = 1462250677000;
-		var endTime = 1462250777000;
+    	var task = this.props.task; //refresh issue???
 
-        return (
-        	<div className="taskDetail">
-				<div className="panel panel-default">
-					<div className="panel-heading">任务详情</div>
-					<div className="panel-body">
-					  	<div className="taskDesc">
+
+    	var getDom = function(){
+    		if(task){
+	  			var name = task.name;
+		    	var startTime = task.startTime;
+		    	var endTime = task.endTime;
+		    	var desc = task.desc;
+		    	var color = task.markColor;
+		    	var attachFiles = task.attachFiles;
+		    	var priority = task.priority;
+
+	  			return (
+	  				<div>
+	  					<div className="taskDesc">
 						  <label>任务描述</label>
-	  					  <textarea defaultValue={desc}></textarea>
+	  					  <span>{desc}</span>
 						</div>
 
 						<div className="taskInfo">
 							<div className="line">
 							    <label>任务名称</label>
-							    <input type="text"/>
+							    <span>{name}</span>
 							</div>
 						  	<div className="line">
 							    <label>开始日期</label>
-							    <div className='datetime'>
-									<Datetime/>
-							    </div>
+							    <span>{startTime}</span>
 							</div>
 							<div className="line">
 							    <label>结束日期</label>
-							    <div className='datetime'>
-									<Datetime/>
-							    </div>
+							    <span>{endTime}</span>
 							</div>
 							<div className="line">
 							    <label>颜色</label>
-								<ColorPicker
-							      animation="slide-up"
-							      color={'#36c'}
-							      onChange={this.onColorChange}/>
+								<span>{color}</span>
 							</div>
 						</div>
 
 						<div className="attachedFiles">
+							{attachFiles}
 						</div>
 					</div>
+				)
+	  		}else{
+	  			return null;
+	  		}
+    	}
+
+        return (
+        	<div className="taskDetail">
+				<div className="panel panel-default">
+					<div className="panel-heading">任务详情</div>
+					<div className="panel-body"></div>
+				  	{
+				  		getDom()
+				  	}
 				</div>
 			</div>
     	);

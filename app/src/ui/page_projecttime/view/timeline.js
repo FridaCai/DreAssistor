@@ -54,6 +54,7 @@ var CTimeLine = React.createClass({
     			id: project.projectId + '_' + project.mobileYearId,
     			title: project.name,
     			isSub: false,
+                instance: project,
     		});
 
     		project.children.forEach(function(subproject){
@@ -62,6 +63,7 @@ var CTimeLine = React.createClass({
                         id: subproject.id,
                         title: subproject.name,
                         isSub: true,
+                        instance: subproject,
                     })    
                 }
     		});
@@ -76,6 +78,7 @@ var CTimeLine = React.createClass({
     				title: task.name,
     				start_time: task.startTime,
     				end_time: task.endTime, 
+                    instance: task,
     			};
     			items.push(itm);
     		});
@@ -88,6 +91,7 @@ var CTimeLine = React.createClass({
 	    				title: task.name,
 	    				start_time: task.startTime,
 	    				end_time: task.endTime, 
+                        instance: task,
 	    			};
 	    			items.push(itm);
     			});
@@ -95,11 +99,7 @@ var CTimeLine = React.createClass({
     	});
 
         var filter = React.createElement(AddOn, {});
-
-
         var sidebarWidth = $(window).width() * 0.2;
-
-
         return (<div>
 	               <Timeline groups={groups}
                         items={items}

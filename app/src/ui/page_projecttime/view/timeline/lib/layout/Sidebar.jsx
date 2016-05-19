@@ -64,10 +64,9 @@ export default class Sidebar extends React.Component {
   }
 
   onProjectClk(projectId, mobileYearId) {
-    API.signal_project_selectchange.dispatch({
-      projectId: projectId,
-      mobileYearId: mobileYearId,
-    })
+    var project = API.findProject(projectId, mobileYearId);
+    API.setSelectedProject(project);
+    API.signal_page_refresh.dispatch();
   }
 
   onProjectDeleteBtnClk(projectId, mobileYearId) {

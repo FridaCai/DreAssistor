@@ -13,11 +13,8 @@ module.exports = class Project {
 		
 		this.children = param.children.map(((subprojectObj) => {
 			var subproject = new SubProject();
-
-			var param = Object.assign({parent: this}, subprojectObj);
-			subproject.init(param);
-
-
+			subproject.init(subprojectObj);
+			subproject.setParent(this);
 			return subproject;
 		}).bind(this));
 
@@ -25,6 +22,7 @@ module.exports = class Project {
 		this.tasks = param.tasks.map((taskObj) => {
 			var task = new Task();
 			task.init(taskObj);
+			task.setParent(this);
 			return task;
 		});
 		
@@ -39,6 +37,11 @@ module.exports = class Project {
 	addChild(subproject){
 		this.children.unshift(subproject);
 		subproject.setParent(this);
+	}
+
+	addTask(task){
+		this.tasks.unshift(task);
+		task.setParent(this);
 	}
 
 	deleteChild(subproject){

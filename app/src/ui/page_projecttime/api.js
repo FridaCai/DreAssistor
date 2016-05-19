@@ -9,16 +9,18 @@ import AppAPI from '../../api.js';
 var API = {
 	signal_addProjectPopup_show: new Signal(),
     signal_addSubProjectPopup_show: new Signal(),
-	signal_projects_add: new Signal(),
-    signal_msgbox_show: new Signal(),
-    signal_page_refresh: new Signal(),
-    signal_project_selectchange: new Signal(),
     signal_editSubProjectPopup_show: new Signal(),
+    signal_msgbox_show: new Signal(),
     signal_timelineContextmenu_show: new Signal(),
+    signal_page_refresh: new Signal(),
 
     getLoginUser: function() {
         return AppAPI.getLoginUser();
     },
+
+
+
+
 
     _selectedProject: undefined,
     getSelectedProject: function() {
@@ -57,6 +59,20 @@ var API = {
         var subprojects = project.children;
         this._selectedSubProject = subprojects.length ? subprojects[0] : undefined;
     },
+    deleteSubProject: function(subproject) {
+        subproject.getParent().deleteChild(subproject);
+    },
+    addSubproject: function(project, subproject){
+        project.addChild(subproject);
+    },
+    editSubproject: function(subproject, oldProject, newProject) {
+        oldProject.deleteChild(subproject);
+        newProject.addChild(subproject);
+    },
+    toggleSubprojectVisbility: function(subproject) {
+        subproject.toggleVisibility();
+    },
+
 
 
 
@@ -70,6 +86,7 @@ var API = {
         this._selectedTask = value;
     },
     initSelectedTask: function() {
+        return;
         var subproject = this.getSelectedSubProject();
         if(!subproject){
             this._selectedTask = undefined;
@@ -79,7 +96,6 @@ var API = {
         var tasks = subproject.tasks;
         this._selectedTask = tasks.length ? tasks[0] : undefined;
     },
-
 
 	
 
@@ -111,15 +127,12 @@ var API = {
 
 
     _projects: new Projects(),
-    
     setProjects: function(value) {
         this._projects.init(value);
     },
-
     getProjects: function() {
         return this._projects.arr;
     },
-
     addProjects: function(newProjects) {
         this._projects.batchAdd(newProjects);
     },
@@ -136,20 +149,7 @@ var API = {
 
 
 
-    deleteSubProject: function(subproject) {
-        subproject.getParent().deleteChild(subproject);
-    },
-    addSubproject: function(project, subproject){
-        project.addChild(subproject);
-    },
-    editSubproject: function(subproject, oldProject, newProject) {
-        oldProject.deleteChild(subproject);
-        newProject.addChild(subproject);
-    },
-    toggleSubprojectVisbility: function(subproject) {
-        subproject.toggleVisibility();
-    },
-
+    
  
 
 

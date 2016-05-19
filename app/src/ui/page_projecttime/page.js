@@ -17,10 +17,7 @@ var PageProjectTime = React.createClass({
         }
     },
 
-    onProjectsAdd: function(event, param) {
-        API.addProjects(param.projects);
-        this.forceUpdate();
-    },
+   
 
    onMessageBoxShow: function(event, param) {
         param = Object.assign({isShow: true}, param);

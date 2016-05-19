@@ -12,12 +12,11 @@ module.exports = class SubProject {
 		this.tasks = param.tasks.map((taskObj) => {
 			var task = new Task();
 			task.init(taskObj);
+			task.setParent(this); 
 			return task;
 		})
 
 		this.isShow = true; //not property of subproject, but user preference.
-		this.parent = param.parent;
-
 		this.creatorId = param.creatorId;
 		this.peopleIds = param.peopleIds;
 	}
@@ -33,5 +32,10 @@ module.exports = class SubProject {
 
 	setParent(parent){
 		this.parent = parent;
+	}
+
+	addTask(task){
+		this.tasks.unshift(task);
+		task.setParent(this);
 	}
 }

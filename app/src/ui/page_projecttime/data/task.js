@@ -14,5 +14,10 @@ module.exports = class Task {
 		this.creatorId = param.creatorId;
 		this.peopleIds = param.peopleIds;
 		this.priority = param.priority;
+		this.parent = param.parent;
+	}
+
+	setParent(parent) {
+		this.parent = parent;
 	}
 }

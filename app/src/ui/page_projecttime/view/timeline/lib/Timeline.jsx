@@ -450,8 +450,9 @@ export default class ReactCalendarTimeline extends React.Component {
         var id = this.dataset.reactid
         var m = re.exec(id);
         var t = m[1];
-        if(t > time){
-          returnObj = $(this).prev();
+
+        if(t >= time){
+          returnObj = (t == time ? $(this): $(this).prev());
           return false;
         }
       })

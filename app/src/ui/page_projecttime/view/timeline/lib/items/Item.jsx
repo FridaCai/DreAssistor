@@ -1,6 +1,6 @@
 import interact from 'interact.js'
-
 import { _get } from '../utils'
+import API from '../../../../api.js'
 
 export default class Item extends React.Component {
   constructor (props) {
@@ -234,6 +234,10 @@ export default class Item extends React.Component {
         this.actualClick(e, e.pointerType === 'mouse' ? 'click' : 'touch')
       })
 
+
+    
+
+    console.log('fridatest1: why interactMounted is set to be true?');
     this.setState({
       interactMounted: true
     })
@@ -255,6 +259,12 @@ export default class Item extends React.Component {
     this.cacheDataFromProps(nextProps)
 
     let { interactMounted } = this.state
+    console.log('fridatest2: why interactMounted is set to be true?');
+
+
+
+
+
     const couldDrag = this.props.selected && this.canMove(this.props)
     const couldResize = this.props.selected && this.canResize(this.props)
     const willBeAbleToDrag = nextProps.selected && this.canMove(nextProps)
@@ -263,6 +273,7 @@ export default class Item extends React.Component {
     if (nextProps.selected && !interactMounted) {
       this.mountInteract()
       interactMounted = true
+      console.log('fridatest3: why interactMounted is set to be true?');
     }
 
     if (interactMounted && couldResize !== willBeAbleToResize) {
@@ -275,11 +286,17 @@ export default class Item extends React.Component {
     }
   }
 
-  onMouseDown (e) {
+  onMouseDown (item, e) {
     if (!this.state.interactMounted) {
       e.preventDefault()
       this.startedClicking = true
+
+      
     }
+
+    //why interactMounted is set to be true???
+    API.setSelectedTask(item);
+    API.signal_page_refresh.dispatch();
   };
 
   onMouseUp (e) {
@@ -342,7 +359,7 @@ export default class Item extends React.Component {
            ref='item'
            className={classNames}
            title={this.itemTitle}
-           onMouseDown={this.onMouseDown.bind(this)}
+           onMouseDown={this.onMouseDown.bind(this, this.props.item.instance)}
            onMouseUp={this.onMouseUp.bind(this)}
            onTouchStart={this.onTouchStart.bind(this)}
            onTouchEnd={this.onTouchEnd.bind(this)}

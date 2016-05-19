@@ -47,7 +47,7 @@
 							"endTime": 1462250716000,
 							"desc": "desc of DSI task",
 							"markColor": 16711680,
-							"attachFiles": [],
+							"attachFiles": ["file1.abc", "file2.abc"],
 							"creatorId": "1",
 							"peopleIds": ["1", "2"],
 							"priority": 0
