@@ -299,6 +299,33 @@ export default class Item extends React.Component {
     API.signal_page_refresh.dispatch();
   };
 
+  onContextMenu(item, e) {
+     API.signal_timelineContextmenu_show.dispatch({
+      left: e.clientX,
+      top: e.clientY,
+      btns: [{
+        label: '修改任务',
+        handler: function() {
+          API.signal_editTaskPopup_show.dispatch({task: item});
+        }
+      },{
+        label: '删除任务',
+        handler: function() {
+          var msg = '确定删除？';
+          API.signal_msgbox_show.dispatch({
+            msg: msg,
+            okHandler: function() {
+              API.deleteTask(item);
+              API.setSelectedTask(undefined);
+              API.signal_page_refresh.dispatch();
+            }
+          })
+        }
+      }],
+    });
+    e.preventDefault();
+  }
+
   onMouseUp (e) {
     if (!this.state.interactMounted && this.startedClicking) {
       this.startedClicking = false
@@ -360,6 +387,7 @@ export default class Item extends React.Component {
            className={classNames}
            title={this.itemTitle}
            onMouseDown={this.onMouseDown.bind(this, this.props.item.instance)}
+           onContextMenu = {this.onContextMenu.bind(this, this.props.item.instance)}
            onMouseUp={this.onMouseUp.bind(this)}
            onTouchStart={this.onTouchStart.bind(this)}
            onTouchEnd={this.onTouchEnd.bind(this)}

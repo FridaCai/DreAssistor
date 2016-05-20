@@ -78,7 +78,12 @@ CDropDown.prototype.update = function(param){
     $.extend(this.param, param);
     this.instance = this.container.cdropdown(this.param);
 }
+CDropDown.prototype.getValue = function() {
+    return this.instance.cdropdown("getValue");
 
+
+
+}
 module.exports = CDropDown;
 
 $.widget("custom.cdropdown", {
@@ -266,6 +271,10 @@ $.widget("custom.cdropdown", {
             self.close();
             self.options.onchange && self.options.onchange(key);
         });
+    },
+
+    getValue: function() {
+        return this.option.defaultKey;
     }
 });
 

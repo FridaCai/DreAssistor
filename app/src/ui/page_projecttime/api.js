@@ -10,9 +10,10 @@ var API = {
 	signal_addProjectPopup_show: new Signal(),
     signal_addSubProjectPopup_show: new Signal(),
     signal_editSubProjectPopup_show: new Signal(),
+    signal_editTaskPopup_show: new Signal(),
     signal_msgbox_show: new Signal(),
     signal_timelineContextmenu_show: new Signal(),
-    signal_page_refresh: new Signal(),
+    signal_page_refresh: new Signal(), //todo: can be partially refresh.
 
     getLoginUser: function() {
         return AppAPI.getLoginUser();
@@ -96,7 +97,12 @@ var API = {
         var tasks = subproject.tasks;
         this._selectedTask = tasks.length ? tasks[0] : undefined;
     },
-
+    addTask: function(task, parent){
+        parent.addTask(task);
+    },
+    deleteTask: function(task){
+        task.getParent().deleteTask(task);
+    },
 	
 
 

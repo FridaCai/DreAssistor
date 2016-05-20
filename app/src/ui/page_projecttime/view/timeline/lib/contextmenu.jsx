@@ -8,6 +8,7 @@ export default class ContextMenu extends React.Component {
       isShow: false,
       left: 0,
       top: 0,
+      btns: [], 
     }
   }
 
@@ -22,21 +23,18 @@ export default class ContextMenu extends React.Component {
   show(e, param) {
     this.setState({
       isShow: true,
-      left: param.x,
-      top: param.y
+      left: param.left,
+      top: param.top,
+      btns: param.btns,
     });
 
     $('body').one('click', this.hide.bind(this));
   }
+
   hide(e, param) {
     this.setState({
       isShow: false,
     })
-  }
-
-  onAddNewTask() {
-    //show popup.
-    
   }
 
   render() {
@@ -46,10 +44,22 @@ export default class ContextMenu extends React.Component {
       top: this.state.top,
     }
 
+
+    var i=0;
     return (
-        <ul style={style} className="dropdown-menu" aria-labelledby="dropdownMenu4">
-          <li><a href="#" onClick={this.onAddNewTask}>添加任务</a></li>
-        </ul>
-    );
+      <ul style={style} className="dropdown-menu" aria-labelledby="dropdownMenu4">
+      {
+        
+        this.state.btns.map(function(btn){
+          var label = btn.label;
+          var handler = btn.handler;
+
+          return (
+            <li key={`btn_${i++}`}><a href="#" onClick={handler}>{label}</a></li>
+          )
+        })
+      }
+      </ul>
+    )
   }
 }    

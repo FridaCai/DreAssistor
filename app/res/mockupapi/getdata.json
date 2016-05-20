@@ -23,6 +23,17 @@
 			"role": "0"
 		}
 	],
+	"priority":[{
+			"id": 0,
+			"label":"低"
+		},{
+			"id": 1,
+			"label": "中"
+		},{
+			"id": 2,
+			"label": "高"
+		}
+	],
 	"projects": [
 		{
 			"projectId": "1",
@@ -47,7 +58,7 @@
 							"endTime": 1462250716000,
 							"desc": "desc of DSI task",
 							"markColor": 16711680,
-							"attachFiles": ["file1.abc", "file2.abc"],
+							"attachedFiles": ["file1.abc", "file2.abc"],
 							"creatorId": "1",
 							"peopleIds": ["1", "2"],
 							"priority": 0
@@ -69,7 +80,7 @@
 							"endTime": 1462250716000,
 							"desc": "desc of test2",
 							"markColor": 16711680,
-							"attachFiles": [],
+							"attachedFiles": [],
 							"creatorId": "1",
 							"peopleIds": ["1", "2"],
 							"priority": 1
@@ -81,7 +92,7 @@
 							"endTime": 1462250716000,
 							"desc": "desc of DSI task",
 							"markColor": 16711680,
-							"attachFiles": [],
+							"attachedFiles": [],
 							"creatorId": "1",
 							"peopleIds": ["1", "2"]
 						}
@@ -96,7 +107,7 @@
 					"endTime": 1462250716000,
 					"desc": "desc of PFI task",
 					"markColor": 16711680,
-					"attachFiles": [],
+					"attachedFiles": [],
 					"creatorId": "1",
 					"peopleIds": ["1", "2"]
 				}
@@ -119,7 +130,7 @@
 					"endTime": 1462250716000,
 					"desc": "desc of DSI task",
 					"markColor": 16711680,
-					"attachFiles": [],
+					"attachedFiles": [],
 					"creatorId": "1",
 					"peopleIds": ["1", "2"]
 				}

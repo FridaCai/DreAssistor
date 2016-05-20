@@ -402,16 +402,14 @@ export default class ReactCalendarTimeline extends React.Component {
     const y = e.clientY - parentPosition.y
 
 
-    var row;
+    var row = -1;
     var totalHeight = lineHeight * 2;
-    if(y<totalHeight){
-      row = -1;
-    }else{
+    if(y>=totalHeight){
       for(var key in groupHeights){
         var value = groupHeights[key];
         totalHeight += value;
         if(totalHeight > y){
-          row = key;
+          row = parseInt(key);
           break;
         }
       }  
@@ -443,14 +441,17 @@ export default class ReactCalendarTimeline extends React.Component {
   }
 
   onBlockClk(row, time) {
-    var re = /.*\$line-(\d*)/;
+    var getTimeByDom = function(dom){
+        var re = /.*\$line-(\d*)/;
+        var id = dom[0].dataset.reactid;
+        var m = re.exec(id);
+        return parseInt(m[1]);
+    }
+
     var vBlock = (function(){
       var returnObj;
       $('.rct-vertical-lines .rct-vl').each(function(){
-        var id = this.dataset.reactid
-        var m = re.exec(id);
-        var t = m[1];
-
+        var t = getTimeByDom($(this));
         if(t >= time){
           returnObj = (t == time ? $(this): $(this).prev());
           return false;
@@ -466,11 +467,16 @@ export default class ReactCalendarTimeline extends React.Component {
     var t = hBlock.position().top;
     var h = hBlock.height();
 
+
+    var parentInstance = this.props.groups[row].instance;
     this.refs.block.show({
       left: l,
       top: t,
       width: w,
       height: h,
+      parent: parentInstance,
+      startTime: getTimeByDom(vBlock),
+      endTime: getTimeByDom(vBlock.next()),
     })
   }
 

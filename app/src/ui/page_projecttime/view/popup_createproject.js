@@ -71,7 +71,7 @@ var CreateProjectPopup = React.createClass({
             addedProjects.push(project);
         });
 
-        API.addProjects(param.projects);
+        API.addProjects(addedProjects);
         API.signal_page_refresh.dispatch();
     },
 

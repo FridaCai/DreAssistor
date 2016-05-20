@@ -39,14 +39,20 @@ module.exports = class Project {
 		subproject.setParent(this);
 	}
 
+	deleteChild(subproject){
+		this.children = this.children.filter(function(_supproject) {
+			return !(subproject.id === _supproject.id);
+		})
+	}
+
 	addTask(task){
 		this.tasks.unshift(task);
 		task.setParent(this);
 	}
-
-	deleteChild(subproject){
-		this.children = this.children.filter(function(_supproject) {
-			return !(subproject.id === _supproject.id);
+	
+	deleteTask(task){
+		this.tasks = this.tasks.filter(function(_task){
+			return !(task.id === _task.id);
 		})
 	}
 }

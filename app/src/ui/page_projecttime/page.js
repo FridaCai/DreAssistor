@@ -17,8 +17,6 @@ var PageProjectTime = React.createClass({
         }
     },
 
-   
-
    onMessageBoxShow: function(event, param) {
         param = Object.assign({isShow: true}, param);
         this.refs.messagebox.setState(param);
@@ -33,10 +31,6 @@ var PageProjectTime = React.createClass({
 
     onAddProjectPopupShow: function(event, param) {
         this.refs.createprojectpopup.show();
-    },
-
-    onAddTaskPopupShow: function() {
-        this.refs.createtaskpopup.show();
     },
 
     onAddSubProjectPopupShow: function(event, param) {
@@ -73,6 +67,35 @@ var PageProjectTime = React.createClass({
                 });
 
                 API.addSubproject(project, subproject);
+                this.forceUpdate();
+            }).bind(this),
+        });
+    },
+    onEditTaskPopupShow: function(event, param){
+        //todo: refer to onEditSubProjectPopupShow.
+        var task = param.task;
+
+        var popupTitle = '编辑任务';
+        
+        var name = task.name;
+        var startTime = task.startTime;
+        var endTime = task.endTime;
+        var desc = task.desc;
+        var markColor = task.markColor;
+        var attachedFiles = task.attachedFiles;
+        var priority = task.priority;
+
+        this.refs.taskpopup.show({
+            popupTitle: popupTitle,
+            name: name,
+            startTime: startTime,
+            endTime: endTime,
+            desc: desc,
+            markColor: markColor,
+            attachedFiles: attachedFiles,
+            priority: priority,
+            onOKHandler: (function(param){
+                task.update(param);
                 this.forceUpdate();
             }).bind(this),
         });
@@ -125,12 +148,11 @@ var PageProjectTime = React.createClass({
 
     componentDidMount: function() {
         API.signal_addProjectPopup_show.listen(this.onAddProjectPopupShow);
-        API.signal_projects_add.listen(this.onProjectsAdd);
         API.signal_msgbox_show.listen(this. onMessageBoxShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
-        API.signal_project_selectchange.listen(this.onProjectSelectChange);
         API.signal_addSubProjectPopup_show.listen(this.onAddSubProjectPopupShow)
         API.signal_editSubProjectPopup_show.listen(this.onEditSubProjectPopupShow);
+        API.signal_editTaskPopup_show.listen(this.onEditTaskPopupShow);
 
         API.getData().then(
             (function(param) {
@@ -148,16 +170,12 @@ var PageProjectTime = React.createClass({
 
     componentDidUnMount: function() {
         API.signal_addProjectPopup_show.unlisten(this.onAddProjectPopupShow);
-        API.signal_projects_add.unlisten(this.onProjectsAdd);
         API.signal_msgbox_show.unlisten(this. onMessageBoxShow);
         API.signal_page_refresh.unlisten(this.onPageRefresh);
-        API.signal_project_selectchange.unlisten(this.onProjectSelectChange);
         API.signal_addSubProjectPopup_show.unlisten(this.onAddSubProjectPopupShow)
         API.signal_editSubProjectPopup_show.unlisten(this.onEditSubProjectPopupShow);
-        API.signal_subproject_selectchange.unlisten(this.onSubProjectSelectChange);
-        API.signal_addTask.unlisten(this.onAddTaskPopupShow);
+        API.signal_editTaskPopup_show.unlisten(this.onEditTaskPopupShow);
     },
-
 
     render: function() {
         if(this.state.isLoading) {
@@ -169,7 +187,7 @@ var PageProjectTime = React.createClass({
                     <div className='leftContainer'>
                         <SubProjectList ref='subprojectlist' project={API.getSelectedProject()}/>
                     </div>
-                    <TaskDetail/>
+                    <TaskDetail task={API.getSelectedTask()}/>
                     <MessageBox ref='messagebox'/>
                     <CreateProjectPopup ref='createprojectpopup'/>
                     <SubProjectPopup ref='subprojectpopup'/>

@@ -35,7 +35,7 @@ var SubProjectList = React.createClass({
 	    });
 	},
 	onEdit: function(subproject) {
-		API.setSelectedSubProject(subproject);
+		//API.setSelectedSubProject(subproject);
 		API.signal_editSubProjectPopup_show.dispatch({subproject: subproject});
 	},
 

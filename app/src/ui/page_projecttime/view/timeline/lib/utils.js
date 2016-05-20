@@ -147,7 +147,11 @@ export function getVisibleItems (items, canvasTimeStart, canvasTimeEnd, keys) {
 
 export function collision (a, b, lineHeight) {
   // var verticalMargin = (lineHeight - a.height)/2;
-  var verticalMargin = 0
+  var verticalMargin = 0;
+  
+  var EPSILON = 0;
+
+
   return ((a.collisionLeft + EPSILON) < (b.collisionLeft + b.collisionWidth) &&
   (a.collisionLeft + a.collisionWidth - EPSILON) > b.collisionLeft &&
   (a.top - verticalMargin + EPSILON) < (b.top + b.height) &&

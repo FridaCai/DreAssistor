@@ -14,10 +14,18 @@ module.exports = class Task {
 		this.creatorId = param.creatorId;
 		this.peopleIds = param.peopleIds;
 		this.priority = param.priority;
-		this.parent = param.parent;
+	}
+	update(param){
+		//might have problem for array copy. 
+		//$.extend(true, [], templateList);
+		Object.assign(this, param); 
 	}
 
 	setParent(parent) {
 		this.parent = parent;
+	}
+
+	getParent() {
+		return this.parent;
 	}
 }

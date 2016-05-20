@@ -38,4 +38,10 @@ module.exports = class SubProject {
 		this.tasks.unshift(task);
 		task.setParent(this);
 	}
+
+	deleteTask(task){
+		this.tasks = this.tasks.filter(function(_task){
+			return !(task.id === _task.id);
+		})
+	}
 }

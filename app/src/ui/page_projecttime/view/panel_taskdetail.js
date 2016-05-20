@@ -24,7 +24,7 @@ var TaskDetail = React.createClass({
 		    	var endTime = task.endTime;
 		    	var desc = task.desc;
 		    	var color = task.markColor;
-		    	var attachFiles = task.attachFiles;
+		    	var attachedFiles = task.attachedFiles;
 		    	var priority = task.priority;
 
 	  			return (
@@ -54,7 +54,7 @@ var TaskDetail = React.createClass({
 						</div>
 
 						<div className="attachedFiles">
-							{attachFiles}
+							{attachedFiles}
 						</div>
 					</div>
 				)
@@ -67,10 +67,12 @@ var TaskDetail = React.createClass({
         	<div className="taskDetail">
 				<div className="panel panel-default">
 					<div className="panel-heading">任务详情</div>
-					<div className="panel-body"></div>
-				  	{
+					<div className="panel-body">
+					{
 				  		getDom()
 				  	}
+					</div>
+				  	
 				</div>
 			</div>
     	);

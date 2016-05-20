@@ -1,4 +1,6 @@
 import API from '../../../api.js';
+import Util from '../../../../../util.js';
+import Task from '../../../data/task.js';
 
 
 export default class Block extends React.Component {
@@ -11,6 +13,10 @@ export default class Block extends React.Component {
       width: undefined,
       height: undefined,
       isShow: false,
+
+      parent: undefined,
+      startTime: 0,
+      endTime: 0,
     }
   }
 
@@ -21,6 +27,9 @@ export default class Block extends React.Component {
       top: param.top,
       width: param.width,
       height: param.height,
+      parent: param.parent,
+      startTime: param.startTime,
+      endTime: param.endTime,
     });
   }
 
@@ -28,11 +37,34 @@ export default class Block extends React.Component {
     this.setState({isShow: false});
   }
   onContextMenu(e) {
-    var x = e.clientX;
-    var y = e.clientY;
+    var self = this;
     API.signal_timelineContextmenu_show.dispatch({
-      x: x,
-      y:y
+      left: e.clientX,
+      top: e.clientY,
+      btns: [{
+        label: '添加任务',
+        handler: function(){
+          var task = new Task(); //default task; new Task
+          task.init({
+            id: Util.generateUUID(),
+            name: '未命名',
+            startTime: self.state.startTime,
+            endTime: self.state.endTime,
+            desc: '',
+            markColor: 2201331,
+            attachedFiles: [],
+            creatorId: API.getLoginUser().id,
+            peopleIds: [],
+            priority: 0,
+          });
+
+          var parent = self.state.parent; //project or subproject
+          //task.setParent(parent);
+          //API.addTask(task, parent);
+          parent.addTask(task);
+          API.signal_page_refresh.dispatch();
+        }
+      }],
     });
     e.preventDefault();
 
@@ -48,7 +80,7 @@ export default class Block extends React.Component {
     }
 
     return (
-      <div className='rct-block' style={style} onContextMenu={this.onContextMenu}></div>
+      <div className='rct-block' style={style} onContextMenu={this.onContextMenu.bind(this)}></div>
     )
   }
 }
