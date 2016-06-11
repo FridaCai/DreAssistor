@@ -1,6 +1,7 @@
-import Person from './ui/page_projecttime/data/person.js'; //todo: Person should not be the data model of page_projecttime;
-var API = {
+import Signal from './signal.js';
 
+var API = {
+	signal_page_refresh: new Signal(),
 
 	PAGE_NAMES: {
 		PROJECT_TIME: 'PROJECT_TIME',
@@ -12,14 +13,14 @@ var API = {
 
 
 	getLoginUser: function() {
-		var person = new Person();
+		/*var person = new Person();
 		var param = {
 			"id": "1",
 			"name": "刘湃",
 			"role": "1",
 		}
 		person.init(param)
-		return person;
+		return person;*/
 	}
 
 }

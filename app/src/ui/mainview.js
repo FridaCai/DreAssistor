@@ -1,7 +1,5 @@
-import React from 'react';
-import Menu from './widget/menu.js';
+import Menu from './menu.js';
 import Page from './page.js';
-
 
 var MainView = React.createClass({
 	getInitialState: function() {

@@ -1,7 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import MainView from './ui/mainview.js';
-import API from './api.js';
 
 if(Promise != undefined){
 	window.Promise = require('es6-promise').Promise;
@@ -39,9 +36,7 @@ if(Promise != undefined){
 })(jQuery);
 
 (function() {
-	var loginUser = API.getLoginUser();
-    var isLogin = loginUser ? true: false;
-	ReactDOM.render(<MainView isLogin = {isLogin}/>, $("#domContainer")[0]);
+	ReactDOM.render(<MainView/>, $("#domContainer")[0]);
 })();
 
 

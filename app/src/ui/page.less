@@ -1,0 +1,89 @@
+
+.react-colorpicker-picker{
+	z-index:10000;
+}
+
+
+.pageHome{
+	.row{
+		.item{
+			cursor: pointer;
+		}
+	}
+}
+.pageTask{
+	.taskList{
+	    background-color: #ccc;
+	    border: solid 3px #ddd;
+	    border-radius: 4px 4px 0 0;
+	    -webkit-box-shadow: none;
+	    box-shadow: none;
+	    height: 50px;
+	    width: 100%;
+	    display: block;
+	    margin: 0 0 10px 0;
+
+	    .addTaskBtn{
+		    background-color: #337ab7;
+		    padding: 1.2em 1.6em 1.4em;
+		    margin: 0 5px 2px 5px;
+		    float: left;
+		    cursor:pointer;
+	    }
+	    .task{
+		    margin-top: 3px;
+		    margin-left: 2px;
+		    float: left;
+		    cursor:pointer;
+	    }
+	}
+
+	.taskPopup{
+		.line{
+		    margin-top: 10px;
+		    clear: both;
+		    float: left;
+
+		    label{
+		    	margin-right: 10px;
+		    	float:left;
+		    }
+
+		    &.name input{
+				border-radius: 4px;
+			    box-shadow: none;
+			    border: solid 1px #ccc;
+			    height: 34px;
+			    margin-top: -4px;
+			    padding: 0 5px;
+		    }
+
+		    &.desc textarea{
+	    	    width: 300px;
+			    height: 150px;
+			    border: solid 1px #ccc;
+			    border-radius: 4px;
+			    padding: 5px;
+		    }
+
+		    .datetime{
+		    	width: 172px;
+			    float: left;
+			    margin-top: -6px;
+		    }
+
+		    &.priority{
+		    	.cdropdown.priorityDropdown button{
+		    	    border-radius: 2px;
+
+		    	    .caret{
+		    	        float: right;
+    					margin-top: 7px;
+		    	    }
+		    	}
+
+		    }
+
+		}
+	}
+}

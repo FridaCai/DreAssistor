@@ -1,8 +1,7 @@
 import React from 'react';
 import Timeline from './timeline/index.js';
 import moment from 'moment';
-import API from '../api.js';
-import CreateProjectPopup from './popup_createproject.js';
+//import API from '../api.js';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -18,10 +17,10 @@ var AddOn = React.createClass({
 
     },
     onAdd: function() {
-        API.signal_addProjectPopup_show.dispatch();
+        //API.signal_addProjectPopup_show.dispatch();
     },
     render: function() {
-        return (<div>
+        /*return (<div>
             <span>项目名称</span>
             <span className='hearderBtns'>
                 <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}} onClick={this.onSort} className='sortBtn'>sort</span>
@@ -30,7 +29,8 @@ var AddOn = React.createClass({
             </span>
             
         </div>
-        )
+        )*/
+        return null;
     }
 
 });
@@ -46,12 +46,23 @@ var CTimeLine = React.createClass({
        
     },
     render: function() {
-    	var projects = API.getProjects();
+        const groups = [
+         {id: 1, title: 'project 1'},
+         {id: 2, title: 'project 2'}
+        ];
+ 
+        const items = [
+         {id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour')},
+         {id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour')},
+         {id: 3, group: 1, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour')}
+        ];
+
+    	/*var projects = API.getProjects();
 
 		var groups = [];
     	projects.forEach(function(project){
     		groups.push({
-    			id: project.projectId + '_' + project.mobileYearId,
+    			id: project.projectId  '_' + project.mobileYearId,
     			title: project.name,
     			isSub: false,
                 instance: project,
@@ -96,7 +107,7 @@ var CTimeLine = React.createClass({
 	    			items.push(itm);
     			});
     		});
-    	});
+    	});*/
 
         var filter = React.createElement(AddOn, {});
         var sidebarWidth = $(window).width() * 0.2;

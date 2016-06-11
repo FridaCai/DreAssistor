@@ -6,7 +6,6 @@
     msgBox.show(callback);
 ***/
 import './messagebox.css';
-import CreateProjectPopup from '../page_projecttime/view/popup_createproject.js'
 
 var MessageBox = React.createClass({
   getInitialState: function() {

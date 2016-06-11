@@ -8,8 +8,8 @@ import Header from './layout/Header.jsx'
 import VerticalLines from './lines/VerticalLines.jsx'
 import HorizontalLines from './lines/HorizontalLines.jsx'
 import TodayLine from './lines/TodayLine.jsx'
-import Block from './block.jsx'
-import ContextMenu from './contextmenu.jsx'
+//import Block from './block.jsx'
+//import ContextMenu from './contextmenu.jsx'
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
@@ -294,7 +294,7 @@ export default class ReactCalendarTimeline extends React.Component {
       newState.groupTops = groupTops
 
 
-      this.refs.block.hide();
+      //this.refs.block.hide();
     }
 
     this.setState(newState)
@@ -439,8 +439,8 @@ export default class ReactCalendarTimeline extends React.Component {
       }
     }
   }
-
-  onBlockClk(row, time) {
+/*
+  onBlockClk(row, time) {return;
     var getTimeByDom = function(dom){
         var re = /.*\$line-(\d*)/;
         var id = dom[0].dataset.reactid;
@@ -479,7 +479,7 @@ export default class ReactCalendarTimeline extends React.Component {
       endTime: getTimeByDom(vBlock.next()),
     })
   }
-
+*/
   dragItem (item, dragTime, newGroupOrder) {
     let newGroup = this.props.groups[newGroupOrder]
     const keys = this.props.keys
@@ -536,7 +536,7 @@ export default class ReactCalendarTimeline extends React.Component {
       if (!this.state.selectedItem) {
         const [row, time] = this.rowAndTimeFromEvent(e)
         if (row >= 0 && row < this.props.groups.length) {
-          this.onBlockClk(row, time);
+          //this.onBlockClk(row, time);
         }
       }
     }
@@ -581,12 +581,12 @@ export default class ReactCalendarTimeline extends React.Component {
                        headerHeight={headerHeight}/>
     )
   }
-
+/*
   block () {
     return (
       <Block ref='block'/>
     )
-  }
+  }*/
   items (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops) {
     return (
       <Items canvasTimeStart={canvasTimeStart}
@@ -774,12 +774,10 @@ export default class ReactCalendarTimeline extends React.Component {
       height: `${height}px`
     }
 
+
     return (
       <div style={this.props.style} ref='container' className='react-calendar-timeline'>
         <div style={outerComponentStyle} className='rct-outer'>
-          <ContextMenu ref='contextmenu'/>
-
-
           {sidebarWidth > 0 ? this.sidebar(height, groupHeights, headerHeight) : null}
           <div ref='scrollComponent'
                className='rct-scroll'
@@ -798,7 +796,6 @@ export default class ReactCalendarTimeline extends React.Component {
                  style={canvasComponentStyle}
                  onDoubleClick={ this.handleDoubleClick.bind(this) }
             >
-              {this.block()}
               {this.items(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops)}
               {this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight)}
               {this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight)}

@@ -1,28 +1,38 @@
-import React from 'react';
 import API from '../api.js';
-import PageProjectTime from './page_projecttime/page.js';
+import PageHome from './page_home/page.js';
+import PageTask from './page_task/page.js';
+import './page.less';
 
 var PageView = React.createClass({
+    pageMap:{
+        PageHome: PageHome,
+        PageTask: PageTask,
+    },
+
 	getInitialState: function() {
         return {
-            pageName: API.pageName,
         }
     },
+
     componentDidMount: function() {
-        //todo: listen to menu event and set pageName state;
+        this.refreshPage('PageHome');
+        API.signal_page_refresh.listen(this.onPageRefresh);
     },
+
     componentDidUnMount: function() {
-        //todo: remove listener.
+        API.signal_page_refresh.unlisten(this.onPageRefresh);
+    },
+
+    onPageRefresh: function(e, param){
+        this.refreshPage(param.controller);
+    },
+
+    refreshPage: function(controller){
+        var reactElement = React.createElement(this.pageMap[controller]);
+        ReactDOM.render(reactElement, this.refs.page);
     },
     render: function() {
-        switch(this.state.pageName) {
-            case API.PAGE_NAMES.PROJECT_TIME: 
-                return (<PageProjectTime/>);
-                break;
-            default: 
-                return (<PageProjectTime/>);
-        }
-    	
+        return (<div ref='page' className=''/>)
     }
 });
 

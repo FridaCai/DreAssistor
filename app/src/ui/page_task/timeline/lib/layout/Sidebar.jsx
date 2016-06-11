@@ -1,5 +1,5 @@
 import { _get, arraysEqual } from '../utils.js'
-import API from '../../../../api.js'
+//import API from '../../../../api.js'
 
 
 export default class Sidebar extends React.Component {
@@ -64,13 +64,13 @@ export default class Sidebar extends React.Component {
   }
 
   onProjectClk(projectId, mobileYearId) {
-    var project = API.findProject(projectId, mobileYearId);
+    /*var project = API.findProject(projectId, mobileYearId);
     API.setSelectedProject(project);
-    API.signal_page_refresh.dispatch();
+    API.signal_page_refresh.dispatch();*/
   }
 
   onProjectDeleteBtnClk(projectId, mobileYearId) {
-    var msg = '确定删除？';
+    /*var msg = '确定删除？';
  
     API.signal_msgbox_show.dispatch({
       msg: msg,
@@ -81,7 +81,7 @@ export default class Sidebar extends React.Component {
       }
     });
 
-    event.stopPropagation();
+    event.stopPropagation();*/
   }
 
   render () {
@@ -141,25 +141,13 @@ export default class Sidebar extends React.Component {
       var projectId = _get(group, 'projectId');
       var mobileYearId = _get(group, 'mobileYearId');
 
-      var dom;
-      if(isSub){
-        dom = (
-          <div key={_get(group, groupIdKey)} className={'rct-sidebar-row sub ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} style={elementStyle}>
-            <span>{_get(group, groupTitleKey)}</span>
-          </div>
-          );
-      }else{
-          dom = (
-          <div key={_get(group, groupIdKey)} 
-              className={'rct-sidebar-row ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} 
-              style={elementStyle} 
-              onClick={this.onProjectClk.bind(this, projectId, mobileYearId)}>
-            <span>{_get(group, groupTitleKey)}</span>
-            <span style={{float: 'right', padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} 
-                onClick={this.onProjectDeleteBtnClk.bind(this, projectId, mobileYearId)}>-</span>
-          </div>
-        );
-      }
+      var dom = (
+        <div key={_get(group, groupIdKey)} 
+            className={'rct-sidebar-row ' + (i % 2 === 0 ? ' rct-sidebar-row-even' : ' rct-sidebar-row-odd')} 
+            style={elementStyle}>
+          <span>{_get(group, groupTitleKey)}</span>
+        </div>
+      );
       
       groupLines.push(dom);
       i += 1

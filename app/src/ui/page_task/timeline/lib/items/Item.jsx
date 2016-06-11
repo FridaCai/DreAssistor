@@ -1,6 +1,6 @@
 import interact from 'interact.js'
 import { _get } from '../utils'
-import API from '../../../../api.js'
+//import API from '../../../../api.js'
 
 export default class Item extends React.Component {
   constructor (props) {
