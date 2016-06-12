@@ -2,6 +2,7 @@ var Util = {
 	
 	SEPERATOR: '___sep___',
 
+//uuid should be generated at backend.
 	generateUUID: function () {
 		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
 		var uuid = new Array( 36 );
@@ -42,6 +43,17 @@ var Util = {
 	convertUnixTimeToDate: function(unix_timestamp) {
         var d = new Date(unix_timestamp);
         return d.toLocaleDateString() + " " + d.toLocaleTimeString();
+	},
+
+	convertIntColorToHex: function(value){
+		return (function(color){
+            color = color ? color.toString(16) : '';
+            color = new Array(6 - color.length + 1).join('0') + color;
+            return '#' + color;
+        })(value);
+	},
+	convertHexColorToInt: function(value){
+		return parseInt(value.replace('#', '0x'));
 	},
 
 	getData: function(url, options) {

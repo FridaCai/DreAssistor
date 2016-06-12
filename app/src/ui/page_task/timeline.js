@@ -48,7 +48,6 @@ var CTimeLine = React.createClass({
     render: function() {
         const groups = [
          {id: 1, title: 'project 1'},
-         {id: 2, title: 'project 2'}
         ];
  
         const items = [
