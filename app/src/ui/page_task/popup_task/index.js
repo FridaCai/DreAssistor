@@ -10,52 +10,13 @@ import moment from 'moment';
 
 import BreakDownList from './breakdown_list.js';
 import AttachmentList from './attachment_list.js';
-import TaskTemplatePanel from './tasktemplate_panel.js';
+import TaskTemplatePanel from './template.js';
 import PrivacyRadioGroup from './privacy_radiogroup.js';
 
 var TaskPopup = React.createClass({
     priorityDropdown: undefined,
 
 	getInitialState: function() {
-        /*
-        return {
-            id: '',
-            name: '未命名',
-            desc: '',
-            startTime: moment().add(-6, 'months').valueOf(),
-            endTime: moment().add(6, 'months').valueOf(),
-            subtasks: [{
-            	id: '0',
-            	label: '豆豆子项1',
-            	isDone: false,
-            }],
-            markColor: 0,
-            priority: 1,
-            attachments: [{
-                id: 0,
-                label: 'attachment1',
-                url: ''
-            }, {
-                id: 1,
-                label: 'attachment2',
-                url: ''   
-            }],
-            privacy: 0,
-            onOKHandler: undefined,
-            template: {
-                type: 0,
-                param: { 
-                    excelUrl: '',
-                },
-                //hot issue.
-                //param: {
-                //    rootcause: '',
-                //    solution: '',
-                //    exec: '',
-                //    feedback: '',
-                //}
-            }
-        }*/
         return {};
     },
     
