@@ -44,8 +44,8 @@
 		    clear: both;
 		    float: left;
 
-		    label{
-		    	margin-right: 10px;
+		    >label{
+		    	width: 100px;
 		    	float:left;
 		    }
 
@@ -72,18 +72,52 @@
 			    margin-top: -6px;
 		    }
 
-		    &.priority{
-		    	.cdropdown.priorityDropdown button{
-		    	    border-radius: 2px;
+	    	.cdropdown button{
+	    	    border-radius: 2px;
+	    	    width: 150px;
 
-		    	    .caret{
-		    	        float: right;
-    					margin-top: 7px;
-		    	    }
+	    	    .caret{
+	    	        float: right;
+					margin-top: 7px;
+
+	    	    }
+	    	}
+
+
+	    	.listContainer{
+	    		float:left;
+	    		width: 550px;
+
+	    		.list-group{
+		    		margin-bottom: 0;
+
+		    		.buttonGroup{
+		    			float: right;
+
+		    			label{
+		    				float:none;
+		    			}
+
+						button.btn{
+	    				    margin: 0 5px;
+							padding: 0 10px;
+		    			}
+
+		    			input[type="radio"]{
+		    				margin: 0 5px;
+		    			}
+		    		}
 		    	}
-
 		    }
 
+		    &.privacy{
+		    	.options{
+		    		float: left;
+		    		label, input{
+		    			margin: 0 5px 0 0;
+		    		}
+		    	}
+		    }
 		}
 	}
 }

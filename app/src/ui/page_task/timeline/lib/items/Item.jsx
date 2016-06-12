@@ -295,12 +295,12 @@ export default class Item extends React.Component {
     }
 
     //why interactMounted is set to be true???
-    API.setSelectedTask(item);
-    API.signal_page_refresh.dispatch();
+    //API.setSelectedTask(item);
+    //API.signal_page_refresh.dispatch();
   };
 
   onContextMenu(item, e) {
-     API.signal_timelineContextmenu_show.dispatch({
+     /*API.signal_timelineContextmenu_show.dispatch({
       left: e.clientX,
       top: e.clientY,
       btns: [{
@@ -323,7 +323,7 @@ export default class Item extends React.Component {
         }
       }],
     });
-    e.preventDefault();
+    e.preventDefault();*/
   }
 
   onMouseUp (e) {

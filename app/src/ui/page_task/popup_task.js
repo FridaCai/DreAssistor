@@ -10,6 +10,61 @@ import moment from 'moment';
 
 //import TaskTemplatePanel from './panel_tasktemplate.js';
 
+var BreakDownList = React.createClass({
+    render: function(){
+        return (
+            <div className='listContainer'>
+                <ul className="list-group">
+                  <li className="list-group-item">
+                    Cras justo odio
+                    <div className='buttonGroup'>
+                        <input name='status' type="radio" defaultValue='done'/>
+                        <label>完成</label>
+                        <input name="status" type="radio" defaultValue='notDone'/>
+                        <label>未完成</label>
+                        <button className='btn btn-default deleteBtn'>Delete</button>
+                    </div>
+                  </li>
+                  <li className="list-group-item">Dapibus ac facilisis in</li>
+                  <li className="list-group-item">Morbi leo risus</li>
+                  <li className="list-group-item">Porta ac consectetur ac</li>
+                  <li className="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div className="input-group">
+                  <input type="text" className="form-control" placeholder="请输入子豆豆名称" />
+                  <span className="input-group-btn">
+                    <button className="btn btn-default" type="button">添加子豆豆</button>
+                  </span>
+                </div>
+            </div>
+        )
+    }
+});
+
+
+var AttachmentList = React.createClass({
+    render: function(){
+        return (
+            <div className='listContainer'>
+                <ul className="list-group">
+                  <li className="list-group-item">
+                    Cras justo odio
+                    <div className='buttonGroup'>
+                        <button className='btn btn-default deleteBtn'>Delete</button>
+                    </div>
+                  </li>
+                  <li className="list-group-item">Dapibus ac facilisis in</li>
+                  <li className="list-group-item">Morbi leo risus</li>
+                  <li className="list-group-item">Porta ac consectetur ac</li>
+                  <li className="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <a href='javascript:void(0);'>添加附件</a>
+            </div>
+        )
+    }
+});
+
+
 var TaskPopup = React.createClass({
 	getInitialState: function() {
         this.priorityDropdown = undefined;
@@ -37,7 +92,7 @@ var TaskPopup = React.createClass({
         this.refs.msgbox.show();
     },
 
-	getContent: function() {
+	getContent: function() {/*<TaskTemplatePanel refs='taskTemplatePanel'/>*/
         const {
           name, desc, startTime, endTime, breakdownList,  priority, attachedFiles, onOKHandler,
         } = this.state;
@@ -75,11 +130,10 @@ var TaskPopup = React.createClass({
             	</div>
 
             	<div className='line breakdownlist'>
-            		<label>任务细分</label>
-            		<div>
-                        
-                    </div>
+            		<label>子豆豆</label>
+                    <BreakDownList/>
             	</div>
+
 				<div className="line markColor">
                     <label>颜色</label>
                     <ColorPicker
@@ -93,30 +147,27 @@ var TaskPopup = React.createClass({
 
                 <div className="line attachedFiles">
                 	<label>附件</label>
-	                {
-	                    attachedFiles.map(function(file){
-	                        return (<span>{file}</span>)
-	                    })
-	                }
+                    <AttachmentList/>
                 </div>
-
+                <div className="line privacy">
+                    <label>谁可以看</label>
+                    <div className='options'>
+                        <label>仅自己可见</label>
+                        <input type='radio'/>
+                        <label>所有人</label>
+                        <input type='radio'/>
+                    </div>
+                </div>
 
 
                 <div className="line taskType">
                     <label>任务模版</label>
                     <span ref='taskTemplateDropdown'/>
-
-
-
-                    
                 </div>
-
-
-
 	        </div>
 	    );   
 
-	    //<TaskTemplatePanel refs='taskTemplatePanel'/>
+	    
     },
     updateJqueryComponent: function() {
     	(function updatePriorityDropdown(){
@@ -150,12 +201,9 @@ var TaskPopup = React.createClass({
     		var container = this.refs.taskTemplateDropdown;
 	        var options = [{
 	            id: 0,
-	            label:"普通模版"
-	        },{
-	            id: 1,
 	            label: "Hot Issue 模版"
 	        },{
-	            id: 2,
+	            id: 1,
 	            label: "尺寸检测模版"
 	        }];
 
@@ -165,7 +213,7 @@ var TaskPopup = React.createClass({
 	            defaultKey: defaultKey, //string. existed id in options.
 	            options: options,
 	            onchange: (function(key){
-	            	this.refs.taskTemplatePanel.updateByType(key);
+	            	//this.refs.taskTemplatePanel.updateByType(key);
 	            }).bind(this),
 	        };
 	        this.taskTemplateDropdown = CDropDown.create(container, param);
@@ -181,7 +229,7 @@ var TaskPopup = React.createClass({
         var attachedFiles = [];
         var priority = this.priorityDropdown.getValue();  
 
-        this.state.onOKHandler({
+        /*this.state.onOKHandler({
             name: name,
             startTime: startTime,
             endTime: endTime,
@@ -189,7 +237,7 @@ var TaskPopup = React.createClass({
             markColor: markColor,
             attachedFiles: attachedFiles, //wrong.
             priority: priority,
-        })
+        })*/
     },
     render: function() {
         var content = this.getContent();
