@@ -18,7 +18,7 @@ var TaskList = React.createClass({
     		startTime: moment().add(-6, 'months').valueOf(),
     		endTime: moment().add(6, 'months').valueOf(),
     		markColor: 0,
-    		attachedFiles: [],
+    		attachments: [],
     		creatorId: '',
     		priority: 0,
     		subtasks: [],
@@ -62,7 +62,7 @@ var TaskList = React.createClass({
 							backgroundColor: Util.convertIntColorToHex(task.markColor),
 						}
 						return (
-							<a className='task' href='javascript:void(0);' style={style} key={id}
+							<a draggable='true' className='task' style={style} key={id}
 									onClick={this.onEditTaskClk.bind(this, id)}>
 								{label}
 							</a>

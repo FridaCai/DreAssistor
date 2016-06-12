@@ -12,7 +12,17 @@ module.exports = class Task {
 		this.endTime = param.endTime;
 		this.desc = param.desc;
 		this.markColor = param.markColor;
-		this.attachedFiles = param.attachedFiles;
+		
+		this.attachments = param.attachments;
+		param.attachments.map((function(attachment){
+			var att = new Attachment();
+			att.init({
+				id: attachment.id,
+				url: attachment.url
+			});
+		}).bind(this))
+
+
 		this.creatorId = param.creatorId;
 		this.priority = param.priority;
 		
@@ -51,5 +61,16 @@ module.exports = class Task {
 	}
 	setParent(parent){
 		this.parent = parent;
+	}
+	addAttachment(attachment){
+		//upload file to s3
+		this.attachments.unshift(attachment);
+		attachment.setParent(this);
+	}
+	deleteAttachment(id){
+		//remove file from s3
+		this.attachments = this.attachments.filter(function(attachment){
+			return !(id === attachment.id);
+		})
 	}
 }

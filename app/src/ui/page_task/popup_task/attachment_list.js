@@ -1,22 +1,69 @@
+import Attachment from '../data/attachment.js';
+import Util from '../../../util.js';
+
 var AttachmentList = React.createClass({
-    render: function(){
-        return (
-            <div className='listContainer'>
-                <ul className="list-group">
-                  <li className="list-group-item">
-                    Cras justo odio
-                    <div className='buttonGroup'>
-                        <button className='btn btn-default deleteBtn'>Delete</button>
-                    </div>
-                  </li>
-                  <li className="list-group-item">Dapibus ac facilisis in</li>
-                  <li className="list-group-item">Morbi leo risus</li>
-                  <li className="list-group-item">Porta ac consectetur ac</li>
-                  <li className="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <a href='javascript:void(0);'>添加附件</a>
-            </div>
-        )
+  getInitialState: function(){
+    return {
+      task: this.props.task,
+    }
+  },
+
+  onAddAttachmentClk: function(){
+    this.refs.fileElem.click();
+  },
+  fileElemChange: function(e){
+    e.preventDefault();
+    //call service to upload file.
+    var files = e.target.files;
+    debugger;
+
+    for(var i=0; i<files.length; i++){
+      var file = files[i];
+      var label = file.name;
+      var attachment = new Attachment();
+      attachment.init({
+        id: Util.generateUUID(),
+        label: label,
+        url: '',
+      })
+      this.state.task.addAttachment(attachment);
+    }
+    this.forceUpdate();
+  },
+
+  onDelete: function(id){
+    this.state.task.deleteAttachment(id);
+    this.forceUpdate();
+  },
+  render: function(){
+    var attachments = this.state.task.attachments;
+      return (
+          <div className='attachmentList listContainer'>
+              <ul className="list-group">
+                {
+                  attachments.map((function(attachment){
+                    var label = attachment.label;
+                    var id = attachment.id;
+
+                    return (
+                      <li className="list-group-item" key={id}>
+                        {label}
+                        <div className='buttonGroup'>
+                            <button className='btn btn-default deleteBtn' onClick={this.onDelete.bind(this, id)}>Delete</button>
+                        </div>
+                      </li>
+                    )
+                  }).bind(this))
+                }
+              </ul>
+              <a href='javascript:void(0);' onClick={this.onAddAttachmentClk}>添加附件</a>
+
+
+            <form>
+              <input type="file" ref="fileElem" multiple accept="*/*" onChange={this.fileElemChange}/>
+            </form>
+          </div>
+      )
     }
 });
 module.exports = AttachmentList;

@@ -31,7 +31,7 @@ var TaskPopup = React.createClass({
             }],
             markColor: 0,
             priority: 1,
-            attachedFiles: [{
+            attachments: [{
                 id: 0,
                 label: 'attachment1',
                 url: ''
@@ -70,7 +70,7 @@ var TaskPopup = React.createClass({
             return null;
 
         const {
-          label, desc, startTime, endTime, subtasks, _markColor, priority, attachedFiles, privacy, template, onOKHandler,
+          label, desc, startTime, endTime, subtasks, _markColor, priority, attachments, privacy, template, onOKHandler,
         } = this.state.task;
 
         var markColor = Util.convertIntColorToHex(_markColor);
@@ -119,7 +119,7 @@ var TaskPopup = React.createClass({
 
                 <div className="line attachedFiles">
                 	<label>附件</label>
-                    <AttachmentList list={attachedFiles}/>
+                    <AttachmentList task={this.state.task}/>
                 </div>
                 <div className="line privacy">
                     <label>谁可以看</label>
@@ -166,7 +166,7 @@ var TaskPopup = React.createClass({
         var endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
         var desc = this.refs.descTA.value;
         var markColor = parseInt(this.refs.markColorCP.state.color.replace('#', '0x'));
-        var attachedFiles = [];
+        var attachments = [];
         var priority = this.priorityDropdown.getValue();  
 
         /*this.state.onOKHandler({
@@ -175,7 +175,7 @@ var TaskPopup = React.createClass({
             endTime: endTime,
             desc: desc, 
             markColor: markColor,
-            attachedFiles: attachedFiles, //wrong.
+            attachments: attachments, //wrong.
             priority: priority,
         })*/
     },
