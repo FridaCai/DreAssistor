@@ -27,20 +27,20 @@ var TaskPopup = React.createClass({
     },
 
 	getContent: function() {
-        if(!this.state.task)
+        if(!this.state.taskObj)
             return null;
 
         const {
-          label, desc, startTime, endTime, subtasks, _markColor, priority, attachments, privacy, template, onOKHandler,
-        } = this.state.task;
+          label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template, onOKHandler,
+        } = this.state.taskObj;
 
-        var markColor = Util.convertIntColorToHex(_markColor);
+        var color = Util.convertIntColorToHex(markColor);
 
 	    return (
 	        <div className="panel-body taskPopup">
             	<div className='line name'>
             		<label>名称</label>
-            		<input type="text" defaultValue={name} ref='nameInput'/>
+            		<input type="text" defaultValue={label} ref='labelInput'/>
             	</div>
             	
             	<div className='line desc'>
@@ -64,14 +64,14 @@ var TaskPopup = React.createClass({
 
             	<div className='line breakdownList'>
             		<label>子豆豆</label>
-                    <BreakDownList task={this.state.task}/>
+                    <BreakDownList subtasks={subtasks} ref='breakdownList'/>
             	</div>
 
 				<div className="line markColor">
                     <label>颜色</label>
                     <ColorPicker
                       animation="slide-up"
-                      color={markColor} ref='markColorCP'/>
+                      color={color} ref='markColorCP'/>
                 </div>
                 <div className="line priority">
                     <label>优先级</label>
@@ -80,23 +80,24 @@ var TaskPopup = React.createClass({
 
                 <div className="line attachedFiles">
                 	<label>附件</label>
-                    <AttachmentList task={this.state.task}/>
+                    <AttachmentList attachments={attachments} ref='attachmentlist'/>
                 </div>
                 <div className="line privacy">
                     <label>谁可以看</label>
-                    <PrivacyRadioGroup privacy={privacy}/>
+                    <PrivacyRadioGroup privacy={privacy} ref='privacyRadioGroup'/>
                 </div>
 
 
                 <div className="line taskType">
                     <label>豆豆模版</label>
-                    <TaskTemplatePanel template={template}/>
+                    <TaskTemplatePanel template={template} ref='templatePanel'/>
                 </div>
 	        </div>
 	    );   
     },
     updateJqueryComponent: function() {
     	(function updatePriorityDropdown(){
+            var defaultKey = this.state.taskObj.priority;
     		var container = this.refs.priorityDropdown;
 	        var options = [{
 	            id: 0,
@@ -108,13 +109,13 @@ var TaskPopup = React.createClass({
 	            id: 2,
 	            label: "高"
 	        }];
-	        var defaultKey = this.state.priority;
+	        
 	        var param = {
 	            id: "priorityDropdown", //string.
 	            defaultKey: defaultKey, //string. existed id in options.
 	            options: options,
 	            onchange: (function(key){
-	                this.setState({priority: key});
+	                
 	            }).bind(this),
 	        };
 	        this.priorityDropdown = CDropDown.create(container, param);
@@ -122,27 +123,34 @@ var TaskPopup = React.createClass({
     },
 
     onOkClk:function() {
-        var name = this.refs.nameInput.value;
+        var label = this.refs.labelInput.value;
+        var desc = this.refs.descTA.value;
         var startTime = this.refs.startTimeDT.state.selectedDate.valueOf();
         var endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
-        var desc = this.refs.descTA.value;
-        var markColor = parseInt(this.refs.markColorCP.state.color.replace('#', '0x'));
-        var attachments = [];
+        var subtasks = this.refs.breakdownList.getValue();
+        var markColor = Util.convertHexColorToInt(this.refs.markColorCP.state.color);
         var priority = this.priorityDropdown.getValue();  
+        var attachments = this.refs.attachmentlist.getValue();
+        var privacy = this.refs.privacyRadioGroup.getValue();
+        var template = this.refs.templatePanel.getValue();
 
-        /*this.state.onOKHandler({
-            name: name,
+        this.state.onOKHandler({
+            label: label,
+            desc: desc,
             startTime: startTime,
             endTime: endTime,
-            desc: desc, 
+            subtasks: subtasks,
             markColor: markColor,
-            attachments: attachments, //wrong.
             priority: priority,
-        })*/
+            attachments: attachments,
+            privacy: privacy,
+            template: template,
+        });
     },
     render: function() {
         var content = this.getContent();
-        return (<MessageBox width={700} title={'添加豆豆'} okHandler={this.onOkClk} ref='msgbox' children={content}/>);
+        var title = this.state.title;
+        return (<MessageBox width={700} title={title} okHandler={this.onOkClk} ref='msgbox' children={content}/>);
     },
 });
 

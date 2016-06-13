@@ -4,10 +4,12 @@ import Util from '../../../util.js';
 var AttachmentList = React.createClass({
   getInitialState: function(){
     return {
-      task: this.props.task,
+      attachments: this.props.attachments,
     }
   },
-
+  getValue: function(){
+    return this.state.attachments;
+  },
   onAddAttachmentClk: function(){
     this.refs.fileElem.click();
   },
@@ -15,28 +17,31 @@ var AttachmentList = React.createClass({
     e.preventDefault();
     //call service to upload file.
     var files = e.target.files;
-    debugger;
 
     for(var i=0; i<files.length; i++){
       var file = files[i];
       var label = file.name;
-      var attachment = new Attachment();
-      attachment.init({
+      
+      var attachment = {
         id: Util.generateUUID(),
         label: label,
         url: '',
-      })
-      this.state.task.addAttachment(attachment);
+      }
+      this.state.attachments.unshift(attachment);
     }
     this.forceUpdate();
   },
 
   onDelete: function(id){
-    this.state.task.deleteAttachment(id);
-    this.forceUpdate();
+    var ats = this.state.attachments.filter(function(at){
+      return !(id === at.id);
+    });
+    this.setState({
+      attachments: ats,
+    });
   },
   render: function(){
-    var attachments = this.state.task.attachments;
+    var attachments = this.state.attachments;
       return (
           <div className='attachmentList listContainer'>
               <ul className="list-group">
@@ -58,8 +63,7 @@ var AttachmentList = React.createClass({
               </ul>
               <a href='javascript:void(0);' onClick={this.onAddAttachmentClk}>添加附件</a>
 
-
-            <form>
+            <form className='upload'>
               <input type="file" ref="fileElem" multiple accept="*/*" onChange={this.fileElemChange}/>
             </form>
           </div>

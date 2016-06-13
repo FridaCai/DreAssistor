@@ -16,9 +16,13 @@ var API = {
 	getTaskArr: function(){
 		return this._tasks.getArr();
 	},
-
-
 }
 
+//need more sophisticate design.
+window.dre = {
+	data: {
+		tasks: API,
+	}
+}
 
 module.exports = API;

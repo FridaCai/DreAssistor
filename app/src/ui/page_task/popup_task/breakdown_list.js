@@ -5,33 +5,34 @@ import SubTask from '../data/subtask.js';
 var BreakDownList = React.createClass({
     getInitialState: function() {
         return {
-            task: this.props.task,
+            subtasks: this.props.subtasks,
         }
     },
+    getValue(){
+        return this.state.subtasks;
+    },
 
-    onDoneClk: function(id){
-        var subtask = this.state.task.findSubTask(id);
-        subtask.setIsDone(true);
-        this.forceUpdate();
+    onStatusChange: function(subtask, status){
+        subtask.isDone = status;
     },
-    onUnDoneClk: function(id){
-        var subtask = this.state.task.findSubTask(id);
-        subtask.setIsDone(false);
-        this.forceUpdate();
-    },
+  
     onDeleteClk: function(id){
-        this.state.task.deleteSubTask(id);
-        this.forceUpdate();
+        var sts = this.state.subtasks.filter(function(st){
+            return !(id === st.id);
+        })
+
+        this.setState({
+            subtasks: sts,
+        })
     },
     onAddClk: function(){
-        var param = {
+        var subtask = {
             id: Util.generateUUID(),
             label: this.refs.labelInput.value, //todo: never trust user input.
             isDone: false,
         }
-        var subtask = new SubTask();
-        subtask.init(param);
-        this.state.task.addSubTask(subtask);
+        
+        this.state.subtasks.unshift(subtask);
 
         this.refs.labelInput.value = '';
         this.forceUpdate();
@@ -42,7 +43,7 @@ var BreakDownList = React.createClass({
             <div className='listContainer'>
                 <ul className="list-group">
                 {
-                    this.state.task.subtasks.map((function(subtask){
+                    this.state.subtasks.map((function(subtask){
                         var label = subtask.label;
                         var isDone = subtask.isDone;
                         var id = subtask.id;
@@ -54,10 +55,10 @@ var BreakDownList = React.createClass({
                                 {label}
                                 <div className='buttonGroup'>
                                     <input name={radioBtnName} type="radio" 
-                                        defaultChecked={isDone} onChange={this.onDoneClk.bind(this, id)}/>
+                                        defaultChecked={isDone} onChange={this.onStatusChange.bind(this, subtask, true)}/>
                                     <label>完成</label>
                                     <input name={radioBtnName} type="radio" 
-                                        defaultChecked={!isDone} onChange={this.onUnDoneClk.bind(this, id)}/>
+                                        defaultChecked={!isDone} onChange={this.onStatusChange.bind(this, subtask, false)}/>
                                     <label>未完成</label>
                                     <button className='btn btn-default deleteBtn' 
                                         onClick={this.onDeleteClk.bind(this, id)}>

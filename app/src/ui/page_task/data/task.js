@@ -1,4 +1,5 @@
 import SubTask from './subtask.js';
+import Attachment from './attachment.js';
 
 module.exports = class Task {
 	constructor(){

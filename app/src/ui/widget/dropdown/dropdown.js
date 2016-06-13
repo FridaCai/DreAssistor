@@ -274,7 +274,7 @@ $.widget("custom.cdropdown", {
     },
 
     getValue: function() {
-        return this.option.defaultKey;
+        return this.options.defaultKey;
     }
 });
 

@@ -11,15 +11,21 @@
     		"markColor": 6076508,
     		"attachments": [],
     		"creatorId": "",
-    		"priority": 0,
+    		"priority": "0",
     		"subtasks": [{
-                "id": 0,
+                "id": "0",
                 "label": "豆豆子项",
-                "isDone": false
+                "isDone": true
             }],
-    		"privacy": 0,
+    		"privacy": "0",
     		"template": {
-    			"type": 0
+    			"type": "1",
+                "param": {
+                    "rootCause": "rootCause",
+                    "solution": "solution",
+                    "execute": "execute",
+                    "feedback": "feedback"
+                }
     		}
 		},{
             "id": "1",
@@ -30,11 +36,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "2",
@@ -45,13 +51,16 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "2",
+                "param": {
+                    "excelUrl": ""
+                }
             }
-        },      {
+        }, {
             "id": "3",
             "label": "EWO",
             "desc": "",
@@ -60,11 +69,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "4",
@@ -75,11 +84,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "5",
@@ -90,11 +99,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },      {
             "id": "6",
@@ -105,11 +114,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "7",
@@ -120,11 +129,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "8",
@@ -135,11 +144,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },      {
             "id": "9",
@@ -150,11 +159,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "10",
@@ -165,11 +174,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "11",
@@ -180,11 +189,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },      {
             "id": "12",
@@ -195,11 +204,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "13",
@@ -210,11 +219,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "14",
@@ -225,11 +234,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },      {
             "id": "15",
@@ -240,11 +249,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "16",
@@ -255,11 +264,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "17",
@@ -270,11 +279,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },      {
             "id": "18",
@@ -285,11 +294,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "19",
@@ -300,11 +309,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "20",
@@ -315,11 +324,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },      {
             "id": "21",
@@ -330,11 +339,11 @@
             "markColor": 6076508,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "22",
@@ -345,11 +354,11 @@
             "markColor": 6013150,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         },{
             "id": "23",
@@ -360,11 +369,11 @@
             "markColor": 15773006,
             "attachments": [],
             "creatorId": "",
-            "priority": 0,
+            "priority": "0",
             "subtasks": [],
-            "privacy": 0,
+            "privacy": "0",
             "template": {
-                "type": 0
+                "type": "0"
             }
         }
 	]

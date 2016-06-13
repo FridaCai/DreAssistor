@@ -10,32 +10,45 @@ var TaskList = React.createClass({
         }
     },
     onAddTaskBtnClk: function(){
-    	var task = new Task();
-    	task.init({
-			id: Util.generateUUID(),
-    		name: '',
-    		desc: '',
-    		startTime: moment().add(-6, 'months').valueOf(),
-    		endTime: moment().add(6, 'months').valueOf(),
-    		markColor: 0,
-    		attachments: [],
-    		creatorId: '',
-    		priority: 0,
-    		subtasks: [],
-    		privacy: 0,
-    		template: {
-    			type: 0,
-    		}
-		});
-		
+        var id = Util.generateUUID();
+
 		API.signal_taskpopup_show.dispatch({
-			task: task,
-			onOKHandler: function(param){
-				task.update(param);
-				API.addTask(task);
-			},
+            title: '添加豆豆',
+			taskObj: {
+                label: '未命名',
+                desc: '',
+                startTime: moment().add(-6, 'months').valueOf(),
+                endTime: moment().add(6, 'months').valueOf(),
+                markColor: 0,
+                attachments: [],
+                creatorId: '',
+                priority: 0,
+                subtasks: [],
+                privacy: 0,
+                template: {
+                    type: 0,
+                }
+            },
+			onOKHandler: (function(taskObj){
+                var task = new Task();
+				task.init($.extend(true, {id: id}, taskObj));
+				API.getTasks().addTask(task);
+                this.forceUpdate();                
+			}).bind(this),
 		});
     },
+
+    onEditTaskClk: function(task){
+        API.signal_taskpopup_show.dispatch({
+            title: '编辑豆豆',
+            taskObj: $.extend(true, {}, task),
+            onOKHandler: (function(taskObj){
+                task.update(taskObj);
+                this.forceUpdate();
+            }).bind(this),
+        });
+    },
+
     componentDidMount: function(){
     	var url = '/app/res/mockupapi/get_tasks.json';
     	Util.getData(url).then((function(param){
@@ -47,9 +60,7 @@ var TaskList = React.createClass({
     		this.forceUpdate();
     	}).bind(this));
     },
-    onEditTaskClk: function(){
-    	API.signal_taskpopup_show.dispatch();
-    },
+
     render: function() {
         return (
             <div className='taskList'>
@@ -63,7 +74,7 @@ var TaskList = React.createClass({
 						}
 						return (
 							<a draggable='true' className='task' style={style} key={id}
-									onClick={this.onEditTaskClk.bind(this, id)}>
+									onClick={this.onEditTaskClk.bind(this, task)}>
 								{label}
 							</a>
 						)
