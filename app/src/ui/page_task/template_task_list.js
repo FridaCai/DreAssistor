@@ -81,8 +81,8 @@ var TemplateTaskList = React.createClass({
     onDragOver: function(e){
       e.preventDefault(); //otherwise, ondrop does not work.
     },
-    onDragStart: function(){
-        console.log('task: onDragStart')
+    onDragStart: function(task, e){
+        e.dataTransfer.setData("text", task.id);
     },
     onDrop: function(){
         //never called...
@@ -108,7 +108,7 @@ var TemplateTaskList = React.createClass({
                                         onDragExit={this.onDragExit}
                                         onDragLeave={this.onDragLeave}
                                         onDragOver={this.onDragOver}
-                                        onDragStart={this.onDragStart}
+                                        onDragStart={this.onDragStart.bind(this, task)}
                                         onDrop={this.onDrop}
                                         >
 								{label}

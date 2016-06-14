@@ -2,6 +2,7 @@ import Timeline from './lib/Timeline.jsx';
 import moment from 'moment';
 import API from '../api.js';
 import Util from '../../../util.js';
+import Task from '../data/task.js';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -59,12 +60,19 @@ var CTimeLine = React.createClass({
     },
 
     onTimelineTaskCreate: function(e, param){
-    	API.getTasks().addTask({
+    	var templateTask = API.getTemplateTasks().find(param.templateTaskId);
+
+    	var taskObj = $.extend({}, templateTask);
+    	taskObj = $.extend(taskObj, {	
+    		id: Util.generateUUID(),
     		startTime: param.startTime,
     		endTime: param.endTime,
-    		id: 'timelinetest',
-    		label: 'timelinetest',
     	});
+
+    	var task = new Task();
+    	task.init(taskObj);
+
+    	API.getTasks().addTask(task);
     	this.forceUpdate();
     },
 
@@ -84,6 +92,7 @@ var CTimeLine = React.createClass({
 				title: task.label,
 				start_time: task.startTime,
 				end_time: task.endTime,
+				color: Util.convertIntColorToHex(task.markColor),
 			})
 		})
  

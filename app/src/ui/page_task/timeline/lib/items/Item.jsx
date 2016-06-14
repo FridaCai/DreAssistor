@@ -378,7 +378,8 @@ export default class Item extends React.Component {
       top: `${dimensions.top}px`,
       width: `${dimensions.width}px`,
       height: `${dimensions.height}px`,
-      lineHeight: `${dimensions.height}px`
+      lineHeight: `${dimensions.height}px`,
+      backgroundColor: this.props.item.color,
     }
 
     return (

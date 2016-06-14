@@ -438,7 +438,7 @@ export default class ReactCalendarTimeline extends React.Component {
     }
   }
 
-  onAppendTask(row, time) {
+  onAppendTask(templateTaskId, row, time) {
     var getTimeByDom = function(dom){
         var re = /.*\$line-(\d*)/;
         var id = dom[0].dataset.reactid;
@@ -459,6 +459,7 @@ export default class ReactCalendarTimeline extends React.Component {
     })();
    
     API.signal_timeline_task_create.dispatch({
+      templateTaskId: templateTaskId,
       startTime: getTimeByDom(vBlock),
       endTime: getTimeByDom(vBlock.next()),
     });
@@ -558,6 +559,7 @@ export default class ReactCalendarTimeline extends React.Component {
   }
 
   items (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops) {
+
     return (
       <Items canvasTimeStart={canvasTimeStart}
              canvasTimeEnd={canvasTimeEnd}
@@ -737,7 +739,12 @@ export default class ReactCalendarTimeline extends React.Component {
     onDrop(e){
       const [row, time] = this.rowAndTimeFromEvent(e)
       if (row >= 0 && row < this.props.groups.length) {
-        this.onAppendTask(row, time);
+        var templateTaskId = e.dataTransfer.getData('text');
+        e.dataTransfer.clearData();
+
+        if(!templateTaskId)
+          return;
+        this.onAppendTask(templateTaskId, row, time);
       }
     }
   render () {
@@ -783,21 +790,15 @@ export default class ReactCalendarTimeline extends React.Component {
                style={scrollComponentStyle}
                onClick={this.scrollAreaClick.bind(this)}
 
-
                onScroll={this.onScroll.bind(this)}
                onWheel={this.onWheel.bind(this)}
                onMouseDown={this.handleMouseDown.bind(this)}
                onMouseMove={this.handleMouseMove.bind(this)}
+               onMouseUp={this.handleMouseUp.bind(this)}
 
                draggable='true'
-               onDrag={this.onDrag.bind(this)}
-                onDragEnd={this.onDragEnd.bind(this)}
-                onDragEnter={this.onDragEnter.bind(this)}
-                onDragExit={this.onDragExit.bind(this)}
-                onDragLeave={this.onDragLeave.bind(this)}
-                onDragOver={this.onDragOver.bind(this)}
-                onDragStart={this.onDragStart.bind(this)}
-                onDrop={this.onDrop.bind(this)}
+               onDragOver={this.onDragOver.bind(this)}
+               onDrop={this.onDrop.bind(this)}
           >
             <div ref='canvasComponent'
                  className='rct-canvas'
@@ -849,7 +850,6 @@ ReactCalendarTimeline.propTypes = {
   useResizeHandle: React.PropTypes.bool,
 
   stackItems: React.PropTypes.bool,
-
   traditionalZoom: React.PropTypes.bool,
 
   itemTouchSendsClick: React.PropTypes.bool,
