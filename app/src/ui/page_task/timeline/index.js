@@ -93,6 +93,7 @@ var CTimeLine = React.createClass({
 				start_time: task.startTime,
 				end_time: task.endTime,
 				color: Util.convertIntColorToHex(task.markColor),
+                instance: task,
 			})
 		})
  

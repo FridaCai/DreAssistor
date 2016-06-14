@@ -11,9 +11,14 @@ var PageTask = React.createClass({
     },
     componentDidMount: function(){
         API.signal_taskpopup_show.listen(this.onTaskPopupShow);
+        API.signal_page_refresh.listen(this.onPageRefresh);
     },
     componentDidUnMount: function(){
         API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
+        API.signal_page_refresh.unlisten(this.onPageRefresh);
+    },
+    onPageRefresh: function(e){
+        this.forceUpdate();
     },
     onTaskPopupShow: function(e, param){
         this.refs.taskpopup.show(param);

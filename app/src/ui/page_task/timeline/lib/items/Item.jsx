@@ -1,6 +1,6 @@
 import interact from 'interact.js'
 import { _get } from '../utils'
-//import API from '../../../../api.js'
+import API from '../../../api.js'
 
 export default class Item extends React.Component {
   constructor (props) {
@@ -261,10 +261,6 @@ export default class Item extends React.Component {
     let { interactMounted } = this.state
     console.log('fridatest2: why interactMounted is set to be true?');
 
-
-
-
-
     const couldDrag = this.props.selected && this.canMove(this.props)
     const couldResize = this.props.selected && this.canResize(this.props)
     const willBeAbleToDrag = nextProps.selected && this.canMove(nextProps)
@@ -286,17 +282,20 @@ export default class Item extends React.Component {
     }
   }
 
-  onMouseDown (item, e) {
+  onMouseDown (task, e) {
     if (!this.state.interactMounted) {
       e.preventDefault()
       this.startedClicking = true
-
-      
     }
 
-    //why interactMounted is set to be true???
-    //API.setSelectedTask(item);
-    //API.signal_page_refresh.dispatch();
+    API.signal_taskpopup_show.dispatch({
+        title: '编辑豆豆',
+        taskObj: $.extend(true, {}, task),
+        onOKHandler: (function(taskObj){
+            task.update(taskObj);
+            API.signal_page_refresh.dispatch();
+        }).bind(this),
+    });
   };
 
   onContextMenu(item, e) {

@@ -3,8 +3,10 @@ import Task from './data/task.js';
 import Tasks from './data/tasks.js';
 
 var API = {
+	signal_page_refresh: new Signal(),
 	signal_taskpopup_show: new Signal(),
 	signal_timeline_task_create: new Signal(),
+
 	
 	_templateTasks: new Tasks(),
 	setTemplateTasks: function(value){

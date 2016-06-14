@@ -730,6 +730,11 @@ export default class ReactCalendarTimeline extends React.Component {
         console.log('timeline: onDragLeave')
     }
     onDragOver(e){
+      var templateTaskId = e.dataTransfer.getData('text');
+      console.log(`timeline: drag over: ${templateTaskId}`);
+      if(!templateTaskId)
+        return;
+
       //otherwise, ondrop does not work.
       e.preventDefault();
     }
