@@ -1,6 +1,6 @@
-import API from './api.js';
-import Task from './data/task.js';
-import Util from '../../util.js';
+import API from '../api.js';
+import Task from '../data/task.js';
+import Util from '../../../util.js';
 import moment from 'moment';
 
 var TemplateTaskList = React.createClass({

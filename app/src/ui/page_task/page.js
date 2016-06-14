@@ -1,8 +1,10 @@
 import CTimeLine from './timeline/index.js';
-import TemplateTaskList from './template_task_list.js';
-import TaskPopup from './popup_task/index.js';
+import TemplateTaskList from './templatetasklist/index.js';
+import TaskPopup from './taskpopup/index.js';
+import AssistorPanel from './assistorpanel/index.js';
 
 import API from './api.js';
+import Util from '../../util.js';
 
 var PageTask = React.createClass({
 	getInitialState: function() {
@@ -12,6 +14,15 @@ var PageTask = React.createClass({
     componentDidMount: function(){
         API.signal_taskpopup_show.listen(this.onTaskPopupShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
+
+        var url = '/app/res/mockupapi/get_tasks.json';
+        Util.getData(url).then((function(param){
+            if(param.errCode !== -1)
+                return;
+
+            API.setTasks(param.tasks);
+            this.forceUpdate();
+        }).bind(this));
     },
     componentDidUnMount: function(){
         API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
@@ -28,6 +39,7 @@ var PageTask = React.createClass({
             <div className='pageTask'>
                 <TemplateTaskList/>
                 <CTimeLine/>
+                <AssistorPanel/>
                 <TaskPopup ref='taskpopup'/>
             </div>
         );    

@@ -41,17 +41,6 @@ var CTimeLine = React.createClass({
         return {};
     },
     componentDidMount: function() {
-    	var url = '/app/res/mockupapi/get_tasks.json';
-    	Util.getData(url).then((function(param){
-    		if(param.errCode !== -1)
-    			return;
-
-
-    		API.setTasks(param.tasks);
-    		this.forceUpdate();
-    	}).bind(this));
-
-
     	API.signal_timeline_task_create.listen(this.onTimelineTaskCreate);
     },
     
@@ -80,6 +69,7 @@ var CTimeLine = React.createClass({
        
     },
     render: function() {
+        
         const groups = [
          {id: 1, title: 'project 1'},
         ];
