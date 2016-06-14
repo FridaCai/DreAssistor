@@ -22,7 +22,6 @@ var PrivacyRadioGroup = React.createClass({
                 <input type='radio' name='privacy' 
                     defaultChecked={this.state.privacy === this.privacy.PRIVATE} 
                     onChange={this.onChange.bind(this, this.privacy.PRIVATE)}/>
-                >
                 <label>仅自己可见</label>
                 <input type='radio' name='privacy' 
                     defaultChecked={this.state.privacy === this.privacy.PUBLIC}

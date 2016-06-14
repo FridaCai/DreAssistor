@@ -712,46 +712,22 @@ export default class ReactCalendarTimeline extends React.Component {
       this.props.onCanvasDoubleClick(timePosition, this.props.groups[groupIndex])
     }
   }
-    onDrag(){
-        console.log('timeline: onDrag');
-    }
-    onDragEnd(e){
-        
-        console.log('timeline: onDragEnd')
-    }
-    onDragEnter(){
-        console.log('timeline: onDragEnter')
-    }
-    onDragExit(){
-        //never called...
-        console.log('timeline: onDragExit')
-    }
-    onDragLeave(){
-        console.log('timeline: onDragLeave')
-    }
-    onDragOver(e){
+   
+  onDragOver(e){
+    e.preventDefault();
+  }
+ 
+  onDrop(e){
+    const [row, time] = this.rowAndTimeFromEvent(e)
+    if (row >= 0 && row < this.props.groups.length) {
       var templateTaskId = e.dataTransfer.getData('text');
-      console.log(`timeline: drag over: ${templateTaskId}`);
+      e.dataTransfer.clearData();
+
       if(!templateTaskId)
         return;
-
-      //otherwise, ondrop does not work.
-      e.preventDefault();
+      this.onAppendTask(templateTaskId, row, time);
     }
-    onDragStart(){
-        console.log('timeline: onDragStart')
-    }
-    onDrop(e){
-      const [row, time] = this.rowAndTimeFromEvent(e)
-      if (row >= 0 && row < this.props.groups.length) {
-        var templateTaskId = e.dataTransfer.getData('text');
-        e.dataTransfer.clearData();
-
-        if(!templateTaskId)
-          return;
-        this.onAppendTask(templateTaskId, row, time);
-      }
-    }
+  }
   render () {
     const { items, groups, headerLabelGroupHeight, headerLabelHeight, sidebarWidth } = this.props
     const { draggingItem, resizingItem, isDragging, width, visibleTimeStart, visibleTimeEnd, canvasTimeStart } = this.state
@@ -801,7 +777,6 @@ export default class ReactCalendarTimeline extends React.Component {
                onMouseMove={this.handleMouseMove.bind(this)}
                onMouseUp={this.handleMouseUp.bind(this)}
 
-               draggable='true'
                onDragOver={this.onDragOver.bind(this)}
                onDrop={this.onDrop.bind(this)}
           >
