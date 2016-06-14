@@ -4,6 +4,24 @@ import Tasks from './data/tasks.js';
 
 var API = {
 	signal_taskpopup_show: new Signal(),
+	signal_timeline_task_create: new Signal(),
+	
+	_templateTasks: new Tasks(),
+	setTemplateTasks: function(value){
+		this._templateTasks = new Tasks();
+		this._templateTasks.init(value);
+	},
+	getTemplateTasks: function(){
+		return this._templateTasks;
+	},
+	getTemplateTaskArr: function(){
+		return this._templateTasks.getArr();
+	},
+
+
+
+
+
 
 	_tasks: new Tasks(),
 	setTasks: function(value){
@@ -15,7 +33,8 @@ var API = {
 	},
 	getTaskArr: function(){
 		return this._tasks.getArr();
-	},
+	}
+
 }
 
 //need more sophisticate design.

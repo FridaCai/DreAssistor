@@ -11,6 +11,10 @@ import TodayLine from './lines/TodayLine.jsx'
 //import Block from './block.jsx'
 //import ContextMenu from './contextmenu.jsx'
 
+import API from '../../api.js';
+
+
+
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
 const defaultKeys = {
@@ -292,14 +296,8 @@ export default class ReactCalendarTimeline extends React.Component {
       newState.height = height
       newState.groupHeights = groupHeights
       newState.groupTops = groupTops
-
-
-      //this.refs.block.hide();
     }
-
     this.setState(newState)
-
-
   }
 
   onWheel (e) {
@@ -439,8 +437,8 @@ export default class ReactCalendarTimeline extends React.Component {
       }
     }
   }
-/*
-  onBlockClk(row, time) {return;
+
+  onAppendTask(row, time) {
     var getTimeByDom = function(dom){
         var re = /.*\$line-(\d*)/;
         var id = dom[0].dataset.reactid;
@@ -459,27 +457,13 @@ export default class ReactCalendarTimeline extends React.Component {
       })
       return returnObj;
     })();
-    
-    var l = vBlock.position().left;
-    var w = vBlock.width() + 2;
-
-    var hBlock = $(`.rct-horizontal-lines div[data-reactid$=horizontal-line-${row}]`);
-    var t = hBlock.position().top;
-    var h = hBlock.height();
-
-
-    var parentInstance = this.props.groups[row].instance;
-    this.refs.block.show({
-      left: l,
-      top: t,
-      width: w,
-      height: h,
-      parent: parentInstance,
+   
+    API.signal_timeline_task_create.dispatch({
       startTime: getTimeByDom(vBlock),
       endTime: getTimeByDom(vBlock.next()),
-    })
+    });
   }
-*/
+
   dragItem (item, dragTime, newGroupOrder) {
     let newGroup = this.props.groups[newGroupOrder]
     const keys = this.props.keys
@@ -532,18 +516,9 @@ export default class ReactCalendarTimeline extends React.Component {
   }
 
   handleMouseUp (e) {
-    if (!this.state.mouseDownAndMove && !hasSomeParentTheClass(e.target, 'rct-item')) {
-      if (!this.state.selectedItem) {
-        const [row, time] = this.rowAndTimeFromEvent(e)
-        if (row >= 0 && row < this.props.groups.length) {
-          //this.onBlockClk(row, time);
-        }
-      }
-    }
-
-
     this.setState({isDragging: false, dragStartPosition: null, mouseDownAndMove:false})
   }
+
 
   todayLine (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight) {
     return (
@@ -581,12 +556,7 @@ export default class ReactCalendarTimeline extends React.Component {
                        headerHeight={headerHeight}/>
     )
   }
-/*
-  block () {
-    return (
-      <Block ref='block'/>
-    )
-  }*/
+
   items (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops) {
     return (
       <Items canvasTimeStart={canvasTimeStart}
@@ -740,7 +710,36 @@ export default class ReactCalendarTimeline extends React.Component {
       this.props.onCanvasDoubleClick(timePosition, this.props.groups[groupIndex])
     }
   }
-
+    onDrag(){
+        console.log('timeline: onDrag');
+    }
+    onDragEnd(e){
+        
+        console.log('timeline: onDragEnd')
+    }
+    onDragEnter(){
+        console.log('timeline: onDragEnter')
+    }
+    onDragExit(){
+        //never called...
+        console.log('timeline: onDragExit')
+    }
+    onDragLeave(){
+        console.log('timeline: onDragLeave')
+    }
+    onDragOver(e){
+      //otherwise, ondrop does not work.
+      e.preventDefault();
+    }
+    onDragStart(){
+        console.log('timeline: onDragStart')
+    }
+    onDrop(e){
+      const [row, time] = this.rowAndTimeFromEvent(e)
+      if (row >= 0 && row < this.props.groups.length) {
+        this.onAppendTask(row, time);
+      }
+    }
   render () {
     const { items, groups, headerLabelGroupHeight, headerLabelHeight, sidebarWidth } = this.props
     const { draggingItem, resizingItem, isDragging, width, visibleTimeStart, visibleTimeEnd, canvasTimeStart } = this.state
@@ -789,7 +788,16 @@ export default class ReactCalendarTimeline extends React.Component {
                onWheel={this.onWheel.bind(this)}
                onMouseDown={this.handleMouseDown.bind(this)}
                onMouseMove={this.handleMouseMove.bind(this)}
-               onMouseUp={this.handleMouseUp.bind(this)}
+
+               draggable='true'
+               onDrag={this.onDrag.bind(this)}
+                onDragEnd={this.onDragEnd.bind(this)}
+                onDragEnter={this.onDragEnter.bind(this)}
+                onDragExit={this.onDragExit.bind(this)}
+                onDragLeave={this.onDragLeave.bind(this)}
+                onDragOver={this.onDragOver.bind(this)}
+                onDragStart={this.onDragStart.bind(this)}
+                onDrop={this.onDrop.bind(this)}
           >
             <div ref='canvasComponent'
                  className='rct-canvas'

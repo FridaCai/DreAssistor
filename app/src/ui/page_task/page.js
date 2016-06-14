@@ -1,5 +1,5 @@
-import CTimeLine from './timeline.js';
-import TaskList from './list_task.js';
+import CTimeLine from './timeline/index.js';
+import TemplateTaskList from './template_task_list.js';
 import TaskPopup from './popup_task/index.js';
 
 import API from './api.js';
@@ -21,7 +21,7 @@ var PageTask = React.createClass({
     render: function() {
         return (
             <div className='pageTask'>
-                <TaskList/>
+                <TemplateTaskList/>
                 <CTimeLine/>
                 <TaskPopup ref='taskpopup'/>
             </div>
