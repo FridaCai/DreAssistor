@@ -1,4 +1,5 @@
 import MainView from './ui/mainview.js';
+import './lib/polyfill.js';
 
 if(Promise != undefined){
 	window.Promise = require('es6-promise').Promise;
