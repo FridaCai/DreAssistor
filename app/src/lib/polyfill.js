@@ -1,7 +1,5 @@
 var PolyFill = {
   execute: function(){
-
-
     if (!Array.prototype.find) {
       Array.prototype.find = function(predicate) {
         if (this === null) {

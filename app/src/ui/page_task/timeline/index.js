@@ -71,14 +71,17 @@ var CTimeLine = React.createClass({
     render: function() {
         
         const groups = [
-         {id: 1, title: 'project 1'},
+         {id: "0", title: 'Mast Timing'},
+         {id: "1", title: 'Vehicle Building'},
+         {id: "2", title: 'PT Cai'},
+         {id: "3", title: 'AIS Development'},
         ];
 
         var items = [];
 		API.getTaskArr().map(function(task){
 			items.push({
 				id: task.id,
-				group: 1,
+				group: "0",
 				title: task.label,
 				start_time: task.startTime,
 				end_time: task.endTime,
@@ -86,7 +89,14 @@ var CTimeLine = React.createClass({
                 instance: task,
 			})
 		})
- 
+        /*items.push({
+            id: '0',
+            group: '0',
+            title: 'DSI',
+            time: Date.parse(new Date()),
+            width: 50,
+        });*/
+        
 
         var filter = React.createElement(AddOn, {});
         var sidebarWidth = $(window).width() * 0.2;

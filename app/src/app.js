@@ -1,8 +1,8 @@
 import MainView from './ui/mainview.js';
-import PolyFill from './lib/polyfill.js';
+//import PolyFill from './lib/polyfill.js';
 
 
-PolyFill.execute();
+//PolyFill.execute();
 
 if(Promise != undefined){
   window.Promise = require('es6-promise').Promise;
