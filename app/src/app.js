@@ -1,10 +1,12 @@
 import MainView from './ui/mainview.js';
-import './lib/polyfill.js';
+import PolyFill from './lib/polyfill.js';
+
+
+PolyFill.execute();
 
 if(Promise != undefined){
-	window.Promise = require('es6-promise').Promise;
+  window.Promise = require('es6-promise').Promise;
 }
-
 
 (function($){
     $.isBlank = function(obj){
