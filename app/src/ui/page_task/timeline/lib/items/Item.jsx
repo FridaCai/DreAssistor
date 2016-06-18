@@ -296,6 +296,8 @@ export default class Item extends React.Component {
             API.signal_page_refresh.dispatch();
         }).bind(this),
     });
+
+    e.stopPropagation();
   };
 
   onContextMenu(item, e) {

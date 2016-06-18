@@ -106,7 +106,6 @@ var CTimeLine = React.createClass({
                             instance: child,
                         })
                     }
-                    
                 })    
             })
         });
