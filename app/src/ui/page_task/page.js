@@ -15,12 +15,13 @@ var PageTask = React.createClass({
         API.signal_taskpopup_show.listen(this.onTaskPopupShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
 
-        var url = '/app/res/mockupapi/get_tasks.json';
+        var url = '/app/res/mockupapi/get_projects.json';
         Util.getData(url).then((function(param){
             if(param.errCode !== -1)
                 return;
 
-            API.setTasks(param.tasks);
+            API.setProjects(param.projects);
+
             this.forceUpdate();
         }).bind(this));
     },

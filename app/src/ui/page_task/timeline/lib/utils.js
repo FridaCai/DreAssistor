@@ -82,7 +82,12 @@ export function coordinateToTimeRatio (canvasTimeStart, canvasTimeEnd, canvasWid
   return (canvasTimeEnd - canvasTimeStart) / canvasWidth
 }
 
-export function calculateDimensions (item, order, keys, canvasTimeStart, canvasTimeEnd, canvasWidth, dragSnap, lineHeight, draggingItem, dragTime, resizingItem, resizeEnd, newGroupOrder, itemHeightRatio) {
+export function calculateDimensions (item, order, keys, 
+    canvasTimeStart, canvasTimeEnd, canvasWidth, 
+    dragSnap, lineHeight, draggingItem, 
+    dragTime, resizingItem, resizeEnd, 
+    newGroupOrder, itemHeightRatio, itemWidth) {
+
   var itemId = _get(item, keys.itemIdKey)
   var itemTimeStart = _get(item, keys.itemTimeStartKey)
   var itemTimeEnd = _get(item, keys.itemTimeEndKey)
@@ -111,7 +116,7 @@ export function calculateDimensions (item, order, keys, canvasTimeStart, canvasT
   const dimensions = {
     left: (x - canvasTimeStart) * ratio,
     top: null,
-    width: Math.max(w * ratio, 3),
+    width: itemWidth ? itemWidth: Math.max(w * ratio, 3),
     height: h,
     order: isDragging ? newGroupOrder : order,
     stack: true,

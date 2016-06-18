@@ -3,6 +3,7 @@ import moment from 'moment';
 import API from '../api.js';
 import Util from '../../../util.js';
 import Task from '../data/task.js';
+import Tag from '../data/tag.js';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -69,34 +70,46 @@ var CTimeLine = React.createClass({
        
     },
     render: function() {
-        
-        const groups = [
-         {id: "0", title: 'Mast Timing'},
-         {id: "1", title: 'Vehicle Building'},
-         {id: "2", title: 'PT Cai'},
-         {id: "3", title: 'AIS Development'},
-        ];
+        var groups = [];
+        API.getProjectArr().map(function(p){
+            p.children.map(function(sp){
+                groups.push({
+                    id: sp.id,
+                    title: sp.label,
+                })
+            })
+        });
 
         var items = [];
-		API.getTaskArr().map(function(task){
-			items.push({
-				id: task.id,
-				group: "0",
-				title: task.label,
-				start_time: task.startTime,
-				end_time: task.endTime,
-				color: Util.convertIntColorToHex(task.markColor),
-                instance: task,
-			})
-		})
-        /*items.push({
-            id: '0',
-            group: '0',
-            title: 'DSI',
-            time: Date.parse(new Date()),
-            width: 50,
-        });*/
-        
+        API.getProjectArr().map(function(p){
+            p.children.map(function(sp){
+                var spId = sp.id;
+                sp.children.map(function(child){
+                    if(child instanceof Tag) {
+                        items.push({
+                            id: child.id,
+                            group: spId,
+                            title: child.label,
+                            start_time: child.time,
+                            end_time: child.time+1,
+                            color: Util.convertIntColorToHex(child.markColor),
+                            instance: child,
+                        })
+                    }else if (child instanceof Task){
+                        items.push({
+                            id: child.id,
+                            group: spId,
+                            title: child.label,
+                            start_time: child.startTime,
+                            end_time: child.endTime,
+                            color: Util.convertIntColorToHex(child.markColor),
+                            instance: child,
+                        })
+                    }
+                    
+                })    
+            })
+        });
 
         var filter = React.createElement(AddOn, {});
         var sidebarWidth = $(window).width() * 0.2;

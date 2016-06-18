@@ -12,7 +12,8 @@ import TodayLine from './lines/TodayLine.jsx'
 //import ContextMenu from './contextmenu.jsx'
 
 import API from '../../api.js';
-
+import Tag from '../../data/tag.js';
+import Task from '../../data/task.js';
 
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
@@ -651,7 +652,16 @@ export default class ReactCalendarTimeline extends React.Component {
     const visibleItems = getVisibleItems(items, canvasTimeStart, canvasTimeEnd, keys)
     const groupOrders = getGroupOrders(groups, keys)
 
-    let dimensionItems = visibleItems.map(item => {
+
+    let dimensionItems = visibleItems.map(function(item){
+      var itemWidth = (function(itm){
+        if(itm.instance instanceof Tag){
+          return itm.instance.width;
+        }else if(itm.instance instanceof Task){
+          return undefined;  
+        }
+      })(item);
+
       return {
         id: _get(item, keys.itemIdKey),
         dimensions: calculateDimensions(
@@ -668,9 +678,11 @@ export default class ReactCalendarTimeline extends React.Component {
           resizingItem,
           resizeEnd,
           newGroupOrder,
-          itemHeightRatio
+          itemHeightRatio,
+          itemWidth
         )
       }
+
     })
 
     const stackingMethod = stackItems ? stack : nostack

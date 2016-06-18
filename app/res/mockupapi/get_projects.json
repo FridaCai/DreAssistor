@@ -2,16 +2,13 @@
     "errCode": -1,
     "errMsg": "",
     "projects": [{
-		"projectId": "0",
+		"id": "0",
 		"label": "凯迪拉克",
 		"creatorId": "0",
 		"sop": 1466049352000, 
 		"ec": "1.0T", 
 		"comment": "sop--项目发布的时间点，其他时间点计算以此为基准; ec--发动机排量engine capacity",
-		"bprange":{
-			"max": 3,
-			"min": null
-		},
+		"bprange":[3, null],
 		"children": [
 			{
 				"id": "0",
@@ -21,14 +18,23 @@
 						"id": "tag_1",
 						"type": "tag",
 						"label": "DSI",
-						"time": "", 
-						"width": 50
+						"time": 1452430100237, 
+						"width": 50,
+						"markColor": 255
 					},{
 						"id": "tag_2",
 						"type": "tag",
 						"label": "VPI",
-						"time": "", 
-						"width": 50
+						"time": 1463921464187, 
+						"width": 50,
+						"markColor": 255
+					},{
+						"id": "tag_3",
+						"type": "tag",
+						"label": "DSO",
+						"time": 1478436664187, 
+						"width": 50,
+						"markColor": 255
 					}
 				]
 			},
@@ -44,34 +50,134 @@
 				"id":"3",
 				"label":"AIS Development",
 				"children": [
-					[
-						{
-				            "id": "0",
-				            "label": "EWO",
-				            "desc": "",
-				            "startTime": 1465718720000,
-				            "endTime": 1465718924000,
-				            "markColor": 6076508,
-				            "attachments": [],
-				            "creatorId": "0",
-				            "priority": "0",
-				            "subtasks": [{
-				                "id": "0",
-				                "label": "豆豆子项",
-				                "isDone": true
-				            }],
-				            "privacy": "0",
-				            "template": {
-				                "type": "1",
-				                "param": {
-				                    "rootCause": "rootCause",
-				                    "solution": "solution",
-				                    "execute": "execute",
-				                    "feedback": "feedback"
-				                }
-				            }
-				        }
-					]
+			        {
+			            "id": "0",
+			            "label": "EWO",
+			            "desc": "",
+			            "startTime": 1465718720000,
+			            "endTime": 1465718924000,
+			            "markColor": 6076508,
+			            "attachments": [],
+			            "creatorId": "0",
+			            "priority": "0",
+			            "subtasks": [{
+			                "id": "0",
+			                "label": "豆豆子项",
+			                "isDone": true
+			            }],
+			            "privacy": "0",
+			            "template": {
+			                "type": "1",
+			                "param": {
+			                    "rootCause": "rootCause",
+			                    "solution": "solution",
+			                    "execute": "execute",
+			                    "feedback": "feedback"
+			                }
+			            },
+			            "type": "task",
+			            "comment": "type: task/tag."
+			        },{
+			            "id": "1",
+			            "label": "HotIssue",
+			            "desc": "",
+			            "startTime": 1465718720000,
+			            "endTime": 1465718924000,
+			            "markColor": 6013150,
+			            "attachments": [],
+			            "creatorId": "0",
+			            "priority": "0",
+			            "subtasks": [],
+			            "privacy": "0",
+			            "template": {
+			                "type": "0"
+			            },
+			            "type": "task"
+			        },{
+			            "id": "2",
+			            "label": "EWO",
+			            "desc": "",
+			            "startTime": 1465718720000,
+			            "endTime": 1465718924000,
+			            "markColor": 6076508,
+			            "attachments": [],
+			            "creatorId": "0",
+			            "priority": "0",
+			            "subtasks": [{
+			                "id": "0",
+			                "label": "豆豆子项",
+			                "isDone": true
+			            }],
+			            "privacy": "0",
+			            "template": {
+			                "type": "1",
+			                "param": {
+			                    "rootCause": "rootCause",
+			                    "solution": "solution",
+			                    "execute": "execute",
+			                    "feedback": "feedback"
+			                }
+			            },
+			            "type": "task"
+			        },{
+			            "id": "3",
+			            "label": "HotIssue",
+			            "desc": "",
+			            "startTime": 1465718720000,
+			            "endTime": 1465718924000,
+			            "markColor": 6013150,
+			            "attachments": [],
+			            "creatorId": "1",
+			            "priority": "0",
+			            "subtasks": [],
+			            "privacy": "0",
+			            "template": {
+			                "type": "0"
+			            },
+			            "type": "task"
+			        },      {
+			            "id": "4",
+			            "label": "EWO",
+			            "desc": "",
+			            "startTime": 1465718720000,
+			            "endTime": 1465718924000,
+			            "markColor": 6076508,
+			            "attachments": [],
+			            "creatorId": "1",
+			            "priority": "0",
+			            "subtasks": [{
+			                "id": "0",
+			                "label": "豆豆子项",
+			                "isDone": true
+			            }],
+			            "privacy": "0",
+			            "template": {
+			                "type": "1",
+			                "param": {
+			                    "rootCause": "rootCause",
+			                    "solution": "solution",
+			                    "execute": "execute",
+			                    "feedback": "feedback"
+			                }
+			            },
+			            "type": "task"
+			        },{
+			            "id": "5",
+			            "label": "HotIssue",
+			            "desc": "",
+			            "startTime": 1465718720000,
+			            "endTime": 1465718924000,
+			            "markColor": 6013150,
+			            "attachments": [],
+			            "creatorId": "2",
+			            "priority": "0",
+			            "subtasks": [],
+			            "privacy": "0",
+			            "template": {
+			                "type": "0"
+			            },
+			            "type": "task"
+			        }
 				]
 			}
 		]
