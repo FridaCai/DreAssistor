@@ -1,6 +1,7 @@
 import CTimeLine from './timeline/index.js';
 import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
+import ProjectPopup from './projectpopup/index.js';
 import AssistorPanel from './assistorpanel/index.js';
 
 import API from './api.js';
@@ -14,6 +15,7 @@ var PageTask = React.createClass({
     componentDidMount: function(){
         API.signal_taskpopup_show.listen(this.onTaskPopupShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
+        API.signal_projectpoup_show.listen(this.onProjectShow);
 
         var url = '/app/res/mockupapi/get_projects.json';
         Util.getData(url).then((function(param){
@@ -28,6 +30,7 @@ var PageTask = React.createClass({
     componentDidUnMount: function(){
         API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
         API.signal_page_refresh.unlisten(this.onPageRefresh);
+        API.signal_projectpoup_show.listen(this.onProjectShow);
     },
     onPageRefresh: function(e){
         this.forceUpdate();
@@ -35,13 +38,24 @@ var PageTask = React.createClass({
     onTaskPopupShow: function(e, param){
         this.refs.taskpopup.show(param);
     },
+    onProjectShow: function(e, param){
+        this.refs.projectpopup.show(param);
+    },
     render: function() {
         return (
             <div className='pageTask'>
                 <TemplateTaskList/>
-                <CTimeLine/>
+                {
+                    API.getProjectArr().map(function(project){
+                        return (
+                            <CTimeLine project={project} key={project.id}/>
+                        )
+                    })
+                }
+                
                 <AssistorPanel/>
                 <TaskPopup ref='taskpopup'/>
+                <ProjectPopup ref='projectpopup'/>
             </div>
         );    
     }

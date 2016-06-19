@@ -4,6 +4,12 @@ var Menu = React.createClass({
             
         }
     },
+    onSignInClk: function(){
+      
+    },
+    onRegisterClk: function(){
+
+    },
     render: function() {
       var projectName = '豆豆';
       var menu1 = '首页'
@@ -34,12 +40,10 @@ var Menu = React.createClass({
                 <div className="form-group">
                   <input type="password" placeholder="Password" className="form-control"/>
                 </div>
-                <button type="submit" className="btn btn-success">Sign in</button>
-                <button type="submit" className="btn btn-success">Register</button>
+                <button type="submit" className="btn btn-success" onClick={this.onSignInClk}>Sign in</button>
+                <button type="submit" className="btn btn-success" onClick={this.onRegisterClk}>Register</button>
               </form>
             </div>
-
-
           </div>
         </nav>    
       );

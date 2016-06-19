@@ -4,6 +4,7 @@ import API from '../api.js';
 import Util from '../../../util.js';
 import Task from '../data/task.js';
 import Tag from '../data/tag.js';
+import MessageBox from '../../widget/messagebox.js';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -21,35 +22,28 @@ var AddOn = React.createClass({
     onAdd: function() {
         //API.signal_addProjectPopup_show.dispatch();
     },
+    onProjectClk: function(){
+        API.signal_projectpoup_show.dispatch({project: this.props.project});
+    },
     render: function() {
-        /*return (<div>
-            <span>项目名称</span>
-            <span className='hearderBtns'>
-                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer'}} onClick={this.onSort} className='sortBtn'>sort</span>
-                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onFilter} className='filterBtn'>filter</span>
-                <span style={{padding: '2px 5px', background:'#ccc', cursor:'pointer', marginLeft:'10px'}} onClick={this.onAdd} className='addBtn'>+</span>    
-            </span>
+        var project = this.props.project;
+        return (
+            <div>
+                <div onClick={this.onProjectClk}>
+                    <h3>{project.label}</h3>
+                </div>
+            </div>
             
-        </div>
-        )*/
-        return null;
+        )
     }
-
 });
 
 var CTimeLine = React.createClass({
 	getInitialState: function() {
         return {};
     },
-    componentDidMount: function() {
-    	API.signal_timeline_task_create.listen(this.onTimelineTaskCreate);
-    },
-    
-    componentDidUnMount: function() {
-    	API.signal_timeline_task_create.unlisten(this.onTimelineTaskCreate);	
-    },
-
-    onTimelineTaskCreate: function(e, param){
+  
+    onTaskCreateHandler: function(param){
     	var templateTask = API.getTemplateTasks().find(param.templateTaskId);
 
     	var taskObj = $.extend({}, templateTask);
@@ -58,11 +52,12 @@ var CTimeLine = React.createClass({
     		startTime: param.startTime,
     		endTime: param.endTime,
     	});
-
     	var task = new Task();
     	task.init(taskObj);
 
-    	API.getTasks().addTask(task);
+        var row = param.row;
+        var subproject = this.props.project.findSubProjectByIndex(row);
+        subproject.addChild(task);
     	this.forceUpdate();
     },
 
@@ -70,47 +65,49 @@ var CTimeLine = React.createClass({
        
     },
     render: function() {
+        var projectId = this.props.project.id;
         var groups = [];
-        API.getProjectArr().map(function(p){
-            p.children.map(function(sp){
-                groups.push({
-                    id: sp.id,
-                    title: sp.label,
-                })
+
+        this.props.project.children.map(function(sp){
+            groups.push({
+                id: projectId + '_' + sp.id,
+                title: sp.label,
+                instance: sp,
             })
-        });
+        })
 
         var items = [];
-        API.getProjectArr().map(function(p){
-            p.children.map(function(sp){
-                var spId = sp.id;
-                sp.children.map(function(child){
-                    if(child instanceof Tag) {
-                        items.push({
-                            id: child.id,
-                            group: spId,
-                            title: child.label,
-                            start_time: child.time,
-                            end_time: child.time+1,
-                            color: Util.convertIntColorToHex(child.markColor),
-                            instance: child,
-                        })
-                    }else if (child instanceof Task){
-                        items.push({
-                            id: child.id,
-                            group: spId,
-                            title: child.label,
-                            start_time: child.startTime,
-                            end_time: child.endTime,
-                            color: Util.convertIntColorToHex(child.markColor),
-                            instance: child,
-                        })
-                    }
-                })    
-            })
+        this.props.project.children.map(function(sp){
+            var spId = sp.id;
+            sp.children.map(function(child){
+                if(child instanceof Tag) {
+                    items.push({
+                        id: projectId + '_' + spId + '_' + child.id,
+                        group: projectId + '_' + spId,
+                        title: child.label,
+                        start_time: child.time,
+                        end_time: child.time+1,
+                        color: Util.convertIntColorToHex(child.markColor),
+                        instance: child,
+                    })
+                }else if (child instanceof Task){
+                    items.push({
+                        id: projectId + '_' + spId + '_' + child.id,
+                        group: projectId + '_' + spId,
+                        title: child.label,
+                        start_time: child.startTime,
+                        end_time: child.endTime,
+                        color: Util.convertIntColorToHex(child.markColor),
+                        instance: child,
+                    })
+                }
+            })    
         });
+        
 
-        var filter = React.createElement(AddOn, {});
+        var filter = React.createElement(AddOn, {
+            project: this.props.project   
+        });
         var sidebarWidth = $(window).width() * 0.2;
         return (<div>
 	               <Timeline groups={groups}
@@ -124,7 +121,8 @@ var CTimeLine = React.createClass({
                         stackItems={true}
                         fixedHeader={'fixed'}
                         sidebarWidth={sidebarWidth}
-                        children={filter}/>
+                        children={filter}
+                        onTaskCreateHandler={this.onTaskCreateHandler}/>
                 </div>
 		);
     }

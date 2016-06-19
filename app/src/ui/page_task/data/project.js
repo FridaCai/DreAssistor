@@ -35,4 +35,8 @@ module.exports = class Project {
 		this.parent = parent;
 	}
 
+	findSubProjectByIndex(index){
+		return this.children[index];
+	}
+
 }

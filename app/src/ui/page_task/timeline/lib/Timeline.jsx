@@ -459,10 +459,11 @@ export default class ReactCalendarTimeline extends React.Component {
       return returnObj;
     })();
    
-    API.signal_timeline_task_create.dispatch({
+    this.props.onTaskCreateHandler && this.props.onTaskCreateHandler({
       templateTaskId: templateTaskId,
       startTime: getTimeByDom(vBlock),
       endTime: getTimeByDom(vBlock.next()),
+      row: row,
     });
   }
 
