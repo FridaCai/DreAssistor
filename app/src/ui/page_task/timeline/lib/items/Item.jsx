@@ -287,7 +287,6 @@ export default class Item extends React.Component {
       e.preventDefault()
       this.startedClicking = true
     }
-
     e.stopPropagation();
   };
 
@@ -310,7 +309,10 @@ export default class Item extends React.Component {
       },{
         label: '豆豆助手',
         handler: function() {
-          console.log('show doudou assistor please.');
+          API.signal_assistorpopup_show.dispatch({
+            title: '豆豆助手',
+            templateTask: task.templateTask,
+          })
         }
       }],
     });

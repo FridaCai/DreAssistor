@@ -1,6 +1,6 @@
 import Signal from '../../signal.js';
 import Task from './data/task.js';
-import Tasks from './data/tasks.js';
+import TemplateTasks from './data/templatetasks.js';
 import Projects from './data/projects.js';
 
 var API = {
@@ -10,9 +10,9 @@ var API = {
 	signal_projectpoup_show: new Signal(),
 	signal_timeline_contextmenu_show: new Signal(),
 	
-	_templateTasks: new Tasks(),
+	_templateTasks: new TemplateTasks(),
 	setTemplateTasks: function(value){
-		this._templateTasks = new Tasks();
+		this._templateTasks = new TemplateTasks();
 		this._templateTasks.init(value);
 	},
 	getTemplateTasks: function(){

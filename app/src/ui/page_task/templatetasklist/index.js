@@ -1,5 +1,5 @@
 import API from '../api.js';
-import Task from '../data/task.js';
+import TemplateTask from '../data/templatetask.js';
 import Util from '../../../util.js';
 import moment from 'moment';
 
@@ -30,7 +30,7 @@ var TemplateTaskList = React.createClass({
                 }
             },
 			onOKHandler: (function(taskObj){
-                var task = new Task();
+                var task = new TemplateTask();
 				task.init($.extend(true, {id: id}, taskObj));
 				API.getTemplateTasks().addTask(task);
                 this.forceUpdate();                

@@ -24,6 +24,7 @@ var PageTask = React.createClass({
             id: Util.generateUUID(),
             startTime: param.startTime,
             endTime: param.endTime,
+            templateTask: templateTask,
         });
         var task = new Task();
         task.init(taskObj);
