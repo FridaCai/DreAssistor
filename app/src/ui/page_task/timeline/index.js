@@ -4,7 +4,7 @@ import API from '../api.js';
 import Util from '../../../util.js';
 import Task from '../data/task.js';
 import Tag from '../data/tag.js';
-import MessageBox from '../../widget/messagebox.js';
+
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -42,30 +42,13 @@ var CTimeLine = React.createClass({
 	getInitialState: function() {
         return {};
     },
-  
-    onTaskCreateHandler: function(param){
-    	var templateTask = API.getTemplateTasks().find(param.templateTaskId);
-
-    	var taskObj = $.extend({}, templateTask);
-    	taskObj = $.extend(taskObj, {	
-    		id: Util.generateUUID(),
-    		startTime: param.startTime,
-    		endTime: param.endTime,
-    	});
-    	var task = new Task();
-    	task.init(taskObj);
-
-        var row = param.row;
-        var subproject = this.props.project.findSubProjectByIndex(row);
-        subproject.addChild(task);
-    	this.forceUpdate();
-    },
 
     componentWillReceiveProps: function(newProps) {
        
     },
     render: function() {
-        var projectId = this.props.project.id;
+        var project = this.props.project;
+        var projectId = project.id;
         var groups = [];
 
         this.props.project.children.map(function(sp){
@@ -110,7 +93,7 @@ var CTimeLine = React.createClass({
         });
         var sidebarWidth = $(window).width() * 0.2;
         return (<div>
-	               <Timeline groups={groups}
+	                <Timeline groups={groups}
                         items={items}
                         defaultTimeStart={moment().add(-12, 'hour')}
                         defaultTimeEnd={moment().add(12, 'hour')}
@@ -122,7 +105,7 @@ var CTimeLine = React.createClass({
                         fixedHeader={'fixed'}
                         sidebarWidth={sidebarWidth}
                         children={filter}
-                        onTaskCreateHandler={this.onTaskCreateHandler}/>
+                        project = {project}/>
                 </div>
 		);
     }

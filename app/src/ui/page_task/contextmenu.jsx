@@ -1,4 +1,4 @@
-import API from '../../../api.js';
+import API from '../../api.js';
 
 export default class ContextMenu extends React.Component {
   constructor(props){
@@ -12,15 +12,7 @@ export default class ContextMenu extends React.Component {
     }
   }
 
-  componentDidMount() {
-    API.signal_timelineContextmenu_show.listen(this.show.bind(this));
-  }
-
-  componentDidUnMount() {
-    API.signal_timelineContextmenu_show.unlisten(this.show.bind(this)); 
-  }
-  
-  show(e, param) {
+  show(param) {
     this.setState({
       isShow: true,
       left: param.left,
@@ -47,19 +39,21 @@ export default class ContextMenu extends React.Component {
 
     var i=0;
     return (
-      <ul style={style} className="dropdown-menu" aria-labelledby="dropdownMenu4">
-      {
-        
-        this.state.btns.map(function(btn){
-          var label = btn.label;
-          var handler = btn.handler;
+      <div className='contextmenu'>
+        <ul style={style} className="dropdown-menu" aria-labelledby="dropdownMenu4">
+        {
+          
+          this.state.btns.map(function(btn){
+            var label = btn.label;
+            var handler = btn.handler;
 
-          return (
-            <li key={`btn_${i++}`}><a href="#" onClick={handler}>{label}</a></li>
-          )
-        })
-      }
-      </ul>
+            return (
+              <li key={`btn_${i++}`}><a href="#" onClick={handler}>{label}</a></li>
+            )
+          })
+        }
+        </ul>
+      </div>
     )
   }
 }    

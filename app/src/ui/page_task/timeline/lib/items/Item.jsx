@@ -288,43 +288,33 @@ export default class Item extends React.Component {
       this.startedClicking = true
     }
 
-    API.signal_taskpopup_show.dispatch({
-        title: '编辑豆豆',
-        taskObj: $.extend(true, {}, task),
-        onOKHandler: (function(taskObj){
-            task.update(taskObj);
-            API.signal_page_refresh.dispatch();
-        }).bind(this),
-    });
-
     e.stopPropagation();
   };
 
-  onContextMenu(item, e) {
-     /*API.signal_timelineContextmenu_show.dispatch({
+  onContextMenu(task, e) {
+     API.signal_timeline_contextmenu_show.dispatch({
       left: e.clientX,
       top: e.clientY,
       btns: [{
         label: '修改任务',
         handler: function() {
-          API.signal_editTaskPopup_show.dispatch({task: item});
+          API.signal_taskpopup_show.dispatch({
+              title: '编辑豆豆',
+              taskObj: $.extend(true, {}, task),
+              onOKHandler: (function(taskObj){
+                  task.update(taskObj);
+                  API.signal_page_refresh.dispatch();
+              }).bind(this),
+          });
         }
       },{
-        label: '删除任务',
+        label: '豆豆助手',
         handler: function() {
-          var msg = '确定删除？';
-          API.signal_msgbox_show.dispatch({
-            msg: msg,
-            okHandler: function() {
-              API.deleteTask(item);
-              API.setSelectedTask(undefined);
-              API.signal_page_refresh.dispatch();
-            }
-          })
+          console.log('show doudou assistor please.');
         }
       }],
     });
-    e.preventDefault();*/
+    e.preventDefault();
   }
 
   onMouseUp (e) {

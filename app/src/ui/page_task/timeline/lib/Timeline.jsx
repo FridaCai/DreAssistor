@@ -8,8 +8,6 @@ import Header from './layout/Header.jsx'
 import VerticalLines from './lines/VerticalLines.jsx'
 import HorizontalLines from './lines/HorizontalLines.jsx'
 import TodayLine from './lines/TodayLine.jsx'
-//import Block from './block.jsx'
-//import ContextMenu from './contextmenu.jsx'
 
 import API from '../../api.js';
 import Tag from '../../data/tag.js';
@@ -458,12 +456,13 @@ export default class ReactCalendarTimeline extends React.Component {
       })
       return returnObj;
     })();
-   
-    this.props.onTaskCreateHandler && this.props.onTaskCreateHandler({
+
+    API.signal_timeline_task_create.dispatch({
       templateTaskId: templateTaskId,
       startTime: getTimeByDom(vBlock),
       endTime: getTimeByDom(vBlock.next()),
       row: row,
+      project: this.props.project,
     });
   }
 
@@ -738,6 +737,8 @@ export default class ReactCalendarTimeline extends React.Component {
 
       if(!templateTaskId)
         return;
+
+
       this.onAppendTask(templateTaskId, row, time);
     }
   }

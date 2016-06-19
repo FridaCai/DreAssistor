@@ -5,11 +5,10 @@ import Projects from './data/projects.js';
 
 var API = {
 	signal_page_refresh: new Signal(),
-	signal_taskpopup_show: new Signal(),
 	signal_timeline_task_create: new Signal(),
-
+	signal_taskpopup_show: new Signal(),
 	signal_projectpoup_show: new Signal(),
-
+	signal_timeline_contextmenu_show: new Signal(),
 	
 	_templateTasks: new Tasks(),
 	setTemplateTasks: function(value){
