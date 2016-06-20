@@ -2,9 +2,10 @@ import CDropDown from '../../widget/dropdown/dropdown.js';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_hotissue.js';
 import SizeDetectTemplate from './template_sizedetect.js';
+import MuleTemplate from './template_mule.js';
 
 var TaskTemplatePanel = React.createClass({
-    templatePanel: [NormalTemplate, HotIssueTemplate, SizeDetectTemplate],
+    templatePanel: [NormalTemplate, HotIssueTemplate, SizeDetectTemplate, MuleTemplate],
     dom: undefined,
     templateTypeDropdown: undefined,
 
@@ -27,6 +28,9 @@ var TaskTemplatePanel = React.createClass({
             },{
                 id: 2,
                 label: "尺寸检测模版"
+            },{
+                id: 3,
+                label: 'Mule MRD'
             }];
 
             var defaultKey = this.state.type;

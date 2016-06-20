@@ -55,9 +55,44 @@
             "subtasks": [],
             "privacy": "0",
             "template": {
-                "type": "2",
+                "type": "3",
                 "param": {
-                    "excelUrl": ""
+                    "bom":{
+                        "status": false,
+                        "attachments": []
+                    },
+                    "size": {
+                        "status": false,
+                        "attachments": []
+                    },
+                    "bp": {
+                        "status": false,
+                        "value": 0,
+                        "attachments": []
+                    },
+                    "tl": {
+                        "status": false,
+                        "graphicSrc": "",
+                        "attachements": []   
+                    },
+                    "heavy": {
+                        "status": false,
+                        "value": "",
+                        "attachements": []   
+                    },
+                    "maf":{
+                        "status": false,
+                        "graphicSrc": "",
+                        "attachements": []   
+                    },
+                    "sil":{
+                        "status": false,
+                        "attachements": []  
+                    },
+                    "doc":{
+                        "status": false,
+                        "attachements": []  
+                    }
                 }
             }
         }, {

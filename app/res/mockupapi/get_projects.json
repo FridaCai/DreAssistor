@@ -8,7 +8,7 @@
 		"sop": 1466049352000, 
 		"ec": "1.0T", 
 		"comment": "sop--项目发布的时间点，其他时间点计算以此为基准; ec--发动机排量engine capacity",
-		"bprange":[3, null],
+		"bprange":[0,101],
 		"children": [
 			{
 				"id": "0",

@@ -1,6 +1,7 @@
 import Util from '../../../util.js';
 import API from '../api.js';
 import SubTask from '../data/subtask.js';
+import RadioGroup from '../../widget/radiogroup/index.js';
 
 var BreakDownList = React.createClass({
     getInitialState: function() {
@@ -13,7 +14,7 @@ var BreakDownList = React.createClass({
     },
 
     onStatusChange: function(subtask, status){
-        subtask.isDone = status;
+        subtask.isDone = (status === 0 ? true: false);
     },
   
     onDeleteClk: function(id){
@@ -45,26 +46,28 @@ var BreakDownList = React.createClass({
                 {
                     this.state.subtasks.map((function(subtask){
                         var label = subtask.label;
-                        var isDone = subtask.isDone;
                         var id = subtask.id;
 
-                        var radioBtnName = `status_${id}`;
+                        var radioGroup = {
+                            id: `status_${id}`,
+                            selectedId: subtask.isDone ? 0: 1,
+                            options: [{
+                                id: 0,
+                                label:"完成"
+                            },{
+                                id: 1,
+                                label: "未完成"
+                            }]
+                        }
 
                         return (
                             <li className="list-group-item" key={id}>
                                 {label}
-                                <div className='buttonGroup'>
-                                    <input name={radioBtnName} type="radio" 
-                                        defaultChecked={isDone} onChange={this.onStatusChange.bind(this, subtask, true)}/>
-                                    <label>完成</label>
-                                    <input name={radioBtnName} type="radio" 
-                                        defaultChecked={!isDone} onChange={this.onStatusChange.bind(this, subtask, false)}/>
-                                    <label>未完成</label>
-                                    <button className='btn btn-default deleteBtn' 
-                                        onClick={this.onDeleteClk.bind(this, id)}>
-                                        Delete
-                                    </button>
-                                </div>
+                                <button className='btn btn-default deleteBtn' 
+                                    onClick={this.onDeleteClk.bind(this, id)}>
+                                    Delete
+                                </button>
+                                <RadioGroup param={radioGroup} ref='completeStatusRadioGroup' onStatusChange={this.onStatusChange.bind(this, subtask)}/>
                             </li>          
                         )
                     }).bind(this))
