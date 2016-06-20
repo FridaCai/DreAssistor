@@ -5,7 +5,33 @@ module.exports = class BaseTask {
 	constructor(){
 		
 	}
+	dump(){
+		var attachments = [];
+		this.attachments.map(function(at){
+			attachments.push(at.dump());
+		})
 
+		var subtasks = [];
+		this.subtasks.map(function(sp){
+			subtasks.push(sp.dump());
+		})
+		
+		return {
+			id: this.id,
+			label: this.label,
+			startTime: this.startTime,
+			endTime: this.endTime,
+			desc: this.desc,
+			markColor: this.markColor,
+			attachments: attachments,
+			creatorId: this.creatorId,
+			priority: this.priority,
+			subtasks: subtasks,
+			privacy: this.privacy,
+			template: this.template,
+			type: 'task',
+		}
+	}
 	init(param){
 		this.id = param.id;
 		this.label = param.label;
@@ -13,6 +39,7 @@ module.exports = class BaseTask {
 		this.endTime = param.endTime;
 		this.desc = param.desc;
 		this.markColor = param.markColor;
+		this.type = 'task';
 		
 		this.attachments = param.attachments;
 		param.attachments.map((function(attachment){

@@ -20,4 +20,11 @@ module.exports = class SubTask {
 	setParent(parent){
 		this.parent = parent;
 	}
+	dump(){
+		return {
+			id: this.id,
+			label: this.label,
+			isDone: this.isDone
+		}
+	}
 }

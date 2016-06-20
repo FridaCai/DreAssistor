@@ -1,268 +1,384 @@
 {
-    "errCode": -1,
-    "errMsg": "",
-    "projects": [{
-		"id": "0",
-		"label": "凯迪拉克",
-		"creatorId": "0",
-		"sop": 1466049352000, 
-		"ec": "1.0T", 
-		"comment": "sop--项目发布的时间点，其他时间点计算以此为基准; ec--发动机排量engine capacity",
-		"bprange":[0,101],
-		"children": [
-			{
-				"id": "0",
-				"label": "Mast Timing",
-				"children": [
-					{
-						"id": "tag_1",
-						"type": "tag",
-						"label": "DSI",
-						"time": 1452430100237, 
-						"width": 50,
-						"markColor": 255
-					},{
-						"id": "tag_2",
-						"type": "tag",
-						"label": "VPI",
-						"time": 1463921464187, 
-						"width": 50,
-						"markColor": 255
-					},{
-						"id": "tag_3",
-						"type": "tag",
-						"label": "DSO",
-						"time": 1478436664187, 
-						"width": 50,
-						"markColor": 255
-					}
-				]
-			},
-			{
-				"id":"1",
-				"label": "Vehicle Building"
-			},
-			{
-				"id":"2",
-				"label": "PT Cai"
-			},
-			{
-				"id":"3",
-				"label":"AIS Development",
-				"children": [
-			        {
-			            "id": "0",
-			            "label": "EWO",
-			            "desc": "",
-			            "startTime": 1465718720000,
-			            "endTime": 1465718924000,
-			            "markColor": 6076508,
-			            "attachments": [],
-			            "creatorId": "0",
-			            "priority": "0",
-			            "subtasks": [{
-			                "id": "0",
-			                "label": "豆豆子项",
-			                "isDone": true
-			            }],
-			            "privacy": "0",
-			            "template": {
-			                "type": "1",
-			                "param": {
-			                    "rootCause": "rootCause",
-			                    "solution": "solution",
-			                    "execute": "execute",
-			                    "feedback": "feedback"
-			                }
-			            },
-			            "type": "task",
-			            "comment": "type: task/tag."
-			        },{
-			            "id": "1",
-			            "label": "HotIssue",
-			            "desc": "",
-			            "startTime": 1465718720000,
-			            "endTime": 1465718924000,
-			            "markColor": 6013150,
-			            "attachments": [],
-			            "creatorId": "0",
-			            "priority": "0",
-			            "subtasks": [],
-			            "privacy": "0",
-			            "template": {
-			                "type": "0"
-			            },
-			            "type": "task"
-			        },{
-			            "id": "2",
-			            "label": "EWO",
-			            "desc": "",
-			            "startTime": 1465718720000,
-			            "endTime": 1465718924000,
-			            "markColor": 6076508,
-			            "attachments": [],
-			            "creatorId": "0",
-			            "priority": "0",
-			            "subtasks": [{
-			                "id": "0",
-			                "label": "豆豆子项",
-			                "isDone": true
-			            }],
-			            "privacy": "0",
-			            "template": {
-			                "type": "1",
-			                "param": {
-			                    "rootCause": "rootCause",
-			                    "solution": "solution",
-			                    "execute": "execute",
-			                    "feedback": "feedback"
-			                }
-			            },
-			            "type": "task"
-			        },{
-			            "id": "3",
-			            "label": "HotIssue",
-			            "desc": "",
-			            "startTime": 1465718720000,
-			            "endTime": 1465718924000,
-			            "markColor": 6013150,
-			            "attachments": [],
-			            "creatorId": "1",
-			            "priority": "0",
-			            "subtasks": [],
-			            "privacy": "0",
-			            "template": {
-			                "type": "0"
-			            },
-			            "type": "task"
-			        },      {
-			            "id": "4",
-			            "label": "EWO",
-			            "desc": "",
-			            "startTime": 1465718720000,
-			            "endTime": 1465718924000,
-			            "markColor": 6076508,
-			            "attachments": [],
-			            "creatorId": "1",
-			            "priority": "0",
-			            "subtasks": [{
-			                "id": "0",
-			                "label": "豆豆子项",
-			                "isDone": true
-			            }],
-			            "privacy": "0",
-			            "template": {
-			                "type": "1",
-			                "param": {
-			                    "rootCause": "rootCause",
-			                    "solution": "solution",
-			                    "execute": "execute",
-			                    "feedback": "feedback"
-			                }
-			            },
-			            "type": "task"
-			        },{
-			            "id": "5",
-			            "label": "HotIssue",
-			            "desc": "",
-			            "startTime": 1465718720000,
-			            "endTime": 1465718924000,
-			            "markColor": 6013150,
-			            "attachments": [],
-			            "creatorId": "2",
-			            "priority": "0",
-			            "subtasks": [],
-			            "privacy": "0",
-			            "template": {
-			                "type": "0"
-			            },
-			            "type": "task"
-			        }
-				]
-			}
-		]
-		
-	},{
-		"id": "1",
-		"label": "258",
-		"creatorId": "1",
-		"sop": 1466049352000, 
-		"ec": "1.0T", 
-		"comment": "sop--项目发布的时间点，其他时间点计算以此为基准; ec--发动机排量engine capacity",
-		"bprange":[3, null],
-		"children": [
-			{
-				"id": "0",
-				"label": "Mast Timing",
-				"children": [
-					{
-						"id": "tag_4",
-						"type": "tag",
-						"label": "DSI",
-						"time": 1452430100237, 
-						"width": 50,
-						"markColor": 255
-					},{
-						"id": "tag_5",
-						"type": "tag",
-						"label": "VPI",
-						"time": 1463921464187, 
-						"width": 50,
-						"markColor": 255
-					},{
-						"id": "tag_6",
-						"type": "tag",
-						"label": "DSO",
-						"time": 1478436664187, 
-						"width": 50,
-						"markColor": 255
-					}
-				]
-			},
-			{
-				"id":"1",
-				"label": "Vehicle Building"
-			},
-			{
-				"id":"2",
-				"label": "PT Cai"
-			},
-			{
-				"id":"3",
-				"label":"AIS Development",
-				"children": [
-			        {
-			            "id": "6",
-			            "label": "EWO",
-			            "desc": "",
-			            "startTime": 1452430100237,
-			            "endTime": 1452430200237,
-			            "markColor": 6076508,
-			            "attachments": [],
-			            "creatorId": "0",
-			            "priority": "0",
-			            "subtasks": [{
-			                "id": "0",
-			                "label": "豆豆子项",
-			                "isDone": true
-			            }],
-			            "privacy": "0",
-			            "template": {
-			                "type": "1",
-			                "param": {
-			                    "rootCause": "rootCause",
-			                    "solution": "solution",
-			                    "execute": "execute",
-			                    "feedback": "feedback"
-			                }
-			            },
-			            "type": "task",
-			            "comment": "type: task/tag."
-			        }
-				]
-			}
-		]
-		
-	}]
+  "errCode": -1,
+  "errMsg": "",
+  "projects": [  
+    {
+      "id": "0",
+      "label": "凯迪拉克",
+      "creatorId": "0",
+      "sop": 1466049352000,
+      "ec": "1.0T",
+      "bprange": {},
+      "children": [
+        {
+          "id": "0",
+          "label": "Mast Timing",
+          "children": [
+            {
+              "id": "tag_1",
+              "label": "DSI",
+              "time": 1452430100237,
+              "width": 50,
+              "markColor": 255,
+              "type": "tag"
+            },
+            {
+              "id": "tag_2",
+              "label": "VPI",
+              "time": 1463921464187,
+              "width": 50,
+              "markColor": 255,
+              "type": "tag"
+            },
+            {
+              "id": "tag_3",
+              "label": "DSO",
+              "time": 1478436664187,
+              "width": 50,
+              "markColor": 255,
+              "type": "tag"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "label": "Vehicle Building",
+          "children": []
+        },
+        {
+          "id": "2",
+          "label": "PT Cai",
+          "children": []
+        },
+        {
+          "id": "3",
+          "label": "AIS Development",
+          "children": [
+            {
+              "id": "79FF8291-FDED-49CE-AC4E-422B1898D54C",
+              "label": "E2",
+              "startTime": 1466388000000,
+              "endTime": 1466564400000,
+              "desc": "",
+              "markColor": 6076508,
+              "attachments": [],
+              "creatorId": "",
+              "priority": "0",
+              "subtasks": [
+                {
+                  "id": "0",
+                  "label": "豆豆子项",
+                  "isDone": true
+                }
+              ],
+              "privacy": "0",
+              "template": {
+                "type": "0",
+                "param": {}
+              },
+              "type": "task",
+              "templateTaskId": "0"
+            },
+            {
+              "id": "98504224-3AA9-4E23-B723-A459D1EF4002",
+              "label": "E1",
+              "startTime": 1466388000000,
+              "endTime": 1466478000000,
+              "desc": "",
+              "markColor": 6076508,
+              "attachments": [],
+              "creatorId": "",
+              "priority": "0",
+              "subtasks": [
+                {
+                  "id": "0",
+                  "label": "豆豆子项",
+                  "isDone": true
+                }
+              ],
+              "privacy": "0",
+              "template": {
+                "type": "0",
+                "param": {}
+              },
+              "type": "task",
+              "templateTaskId": "0"
+            },
+            {
+              "id": "9B6BA01A-ACF8-44F7-9ED6-2D6659C144AC",
+              "label": "E3",
+              "startTime": 1466395200000,
+              "endTime": 1466658000000,
+              "desc": "",
+              "markColor": 6076508,
+              "attachments": [],
+              "creatorId": "",
+              "priority": "0",
+              "subtasks": [
+                {
+                  "id": "0",
+                  "label": "豆豆子项",
+                  "isDone": true
+                }
+              ],
+              "privacy": "0",
+              "template": {
+                "type": "0",
+                "param": {}
+              },
+              "type": "task",
+              "templateTaskId": "0"
+            },
+            {
+              "id": "DE18DC1D-D8E4-4873-9B79-98E04215140F",
+              "label": "M3",
+              "startTime": 1466409600000,
+              "endTime": 1466413200000,
+              "desc": "",
+              "markColor": 15773006,
+              "attachments": [],
+              "creatorId": "",
+              "priority": "0",
+              "subtasks": [],
+              "privacy": "0",
+              "template": {
+                "type": "3",
+                "param": {
+                  "bom": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "size": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "bp": {
+                    "isDone": false,
+                    "attachments": [],
+                    "value": "30"
+                  },
+                  "tl": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "heavy": {
+                    "isDone": false,
+                    "attachments": [],
+                    "value": "30"
+                  },
+                  "maf": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "sil": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "doc": {
+                    "isDone": false,
+                    "attachments": []
+                  }
+                }
+              },
+              "type": "task",
+              "templateTaskId": "2"
+            },
+            {
+              "id": "85E4C7C5-EF64-4CC3-9EB9-FE2638CF230C",
+              "label": "M2",
+              "startTime": 1466402400000,
+              "endTime": 1466406000000,
+              "desc": "",
+              "markColor": 15773006,
+              "attachments": [],
+              "creatorId": "",
+              "priority": "0",
+              "subtasks": [],
+              "privacy": "0",
+              "template": {
+                "type": "3",
+                "param": {
+                  "bom": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "size": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "bp": {
+                    "isDone": false,
+                    "attachments": [],
+                    "value": "20"
+                  },
+                  "tl": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "heavy": {
+                    "isDone": false,
+                    "attachments": [],
+                    "value": "20"
+                  },
+                  "maf": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "sil": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "doc": {
+                    "isDone": false,
+                    "attachments": []
+                  }
+                }
+              },
+              "type": "task",
+              "templateTaskId": "2"
+            },
+            {
+              "id": "A1EEBF37-C20C-4EE8-981E-64FA0CD95E2D",
+              "label": "M1",
+              "startTime": 1466398800000,
+              "endTime": 1466402400000,
+              "desc": "",
+              "markColor": 15773006,
+              "attachments": [],
+              "creatorId": "",
+              "priority": "0",
+              "subtasks": [],
+              "privacy": "0",
+              "template": {
+                "type": "3",
+                "param": {
+                  "bom": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "size": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "bp": {
+                    "isDone": false,
+                    "attachments": [],
+                    "value": "10"
+                  },
+                  "tl": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "heavy": {
+                    "isDone": false,
+                    "attachments": [],
+                    "value": "10"
+                  },
+                  "maf": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "sil": {
+                    "isDone": false,
+                    "attachments": []
+                  },
+                  "doc": {
+                    "isDone": false,
+                    "attachments": []
+                  }
+                }
+              },
+              "type": "task",
+              "templateTaskId": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "label": "258",
+      "creatorId": "1",
+      "sop": 1466049352000,
+      "ec": "1.0T",
+      "bprange": {},
+      "children": [
+        {
+          "id": "0",
+          "label": "Mast Timing",
+          "children": [
+            {
+              "id": "tag_4",
+              "label": "DSI",
+              "time": 1452430100237,
+              "width": 50,
+              "markColor": 255,
+              "type": "tag"
+            },
+            {
+              "id": "tag_5",
+              "label": "VPI",
+              "time": 1463921464187,
+              "width": 50,
+              "markColor": 255,
+              "type": "tag"
+            },
+            {
+              "id": "tag_6",
+              "label": "DSO",
+              "time": 1478436664187,
+              "width": 50,
+              "markColor": 255,
+              "type": "tag"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "label": "Vehicle Building",
+          "children": []
+        },
+        {
+          "id": "2",
+          "label": "PT Cai",
+          "children": []
+        },
+        {
+          "id": "3",
+          "label": "AIS Development",
+          "children": [
+            {
+              "id": "6",
+              "label": "EWO",
+              "startTime": 1452430100237,
+              "endTime": 1452430200237,
+              "desc": "",
+              "markColor": 6076508,
+              "attachments": [],
+              "creatorId": "0",
+              "priority": "0",
+              "subtasks": [
+                {
+                  "id": "0",
+                  "label": "豆豆子项",
+                  "isDone": true
+                }
+              ],
+              "privacy": "0",
+              "template": {
+                "type": "1",
+                "param": {
+                  "rootCause": "rootCause",
+                  "solution": "solution",
+                  "execute": "execute",
+                  "feedback": "feedback"
+                }
+              },
+              "type": "task"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
-

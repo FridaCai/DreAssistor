@@ -2,7 +2,7 @@ import CTimeLine from './timeline/index.js';
 import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
 import ProjectPopup from './projectpopup/index.js';
-import AssistorPanel from './assistorpanel/index.js';
+import AssistorPopup from './assistorpopup/index.js';
 import ContextMenu from './contextmenu.jsx';
 
 import API from './api.js';
@@ -24,7 +24,7 @@ var PageTask = React.createClass({
             id: Util.generateUUID(),
             startTime: param.startTime,
             endTime: param.endTime,
-            templateTask: templateTask,
+            templateTaskId: param.templateTaskId,
         });
         var task = new Task();
         task.init(taskObj);
@@ -41,6 +41,7 @@ var PageTask = React.createClass({
         API.signal_projectpoup_show.listen(this.onProjectShow);
         API.signal_timeline_task_create.listen(this.onTaskCreate);
         API.signal_timeline_contextmenu_show.listen(this.onContextMenuShow);
+        API.signal_assistorpopup_show.listen(this.onAssistorPopupShow);
 
         var url = '/app/res/mockupapi/get_projects.json';
         Util.getData(url).then((function(param){
@@ -56,6 +57,7 @@ var PageTask = React.createClass({
         API.signal_projectpoup_show.unlisten(this.onProjectShow);
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
         API.signal_timeline_contextmenu_show.unlisten(this.onContextMenuShow);
+        API.signal_assistorpopup_show.unlisten(this.onAssistorPopupShow);
     },
     onPageRefresh: function(e){
         this.forceUpdate();
@@ -69,6 +71,9 @@ var PageTask = React.createClass({
     onContextMenuShow: function(e, param) {
         this.refs.contextmenu.show(param);
     },
+    onAssistorPopupShow: function(e, param){
+        this.refs.assistorpopup.show(param);
+    },
     render: function() {
         return (
             <div className='pageTask'>
@@ -80,11 +85,10 @@ var PageTask = React.createClass({
                         )
                     })
                 }
-                
-                <AssistorPanel/>
                 <TaskPopup ref='taskpopup'/>
                 <ProjectPopup ref='projectpopup'/>
                 <ContextMenu ref='contextmenu'/>
+                <AssistorPopup ref='assistorpopup'/>
             </div>
         );    
     }

@@ -32,4 +32,17 @@ module.exports = class SubProject {
 	setParent(parent){
 		this.parent = parent;
 	}
+
+	dump(){
+		var children = [];
+		this.children.map(function(child){
+			children.push(child.dump());
+		})
+		return {
+			id: this.id,
+			label: this.label,
+			children: children
+		}
+
+	}
 }

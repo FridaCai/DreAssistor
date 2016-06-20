@@ -1,7 +1,7 @@
 import API from '../api.js';
 import MessageBox from '../../widget/messagebox.js';
 
-var AssistorPanel = React.createClass({
+var AssistorPopup = React.createClass({
     getInitialState: function() {
         return {
         };
@@ -17,7 +17,7 @@ var AssistorPanel = React.createClass({
 
     getContent: function() {
         return (
-          <div className='assistorPanel'>
+          <div className='assistorPopup'>
                 <div className='teacherPanel'>
                     <ul className="nav nav-tabs">
                       <li role="presentation" className="active"><a href="#">前辈A</a></li>
@@ -26,6 +26,8 @@ var AssistorPanel = React.createClass({
                     </ul>
                 </div>
                 <div className='infoSearchPanel'>
+                    
+                    //豆豆类别对应的属性
                 </div>
             </div>
         )
@@ -45,4 +47,4 @@ var AssistorPanel = React.createClass({
     },
 });
 
-module.exports = AssistorPanel;
+module.exports = AssistorPopup;

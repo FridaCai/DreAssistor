@@ -120,7 +120,7 @@ var MuleTemplate = React.createClass({
                     <RadioGroup param={bpRadioGroup} ref='bpRadioGroup'/>
                     <div style={{clear:'both'}}>
                         <label>实测</label>
-                        <input name='number' defaultValue={bpValue} ref='bpInput'/>Kpa 
+                        <input defaultValue={bpValue} ref='bpInput'/>Kpa 
                     </div>
                     <AttachmentList attachments={bpAttachments} ref='bpAttachmentList'/>
                 </div>
@@ -138,7 +138,7 @@ var MuleTemplate = React.createClass({
                     <RadioGroup param={heavyRadioGroup} ref='heavyRadioGroup'/>
                     <div style={{clear:'both'}}>
                         <label>实测</label>
-                        <input name='number' ref='heavyInput'/>kg
+                        <input defaultValue={heavyValue} ref='heavyInput'/>kg
                     </div>
                     <AttachmentList attachments={heavyAttachments} ref='heavyAttachmentList'/>
                 </div>

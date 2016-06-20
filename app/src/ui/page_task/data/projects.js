@@ -23,4 +23,14 @@ module.exports = class Projects {
 			return project.id === projectId;
 		})
 	}
+
+	dump(){
+		var obj = [];
+
+		this.arr.map(function(project){
+			obj.push(project.dump());
+		});
+		
+		return JSON.stringify(obj);
+	}
 }

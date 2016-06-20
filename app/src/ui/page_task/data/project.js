@@ -39,4 +39,23 @@ module.exports = class Project {
 		return this.children[index];
 	}
 
+	dump(){
+		var children = [];
+		this.children.map(function(child){
+			children.push(child.dump());
+		});
+
+		return {
+			id: this.id,
+			label: this.label,
+			creatorId: this.creatorId,
+			sop: this.sop,
+			ec: this.ec,
+			bprange: {
+				min: this.bprange.min,
+				max: this.bprange.max
+			},
+			children: children
+		};
+	}
 }
