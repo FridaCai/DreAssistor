@@ -53,9 +53,7 @@ var AttachmentList = React.createClass({
                     return (
                       <li className="list-group-item" key={id}>
                         {label}
-                        <div className='buttonGroup'>
-                            <button className='btn btn-default deleteBtn' onClick={this.onDelete.bind(this, id)}>Delete</button>
-                        </div>
+                        <button className='btn btn-default deleteBtn' onClick={this.onDelete.bind(this, id)}>Delete</button>
                       </li>
                     )
                   }).bind(this))

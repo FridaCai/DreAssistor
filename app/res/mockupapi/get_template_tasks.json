@@ -58,40 +58,40 @@
                 "type": "3",
                 "param": {
                     "bom":{
-                        "status": false,
+                        "isDone": false,
                         "attachments": []
                     },
                     "size": {
-                        "status": false,
+                        "isDone": false,
                         "attachments": []
                     },
                     "bp": {
-                        "status": false,
-                        "value": 0,
+                        "isDone": false,
+                        "value": 50,
                         "attachments": []
                     },
                     "tl": {
-                        "status": false,
+                        "isDone": false,
                         "graphicSrc": "",
-                        "attachements": []   
+                        "attachments": []   
                     },
                     "heavy": {
-                        "status": false,
+                        "isDone": false,
                         "value": "",
-                        "attachements": []   
+                        "attachments": []   
                     },
                     "maf":{
-                        "status": false,
+                        "isDone": false,
                         "graphicSrc": "",
-                        "attachements": []   
+                        "attachments": []   
                     },
                     "sil":{
-                        "status": false,
-                        "attachements": []  
+                        "isDone": false,
+                        "attachments": []  
                     },
                     "doc":{
-                        "status": false,
-                        "attachements": []  
+                        "isDone": false,
+                        "attachments": []  
                     }
                 }
             }

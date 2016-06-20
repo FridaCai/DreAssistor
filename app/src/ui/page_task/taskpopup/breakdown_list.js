@@ -12,10 +12,6 @@ var BreakDownList = React.createClass({
     getValue(){
         return this.state.subtasks;
     },
-
-    onStatusChange: function(subtask, status){
-        subtask.isDone = (status === 0 ? true: false);
-    },
   
     onDeleteClk: function(id){
         var sts = this.state.subtasks.filter(function(st){
@@ -57,7 +53,10 @@ var BreakDownList = React.createClass({
                             },{
                                 id: 1,
                                 label: "未完成"
-                            }]
+                            }],
+                            onChange: (function(selectedId){
+                                subtask.isDone = (selectedId === 0 ? true: false);
+                            }).bind(this),
                         }
 
                         return (
@@ -67,7 +66,7 @@ var BreakDownList = React.createClass({
                                     onClick={this.onDeleteClk.bind(this, id)}>
                                     Delete
                                 </button>
-                                <RadioGroup param={radioGroup} ref='completeStatusRadioGroup' onStatusChange={this.onStatusChange.bind(this, subtask)}/>
+                                <RadioGroup param={radioGroup} ref='completeStatusRadioGroup'/>
                             </li>          
                         )
                     }).bind(this))

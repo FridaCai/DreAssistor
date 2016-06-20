@@ -1,3 +1,6 @@
+import RadioGroup from '../../widget/radiogroup/index.js';
+import AttachmentList from './attachment_list.js';
+
 var MuleTemplate = React.createClass({
     getValue(){
         return {
@@ -9,180 +12,157 @@ var MuleTemplate = React.createClass({
         return {
         }
     },
-    onStatusChange: function(){
 
+    getValue(){
+        return {
+            bom: {
+                isDone: (this.refs.bomRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.bomAttachmentList.getValue()
+            },
+            size: {
+                isDone: (this.refs.sizeRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.sizeAttachmentList.getValue()
+            },
+            bp: {
+                isDone: (this.refs.bpRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.bpAttachmentList.getValue(),
+                value: this.refs.bpInput.value,
+            },
+            tl: {
+                isDone: (this.refs.tlRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.tlAttachmentList.getValue(),
+            },
+            heavy: {
+                isDone: (this.refs.heavyRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.heavyAttachmentList.getValue(),  
+                value: this.refs.heavyInput.value,
+            },
+            maf: {
+                isDone: (this.refs.mafRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.mafAttachmentList.getValue(),  
+            },
+            sil: {
+                isDone: (this.refs.silRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.silAttachmentList.getValue(),  
+            },
+            doc: {
+                isDone: (this.refs.docRadioGroup.getValue() == 0 ? true: false),
+                attachments: this.refs.docAttachmentList.getValue(),  
+            }
+        }
     },
+
 	render(){
         //isDone, value, graph, attachments, 
         const { bom, size, bp, tl, heavy, maf, sil, doc //tl: transmission lose, maf: 流量传感器
          } = this.props;
 
-         var project_bp_range = {max: 100, min:10};
-         var project_heavy_range = {max: 100, min: 10};
+        var project_bp_range = {max: 100, min:10};
+        var project_heavy_range = {max: 100, min: 10};
+
+
+        var getRadioParam = function(target){
+            return {
+                id: target,
+                selectedId: eval(target).isDone ? 0:1,
+                options: [{
+                    id: 0,
+                    label:"完成"
+                },{
+                    id: 1,
+                    label: "未完成"
+                }],
+                onChange:function(selectedId){
+                    eval(target).isDone = (selectedId === 0 ? true: false);
+                }
+            }
+        }
+
+        var bomRadioGroup = getRadioParam('bom');
+        var bomAttachments = bom.attachments;
+        var sizeRadioGroup = getRadioParam('size');
+        var sizeAttachments = size.attachments;
+        var bpRadioGroup = getRadioParam('bp');
+        var bpAttachments = bp.attachments;
+        var bpValue = bp.value;
+        var tlRadioGroup = getRadioParam('tl');
+        var tlAttachments = tl.attachments;
+        var tlGraphicSrc = tl.graphicSrc;
+        var heavyRadioGroup = getRadioParam('heavy');
+        var heavyAttachments = heavy.attachments;
+        var heavyValue = heavy.value;
+        var mafRadioGroup = getRadioParam('maf');
+        var mafAttachments = maf.attachments;
+        var mafGraphicSrc = maf.graphicSrc;
+        var silRadioGroup = getRadioParam('sil');
+        var silAttachments = sil.attachments;
+        var docRadioGroup = getRadioParam('doc');
+        var docAttachments = doc.attachments;
+
 
 		return (
             <div className='mule'>
                 <div className='line2'>
                     <label>Mule Bom check</label>
-
-                    <div className='buttonGroup'>
-                        <input name='bom_status' type="radio" 
-                            defaultChecked={bom.isDone} onChange={this.onStatusChange.bind(this, 'bom', true)}/>
-                        <label>完成</label>
-                        <input name='bom_status' type="radio" 
-                            defaultChecked={!bom.isDone} onChange={this.onStatusChange.bind(this, 'bom', false)}/>
-                        <label>未完成</label>
-                    </div>
-
-                    <button className='btn btn-default'>
-                        附件上传
-                    </button>
+                    <RadioGroup param={bomRadioGroup} ref='bomRadioGroup'/>
+                    <AttachmentList attachments={bomAttachments} ref='bomAttachmentList'/>
                 </div>
                 
                 <div className='line2'>
                     <label>尺寸检查</label>
-
-                    <div className='buttonGroup'>
-                        <input name='size_status' type="radio" 
-                            defaultChecked={size.isDone} onChange={this.onStatusChange.bind(this, 'size', true)}/>
-                        <label>完成</label>
-                        <input name='size_status' type="radio" 
-                            defaultChecked={!size.isDone} onChange={this.onStatusChange.bind(this, 'size', false)}/>
-                        <label>未完成</label>
-                    </div>
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <RadioGroup param={sizeRadioGroup} ref='sizeRadioGroup' />
+                    <AttachmentList attachments={sizeAttachments} ref='sizeAttachmentList'/>
                 </div>
+
 
                 <div className='line2'>
                     <label>背压／压力降 目标:{project_bp_range.max}Kpa</label>
-
-                    <div className='buttonGroup'>
-                        <input name='bp_status' type="radio" 
-                            defaultChecked={bp.isDone} onChange={this.onStatusChange.bind(this, 'bp', true)}/>
-                        <label>完成</label>
-                        <input name='bp_status' type="radio" 
-                            defaultChecked={!bp.isDone} onChange={this.onStatusChange.bind(this, 'bp', false)}/>
-                        <label>未完成</label>
-                    </div>
-
+                    <RadioGroup param={bpRadioGroup} ref='bpRadioGroup'/>
                     <div style={{clear:'both'}}>
                         <label>实测</label>
-                        <input name='number'/>Kpa 
+                        <input name='number' defaultValue={bpValue} ref='bpInput'/>Kpa 
                     </div>
-                    
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <AttachmentList attachments={bpAttachments} ref='bpAttachmentList'/>
                 </div>
 
                 <div className='line2'>
                     <label>传递损失</label>
-
-                    <div className='buttonGroup'>
-                        <input name='tl_status' type="radio" 
-                            defaultChecked={tl.isDone} onChange={this.onStatusChange.bind(this, 'tl', true)}/>
-                        <label>完成</label>
-                        <input name='tl_status' type="radio" 
-                            defaultChecked={!tl.isDone} onChange={this.onStatusChange.bind(this, 'tl', false)}/>
-                        <label>未完成</label>
-                    </div>
-
+                    <RadioGroup param={tlRadioGroup} ref='tlRadioGroup'/>
                     <label>实测(曲线图)</label>
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <AttachmentList attachments={tlAttachments} ref='tlAttachmentList'/>
                 </div>
 
 
                 <div className='line2'>
                     <label>重量 目标:{project_heavy_range.max}Kg</label>
-
-                    <div className='buttonGroup'>
-                        <input name='heavy_status' type="radio" 
-                            defaultChecked={heavy.isDone} onChange={this.onStatusChange.bind(this, 'heavy', true)}/>
-                        <label>完成</label>
-                        <input name='heavy_status' type="radio" 
-                            defaultChecked={!heavy.isDone} onChange={this.onStatusChange.bind(this, 'heavy', false)}/>
-                        <label>未完成</label>
-                    </div>
-
+                    <RadioGroup param={heavyRadioGroup} ref='heavyRadioGroup'/>
                     <div style={{clear:'both'}}>
                         <label>实测</label>
-                        <input name='number'/>kg
+                        <input name='number' ref='heavyInput'/>kg
                     </div>
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <AttachmentList attachments={heavyAttachments} ref='heavyAttachmentList'/>
                 </div>
-
-
-
 
 
                 <div className='line2'>
                     <label>MAF 5*5</label>
-
-                    <div className='buttonGroup'>
-                        <input name='maf_status' type="radio" 
-                            defaultChecked={maf.isDone} onChange={this.onStatusChange.bind(this, 'maf', true)}/>
-                        <label>完成</label>
-                        <input name='maf_status' type="radio" 
-                            defaultChecked={!maf.isDone} onChange={this.onStatusChange.bind(this, 'maf', false)}/>
-                        <label>未完成</label>
-                    </div>
-
+                    <RadioGroup param={mafRadioGroup} ref='mafRadioGroup'/>
                     <label>实测(曲线图)</label>
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <AttachmentList attachments={mafAttachments} ref='mafAttachmentList'/>
                 </div>
-                
-
-
 
 
                 <div className='line2'>
                     <label>SIL</label>
-
-                    <div className='buttonGroup'>
-                        <input name='sil_status' type="radio" 
-                            defaultChecked={sil.isDone} onChange={this.onStatusChange.bind(this, 'sil', true)}/>
-                        <label>完成</label>
-                        <input name='sil_status' type="radio" 
-                            defaultChecked={!sil.isDone} onChange={this.onStatusChange.bind(this, 'sil', false)}/>
-                        <label>未完成</label>
-                    </div>
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <RadioGroup param={silRadioGroup} ref='silRadioGroup'/>
+                    <AttachmentList attachments={silAttachments} ref='silAttachmentList'/>
                 </div>
-
-
 
 
                 <div className='line2'>
                     <label>文档检查</label>
-
-                    <div className='buttonGroup'>
-                        <input name='doc_status' type="radio" 
-                            defaultChecked={doc.isDone} onChange={this.onStatusChange.bind(this, 'doc', true)}/>
-                        <label>完成</label>
-                        <input name='doc_status' type="radio" 
-                            defaultChecked={!doc.isDone} onChange={this.onStatusChange.bind(this, 'doc', false)}/>
-                        <label>未完成</label>
-                    </div>
-
-                    <button className='btn btn-default'> 
-                        附件上传
-                    </button>
+                    <RadioGroup param={docRadioGroup} ref='docRadioGroup'/>
+                    <AttachmentList attachments={docAttachments} ref='docAttachmentList'/>
                 </div>
             </div>
         )
