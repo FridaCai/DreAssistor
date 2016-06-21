@@ -2,8 +2,29 @@
 	"errCode": -1,
 	"errMsg": "",
 	"tasks": [
+        {
+            "id": "0",
+            "label": "普通",
+            "desc": "",
+            "startTime": 1465718720000,
+            "endTime": 1465718924000,
+            "markColor": 6076508,
+            "attachments": [],
+            "creatorId": "",
+            "priority": "0",
+            "subtasks": [{
+                "id": "0",
+                "label": "豆豆子项",
+                "isDone": true
+            }],
+            "privacy": "0",
+            "template": {
+                "type": "0"
+            },
+            "statical":["duration"]
+        },
 		{
-			"id": "0",
+			"id": "1",
     		"label": "EWO",
     		"desc": "",
     		"startTime": 1465718720000,
@@ -19,10 +40,11 @@
             }],
     		"privacy": "0",
     		"template": {
-    			"type": "0"
-    		}
+    			"type": "1"
+    		},
+            "statical":["duration"]
 		},{
-            "id": "1",
+            "id": "2",
             "label": "HotIssue",
             "desc": "",
             "startTime": 1465718720000,
@@ -34,16 +56,17 @@
             "subtasks": [],
             "privacy": "0",
             "template": {
-                "type": "1",
+                "type": "2",
                 "param": {
                     "rootCause": "rootCause",
                     "solution": "solution",
                     "execute": "execute",
                     "feedback": "feedback"
                 }
-            }
+            },
+            "statical":["duration"]
         },{
-            "id": "2",
+            "id": "3",
             "label": "Mule",
             "desc": "",
             "startTime": 1465718720000,
@@ -94,7 +117,8 @@
                         "attachments": []  
                     }
                 }
-            }
+            },
+            "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]
         }
 	]
 }	

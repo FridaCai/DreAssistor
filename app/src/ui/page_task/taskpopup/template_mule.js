@@ -61,10 +61,11 @@ var MuleTemplate = React.createClass({
         var project_heavy_range = {max: 100, min: 10};
 
 
-        var getRadioParam = function(target){
+        var getRadioParam = function(targetStr, target){
+
             return {
-                id: target,
-                selectedId: eval(target).isDone ? 0:1,
+                id: targetStr,
+                selectedId: target ? (target.isDone ? 0:1) : 1,
                 options: [{
                     id: 0,
                     label:"完成"
@@ -72,32 +73,32 @@ var MuleTemplate = React.createClass({
                     id: 1,
                     label: "未完成"
                 }],
-                onChange:function(selectedId){
-                    eval(target).isDone = (selectedId === 0 ? true: false);
+                onChange:function(selectedId){ //todo: problem in create template case.
+                    //eval(target).isDone = (selectedId === 0 ? true: false);
                 }
             }
         }
 
-        var bomRadioGroup = getRadioParam('bom');
-        var bomAttachments = bom.attachments;
-        var sizeRadioGroup = getRadioParam('size');
-        var sizeAttachments = size.attachments;
-        var bpRadioGroup = getRadioParam('bp');
-        var bpAttachments = bp.attachments;
-        var bpValue = bp.value;
-        var tlRadioGroup = getRadioParam('tl');
-        var tlAttachments = tl.attachments;
-        var tlGraphicSrc = tl.graphicSrc;
-        var heavyRadioGroup = getRadioParam('heavy');
-        var heavyAttachments = heavy.attachments;
-        var heavyValue = heavy.value;
-        var mafRadioGroup = getRadioParam('maf');
-        var mafAttachments = maf.attachments;
-        var mafGraphicSrc = maf.graphicSrc;
-        var silRadioGroup = getRadioParam('sil');
-        var silAttachments = sil.attachments;
-        var docRadioGroup = getRadioParam('doc');
-        var docAttachments = doc.attachments;
+        var bomRadioGroup = getRadioParam('bom', bom);
+        var bomAttachments = bom ? bom.attachments : [];
+        var sizeRadioGroup = getRadioParam('size', size);
+        var sizeAttachments = size ? size.attachments : [];
+        var bpRadioGroup = getRadioParam('bp', bp);
+        var bpAttachments = bp ? bp.attachments : [];
+        var bpValue = bp ? bp.value : '';
+        var tlRadioGroup = getRadioParam('tl', tl);
+        var tlAttachments = tl ? tl.attachments : [];
+        var tlGraphicSrc = tl ? tl.graphicSrc : '';
+        var heavyRadioGroup = getRadioParam('heavy', heavy);
+        var heavyAttachments = heavy ? heavy.attachments: [];
+        var heavyValue = heavy ? heavy.value: '';
+        var mafRadioGroup = getRadioParam('maf', maf)
+        var mafAttachments = maf ? maf.attachments : [];
+        var mafGraphicSrc = maf ? maf.graphicSrc : '';
+        var silRadioGroup = getRadioParam('sil', sil);
+        var silAttachments = sil ? sil.attachments : [];
+        var docRadioGroup = getRadioParam('doc', doc);
+        var docAttachments = doc ? doc.attachments : [];
 
 
 		return (

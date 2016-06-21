@@ -54,7 +54,19 @@ var API = {
 	},
 	getProjectArr: function(){
 		return this._projects.getArr();
-	}
+	},
+
+
+
+
+
+	_templateEnum: undefined,
+	setTemplateEnum:function(value){
+		this._templateEnum = value;
+	},
+	getTemplateEnum: function(){
+		return this._templateEnum;
+	},
 }
 
 //need more sophisticate design.

@@ -14,10 +14,10 @@ module.exports = class SubProject {
 		this.children = [];
 		param.children && param.children.map((function(c){
 			var child;
-			if(c.type === 'task'){
-				child = new Task();
-			}else if(c.type === 'tag'){
+			if(c.class === 'Tag'){
 				child = new Tag();
+			}else if(c.class === 'Task'){
+				child = new Task();
 			}
 			child.init(c);
 			this.children.push(child);

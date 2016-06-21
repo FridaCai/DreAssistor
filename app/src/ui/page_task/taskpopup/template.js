@@ -1,11 +1,12 @@
 import CDropDown from '../../widget/dropdown/dropdown.js';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_hotissue.js';
-import SizeDetectTemplate from './template_sizedetect.js';
+import EWOTemplate from './template_ewo.js';
 import MuleTemplate from './template_mule.js';
+import API from '../api.js';
 
 var TaskTemplatePanel = React.createClass({
-    templatePanel: [NormalTemplate, HotIssueTemplate, SizeDetectTemplate, MuleTemplate],
+    templatePanel: [NormalTemplate, EWOTemplate, HotIssueTemplate, MuleTemplate],
     dom: undefined,
     templateTypeDropdown: undefined,
 
@@ -19,20 +20,7 @@ var TaskTemplatePanel = React.createClass({
     updateJqueryComponent: function(){
         (function updateTaskTemplateDropdown(){
             var container = this.refs.templateTypeDropdown;
-            var options = [{
-                id: 0,
-                label: "普通模版",
-            },{
-                id: 1,
-                label: "Hot Issue 模版"
-            },{
-                id: 2,
-                label: "尺寸检测模版"
-            },{
-                id: 3,
-                label: 'Mule MRD'
-            }];
-
+            var options = API.getTemplateEnum();
             var defaultKey = this.state.type;
             var param = {
                 id: "templateTypeDropdown", //string.

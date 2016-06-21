@@ -1,4 +1,4 @@
-var SizeDetectTemplate = React.createClass({
+var EWOTemplate = React.createClass({
     getValue(){
         return {
             excelUrl:  ''
@@ -8,10 +8,16 @@ var SizeDetectTemplate = React.createClass({
         
     },
 	render(){
+        return (
+            <div>EWO</div>
+        )
+
+
+
 		return (
-            <div className='sizedetect'>
+            <div className='ewo'>
                 <div className='line'>
-                    <button>导入excel</button>
+                    EWO template
                 </div>
                 <img src='/app/res/curve.png'/>
 
@@ -20,6 +26,6 @@ var SizeDetectTemplate = React.createClass({
                 </form>
             </div>
         )
-	},
+	}
 });
-module.exports = SizeDetectTemplate;
+module.exports = EWOTemplate;

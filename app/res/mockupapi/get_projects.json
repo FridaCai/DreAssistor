@@ -20,7 +20,7 @@
               "time": 1452430100237,
               "width": 50,
               "markColor": 255,
-              "type": "tag"
+              "class": "Tag"
             },
             {
               "id": "tag_2",
@@ -28,7 +28,7 @@
               "time": 1463921464187,
               "width": 50,
               "markColor": 255,
-              "type": "tag"
+              "class": "Tag"
             },
             {
               "id": "tag_3",
@@ -36,7 +36,7 @@
               "time": 1478436664187,
               "width": 50,
               "markColor": 255,
-              "type": "tag"
+              "class": "Tag"
             }
           ]
         },
@@ -73,11 +73,10 @@
               ],
               "privacy": "0",
               "template": {
-                "type": "0",
+                "type": "1",
                 "param": {}
               },
-              "type": "task",
-              "templateTaskId": "0"
+              "class": "Task"
             },
             {
               "id": "98504224-3AA9-4E23-B723-A459D1EF4002",
@@ -98,11 +97,10 @@
               ],
               "privacy": "0",
               "template": {
-                "type": "0",
+                "type": "1",
                 "param": {}
               },
-              "type": "task",
-              "templateTaskId": "0"
+              "class": "Task"
             },
             {
               "id": "9B6BA01A-ACF8-44F7-9ED6-2D6659C144AC",
@@ -123,11 +121,10 @@
               ],
               "privacy": "0",
               "template": {
-                "type": "0",
+                "type": "1",
                 "param": {}
               },
-              "type": "task",
-              "templateTaskId": "0"
+              "class": "Task"
             },
             {
               "id": "DE18DC1D-D8E4-4873-9B79-98E04215140F",
@@ -180,8 +177,7 @@
                   }
                 }
               },
-              "type": "task",
-              "templateTaskId": "2"
+              "class": "Task"
             },
             {
               "id": "85E4C7C5-EF64-4CC3-9EB9-FE2638CF230C",
@@ -234,8 +230,7 @@
                   }
                 }
               },
-              "type": "task",
-              "templateTaskId": "2"
+              "class": "Task"
             },
             {
               "id": "A1EEBF37-C20C-4EE8-981E-64FA0CD95E2D",
@@ -288,8 +283,7 @@
                   }
                 }
               },
-              "type": "task",
-              "templateTaskId": "2"
+              "class": "Task"
             }
           ]
         }
@@ -313,7 +307,7 @@
               "time": 1452430100237,
               "width": 50,
               "markColor": 255,
-              "type": "tag"
+              "class": "Tag"
             },
             {
               "id": "tag_5",
@@ -321,7 +315,7 @@
               "time": 1463921464187,
               "width": 50,
               "markColor": 255,
-              "type": "tag"
+              "class": "Tag"
             },
             {
               "id": "tag_6",
@@ -329,7 +323,7 @@
               "time": 1478436664187,
               "width": 50,
               "markColor": 255,
-              "type": "tag"
+              "class": "Tag"
             }
           ]
         },
@@ -366,15 +360,9 @@
               ],
               "privacy": "0",
               "template": {
-                "type": "1",
-                "param": {
-                  "rootCause": "rootCause",
-                  "solution": "solution",
-                  "execute": "execute",
-                  "feedback": "feedback"
-                }
+                "type": "1"
               },
-              "type": "task"
+              "class": "Task"
             }
           ]
         }

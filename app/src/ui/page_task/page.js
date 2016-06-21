@@ -18,13 +18,11 @@ var PageTask = React.createClass({
 
     onTaskCreate: function(e, param){
         var templateTask = API.getTemplateTasks().find(param.templateTaskId);
-
         var taskObj = $.extend({}, templateTask);
         taskObj = $.extend(taskObj, {   
             id: Util.generateUUID(),
             startTime: param.startTime,
             endTime: param.endTime,
-            templateTaskId: param.templateTaskId,
         });
         var task = new Task();
         task.init(taskObj);
@@ -43,11 +41,20 @@ var PageTask = React.createClass({
         API.signal_timeline_contextmenu_show.listen(this.onContextMenuShow);
         API.signal_assistorpopup_show.listen(this.onAssistorPopupShow);
 
-        var url = '/app/res/mockupapi/get_projects.json';
-        Util.getData(url).then((function(param){
-            if(param.errCode !== -1)
-                return;
-            API.setProjects(param.projects);
+
+        Promise.all([
+            Util.getData('/app/res/mockupapi/get_projects.json'),
+            Util.getData('/app/res/mockupapi/get_template_enum.json')
+        ]).then((function(param){
+            var projectsResponse = param[0];
+            var templateEnumResponse = param[1];
+
+            if(projectsResponse.errCode == -1){
+                API.setProjects(projectsResponse.projects);    
+            }
+            if(templateEnumResponse.errCode == -1){
+                API.setTemplateEnum(templateEnumResponse.templateenum);       
+            }
             this.forceUpdate();
         }).bind(this));
     },
