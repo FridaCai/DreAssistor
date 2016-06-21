@@ -89,7 +89,7 @@ var TaskPopup = React.createClass({
 
 
                 <div className="line taskType">
-                    <label>豆豆模版</label>
+                    <label>豆豆类型</label>
                     <TaskTemplatePanel template={template} ref='templatePanel'/>
                 </div>
 	        </div>

@@ -117,7 +117,7 @@ var MuleTemplate = React.createClass({
 
 
                 <div className='line2'>
-                    <label>背压／压力降 目标:{project_bp_range.max}Kpa</label>
+                    <label>背压 目标:{project_bp_range.max}Kpa</label>
                     <RadioGroup param={bpRadioGroup} ref='bpRadioGroup'/>
                     <div style={{clear:'both'}}>
                         <label>实测</label>

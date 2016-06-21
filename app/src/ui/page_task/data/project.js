@@ -39,6 +39,14 @@ module.exports = class Project {
 		return this.children[index];
 	}
 
+	findTasks(condition){
+		var tasks = [];
+		this.children.map(function(sp){
+			tasks = tasks.concat(sp.findTasks(condition));
+		})
+		return tasks;
+	}
+
 	dump(){
 		var children = [];
 		this.children.map(function(child){

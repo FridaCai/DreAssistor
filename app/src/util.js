@@ -2,7 +2,22 @@ var Util = {
 	
 	SEPERATOR: '___sep___',
 
-//uuid should be generated at backend.
+	getValue: function(obj, keys){
+		var target = obj;
+		var arr = keys.split('.');
+		
+		for(var i=0; i<arr.length; i++){
+			var key = arr[i];
+			target = target[key];
+			if(!target){
+				return false;
+			}
+		}
+
+		return target;
+	},
+
+	//uuid should be generated at backend.
 	generateUUID: function () {
 		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
 		var uuid = new Array( 36 );

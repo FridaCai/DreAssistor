@@ -76,7 +76,8 @@
                 "type": "1",
                 "param": {}
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration"]
             },
             {
               "id": "98504224-3AA9-4E23-B723-A459D1EF4002",
@@ -100,7 +101,8 @@
                 "type": "1",
                 "param": {}
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration"]
             },
             {
               "id": "9B6BA01A-ACF8-44F7-9ED6-2D6659C144AC",
@@ -124,7 +126,8 @@
                 "type": "1",
                 "param": {}
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration"]
             },
             {
               "id": "DE18DC1D-D8E4-4873-9B79-98E04215140F",
@@ -177,7 +180,8 @@
                   }
                 }
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]
             },
             {
               "id": "85E4C7C5-EF64-4CC3-9EB9-FE2638CF230C",
@@ -230,7 +234,8 @@
                   }
                 }
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]
             },
             {
               "id": "A1EEBF37-C20C-4EE8-981E-64FA0CD95E2D",
@@ -283,7 +288,8 @@
                   }
                 }
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]
             }
           ]
         }
@@ -362,7 +368,8 @@
               "template": {
                 "type": "1"
               },
-              "class": "Task"
+              "class": "Task",
+              "statical":["duration"]
             }
           ]
         }

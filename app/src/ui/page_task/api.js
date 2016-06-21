@@ -67,6 +67,21 @@ var API = {
 	getTemplateEnum: function(){
 		return this._templateEnum;
 	},
+
+
+	getStaticalProperties: function(tasks){
+		var properties = [];
+		
+		tasks.map(function(task){
+			task.statical.map(function(property){
+				if(properties.indexOf(property) === -1){
+					properties.push(property);
+				}
+			})
+		})
+
+		return properties;
+	}
 }
 
 //need more sophisticate design.

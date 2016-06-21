@@ -1,5 +1,6 @@
 import Task from './task.js';
 import Tag from './tag.js';
+import Util from '../../../util.js';
 
 module.exports = class SubProject {
 	constructor(){
@@ -31,6 +32,33 @@ module.exports = class SubProject {
 
 	setParent(parent){
 		this.parent = parent;
+	}
+
+
+//{template.type: 'a'}
+	findTasks(condition){
+		var meetCondition = function(task){
+			if(!condition)
+				return true;
+			
+			if(Util.getValue(task, condition.key) === condition.value){
+				return true;
+			}
+
+			return false;
+		}
+
+		return this.children.filter(function(task){
+			if(!(task instanceof Task)){
+				return false;
+			}
+
+			if(meetCondition(task)){
+				return true;
+			}
+
+			return false;
+		})
 	}
 
 	dump(){
