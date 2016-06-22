@@ -174,10 +174,27 @@ var PropertyPanel = React.createClass({
         //build series and labels
         var series = [];
         var labels = [];
+        var avgSeries = [];
+
+
         var graphSeries = tasks.map((function(task){
             labels.push(task.label);
             series.push(this._getValue(task, property));
         }).bind(this))
+
+
+
+        var sum = 0;
+        series.map(function(v){
+            sum += parseFloat(v);
+        })
+        var avg = sum/series.length;
+        var avgSeries = series.map(function(){
+            return avg;
+        })
+
+
+
 
 
 
@@ -194,7 +211,7 @@ var PropertyPanel = React.createClass({
         if(graphType === '0'){
             this._chart = new Chartist.Bar('.ct-chart', {labels: labels, series: [series]}, options);
         }else if(graphType === '1'){
-            this._chart = new Chartist.Line('.ct-chart', {labels: labels, series: [series]}, options);
+            this._chart = new Chartist.Line('.ct-chart', {labels: labels, series: [series, avgSeries]}, options);
         }else if(graphType === '2'){
             this._chart = new Chartist.Pie('.ct-chart', {labels: labels, series: series}, options);
         }
