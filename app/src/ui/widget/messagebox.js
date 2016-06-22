@@ -18,6 +18,7 @@ var MessageBox = React.createClass({
              okHandler: this.props.okHandler || function(){},
              isShow: false,
              width: 400,
+             cName: this.props.cName,
         }
     },
     componentWillReceiveProps: function(newProps) {
@@ -66,12 +67,12 @@ var MessageBox = React.createClass({
 
         var content = this.getContent();
 
-        var style={width: `${this.state.width}px`};
-        
+      
+        var className = `MsgBox ${this.state.cName}`;
         return (
-            <div id='MsgBoxWrapper' className='MsgBox'>
+            <div id='MsgBoxWrapper' className={className}>
                 <div id='MsgBoxOverLay' className='MsgBoxOverLay' onClick={this.hide}></div>
-                <div className='MsgBoxMain'  style={style}>
+                <div className='MsgBoxMain'>
                     <div className='MsgBoxHeader'>
                         <h2 className='title'>{title}</h2>
                         <span className='closebtn' onClick={this.hide}>

@@ -30,7 +30,10 @@ var AssistorPopup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} okHandler={this.onOkClk} ref='msgbox' children={content}/>);
+        var className = 'assistorMsg';
+        return (<MessageBox title={title} 
+            okHandler={this.onOkClk} ref='msgbox' children={content} cName={className}/>
+        );
     },
 });
 

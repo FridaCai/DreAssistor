@@ -256,7 +256,7 @@ $.widget("custom.cdropdown", {
 
         container.append($(html));
 
-        var selector = "li[data=#id]".replace(/#id/g, id);
+        var selector = "li[data='#id']".replace(/#id/g, id);
         if(!icon){
             container.find(selector).find(".icon").remove();
         }else if(icon.endsWith("svg")){

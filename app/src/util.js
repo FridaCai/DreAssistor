@@ -10,7 +10,7 @@ var Util = {
 			var key = arr[i];
 			target = target[key];
 			if(!target){
-				return false;
+				return undefined;
 			}
 		}
 
