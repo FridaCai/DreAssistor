@@ -146,6 +146,8 @@ var TaskPopup = React.createClass({
             privacy: privacy,
             template: template,
         });
+
+        return Promise.resolve();
     },
     render: function() {
         var content = this.getContent();

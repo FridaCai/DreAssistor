@@ -19,6 +19,7 @@ var MessageBox = React.createClass({
              isShow: false,
              width: 400,
              cName: this.props.cName,
+             hideFooter: this.props.hideFooter
         }
     },
     componentWillReceiveProps: function(newProps) {
@@ -35,8 +36,9 @@ var MessageBox = React.createClass({
         })
     },
     onOKBtnClk: function() {
-        this.state.okHandler();
-        this.hide();
+        this.state.okHandler().then((function(){
+            this.hide();    
+        }).bind(this));
     },
 
     hide: function() {
@@ -69,6 +71,20 @@ var MessageBox = React.createClass({
 
       
         var className = `MsgBox ${this.state.cName}`;
+
+        var getFooterDom = (function(){
+            if(this.state.hideFooter){
+                return null
+            }
+
+            return (
+                <div className='MsgBoxBtns'>
+                    <button className='btn btn-primary msgboxactive' onClick={this.onOKBtnClk}>{okBtnLabel}</button>
+                    <button className='btn btn-default msgboxdefault' onClick={this.hide}>{cancelBtnLabel}</button>
+                </div>
+            )
+        }).bind(this);
+
         return (
             <div id='MsgBoxWrapper' className={className}>
                 <div id='MsgBoxOverLay' className='MsgBoxOverLay' onClick={this.hide}></div>
@@ -82,10 +98,7 @@ var MessageBox = React.createClass({
                     <div className='MsgBoxContent'>
                         {content}
                     </div>
-                    <div className='MsgBoxBtns'>
-                        <button className='btn btn-primary msgboxactive' onClick={this.onOKBtnClk}>{okBtnLabel}</button>
-                        <button className='btn btn-default msgboxdefault' onClick={this.hide}>{cancelBtnLabel}</button>
-                    </div>
+                    {getFooterDom()}
                 </div>
             </div>
         );

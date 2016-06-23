@@ -56,6 +56,7 @@ var ProjectPopup = React.createClass({
     },
 
     onOkClk:function() {
+        return Promise.resolve();
     },
     render: function() {
         var content = this.getContent();
