@@ -104,18 +104,17 @@ var RegisterPopup = React.createClass({
     	var url = '/user';
 
     	if(valInfo.isValid){
-    		Util.postData(url, {
+    		return Util.postData(url, {
     			name: name,
     			email: email,
     			password: password,
     		}).then((function(res){
     			if(res.errCode != -1){
-    				console.log('error!');
+    				Promise.reject();//email already registered.
     			}
 
 				API.setLoginUser(res.person);
     			API.sigal_loginHeader_update.dispatch();
-    			return Promise.resolve();
     		}).bind(this));
     	}else{
     		this.setState({

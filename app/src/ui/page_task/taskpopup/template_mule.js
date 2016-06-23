@@ -2,12 +2,6 @@ import RadioGroup from '../../widget/radiogroup/index.js';
 import AttachmentList from './attachment_list.js';
 
 var MuleTemplate = React.createClass({
-    getValue(){
-        return {
-            
-        }
-    },
-
     getInitialState() {
         return {
         }
