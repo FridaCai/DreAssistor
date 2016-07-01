@@ -18,7 +18,7 @@ var MainView = React.createClass({
         API.sigal_loginHeader_update.unlisten(this.updateLoginHeader);
     },
     updateLoginHeader: function(){
-        this.menu.forceUpdate();
+        this.refs.menu.forceUpdate();
     },
     showRegisterPopup: function(){
         this.refs.registerpopup.show();

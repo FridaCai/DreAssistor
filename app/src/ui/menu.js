@@ -1,5 +1,7 @@
 import API from '../api.js';
-
+import {ENUM, CError} from '../exception.js';
+import User from '../data/user.js';
+import Request from '../request.js';
 
 var LoginUserPart = React.createClass({
     getInitialState: function() {
@@ -9,31 +11,57 @@ var LoginUserPart = React.createClass({
     onSignInClk: function(){
       var email = this.refs.emailInput.value;
       var password = this.refs.passwordInput.value;
-
-      var url = 'user';
-      Request.getData(Request.getBackendAPI(url), {
-        email: email,
+debugger;
+      Request.getData(Request.getBackendAPI('user'), {
+        email: email, 
         password: password
-      }).then(function(res){
+      }).then((function(res){
         if(res.errCode != -1){
-          return;
+          throw new CError(res.errCode);
         }
-      })
+        API.setLoginUser(res.user);
+        API.setToken(res.token);
+        
+        //todo: update ui.
+        this.setState({
+
+        })
+
+
+
+      }).bind(this)).catch((function(e){
+        var msg = ENUM[e.key]().res.msg;
+
+        //todo: setup ui to show error msg.
+        this.setState({})
+      }).bind(this));
+
+
+
+
     },
     onRegisterClk: function(){
       API.signal_registerpopup_show.dispatch();
     },
-    showLoginUserInfo: function(){
+    
 
+    showLoginUserInfo: function(){
+      
     },
+
+
+
     logOut: function(){
       API.resetLoginUser();
-      this.forceUpdate();
+      API.removeToken();
+
+
+      //todo: update ui.
     },
 
     render:function(){
-      var isLogin = API.isLogin();
       var loginUser = API.getLoginUser();
+      var isLogin = loginUser ? true: false;
 
       if (isLogin) {
         return (

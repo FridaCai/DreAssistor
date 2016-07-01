@@ -2,6 +2,8 @@ import MessageBox from '../widget/messagebox.js';
 import API from '../../api.js';
 import Util from '../../util.js';
 import Request from '../../request.js';
+import {ENUM, CError} from '../../exception.js';
+import User from '../../data/user.js';
 
 var RegisterPopup = React.createClass({
   	getInitialState: function() {
@@ -45,68 +47,56 @@ var RegisterPopup = React.createClass({
     },
 
     onOkClk:function() {
-    	var getValInfo = function(name, email, password, confirmpassword){
+        var errorMap = { 
+            c0: '请输入用户名',
+            c1: '请输入邮箱',
+            c2: '请输入合法的邮箱',
+            c3: '请输入密码',
+            c4: '请再次输入密码',
+            c5: '输入的两次密码不一致',
+        };
+
+    	var getErrorInfo = function(name, email, password, confirmpassword){
     		if(!name){
-    			return {
-    				isValid: false,
-    				errorMsg: '请输入用户名'
-    			}
+    			return 'c0';
     		}
 
     		if(!email){
-    			return {
-    				isValid: false,
-    				errorMsg: '请输入邮箱'
-    			}
+    			return 'c1';
     		}
 
     		var emailPatten = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     		if(!emailPatten.test(email)){
-    			return {
-    				isValid: false,
-    				errorMsg: '请输入合法的邮箱'
-    			}
+    			return 'c2';
     		}
 
     		if(!password){
-    			return {
-    				isValid: false,
-    				errorMsg: '请输入密码'
-    			}
+    			return 'c3';
     		}
     		
     		if(!confirmpassword){
-				return {
-    				isValid: false,
-    				errorMsg: '请再次输入密码'
-    			}
+				return 'c4';
 			}
     		
     		if(password != confirmpassword){
-    			return {
-    				isValid: false,
-    				errorMsg: '输入的两次密码不一致'
-    			}
+    			return 'c5';
     		}
 
-    		return {
-    			isValid: true,
-    			errorMsg: ''
-    		}
+    		return null
     	}
 
     	var name = this.refs.nameInput.value;
     	var email = this.refs.emailInput.value;
     	var password = this.refs.passwordInput.value;
     	var passwordConfirm = this.refs.passwordConfirmInput.value;
-    	var valInfo = getValInfo(name, email, password, passwordConfirm);
+    	var errorInfo = getErrorInfo(name, email, password, passwordConfirm);
         var url = Request.getBackendAPI('user');
 
 
-        if(!valInfo.isValid){
+        if(errorInfo){
             this.setState({
-                isValid: valInfo.isValid,
-                errorMsg: valInfo.errorMsg,
+                isValid: false,
+                errorMsg: errorMap[errorInfo],
             })
             return Promise.reject();
         }
@@ -120,14 +110,26 @@ var RegisterPopup = React.createClass({
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         }).then((function(res){
 			if(res.errCode != -1){
-				Promise.reject();//email already registered.
+                throw new CError(res.errCode);
 			}
 
-			API.setLoginUser(res.person);
+			API.setLoginUser({
+                id: res.userId,
+                name: name,
+                email: email,
+            });
+            API.setToken(res.token, res.expires);
 			API.sigal_loginHeader_update.dispatch();
-            Promise.resolve(); //why popup not closed???
-		}).bind(this));
-    	
+            Promise.resolve(); 
+            
+		}).bind(this)).catch((function(e){
+            var msg = ENUM[e.key]().res.msg;
+            this.setState({
+                isValid: false,
+                errorMsg: msg,
+            })
+            return Promise.reject();
+        }).bind(this));
     },
 
     render: function() {

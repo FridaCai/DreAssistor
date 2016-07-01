@@ -10,7 +10,7 @@ var getMockupAPI = function(url){
 	return prefix + url;
 }
 
-var getData = function(url, options) {
+var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
 
@@ -18,6 +18,7 @@ var getData = function(url, options) {
         var params = {
             url: url,
             type: 'GET',
+            data: data,
             success: resolve,
             error: reject
         };

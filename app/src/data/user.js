@@ -1,4 +1,4 @@
-module.exports = class Person {
+module.exports = class User {
 	constructor(){
 		
 	}

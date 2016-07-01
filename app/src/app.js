@@ -1,5 +1,6 @@
 import MainView from './ui/mainview.js';
 import PolyFill from './lib/polyfill.js';
+import API from './api.js';
 
 
 PolyFill.execute();
@@ -39,7 +40,9 @@ if(Promise != undefined){
 })(jQuery);
 
 (function() {
-	ReactDOM.render(<MainView/>, $("#domContainer")[0]);
+    API.initLoginStatus().then(function(){
+        ReactDOM.render(<MainView/>, $("#domContainer")[0]);    
+    })
 })();
 
 

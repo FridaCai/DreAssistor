@@ -1,5 +1,6 @@
 import Signal from './signal.js';
-import Person from './data/person.js';
+import User from './data/user.js';
+import Request from './request.js';
 
 var API = {
 	signal_page_refresh: new Signal(),
@@ -17,18 +18,66 @@ var API = {
 	
 
 	_loginUser: undefined,
-	setLoginUser: function(value){
-		this._loginUser = new Person();
-		this._loginUser.init(value);
-	},
-	resetLoginUser: function(){
-		this._loginUser = undefined;
+	setLoginUser: function(userObj){
+	    this._loginUser = new User();
+        this._loginUser.init(userObj);
 	},
 	getLoginUser: function() {
 		return this._loginUser;
 	},
-	isLogin: function(){
-		return this._loginUser ? true: false;
+	resetLoginUser: function(){
+		this._loginUser = undefined;
+	},
+	setToken:function(token){
+		if(!token) return;
+
+		window.localStorage.setItem('token', token);
+		$.ajaxSetup({
+			headers: {
+			  'x-access-token': token
+			}
+		});
+	},
+
+	getToken:function(){
+		return window.localStorage.getItem('token');
+	},
+
+	//when token has expired or invalide, remove token.
+	removeToken: function(){
+		window.localStorage.removeItem('token');
+		$.ajaxSetup({
+			headers: {
+			  'x-access-token': undefined
+			}
+		});
+	},
+
+	initLoginStatus: function(){
+		return new Promise((function(resolve, reject){
+			if(this._loginUser){
+				resolve();
+			}
+
+			if(!this.getToken())
+				resolve();
+
+			$.ajaxSetup({
+				headers: {
+				  'x-access-token': this.getToken()
+				}
+			});
+			Request.getData(Request.getBackendAPI('authTest')).then((function(res){
+				if(res.errCode!=-1){
+					this.removeToken();
+					resolve();					
+				}
+
+				this.setLoginUser(res.user);
+				resolve();
+
+			}).bind(this));	
+		}).bind(this))
 	}
 
 }
