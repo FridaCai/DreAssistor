@@ -3,15 +3,50 @@ import {ENUM, CError} from '../exception.js';
 import User from '../data/user.js';
 import Request from '../request.js';
 
-var LoginUserPart = React.createClass({
+
+       
+var UserCenterContainer = React.createClass({
     getInitialState: function() {
         return {
+          userName: '', //login.
+        }
+    },
+
+
+    logOut: function(){
+      API.resetLoginUser();
+      API.removeToken();
+      API.sigal_loginHeader_update.dispatch();
+
+    },
+    render: function(){
+      var loginUser = API.getLoginUser();
+        return (
+          <ul className="nav navbar-nav navbar-right" data-reactid=".0.0.0.1.1">
+            <li className="dropdown">
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                {loginUser.name}
+                <span className="caret"></span>
+              </a>
+              <ul className="dropdown-menu">
+                <li><a href="javascript: void(0);" onClick={this.showLoginUserInfo}>个人信息</a></li>
+                <li><a href="javascript: void(0);" onClick={this.logOut}>退出登录</a></li>
+              </ul>
+            </li>
+          </ul>
+        )
+    }
+})
+
+var LoginContainer = React.createClass({
+    getInitialState: function() {
+        return {
+          errormsg: ''
         }
     },
     onSignInClk: function(){
       var email = this.refs.emailInput.value;
       var password = this.refs.passwordInput.value;
-debugger;
       Request.getData(Request.getBackendAPI('user'), {
         email: email, 
         password: password
@@ -22,77 +57,40 @@ debugger;
         API.setLoginUser(res.user);
         API.setToken(res.token);
         
-        //todo: update ui.
-        this.setState({
-
-        })
-
-
+        API.sigal_loginHeader_update.dispatch();
 
       }).bind(this)).catch((function(e){
         var msg = ENUM[e.key]().res.msg;
 
-        //todo: setup ui to show error msg.
-        this.setState({})
+        this.setState({
+          errormsg: msg
+        })
       }).bind(this));
-
-
-
-
     },
+
     onRegisterClk: function(){
       API.signal_registerpopup_show.dispatch();
     },
-    
-
-    showLoginUserInfo: function(){
-      
-    },
-
-
-
-    logOut: function(){
-      API.resetLoginUser();
-      API.removeToken();
-
-
-      //todo: update ui.
-    },
 
     render:function(){
-      var loginUser = API.getLoginUser();
-      var isLogin = loginUser ? true: false;
+      var msg = this.state.errormsg;
 
-      if (isLogin) {
-        return (
-          <ul class="nav navbar-nav navbar-right" data-reactid=".0.0.0.1.1">
-            <li class="dropdown open">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-                {loginUser.name}
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="javascript: void(0);" onClick={this.showLoginUserInfo}>个人信息</a></li>
-                <li><a href="javascript: void(0);" onClick={this.logOut}>退出登录</a></li>
-              </ul>
-            </li>
-          </ul>
-        )
-      } else {
-        return (
-          <div className="navbar-form navbar-right">
-            <div className="form-group">
-              <input type="text" placeholder="Email" className="form-control" ref='emailInput'/>
-            </div>
-
-            <div className="form-group">
-              <input type="password" placeholder="Password" className="form-control" ref='passwordInput'/>
-            </div>
-            <button className="btn btn-success" onClick={this.onSignInClk}>Sign in</button>
-            <button className="btn btn-success" onClick={this.onRegisterClk}>Register</button>
+      return (
+        <div className="navbar-form navbar-right">
+          <div className="form-group" style={{color:'white'}}>
+            {msg}
           </div>
-        )
-      }
+          <div className="form-group">
+            <input type="text" placeholder="Email" className="form-control" ref='emailInput'/>
+          </div>
+
+          <div className="form-group">
+            <input type="password" placeholder="Password" className="form-control" ref='passwordInput'/>
+          </div>
+          <button className="btn btn-success" onClick={this.onSignInClk}>Sign in</button>
+          <button className="btn btn-success" onClick={this.onRegisterClk}>Register</button>
+        </div>
+      )
     }
 })
 
@@ -107,6 +105,15 @@ var Menu = React.createClass({
       var projectName = '豆豆';
       var menu1 = '首页'
       var menu2 = '联系我们';
+
+      
+      
+      var getLoginDom = function(){
+        var isLogin = API.isLogin();
+        if(isLogin)
+          return(<UserCenterContainer/>)
+        else return (<LoginContainer/>)
+      }
 
       return (
         <nav className="navbar navbar-inverse navbar-static-top">
@@ -126,7 +133,8 @@ var Menu = React.createClass({
                 <li><a href="#about">{menu2}</a></li>
               </ul>
 
-              <LoginUserPart/>
+
+              {getLoginDom()}
               
             </div>
           </div>

@@ -7,6 +7,7 @@ var API = {
 	signal_registerpopup_show: new Signal(),
 	sigal_loginHeader_update: new Signal(),
 
+
 	PAGE_NAMES: {
 		PROJECT_TIME: 'PROJECT_TIME',
 		PROJECT_ASSET: 'PROJECT_ASSET',
@@ -28,6 +29,9 @@ var API = {
 	resetLoginUser: function(){
 		this._loginUser = undefined;
 	},
+	isLogin: function(){
+		return this._loginUser ? true: false;
+	},	
 	setToken:function(token){
 		if(!token) return;
 
@@ -57,10 +61,13 @@ var API = {
 		return new Promise((function(resolve, reject){
 			if(this._loginUser){
 				resolve();
+				return;
 			}
 
-			if(!this.getToken())
+			if(!this.getToken()){
 				resolve();
+				return;
+			}
 
 			$.ajaxSetup({
 				headers: {
@@ -71,10 +78,12 @@ var API = {
 				if(res.errCode!=-1){
 					this.removeToken();
 					resolve();					
+					return;
 				}
 
 				this.setLoginUser(res.user);
 				resolve();
+				return;
 
 			}).bind(this));	
 		}).bind(this))
