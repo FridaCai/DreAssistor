@@ -1,7 +1,8 @@
+import moment from 'moment';
 import API from '../api.js';
 import TemplateTask from '../data/templatetask.js';
+import  Request from '../../../request.js';
 import Util from '../../../util.js';
-import moment from 'moment';
 
 var TemplateTaskList = React.createClass({
 	getInitialState: function() {
@@ -50,8 +51,9 @@ var TemplateTaskList = React.createClass({
     },
 
     componentDidMount: function(){
-    	var url = '/app/res/mockupapi/get_template_tasks.json';
-    	Util.getData(url).then((function(param){
+        var url = Request.getMockupAPI('get_template_tasks.json');
+
+        Request.getData(url).then((function(param){
     		if(param.errCode !== -1)
     			return;
 

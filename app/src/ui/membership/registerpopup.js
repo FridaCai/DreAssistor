@@ -1,7 +1,7 @@
 import MessageBox from '../widget/messagebox.js';
 import API from '../../api.js';
 import Util from '../../util.js';
-
+import Request from '../../request.js';
 
 var RegisterPopup = React.createClass({
   	getInitialState: function() {
@@ -99,30 +99,35 @@ var RegisterPopup = React.createClass({
     	var email = this.refs.emailInput.value;
     	var password = this.refs.passwordInput.value;
     	var passwordConfirm = this.refs.passwordConfirmInput.value;
-
     	var valInfo = getValInfo(name, email, password, passwordConfirm);
-    	var url = '/user';
+        var url = Request.getBackendAPI('user');
 
-    	if(valInfo.isValid){
-    		return Util.postData(url, {
-    			name: name,
-    			email: email,
-    			password: password,
-    		}).then((function(res){
-    			if(res.errCode != -1){
-    				Promise.reject();//email already registered.
-    			}
 
-				API.setLoginUser(res.person);
-    			API.sigal_loginHeader_update.dispatch();
-    		}).bind(this));
-    	}else{
-    		this.setState({
-    			isValid: valInfo.isValid,
-    			errorMsg: valInfo.errorMsg,
-    		})
-    		return Promise.reject();
-    	}
+        if(!valInfo.isValid){
+            this.setState({
+                isValid: valInfo.isValid,
+                errorMsg: valInfo.errorMsg,
+            })
+            return Promise.reject();
+        }
+
+
+		return Request.postData(url, {
+            name: name,
+            email: email,
+            password: password,    
+		}, {
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+        }).then((function(res){
+			if(res.errCode != -1){
+				Promise.reject();//email already registered.
+			}
+
+			API.setLoginUser(res.person);
+			API.sigal_loginHeader_update.dispatch();
+            Promise.resolve(); //why popup not closed???
+		}).bind(this));
+    	
     },
 
     render: function() {

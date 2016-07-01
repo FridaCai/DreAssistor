@@ -10,15 +10,14 @@ var LoginUserPart = React.createClass({
       var email = this.refs.emailInput.value;
       var password = this.refs.passwordInput.value;
 
-      var url = '/user';
-      Util.getData({
+      var url = 'user';
+      Request.getData(Request.getBackendAPI(url), {
         email: email,
         password: password
       }).then(function(res){
         if(res.errCode != -1){
           return;
         }
-        debugger;
       })
     },
     onRegisterClk: function(){
@@ -53,7 +52,7 @@ var LoginUserPart = React.createClass({
         )
       } else {
         return (
-          <form className="navbar-form navbar-right">
+          <div className="navbar-form navbar-right">
             <div className="form-group">
               <input type="text" placeholder="Email" className="form-control" ref='emailInput'/>
             </div>
@@ -61,9 +60,9 @@ var LoginUserPart = React.createClass({
             <div className="form-group">
               <input type="password" placeholder="Password" className="form-control" ref='passwordInput'/>
             </div>
-            <button type="submit" className="btn btn-success" onClick={this.onSignInClk}>Sign in</button>
-            <button type="submit" className="btn btn-success" onClick={this.onRegisterClk}>Register</button>
-          </form>
+            <button className="btn btn-success" onClick={this.onSignInClk}>Sign in</button>
+            <button className="btn btn-success" onClick={this.onRegisterClk}>Register</button>
+          </div>
         )
       }
     }

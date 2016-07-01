@@ -44,8 +44,6 @@ var PolyFill = {
         return target;
       };
     }
-
-
   }
 }
 module.exports = PolyFill;

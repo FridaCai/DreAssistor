@@ -10,6 +10,8 @@ import Util from '../../util.js';
 import Task from './data/task.js';
 import Project from './data/project.js';
 
+import Request from '../../request.js';
+
 var PageTask = React.createClass({
 	getInitialState: function() {
         return {
@@ -41,10 +43,9 @@ var PageTask = React.createClass({
         API.signal_timeline_contextmenu_show.listen(this.onContextMenuShow);
         API.signal_assistorpopup_show.listen(this.onAssistorPopupShow);
 
-
         Promise.all([
-            Util.getData('/app/res/mockupapi/get_projects.json'),
-            Util.getData('/app/res/mockupapi/get_template_enum.json')
+            Request.getData(Request.getMockupAPI('get_projects.json')),
+            Request.getData(Request.getMockupAPI('get_template_enum.json'))
         ]).then((function(param){
             var projectsResponse = param[0];
             var templateEnumResponse = param[1];
