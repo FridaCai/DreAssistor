@@ -7,7 +7,7 @@
     "start-webpack": "webpack -d --watch",
     "build": "cnpm install && webpack -d --watch",
     "build-ec2": "npm install && webpack -p",
-    "deploy": "http-server -p 8000 -c-1 ./",
+    "deploy": "http-server -p 8001 -c-1 ./",
     "stop": "killall node"
   },
   "repository": {
