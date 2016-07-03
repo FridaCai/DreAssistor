@@ -2,9 +2,10 @@ import Timeline from './lib/Timeline.jsx';
 import moment from 'moment';
 import API from '../api.js';
 import Util from '../../../util.js';
+import Signal from '../../../signal.js';
 import Task from '../data/task.js';
 import Tag from '../data/tag.js';
-
+import ContextMenu from '../contextmenu.jsx';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -38,13 +39,22 @@ var AddOn = React.createClass({
     }
 });
 
+
 var CTimeLine = React.createClass({
 	getInitialState: function() {
         return {};
     },
+ 
+    onContextMenu: function(param){
+        var p = $(this.refs.timeline).offset();
+        var left = param.left - p.left;
+        var top = param.top - p.top;
 
-    componentWillReceiveProps: function(newProps) {
-       
+
+        param.left = left;
+        param.top = top;
+
+        this.refs.contextmenu.show(param);
     },
     render: function() {
         var project = this.props.project;
@@ -92,21 +102,25 @@ var CTimeLine = React.createClass({
             project: this.props.project   
         });
         var sidebarWidth = $(window).width() * 0.2;
-        return (<div>
-	                <Timeline groups={groups}
-                        items={items}
-                        defaultTimeStart={moment().add(-12, 'hour')}
-                        defaultTimeEnd={moment().add(12, 'hour')}
-                        canMove={true}
-                        canResize={true}
-                        canChangeGroup={true}
-                        useResizeHandle={true}
-                        stackItems={true}
-                        fixedHeader={'fixed'}
-                        sidebarWidth={sidebarWidth}
-                        children={filter}
-                        project = {project}/>
-                </div>
+        return (
+            <div className='timeline' style={{position:'relative'}} ref='timeline'>
+                <Timeline groups={groups}
+                    items={items}
+                    defaultTimeStart={moment().add(-12, 'hour')}
+                    defaultTimeEnd={moment().add(12, 'hour')}
+                    canMove={true}
+                    canResize={true}
+                    canChangeGroup={true}
+                    useResizeHandle={true}
+                    stackItems={true}
+                    fixedHeader={'fixed'}
+                    sidebarWidth={sidebarWidth}
+                    children={filter}
+                    project = {project}
+                    onContextMenu = {this.onContextMenu}/>
+                <ContextMenu ref='contextmenu'/>
+            </div>
+	        
 		);
     }
 });

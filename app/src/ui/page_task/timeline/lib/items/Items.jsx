@@ -76,7 +76,11 @@ export default class Items extends React.Component {
         {
           visibleItems.map(
             (function(item) {
-              return (<Item key={_get(item, itemIdKey)}
+              return (
+
+
+
+                <Item key={_get(item, itemIdKey)}
                                           item={item}
                                           keys={this.props.keys}
                                           order={groupOrders[_get(item, itemGroupKey)]}
@@ -101,7 +105,13 @@ export default class Items extends React.Component {
                                           onDrag={this.props.itemDrag}
                                           onDrop={this.props.itemDrop}
                                           onItemDoubleClick={this.props.onItemDoubleClick}
-                                          onSelect={this.props.itemSelect}/>)
+                                          onSelect={this.props.itemSelect}
+                                          onContextMenu={this.props.onContextMenu}/>
+
+              )
+
+
+
             }).bind(this)
           ) 
         }

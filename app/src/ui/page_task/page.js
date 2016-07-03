@@ -52,7 +52,6 @@ var PageTask = React.createClass({
         API.signal_page_refresh.listen(this.onPageRefresh);
         API.signal_projectpoup_show.listen(this.onProjectShow);
         API.signal_timeline_task_create.listen(this.onTaskCreate);
-        API.signal_timeline_contextmenu_show.listen(this.onContextMenuShow);
         API.signal_statical_assistor_popup_show.listen(this.onStaticalAssistorPopupShow);
         API.signal_people_assistor_popup_show.listen(this.onPeopleAssistorPopupShow);
 
@@ -77,7 +76,6 @@ var PageTask = React.createClass({
         API.signal_page_refresh.unlisten(this.onPageRefresh);
         API.signal_projectpoup_show.unlisten(this.onProjectShow);
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
-        API.signal_timeline_contextmenu_show.unlisten(this.onContextMenuShow);
         API.signal_statical_assistor_popup_show.unlisten(this.onStaticalAssistorPopupShow);
         API.signal_people_assistor_popup_show.unlisten(this.onPeopleAssistorPopupShow);
     },
@@ -90,9 +88,7 @@ var PageTask = React.createClass({
     onProjectShow: function(e, param){
         this.refs.projectpopup.show(param);
     },
-    onContextMenuShow: function(e, param) {
-        this.refs.contextmenu.show(param);
-    },
+    
     onStaticalAssistorPopupShow: function(e, param){
         this.refs.staticalAssistorPopup.show(param);
     },

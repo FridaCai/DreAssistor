@@ -21,18 +21,30 @@ $list-item-padding: 0 4px;
 $weekend: rgba(250, 246, 225, 0.5);
 
 .react-calendar-timeline {
+  position:relative;
+
   * {
     box-sizing: border-box;
   }
   
-  .dropdown-menu{
-    position: absolute;
+  .contextmenu {
+    position:absolute;
+    top:0;
+    left:0;
     z-index: 100;
+
+    .dropdown-menu {
+      display:block;
+      position: absolute;
+      z-index: 100;
+    }
   }
+  
 
   .rct-outer {
     display: block;
     overflow: hidden;
+    position:relative;
   }
 
   .rct-scroll {
@@ -40,6 +52,7 @@ $weekend: rgba(250, 246, 225, 0.5);
     vertical-align: top;
     overflow-x: scroll;
     overflow-y: hidden;
+    position:relative;
   }
 
   .rct-canvas {
@@ -54,6 +67,8 @@ $weekend: rgba(250, 246, 225, 0.5);
   }
 
   .rct-items {
+    position:relative;
+
     .rct-item {
       overflow: hidden;
       position: absolute;

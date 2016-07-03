@@ -14,6 +14,8 @@ import Tag from '../../data/tag.js';
 import Task from '../../data/task.js';
 
 
+import ContextMenu from '../../contextmenu.jsx';
+
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
 const defaultKeys = {
@@ -559,6 +561,7 @@ export default class ReactCalendarTimeline extends React.Component {
     )
   }
 
+
   items (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops) {
 
     return (
@@ -588,7 +591,8 @@ export default class ReactCalendarTimeline extends React.Component {
              itemDrop={this.dropItem.bind(this)}
              onItemDoubleClick={this.props.onItemDoubleClick}
              itemResizing={this.resizingItem.bind(this)}
-             itemResized={this.resizedItem.bind(this)} />
+             itemResized={this.resizedItem.bind(this)} 
+             onContextMenu={this.props.onContextMenu}/>
     )
   }
 
@@ -778,6 +782,8 @@ export default class ReactCalendarTimeline extends React.Component {
 
     return (
       <div style={this.props.style} ref='container' className='react-calendar-timeline'>
+
+
         <div style={outerComponentStyle} className='rct-outer'>
           {sidebarWidth > 0 ? this.sidebar(height, groupHeights, headerHeight) : null}
           <div ref='scrollComponent'
@@ -817,6 +823,8 @@ export default class ReactCalendarTimeline extends React.Component {
             </div>
           </div>
         </div>
+
+
       </div>
     )
   }

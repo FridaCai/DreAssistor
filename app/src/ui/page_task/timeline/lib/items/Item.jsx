@@ -291,7 +291,7 @@ export default class Item extends React.Component {
   };
 
   onContextMenu(task, e) {
-     API.signal_timeline_contextmenu_show.dispatch({
+    this.props.onContextMenu({
       left: e.clientX,
       top: e.clientY,
       btns: [{
