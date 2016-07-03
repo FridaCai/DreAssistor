@@ -9,8 +9,8 @@ var API = {
 	signal_taskpopup_show: new Signal(),
 	signal_projectpoup_show: new Signal(),
 	signal_timeline_contextmenu_show: new Signal(),
-	signal_assistorpopup_show: new Signal(),
-
+	signal_statical_assistor_popup_show: new Signal(),
+	signal_people_assistor_popup_show: new Signal(),
 	
 	
 	_templateTasks: new TemplateTasks(),

@@ -295,10 +295,10 @@ export default class Item extends React.Component {
       left: e.clientX,
       top: e.clientY,
       btns: [{
-        label: '修改任务',
+        label: '修改豆豆',
         handler: function() {
           API.signal_taskpopup_show.dispatch({
-              title: '编辑豆豆',
+              title: '修改豆豆',
               taskObj: $.extend(true, {}, task),
               onOKHandler: (function(taskObj){
                   task.update(taskObj);
@@ -307,10 +307,29 @@ export default class Item extends React.Component {
           });
         }
       },{
-        label: '豆豆助手',
+        label: '删除豆豆',
         handler: function() {
-          API.signal_assistorpopup_show.dispatch({
-            title: '豆豆助手',
+          //修改状态位
+          alert('开发中 :)');
+        }
+      },{
+        label: '复制豆豆',
+        handler: function() {
+          alert('开发中 :)');
+        }
+      },{
+        label: '统计助手',
+        handler: function() {
+          API.signal_statical_assistor_popup_show.dispatch({
+            title: '统计助手',
+            templateTask: task.templateTask,
+          })
+        }
+      },{
+        label: '前辈助手',
+        handler: function(){
+          API.signal_people_assistor_popup_show.dispatch({
+            title: '前辈助手',
             templateTask: task.templateTask,
           })
         }

@@ -3,7 +3,7 @@ import MessageBox from '../../widget/messagebox.js';
 import PropertyPanel from './propertypanel.js';
 import TeacherPanel from './teacherpanel.js';
 
-var AssistorPopup = React.createClass({
+var StaticalAssistorPopup = React.createClass({
     getInitialState: function() {
         return {
         };
@@ -18,7 +18,7 @@ var AssistorPopup = React.createClass({
     
     getContent: function() {
         return (
-            <div className='assistorPopup'>
+            <div className='staticalAssistorPopup'>
                 <TeacherPanel/>
                 <PropertyPanel/>
             </div>
@@ -37,4 +37,4 @@ var AssistorPopup = React.createClass({
     },
 });
 
-module.exports = AssistorPopup;
+module.exports = StaticalAssistorPopup;

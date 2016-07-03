@@ -10,14 +10,14 @@ import './messagebox.css';
 var MessageBox = React.createClass({
   getInitialState: function() {
         return {
-             title: '',
+             title: this.props.title || '',
              disablemask: false,
              contentsSelectable: false,
              tabindex: 0,
-             msg: '',
+             msg: this.props.msg || '',
              okHandler: this.props.okHandler || function(){},
              isShow: false,
-             width: 400,
+             width: this.props.width || 400,
              cName: this.props.cName,
              hideFooter: this.props.hideFooter
         }
