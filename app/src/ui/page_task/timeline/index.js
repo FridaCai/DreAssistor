@@ -42,7 +42,10 @@ var AddOn = React.createClass({
 
 var CTimeLine = React.createClass({
 	getInitialState: function() {
-        return {};
+        return {
+            project: this.props.project,
+            filter: this.props.filter,
+        };
     },
  
     onContextMenu: function(param){
@@ -56,17 +59,47 @@ var CTimeLine = React.createClass({
 
         this.refs.contextmenu.show(param);
     },
-    render: function() {
-        var project = this.props.project;
-        var projectId = project.id;
-        var groups = [];
+    componentWillReceiveProps: function(nextprops) {
+        debugger;
+        this.setState({
+            project: nextprops.project,
+            filter: nextprops.filter,
+        })
+    },  
 
+
+    render: function() {debugger;
+        var passFilter = function(filter, ids){
+            if(!filter)
+                return true;
+
+            var target = filter;
+
+            for(var i=0; i<ids.length; i++){
+                var target = target[ids[i]];
+                if(!target)
+                    return false; 
+            }
+
+            return target ? true : false;
+        }
+
+
+        var project= this.state.project;
+        var projectId = project.id;
+        var filter = this.state.filter;
+
+        var fp = passFilter(filter, [projectId]);
+        if(!fp) return null;
+        
+        var groups = [];
         this.props.project.children.map(function(sp){
             groups.push({
                 id: projectId + '_' + sp.id,
                 title: sp.label,
                 instance: sp,
-            })
+            })    
+            
         })
 
         var items = [];
@@ -84,21 +117,25 @@ var CTimeLine = React.createClass({
                         instance: child,
                     })
                 }else if (child instanceof Task){
-                    items.push({
-                        id: projectId + '_' + spId + '_' + child.id,
-                        group: projectId + '_' + spId,
-                        title: child.label,
-                        start_time: child.startTime,
-                        end_time: child.endTime,
-                        color: Util.convertIntColorToHex(child.markColor),
-                        instance: child,
-                    })
+                    var ft = passFilter(filter, [projectId, spId, child.id]);
+                    if(ft){
+                        items.push({
+                            id: projectId + '_' + spId + '_' + child.id,
+                            group: projectId + '_' + spId,
+                            title: child.label,
+                            start_time: child.startTime,
+                            end_time: child.endTime,
+                            color: Util.convertIntColorToHex(child.markColor),
+                            instance: child,
+                        })    
+                    }
+                    
                 }
-            })    
+            })
         });
         
 
-        var filter = React.createElement(AddOn, {
+        var addOn = React.createElement(AddOn, {
             project: this.props.project   
         });
         var sidebarWidth = $(window).width() * 0.2;
@@ -115,7 +152,7 @@ var CTimeLine = React.createClass({
                     stackItems={true}
                     fixedHeader={'fixed'}
                     sidebarWidth={sidebarWidth}
-                    children={filter}
+                    children={addOn}
                     project = {project}
                     onContextMenu = {this.onContextMenu}/>
                 <ContextMenu ref='contextmenu'/>

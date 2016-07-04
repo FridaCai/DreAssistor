@@ -46,6 +46,9 @@ module.exports = class Project {
 		})
 		return tasks;
 	}
+	hasTask(condition){
+		return this.findTasks(condition).length === 0 ? false: true;
+	}
 
 	dump(){
 		var children = [];

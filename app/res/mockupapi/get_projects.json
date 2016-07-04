@@ -5,7 +5,7 @@
     {
       "id": "0",
       "label": "凯迪拉克",
-      "creatorId": "0",
+      "creatorId": 2,
       "sop": 1466049352000,
       "ec": "1.0T",
       "bprange": {},
@@ -62,7 +62,7 @@
               "desc": "",
               "markColor": 6076508,
               "attachments": [],
-              "creatorId": "",
+              "creatorId": 2,
               "priority": "0",
               "subtasks": [
                 {
@@ -87,7 +87,7 @@
               "desc": "",
               "markColor": 6076508,
               "attachments": [],
-              "creatorId": "",
+              "creatorId": 3,
               "priority": "0",
               "subtasks": [
                 {
@@ -112,7 +112,7 @@
               "desc": "",
               "markColor": 6076508,
               "attachments": [],
-              "creatorId": "",
+              "creatorId": 2,
               "priority": "0",
               "subtasks": [
                 {
@@ -137,7 +137,7 @@
               "desc": "",
               "markColor": 15773006,
               "attachments": [],
-              "creatorId": "",
+              "creatorId": 3,
               "priority": "0",
               "subtasks": [],
               "privacy": "0",
@@ -191,7 +191,7 @@
               "desc": "",
               "markColor": 15773006,
               "attachments": [],
-              "creatorId": "",
+              "creatorId": 2,
               "priority": "0",
               "subtasks": [],
               "privacy": "0",
@@ -245,7 +245,7 @@
               "desc": "",
               "markColor": 15773006,
               "attachments": [],
-              "creatorId": "",
+              "creatorId": 3,
               "priority": "0",
               "subtasks": [],
               "privacy": "0",
@@ -298,7 +298,7 @@
     {
       "id": "1",
       "label": "258",
-      "creatorId": "1",
+      "creatorId": 2,
       "sop": 1466049352000,
       "ec": "1.0T",
       "bprange": {},
@@ -355,7 +355,7 @@
               "desc": "",
               "markColor": 6076508,
               "attachments": [],
-              "creatorId": "0",
+              "creatorId": 2,
               "priority": "0",
               "subtasks": [
                 {

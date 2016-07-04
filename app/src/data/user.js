@@ -15,11 +15,13 @@ module.exports = class User {
 		Object.assign(this, param); 
 	}
 	
+
+	
 	dump(){
 		return {
 			id: this.id,
-			name: this.label,
-			email: this.url,
+			name: this.name,
+			email: this.email,
 		}
 	}
 }

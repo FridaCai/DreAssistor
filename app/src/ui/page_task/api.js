@@ -2,6 +2,7 @@ import Signal from '../../signal.js';
 import Task from './data/task.js';
 import TemplateTasks from './data/templatetasks.js';
 import Projects from './data/projects.js';
+import Users from '../../data/users.js';
 
 var API = {
 	signal_page_refresh: new Signal(),
@@ -68,6 +69,8 @@ var API = {
 	},
 
 
+
+	//for statical assistor panel
 	getStaticalProperties: function(tasks){
 		var properties = [];
 		
@@ -78,9 +81,92 @@ var API = {
 				}
 			})
 		})
-
 		return properties;
-	}
+	},
+
+
+	//for user assistor panel
+	_users:[],
+	getUsers:function(){
+		return this._users;
+	},
+	getUserArr: function(){
+		return this._users.getArr();
+	},
+	setUsers:function(userobjs){
+		this._users = new Users();
+		this._users.init(userobjs);
+	},
+	findUserById: function(id){
+		var user = this.getUserArr().find(function(user){
+			return user.id === id;
+		})
+		return user;
+	},
+
+
+	//go through each project and return unduplicated users in the tasks of project
+	findUsersHaveProject(){
+		var userIds = [];
+		this.getProjectArr().map(function(p){
+			p.findTasks().map(function(t){
+				var creatorId = t.creatorId;
+				if(userIds.indexOf(creatorId) === -1){
+					userIds.push(creatorId);
+				}
+			})
+		});
+
+		var users = userIds.map((function(id){
+			var user = this.findUserById(id);
+			return user;
+		}).bind(this));
+		return users;
+	},
+	
+
+	/**
+	filterTree: [{
+		projectId: {
+			subprojectId: {
+				taskId: {empty},
+				taskId: {}
+			},
+			subprojectId: {
+
+			}
+		}
+	},{
+	}]
+	**/
+	filterProjectsByUser:function(user){
+		var filtered = {};
+		var projects = API.getProjectArr();
+		for(var i=0; i<projects.length; i++){
+			var project = projects[i];
+			var condition = user ? {key: 'creatorId', value: user.id}: user;
+			if(!project.hasTask(condition)){
+				continue;
+			}
+
+			filtered[project.id]={};
+
+			var subprojects = project.children;
+			for(var j=0; j<subprojects.length; j++){
+				var subproject = subprojects[j];	
+				
+				if(!subproject.hasTask(condition)){
+					continue;
+				}
+
+				filtered[project.id][subproject.id] = {};
+				subproject.findTasks(condition).map(function(t){
+					filtered[project.id][subproject.id][t.id] = {};
+				})
+			}
+		}
+		return filtered;
+	},
 }
 
 //need more sophisticate design.

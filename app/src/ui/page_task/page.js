@@ -28,7 +28,6 @@ var PageTask = React.createClass({
             return;
         }
 
-
         var templateTask = API.getTemplateTasks().find(param.templateTaskId);
         var creator = SuperAPI.getLoginUser();
         var taskObj = $.extend({}, templateTask);
@@ -57,16 +56,21 @@ var PageTask = React.createClass({
 
         Promise.all([
             Request.getData(Request.getMockupAPI('get_projects.json')),
-            Request.getData(Request.getMockupAPI('get_template_enum.json'))
+            Request.getData(Request.getMockupAPI('get_template_enum.json')),
+            Request.getData(Request.getMockupAPI('get_users.json'))
         ]).then((function(param){
             var projectsResponse = param[0];
             var templateEnumResponse = param[1];
+            var usersResponse = param[2];
 
             if(projectsResponse.errCode == -1){
                 API.setProjects(projectsResponse.projects);    
             }
             if(templateEnumResponse.errCode == -1){
                 API.setTemplateEnum(templateEnumResponse.templateenum);       
+            }
+            if(usersResponse.errCode == -1){
+                API.setUsers(usersResponse.users);
             }
             this.forceUpdate();
         }).bind(this));
@@ -96,6 +100,7 @@ var PageTask = React.createClass({
         this.refs.peopleAssistorPopup.show(param);  
     },
     render: function() {
+        //todo: create popup when needed. otherwise, avoid loading data for the not necessary rendering.
         return (
             <div className='pageTask'>
                 <TemplateTaskList/>
@@ -109,7 +114,7 @@ var PageTask = React.createClass({
                 <TaskPopup ref='taskpopup'/>
                 <ProjectPopup ref='projectpopup'/>
                 <ContextMenu ref='contextmenu'/>
-                <PeopleAssistorPopup ref='peopleAssistorPopup'/>
+                <PeopleAssistorPopup ref='peopleAssistorPopup'/> 
                 <StaticalAssistorPopup ref='staticalAssistorPopup'/>
                 <MessageBox ref='msgbox' msg='请先登录' cName='msg_4_2'/>
             </div>

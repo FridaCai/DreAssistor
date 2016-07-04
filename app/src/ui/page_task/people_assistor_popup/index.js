@@ -5,6 +5,7 @@ import CTimeLine from '../timeline/index.js';
 var PeopleAssistorPopup = React.createClass({
     getInitialState: function() {
         return {
+            selectedUserIndex: 0,
         };
     },
     
@@ -14,27 +15,47 @@ var PeopleAssistorPopup = React.createClass({
         this.refs.msgbox.show();
     },
 
-    
+    onSelectUser: function(index){
+        this.setState({
+            selectedUserIndex:index,
+        })
+    },
+
     getContent: function() {
+        var users = API.findUsersHaveProject();
+        var selectedUser = users[this.state.selectedUserIndex];
+        
+        var filter = API.filterProjectsByUser(selectedUser);
+        var projects = API.getProjectArr();
+
+        var userIndex = 0;
         return (
             <div>
                 <ul className="nav nav-tabs">
-                  <li role="presentation" className="active"><a href="#">Home</a></li>
-                  <li role="presentation"><a href="#">Profile</a></li>
-                  <li role="presentation"><a href="#">Messages</a></li>
+                {
+                    users.map((function(user){
+                        var userName = user.name; 
+                        var userId = user.id;
+                        var className = (userId === selectedUser.id ? 'active': '');
+                        return (
+                            <li role="presentation" className={className} key={userId} 
+                                onClick={this.onSelectUser.bind(this, userIndex++)}>
+                                <a href="javascript:void(0);">{userName}</a>
+                            </li>
+                        )
+                    }).bind(this))
+                }
                 </ul>    
 
-
-
-
                 <div>
-                    {
-                        API.getProjectArr().map(function(project){
-                            return (
-                                <CTimeLine project={project} key={project.id}/>
-                            )
-                        })
-                    }
+                {
+                    //also filter project with userfilter???
+                    projects.map(function(project){
+                        return (
+                            <CTimeLine project={project} key={project.id} filter={filter}/>
+                        )
+                    })
+                }
                 </div>
             </div>
             
@@ -47,6 +68,9 @@ var PeopleAssistorPopup = React.createClass({
         var content = this.getContent();
         var title = this.state.title;
         var className = 'assistorMsg';
+
+
+
         return (<MessageBox title={title} 
             okHandler={this.onOkClk} ref='msgbox' children={content} cName={className} hideFooter={true}/>
         );
