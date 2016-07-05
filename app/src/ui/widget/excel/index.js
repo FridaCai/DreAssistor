@@ -12,9 +12,10 @@ var UploadExcelComponent = React.createClass({
     onDrop: function(e){
 
         var processWorkbook = function(workbook, xlsFileName){
-            debugger;
             var SHEET_NAME = 'SNORKEL';
+            var COLORS = ['#46aac4','#f69240', '#4a7ebb', '#a7c36f', '#be4b48', '#7d60a0', '#ff0000', '#00ff00', '#0000ff', '#04fced'];
             var worksheet = workbook.Sheets[SHEET_NAME];
+
 
             /*var address_of_cell = 'A9';
             var desired_cell = worksheet[address_of_cell];
@@ -31,7 +32,6 @@ var UploadExcelComponent = React.createClass({
                 columnMax: result[3],
               }
             })(worksheet['!ref']);
-
 
             var getColumn = function(min, max, columnName){
               var returnLabel = [];
@@ -118,17 +118,15 @@ var UploadExcelComponent = React.createClass({
   onDragOver(e){
     e.preventDefault();
   },
- 
-
-    render: function() {
-        return (
-          <div className='uploadExcel'>
-            <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop} >请将上传文件脱至此处</div>
-            <div className="ct-chart ct-perfect-fourth" ></div>
-          </div>
-        );
-     
-    }
+  render: function() {
+      return (
+        <div className='uploadExcel'>
+          <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop} >请将文件拖至此处上传</div>
+          <div className="ct-chart ct-perfect-fourth" ></div>
+        </div>
+      );
+   
+  }
 });
 
 module.exports = UploadExcelComponent;

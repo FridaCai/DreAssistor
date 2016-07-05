@@ -137,7 +137,7 @@
             var normalizedData = Chartist.getDataArray(chart.data, chart.optionsProvider.getCurrentOptions().reverseData);
 
             // Add column headers inclusing the series column header for the row headers
-            [options.seriesHeader].concat(chart.data.labels).forEach(function (text) {
+            ['', options.seriesHeader].concat(chart.data.labels).forEach(function (text) {
               firstRow
                 .elem('th', {
                   scope: 'col',
@@ -151,6 +151,18 @@
               var seriesName = series.name || [index + 1, '. Series'].join('');
 
               var row = tBody.elem('tr');
+
+              var controlth = row.elem('th', {
+                scope: 'row',
+                role: 'rowheader'
+              });
+              controlth.elem('input', {
+                type: 'checkbox'
+              });
+              controlth.elem('span', {
+                class: `markcolor color${index}`
+              });
+
 
               row.elem('th', {
                 scope: 'row',
