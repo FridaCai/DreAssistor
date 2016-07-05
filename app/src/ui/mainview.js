@@ -3,6 +3,8 @@ import Page from './page.js';
 import RegisterPopup from './membership/registerpopup.js';
 import API from "../api.js";
 
+import UploadExcelComponent from './widget/excel/index.js';
+
 var MainView = React.createClass({
 	getInitialState: function() {
         return {
@@ -29,6 +31,7 @@ var MainView = React.createClass({
 				<Menu ref='menu'/>
 				<Page/>
                 <RegisterPopup ref='registerpopup'/>
+                <UploadExcelComponent/>
     		</div>
 		);
     }

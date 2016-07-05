@@ -1,5 +1,6 @@
 import RadioGroup from '../../widget/radiogroup/index.js';
 import AttachmentList from './attachment_list.js';
+import UploadExcelComponent from '../../widget/excel/index.js';
 
 var MuleTemplate = React.createClass({
     getInitialState() {
@@ -98,6 +99,12 @@ var MuleTemplate = React.createClass({
 		return (
             <div className='mule'>
                 <div className='line2'>
+                    <label>Snorkel Noise</label>
+                    <UploadExcelComponent/>
+                </div>
+
+
+                <div className='line2'>
                     <label>Mule Bom check</label>
                     <RadioGroup param={bomRadioGroup} ref='bomRadioGroup'/>
                     <AttachmentList attachments={bomAttachments} ref='bomAttachmentList'/>
@@ -159,6 +166,14 @@ var MuleTemplate = React.createClass({
                     <RadioGroup param={docRadioGroup} ref='docRadioGroup'/>
                     <AttachmentList attachments={docAttachments} ref='docAttachmentList'/>
                 </div>
+
+                <div className='line2'>
+                    <label>文档检查</label>
+                    <RadioGroup param={docRadioGroup} ref='docRadioGroup'/>
+                    <AttachmentList attachments={docAttachments} ref='docAttachmentList'/>
+                </div>
+
+
             </div>
         )
 	}
