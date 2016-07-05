@@ -11,29 +11,60 @@ var UploadExcelComponent = React.createClass({
     
     onDrop: function(e){
 
-        var processWorkbook = function(workbook){
+        var processWorkbook = function(workbook, xlsFileName){
             debugger;
             var SHEET_NAME = 'SNORKEL';
             var worksheet = workbook.Sheets[SHEET_NAME];
 
-            var address_of_cell = 'A9';
+            /*var address_of_cell = 'A9';
             var desired_cell = worksheet[address_of_cell];
-            var desired_value = desired_cell ? desired_cell.v:undefined;
+            var desired_value = desired_cell ? desired_cell.v:undefined;*/
+
+            var range =  (function(raw){
+              var reg = /^([A-Z]*)(\d*)\:([A-Z]*)(\d*)$/;
+              var result = raw.match(reg);
+
+              return {
+                lineMin: parseInt(result[2]),
+                lineMax: parseInt(result[4]),
+                columnMin: result[1],
+                columnMax: result[3],
+              }
+            })(worksheet['!ref']);
 
 
+            var getColumn = function(min, max, columnName){
+              var returnLabel = [];
+              for(var i=min; i<=max; i++){
+                var key = `${columnName}${i}`;
 
-            var address_of_cell = 'A259';
-            var desired_cell = worksheet[address_of_cell];
-            var desired_value = desired_cell ? desired_cell.v:undefined;
+                var value = worksheet[key];
 
+                if(value && value.t == 'n'){
+                  var tmp = Math.round(value.v * 100) / 100;
+                  returnLabel.push(tmp);
+                }
+              }
+              return returnLabel;
+            }
+            
 
+            var labels = getColumn(range.lineMin, range.lineMax, 'A'); // a9-a259
+            var seriesQA = getColumn(range.lineMin, range.lineMax, 'B');
+            var series2Order = getColumn(range.lineMin, range.lineMax, 'C');
+            var series4Order = getColumn(range.lineMin, range.lineMax, 'D');
+            var series6Order = getColumn(range.lineMin, range.lineMax, 'E');
+
+            
+              
+            
             new Chartist.Line('.ct-chart', {
-              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+              labels: labels,
               series: [
-                {name: 'OA-level', data: [20000, 30000, 35000, 32000, 40000, 42000, 50000, 62000, 80000, 94000, 100000, 120000]},
-                {name: '2 order', data: [10000, 15000, 12000, 14000, 20000, 23000, 22000, 24000, 21000, 18000, 30000, 32000]},
-                {name: '4 order', data: [10000, 15000, 12000, 14000, 20000, 23000, 22000, 24000, 21000, 18000, 30000, 32000]},
-                {name: '6 order', data: [10000, 15000, 12000, 14000, 20000, 23000, 22000, 24000, 21000, 18000, 30000, 32000]}
+                {name: 'OA-level', data: seriesQA},
+                {name: '2 order', data: series2Order},
+                {name: '4 order', data: series4Order},
+                {name: '6 order', data: series6Order}
               ]
             }, {
               fullWidth: true,
@@ -44,16 +75,19 @@ var UploadExcelComponent = React.createClass({
               },
               axisX: {
                 labelInterpolationFnc: function(value) {
-                  return value.split('').slice(0, 3).join('');
+                  if(value % 500 === 0){
+                    return value;  
+                  }
+                  
                 }
               },
               plugins: [
                 Chartist.plugins.ctAccessibility({
-                  caption: 'Fiscal year 2015',
-                  seriesHeader: 'business numbers',
-                  summary: 'A graphic that shows the business numbers of the fiscal year 2015',
+                  caption: xlsFileName,
+                  seriesHeader: 'rpm',
+                  summary: '',
                   valueTransform: function(value) {
-                    return value + ' dollar';
+                    return value;
                   },
                   // ONLY USE THIS IF YOU WANT TO MAKE YOUR ACCESSIBILITY TABLE ALSO VISIBLE!
                   visuallyHiddenStyles: 'position: absolute; top: 100%; width: 100%; font-size: 11px; overflow-x: auto; background-color: rgba(0, 0, 0, 0.1); padding: 10px'
@@ -75,7 +109,7 @@ var UploadExcelComponent = React.createClass({
             reader.onload = function(e) {
                 var data = e.target.result;
                 var workbook = XLSX.read(data, {type: 'binary'});
-                processWorkbook(workbook);
+                processWorkbook(workbook, name);
             };
             reader.readAsBinaryString(f);
         }
