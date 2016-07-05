@@ -17,55 +17,7 @@
     }
 
     .ct-chart{
-        table{
-
-            th{
-                min-width: 80px;
-
-                input{
-                    float:left;
-                }
-                .markcolor{
-                    width: 10px;
-                    height: 10px;
-                    float: left;
-                    display: table-cell;
-                    margin-top: 5px;
-                    margin-left: 5px;
-
-                    &.color0{
-                        background: #46aac4;
-                    }
-                    &.color1{
-                        background: #f69240;
-                    }
-                    &.color2{
-                        background: #4a7ebb;
-                    }
-                    &.color3{
-                        background: #a7c36f;
-                    }
-                    &.color4{
-                        background: #be4b48;
-                    }
-                    &.color5{
-                        background: #7d60a0;
-                    }
-                    &.color6{
-                        background: #ff0000;
-                    }
-                    &.color7{
-                        background: #00ff00;
-                    }
-                    &.color8{
-                        background: #0000ff;
-                    }
-                    &.color9{
-                        background: #04fced;
-                    }
-                }
-            }
-        }
+        
         svg{
             .ct-series.ct-series-a {
                 .ct-point, .ct-line{
@@ -129,4 +81,59 @@
         
     }
 
+    .excelTable{
+        width: 100%; 
+        font-size: 11px; 
+        overflow-x: auto; 
+        background-color: 
+        rgba(0, 0, 0, 0.1); 
+        padding: 10px;
+
+        th{
+            min-width: 80px;
+
+            input{
+                float:left;
+            }
+            .markcolor{
+                width: 10px;
+                height: 10px;
+                float: left;
+                display: table-cell;
+                margin-top: 5px;
+                margin-left: 5px;
+
+                &.color0{
+                    background: #46aac4;
+                }
+                &.color1{
+                    background: #f69240;
+                }
+                &.color2{
+                    background: #4a7ebb;
+                }
+                &.color3{
+                    background: #a7c36f;
+                }
+                &.color4{
+                    background: #be4b48;
+                }
+                &.color5{
+                    background: #7d60a0;
+                }
+                &.color6{
+                    background: #ff0000;
+                }
+                &.color7{
+                    background: #00ff00;
+                }
+                &.color8{
+                    background: #0000ff;
+                }
+                &.color9{
+                    background: #04fced;
+                }
+            }
+        }
+    }
 }

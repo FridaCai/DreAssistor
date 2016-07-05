@@ -1,25 +1,74 @@
 import './index.less';
+import Table from './table.js';
 
 var UploadExcelComponent = React.createClass({
     getInitialState: function() {
         return {
+          labels: [],
+          series: [],
+          caption: '',
         }
     },
-    componentWillReceiveProps: function(newProps) {
-    },
 
+    _chart:undefined,
+    updateChart: function(){
+      var labels = this.state.labels;
+      var _series = this.state.series;
+      var caption = this.state.caption;
+
+      var series = [];
+      for(var i=0; i<_series.length; i++){
+        var serie = _series[i];
+        series.push(serie.data);
+      }
+
+      if(this._chart){
+        this._chart.detach();
+        this._chart.svg.remove();
+      }
+
+      this._chart = new Chartist.Line('.ct-chart', {
+        labels: labels,
+        series: series,
+      }, {
+        fullWidth: true,
+        lineSmooth: false,
+        chartPadding: {
+          right: 20,
+          left: 10
+        },
+        axisX: {
+          labelInterpolationFnc: function(value) {
+            if(value % 500 === 0){
+              return value;  
+            }
+          }
+        }
+      });
+
+
+    },
+/*
+,
+        plugins: [
+          Chartist.plugins.ctAccessibility({
+            caption: caption,
+            seriesHeader: 'rpm',
+            summary: '',
+            valueTransform: function(value) {
+              return value;
+            },
+            // ONLY USE THIS IF YOU WANT TO MAKE YOUR ACCESSIBILITY TABLE ALSO VISIBLE!
+            visuallyHiddenStyles: 'position: absolute; top: 100%; width: 100%; font-size: 11px; overflow-x: auto; background-color: rgba(0, 0, 0, 0.1); padding: 10px'
+          })
+        ]
+*/
     
     onDrop: function(e){
-
-        var processWorkbook = function(workbook, xlsFileName){
+        var processWorkbook = (function(workbook, xlsFileName){
             var SHEET_NAME = 'SNORKEL';
             var COLORS = ['#46aac4','#f69240', '#4a7ebb', '#a7c36f', '#be4b48', '#7d60a0', '#ff0000', '#00ff00', '#0000ff', '#04fced'];
             var worksheet = workbook.Sheets[SHEET_NAME];
-
-
-            /*var address_of_cell = 'A9';
-            var desired_cell = worksheet[address_of_cell];
-            var desired_value = desired_cell ? desired_cell.v:undefined;*/
 
             var range =  (function(raw){
               var reg = /^([A-Z]*)(\d*)\:([A-Z]*)(\d*)$/;
@@ -50,53 +99,30 @@ var UploadExcelComponent = React.createClass({
             
 
             var labels = getColumn(range.lineMin, range.lineMax, 'A'); // a9-a259
-            var seriesQA = getColumn(range.lineMin, range.lineMax, 'B');
-            var series2Order = getColumn(range.lineMin, range.lineMax, 'C');
-            var series4Order = getColumn(range.lineMin, range.lineMax, 'D');
-            var series6Order = getColumn(range.lineMin, range.lineMax, 'E');
-
-            
-              
-            
-            new Chartist.Line('.ct-chart', {
-              labels: labels,
-              series: [
-                {name: 'OA-level', data: seriesQA},
-                {name: '2 order', data: series2Order},
-                {name: '4 order', data: series4Order},
-                {name: '6 order', data: series6Order}
-              ]
+            var series = [{
+              label: worksheet['B3'].v,
+              isShow: true,
+              data: getColumn(range.lineMin, range.lineMax, 'B')
             }, {
-              fullWidth: true,
-              lineSmooth: false,
-              chartPadding: {
-                right: 20,
-                left: 10
-              },
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  if(value % 500 === 0){
-                    return value;  
-                  }
-                  
-                }
-              },
-              plugins: [
-                Chartist.plugins.ctAccessibility({
-                  caption: xlsFileName,
-                  seriesHeader: 'rpm',
-                  summary: '',
-                  valueTransform: function(value) {
-                    return value;
-                  },
-                  // ONLY USE THIS IF YOU WANT TO MAKE YOUR ACCESSIBILITY TABLE ALSO VISIBLE!
-                  visuallyHiddenStyles: 'position: absolute; top: 100%; width: 100%; font-size: 11px; overflow-x: auto; background-color: rgba(0, 0, 0, 0.1); padding: 10px'
-                })
-              ]
-            });
+              label: worksheet['C3'].v,
+              isShow: true,
+              data: getColumn(range.lineMin, range.lineMax, 'C')
+            }, {
+              label: worksheet['D3'].v,
+              isShow: true,
+              data: getColumn(range.lineMin, range.lineMax, 'D')
+            }, {
+              label: worksheet['E3'].v,
+              isShow: true,
+              data: getColumn(range.lineMin, range.lineMax, 'E')
+            }];
 
-        };
-
+            this.setState({
+              labels: labels,
+              series: series,
+              caption: xlsFileName,
+            }, this.updateChart);
+        }).bind(this);
 
 
         e.stopPropagation();
@@ -118,14 +144,24 @@ var UploadExcelComponent = React.createClass({
   onDragOver(e){
     e.preventDefault();
   },
+
+  onToggleCurve(index, isShow){
+    debugger;
+    this.state.series[index].isShow = isShow;
+    /*this.forceUpdate(this.updateChart);*/
+
+    $($('.ct-series')[index]).toggle();  
+    
+  },
+  
   render: function() {
       return (
         <div className='uploadExcel'>
-          <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop} >请将文件拖至此处上传</div>
+          <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop}>请将文件拖至此处上传</div>
           <div className="ct-chart ct-perfect-fourth" ></div>
+          <Table labels={this.state.labels} series={this.state.series} caption={this.state.caption} onToggleCurve={this.onToggleCurve}/>
         </div>
       );
-   
   }
 });
 
