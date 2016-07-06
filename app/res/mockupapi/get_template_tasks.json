@@ -115,7 +115,8 @@
                     "doc":{
                         "isDone": false,
                         "attachments": []  
-                    }
+                    },
+                    "snorkelNoise": ""
                 }
             },
             "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]

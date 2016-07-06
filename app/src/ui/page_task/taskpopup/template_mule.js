@@ -43,13 +43,14 @@ var MuleTemplate = React.createClass({
             doc: {
                 isDone: (this.refs.docRadioGroup.getValue() == 0 ? true: false),
                 attachments: this.refs.docAttachmentList.getValue(),  
-            }
+            },
+            snorkelNoise: this.refs.snorkelNoiseExcelComponent.getFileName(),
         }
     },
 
 	render(){
         //isDone, value, graph, attachments, 
-        const { bom, size, bp, tl, heavy, maf, sil, doc //tl: transmission lose, maf: 流量传感器
+        const { bom, size, bp, tl, heavy, maf, sil, doc, snorkelNoise//tl: transmission lose, maf: 流量传感器
          } = this.props;
 
         var project_bp_range = {max: 100, min:10};
@@ -100,7 +101,7 @@ var MuleTemplate = React.createClass({
             <div className='mule'>
                 <div className='line2'>
                     <label>Snorkel Noise</label>
-                    <UploadExcelComponent/>
+                    <UploadExcelComponent ref='snorkelNoiseExcelComponent' fileName={snorkelNoise}/>
                 </div>
 
 
