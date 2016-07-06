@@ -290,6 +290,11 @@
               },
               "class": "Task",
               "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]
+            },
+            {
+                "class":"Task", "id":"C493C4E0-121B-4659-97AE-814513E4E5A1","label":"M_sn1","startTime":1467759600000,"endTime":1467763200000,"desc":"","markColor":15773006,"attachments":[],"creatorId":2,"priority":"0","subtasks":[],"privacy":"0","template":{"type":"3","param":{"bom":{"isDone":false,"attachments":[]},"size":{"isDone":false,"attachments":[]},"bp":{"isDone":false,"attachments":[],"value":"50"},"tl":{"isDone":false,"attachments":[]},"heavy":{"isDone":false,"attachments":[],"value":""},"maf":{"isDone":false,"attachments":[]},"sil":{"isDone":false,"attachments":[]},"doc":{"isDone":false,"attachments":[]},"snorkelNoiseXls":["Snorkel Noise1.xlsx"]}},"type":"task","statical":["duration","template.param.bp.value","template.param.heavy.value","template.param.snorkelNoiseXls"]
+            },{
+                "class":"Task","id":"B23218CC-AAC7-4995-B9CC-E26468B25A3B","label":"M_sn2","startTime":1467756000000,"endTime":1467759600000,"desc":"","markColor":15773006,"attachments":[],"creatorId":2,"priority":"0","subtasks":[],"privacy":"0","template":{"type":"3","param":{"bom":{"isDone":false,"attachments":[]},"size":{"isDone":false,"attachments":[]},"bp":{"isDone":false,"attachments":[],"value":"50"},"tl":{"isDone":false,"attachments":[]},"heavy":{"isDone":false,"attachments":[],"value":""},"maf":{"isDone":false,"attachments":[]},"sil":{"isDone":false,"attachments":[]},"doc":{"isDone":false,"attachments":[]},"snorkelNoiseXls":["Snorkel Noise2.xlsx"]}},"type":"task","statical":["duration","template.param.bp.value","template.param.heavy.value","template.param.snorkelNoiseXls"]
             }
           ]
         }

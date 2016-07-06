@@ -2,11 +2,11 @@ import CDropDown from '../../widget/dropdown/dropdown.js';
 import API from '../api.js';
 import Util from '../../../util.js';
 import moment from 'moment';
+import UploadExcelComponent from '../../widget/excel/index.js';
 
 var PropertyPanel = React.createClass({
     _alltasks: undefined,
     _condition: undefined,
-
     _chart:undefined,
 
     getInitialState: function() {
@@ -18,23 +18,6 @@ var PropertyPanel = React.createClass({
     componentDidMount: function() {
         this.updateJqueryComponent();
         this.updateChart();
-    },
-
-    updateChart: function(){
-        var data = {
-          // A labels array that can contain any sort of values
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          // Our series array that contains series objects or in this case series data arrays
-          series: [
-            [10, 2, 4, 2, 0]
-          ]
-        };
-
-        var options = {
-          width: 600,
-          height: 400
-        };
-        this._chart = new Chartist.Line('.ct-chart', data, options);
     },
     
     updateJqueryComponent: function() {
@@ -55,7 +38,6 @@ var PropertyPanel = React.createClass({
             };
             this[id] = CDropDown.create(container, param);
         }).call(this);
-
 
         (function updateYAxisDropdown(){
             var properties = API.getStaticalProperties(this._getAllTasks());
@@ -106,6 +88,23 @@ var PropertyPanel = React.createClass({
         });
     },
 
+    updateChart: function(){
+        var data = {
+          // A labels array that can contain any sort of values
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          // Our series array that contains series objects or in this case series data arrays
+          series: [
+            [10, 2, 4, 2, 0]
+          ]
+        };
+
+        var options = {
+          width: 600,
+          height: 400
+        };
+        this._chart = new Chartist.Line('.ct-chart', data, options);
+    },
+
     _getCondition: function(){ //todo: should cache data.
         return (this.state.templateType === '-1' ? undefined: {
             key: 'template.type',
@@ -128,12 +127,16 @@ var PropertyPanel = React.createClass({
             'duration': '执行时间(小时)',
             'template.param.bp.value': '背压(Kpa)',
             'template.param.heavy.value': '重量(Kg)',
+            'template.param.snorkelNoiseXls': 'Snorkel Noise',
         }[column]
     },
 
     onRefreshGraph: function(){
-        this._chart.detach();
-        this._chart.svg.remove();
+        if(this._chart){
+            this._chart.detach();
+            this._chart.svg.remove();    
+        }
+        
 
         //get indices and property from xAxisInput and yAxisDropdown.
         var indices = (function(xAxisLabel){
@@ -171,6 +174,48 @@ var PropertyPanel = React.createClass({
         }.bind(this))
         
 
+
+
+
+
+
+
+
+
+        var snorkelNoiseXls = tasks.map((function(task){
+            return this._getValue(task, property);
+        }).bind(this));
+
+
+        
+    debugger;
+    
+    //merge of several excel files.
+    this.refs.uploadExcelComponent.setState({
+        fileNames: snorkelNoiseXls,
+    }, (function(){
+        this.refs.uploadExcelComponent.execute(snorkelNoiseXls);
+    }).bind(this))
+
+
+
+        return;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //build series and labels
         var series = [];
         var labels = [];
@@ -192,16 +237,6 @@ var PropertyPanel = React.createClass({
         var avgSeries = series.map(function(){
             return avg;
         })
-
-
-
-
-
-
- 
-
-
-
         var options = {
           width: 600,
           height: 400
@@ -360,12 +395,20 @@ var PropertyPanel = React.createClass({
                                 </div>
                                 
                             </div>
-                            <div className="ct-chart ct-perfect-fourth" style={{width: '600px',height:'400px'}}></div>
+                            
+
+
+
+
+
+
+                            <UploadExcelComponent ref='uploadExcelComponent'/>
                         </div>  
                     </div>
                 </div>
             </div>
         );
+//<!--<div className="ct-chart ct-perfect-fourth" style={{width: '600px',height:'400px'}}></div>-->
     },
 });
 

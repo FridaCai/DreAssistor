@@ -1,18 +1,25 @@
 import './index.less';
 import Table from './table.js';
 
+//# load, no files
+//# load, has files;
+//# drag and drop;
+
+//load excel files; parse xlsx files; draw chart and table.
+
 var UploadExcelComponent = React.createClass({
+
   getInitialState: function() {
       return {
-        fileName: this.props.fileName,
+        fileNames: this.props.fileNames,
         labels: [],
         series: [],
         caption: '',
       }
   },
 
-  getFileName: function(){
-    return this.state.fileName;
+  getFileNames: function(){
+    return this.state.fileNames;
   },
 
   _chart:undefined,
@@ -60,9 +67,9 @@ var UploadExcelComponent = React.createClass({
       var fileName = files[0].name;
 
       this.setState({
-        fileName: fileName,
+        fileNames: [fileName],
       })
-      this.execute(fileName);
+      this.execute(this.state.fileNames);
   },
 
   onDragOver(e){
@@ -161,25 +168,45 @@ var UploadExcelComponent = React.createClass({
       
   },
 
-  execute: function(fileName){
-    this.parseFile(fileName).then((function(param){
+  execute: function(fileNames){
+    var promiseArr = fileNames.map((function(fileName){
+      return this.parseFile(fileName);
+    }).bind(this));
+
+
+    
+
+    Promise.all(promiseArr).then((function(params){
+      var labels = params[0].labels;
+      var captions = [];
+      var series = [];
+      
+      params.map(function(param){
+        series = series.concat(param.series);
+        captions = captions.concat(param.caption);
+      })
+      
       this.setState({
-          labels: param.labels,
-          series: param.series,
-          caption: param.caption,
+          labels: labels,
+          series: series,
+          caption: captions.join(' & '),
       }, this.updateChart);
+
+
     }).bind(this)); 
+
+     
   },
 
   componentDidMount: function(){
-    if(!this.state.fileName)
+    if(!this.state.fileNames)
       return;
 
-    this.execute(this.state.fileName);
+    this.execute(this.state.fileNames);
   },
 
   render: function() {
-      var chartTableStyle = this.state.fileName ? {display: 'block'}: {display:'none'};
+      var chartTableStyle = this.state.fileNames ? {display: 'block'}: {display:'none'};
       return (
         <div className='uploadExcel'>
           <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop}>

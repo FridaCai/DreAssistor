@@ -116,10 +116,11 @@
                         "isDone": false,
                         "attachments": []  
                     },
-                    "snorkelNoise": ""
+                    "snorkelNoiseXls": []
                 }
             },
-            "statical":["duration", "template.param.bp.value", "template.param.heavy.value"]
-        }
+            "statical":["duration", "template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]
+            }
+
 	]
 }	
