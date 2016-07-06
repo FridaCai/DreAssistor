@@ -66,9 +66,9 @@ var UploadExcelComponent = React.createClass({
       var fileName = files[0].name;
 
       this.setState({
-        fileNames: [fileName],
-      })
-      this.execute(this.state.fileNames);
+        fileNames: [fileName]
+      }, this.execute.bind(this, [fileName]))
+      
   },
 
   onDragOver(e){
@@ -189,14 +189,20 @@ var UploadExcelComponent = React.createClass({
     }).bind(this)); 
   },
 
+  isShowChart: function(charts){
+    return (!charts || charts.length === 0) ? false: true;
+  },
   componentDidMount: function(){
-    if(!this.state.fileNames)
+    var isShowChart = this.isShowChart(this.state.fileNames);
+    if(!isShowChart)
       return;
+
     this.execute(this.state.fileNames);
   },
 
   render: function() {
-      var chartTableStyle = this.state.fileNames ? {display: 'block'}: {display:'none'};
+      var isShowChart = this.isShowChart(this.state.fileNames);
+      var chartTableStyle = isShowChart ? {display: 'block'}: {display:'none'};
       var dragAreaStyle = this.props.isForbidUpload ? {display: 'none'} : {display: 'block'};
 
       return (
