@@ -24,6 +24,14 @@ module.exports = class Projects {
 		})
 	}
 
+	findTasks(condition){
+		var tasks = [];
+		this.arr.map(function(p){
+			tasks = tasks.concat(p.findTasks(condition));
+		})
+		return tasks;
+	}
+
 	dump(){
 		var obj = [];
 

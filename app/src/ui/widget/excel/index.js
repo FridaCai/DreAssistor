@@ -8,7 +8,6 @@ import Table from './table.js';
 //load excel files; parse xlsx files; draw chart and table.
 
 var UploadExcelComponent = React.createClass({
-
   getInitialState: function() {
       return {
         fileNames: this.props.fileNames,
@@ -172,10 +171,6 @@ var UploadExcelComponent = React.createClass({
     var promiseArr = fileNames.map((function(fileName){
       return this.parseFile(fileName);
     }).bind(this));
-
-
-    
-
     Promise.all(promiseArr).then((function(params){
       var labels = params[0].labels;
       var captions = [];
@@ -191,25 +186,25 @@ var UploadExcelComponent = React.createClass({
           series: series,
           caption: captions.join(' & '),
       }, this.updateChart);
-
-
     }).bind(this)); 
-
-     
   },
 
   componentDidMount: function(){
     if(!this.state.fileNames)
       return;
-
     this.execute(this.state.fileNames);
   },
 
   render: function() {
       var chartTableStyle = this.state.fileNames ? {display: 'block'}: {display:'none'};
+      var dragAreaStyle = this.props.isForbidUpload ? {display: 'none'} : {display: 'block'};
+
       return (
         <div className='uploadExcel'>
-          <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop}>
+
+
+
+          <div style={dragAreaStyle} className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop}>
             请将文件拖至此处上传
           </div>
           <div className='chartTable' style={chartTableStyle}>

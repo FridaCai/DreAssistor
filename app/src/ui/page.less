@@ -215,89 +215,85 @@ form.upload{
 
 			.staticalAssistorPopup{
 				background: white;
+				width: 100%;
 
-				.teacherPanel{
-					width:50%;display:none;
-				}
-				.infoSearchPanel{
-					width: 100%;
+				.line.condition{
+				    padding: 10px 0;
+				    background: white;
+				    clear: both;
+				    margin: 0;
+				    width: 100%;
 
-					.line.condition{
-					    padding: 10px 0;
-					    background: white;
-					    clear: both;
-					    margin: 0;
-					    width: 100%;
-
-						>label{
-							float:left;
-							margin: 0 10px;
-						}
-
-						.cdropdown{
-							button{
-								border-radius: 4px;
-
-								.caret{
-									float:right;
-									margin: 7px 0 0 0;
-								}
-							}
-						}
-						.searchBtn{
-						    margin: 2px 10px;
-		    				padding: 0 10px;
-						}
-					}
-
-					.panel.panel-default{
+					>label{
 						float:left;
-						margin-bottom:0;
+						margin: 0 10px;
+					}
 
-						.tableSession{
-							float:left;
-						    width: 45%;
-						    border-right: 1px solid #ccc;
-						    box-sizing: border-box;
-						    height: 600px;
+					.cdropdown{
+						button{
+							border-radius: 4px;
 
-							.projectDom{
-								.panel-heading{
-								    color: #333;
-									background-color: #f5f5f5;
-									border-color: #ddd;
-								}
+							.caret{
+								float:right;
+								margin: 7px 0 0 0;
 							}
 						}
-						.chartSession{
-							float:left;
-							width: 50%;
-							.panel-body{
-								.axisControl{
-									float:left;
+					}
+					.searchBtn{
+					    margin: 2px 10px;
+	    				padding: 0 10px;
+					}
+				}
 
-									.line{
-										&.x{
-											.xAxisInput{
-											    border-radius: 3px;
-											    border: solid 1px #ccc;
-											    width: 150px;
-											    padding-left: 10px;
-											    
-											}
-											.hint{
-												margin-left: 10px;
-											}
-										}
-									}
+
+
+				.tableSession{
+
+					float:left;
+				    width: 45%;
+				    border-right: 1px solid #ccc;
+				    box-sizing: border-box;
+				    height: 600px;
+				    margin-bottom:0;
+
+					.projectDom{
+						.panel-heading{
+						    color: #333;
+							background-color: #f5f5f5;
+							border-color: #ddd;
+						}
+					}
+				}
+				.chartSession{
+					float:left;
+					width: 50%;
+					
+					.axisControl{
+						float:left;
+
+						.line{
+							&.x{
+								.xAxisInput{
+								    border-radius: 3px;
+								    border: solid 1px #ccc;
+								    width: 150px;
+								    padding-left: 10px;
+								    
 								}
-								.ct-chart {
-									float:left;
+								.hint{
+									margin-left: 10px;
 								}
 							}
 						}
 					}
+					.chartContainer{
+						width: 600px;
+					    height: 400px;
+					    float:left;
+					    margin-top:10px;
+					}
 				}
+				
 			}
 		}
 		

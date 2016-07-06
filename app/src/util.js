@@ -1,6 +1,14 @@
 var Util = {
 	
 	SEPERATOR: '___sep___',
+    COLUMN_LABLE_MAP: {
+	    'label': '名称',
+	    'template.type': '豆豆类型',
+	    'duration': '执行时间(小时)',
+	    'template.param.bp.value': '背压(Kpa)',
+	    'template.param.heavy.value': '重量(Kg)',
+	    'template.param.snorkelNoiseXls': 'Snorkel Noise'
+	},
 
 	getValue: function(obj, keys){
 		var target = obj;
