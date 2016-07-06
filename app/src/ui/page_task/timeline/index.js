@@ -60,7 +60,6 @@ var CTimeLine = React.createClass({
         this.refs.contextmenu.show(param);
     },
     componentWillReceiveProps: function(nextprops) {
-        debugger;
         this.setState({
             project: nextprops.project,
             filter: nextprops.filter,
@@ -68,7 +67,7 @@ var CTimeLine = React.createClass({
     },  
 
 
-    render: function() {debugger;
+    render: function() {
         var passFilter = function(filter, ids){
             if(!filter)
                 return true;

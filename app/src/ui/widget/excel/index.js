@@ -4,6 +4,7 @@ import Table from './table.js';
 var UploadExcelComponent = React.createClass({
     getInitialState: function() {
         return {
+          excelFilePath: this.props.excelFilePath,
           labels: [],
           series: [],
           caption: '',
@@ -45,24 +46,7 @@ var UploadExcelComponent = React.createClass({
           }
         }
       });
-
-
     },
-/*
-,
-        plugins: [
-          Chartist.plugins.ctAccessibility({
-            caption: caption,
-            seriesHeader: 'rpm',
-            summary: '',
-            valueTransform: function(value) {
-              return value;
-            },
-            // ONLY USE THIS IF YOU WANT TO MAKE YOUR ACCESSIBILITY TABLE ALSO VISIBLE!
-            visuallyHiddenStyles: 'position: absolute; top: 100%; width: 100%; font-size: 11px; overflow-x: auto; background-color: rgba(0, 0, 0, 0.1); padding: 10px'
-          })
-        ]
-*/
     
     onDrop: function(e){
         var processWorkbook = (function(workbook, xlsFileName){
@@ -128,17 +112,30 @@ var UploadExcelComponent = React.createClass({
         e.stopPropagation();
         e.preventDefault();
         var files = e.dataTransfer.files;
-        var i,f;
-        for (i = 0, f = files[i]; i != files.length; ++i) {
-            var reader = new FileReader();
-            var name = f.name;
-            reader.onload = function(e) {
-                var data = e.target.result;
-                var workbook = XLSX.read(data, {type: 'binary'});
-                processWorkbook(workbook, name);
-            };
-            reader.readAsBinaryString(f);
-        }
+
+
+
+        //todo: upload to server. load file from server and extract chart and table value;
+        var filename = files[0].name;
+        var url = `/app/res/${filename}`;
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", url, true);
+        oReq.responseType = "arraybuffer";
+        oReq.onload = (function(e) {
+          var arraybuffer = oReq.response;
+          var data = new Uint8Array(arraybuffer);
+          var arr = new Array();
+          for(var i = 0; i != data.length; ++i) 
+            arr[i] = String.fromCharCode(data[i]);
+          var bstr = arr.join("");
+          
+          this.setState({
+            excelFilePath: url,
+          });
+          var workbook = XLSX.read(bstr, {type:"binary"});
+          processWorkbook(workbook, filename);
+        }).bind(this);
+        oReq.send();
     },
 
   onDragOver(e){
@@ -146,20 +143,28 @@ var UploadExcelComponent = React.createClass({
   },
 
   onToggleCurve(index, isShow){
-    debugger;
     this.state.series[index].isShow = isShow;
-    /*this.forceUpdate(this.updateChart);*/
-
     $($('.ct-series')[index]).toggle();  
-    
   },
   
   render: function() {
+      var getTableChartDom = (function(){
+
+        if(this.state.excelFilePath){
+          return (
+            <div className='chartTable'>
+              <div className="ct-chart ct-perfect-fourth" ></div>
+              <Table labels={this.state.labels} series={this.state.series} caption={this.state.caption} onToggleCurve={this.onToggleCurve}/>
+            </div>
+            
+          )
+        }else return null;
+      }).call(this);
+
       return (
         <div className='uploadExcel'>
           <div className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop}>请将文件拖至此处上传</div>
-          <div className="ct-chart ct-perfect-fourth" ></div>
-          <Table labels={this.state.labels} series={this.state.series} caption={this.state.caption} onToggleCurve={this.onToggleCurve}/>
+          {getTableChartDom}
         </div>
       );
   }

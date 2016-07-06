@@ -31,7 +31,6 @@ var MainView = React.createClass({
 				<Menu ref='menu'/>
 				<Page/>
                 <RegisterPopup ref='registerpopup'/>
-                <UploadExcelComponent/>
     		</div>
 		);
     }

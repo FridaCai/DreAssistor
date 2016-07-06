@@ -60,9 +60,8 @@ var TaskTemplatePanel = React.createClass({
     render: function(){
         return (
             <div className='taskTemplateContainer'>
-                <span ref='templateTypeDropdown'/>
-                
-                <div ref='templatePanel'></div>
+                <span ref='templateTypeDropdown' className='templateTypeDropdown'/>
+                <div ref='templatePanel' className='templatePanel'></div>
             </div>
         )
         
