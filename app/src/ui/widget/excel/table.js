@@ -4,16 +4,27 @@
 var Table = React.createClass({
     getInitialState: function() {
         return {
-        	/*labels: this.props.labels,
+        	labels: this.props.labels,
         	series: this.props.series,
-        	caption: this.props.caption,
-        	onToggleCurve: this.props.onToggleCurve,*/
         }
     },
-
+	componentWillReceiveProps: function(newProps){
+		this.setState({
+			labels: newProps.labels,
+			series: newProps.series,
+		})
+	},
     onChange: function(index, isShow){
     	this.props.onToggleCurve(index, isShow);
+
+    	var series = this.state.series;
+    	series[index].isShow = isShow;
+
+    	this.setState({
+    		series: series,
+    	})
     },
+
 
     render: function(){
     	var i=-1;
@@ -27,7 +38,7 @@ var Table = React.createClass({
 							<th scope="col" role="columnheader"></th>
 							<th scope="col" role="columnheader">rpm</th>
 							{
-								this.props.labels.map((function(label){
+								this.state.labels.map((function(label){
 									return (
 										<th scope="col" role="columnheader" key={label}>{label}</th>
 									)
@@ -38,7 +49,7 @@ var Table = React.createClass({
 
 
 						{
-							this.props.series.map((function(serie){
+							this.state.series.map((function(serie){
 								var isChecked = serie.isShow;
 								var label = serie.label;
 								
@@ -48,7 +59,7 @@ var Table = React.createClass({
 								return (
 									<tr key={i}>
 										<th scope="row" role="rowheader">
-											<input type="checkbox" defaultChecked={isChecked} onChange={this.onChange.bind(this, i, !isChecked)}></input>  
+											<input type="checkbox" checked={isChecked} onChange={this.onChange.bind(this, i, !isChecked)}></input>  
 											<span className={className}></span>
 										</th>
 										<th scope="row" role="rowheader">{label}</th>

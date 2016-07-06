@@ -11,6 +11,10 @@ var UploadExcelComponent = React.createClass({
         }
     },
 
+    getExcelFilePath: function(){
+      return this.state.excelFilePath;
+    },
+
     _chart:undefined,
     updateChart: function(){
       var labels = this.state.labels;
@@ -105,6 +109,7 @@ var UploadExcelComponent = React.createClass({
               labels: labels,
               series: series,
               caption: xlsFileName,
+              excelFilePath: url,
             }, this.updateChart);
         }).bind(this);
 
