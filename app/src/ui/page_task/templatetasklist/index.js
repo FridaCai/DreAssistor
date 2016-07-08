@@ -3,6 +3,7 @@ import API from '../api.js';
 import TemplateTask from '../data/templatetask.js';
 import  Request from '../../../request.js';
 import Util from '../../../util.js';
+import MessageBox from '../../widget/messagebox.js';
 
 var TemplateTaskList = React.createClass({
 	getInitialState: function() {
@@ -11,6 +12,10 @@ var TemplateTaskList = React.createClass({
         }
     },
     onAddTaskBtnClk: function(){
+        this.refs.msgbox.show();
+        return;
+
+
         var id = Util.generateUUID();
 
 		API.signal_taskpopup_show.dispatch({
@@ -93,6 +98,7 @@ var TemplateTaskList = React.createClass({
     render: function() {
         return (
             <div className='taskList'>
+                <MessageBox ref='msgbox' msg='想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.'/>
 				<span className="label label-primary addTaskBtn" onClick={this.onAddTaskBtnClk}>+</span>
 				{
 					API.getTemplateTaskArr().map((function(task){

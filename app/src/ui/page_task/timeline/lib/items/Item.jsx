@@ -317,7 +317,9 @@ export default class Item extends React.Component {
         handler: function() {
           alert('开发中 :)');
         }
-      },{
+      }
+
+      /*,{
         label: '统计助手',
         handler: function() {
           API.signal_statical_assistor_popup_show.dispatch({
@@ -333,7 +335,10 @@ export default class Item extends React.Component {
             templateTask: task.templateTask,
           })
         }
-      }],
+      }*/
+
+
+      ],
     });
     e.preventDefault();
   }

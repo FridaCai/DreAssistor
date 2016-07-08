@@ -51,7 +51,7 @@ var MessageBox = React.createClass({
             return this.props.children;
         }
         return(
-            <p className='msgContentclassNamees'>{this.state.msg}</p>
+            <p className='msgboxTxt'>{this.state.msg}</p>
         )
     },
 

@@ -92,18 +92,46 @@ var PageTask = React.createClass({
     onProjectShow: function(e, param){
         this.refs.projectpopup.show(param);
     },
-    
     onStaticalAssistorPopupShow: function(e, param){
         this.refs.staticalAssistorPopup.show(param);
     },
     onPeopleAssistorPopupShow: function(e, param){
         this.refs.peopleAssistorPopup.show(param);  
     },
+    
+    onShowPropertyAssistor:function(){
+         API.signal_statical_assistor_popup_show.dispatch({
+            title: '统计助手',
+          })
+    },
+    onShowPeopleAssistor:function(){
+        API.signal_people_assistor_popup_show.dispatch({
+            title: '前辈助手',
+          })
+    },
+    
+    onAddProjectClk:function(){
+        API.signal_projectpoup_show.dispatch({
+            title: '添加项目',
+        });
+    },
+
     render: function() {
         //todo: create popup when needed. otherwise, avoid loading data for the not necessary rendering.
         return (
             <div className='pageTask'>
                 <TemplateTaskList/>
+
+
+
+
+                <div className="btn-group" role="group" aria-label="Basic example"> 
+                    <button type="button" className="btn btn-default" onClick={this.onAddProjectClk}>添加项目</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onShowPropertyAssistor}>查看属性助手</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onShowPeopleAssistor}>查看前辈助手</button> 
+                </div> 
+
+
                 {
                     API.getProjectArr().map(function(project){
                         return (
@@ -111,6 +139,7 @@ var PageTask = React.createClass({
                         )
                     })
                 }
+
                 <TaskPopup ref='taskpopup'/>
                 <ProjectPopup ref='projectpopup'/>
                 <ContextMenu ref='contextmenu'/>
