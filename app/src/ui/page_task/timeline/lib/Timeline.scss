@@ -197,6 +197,11 @@ $weekend: rgba(250, 246, 225, 0.5);
       box-sizing: 'border-box';
       border-bottom: $border-width solid $border-color;
       overflow: 'hidden';
+
+      h3{
+        margin: 0;
+        padding: 15px 0 0 3px;
+      }
     }
 
     .rct-sidebar-row {
