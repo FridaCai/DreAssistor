@@ -26,6 +26,7 @@ var PageTask = React.createClass({
         API.signal_taskpopup_show.listen(this.onTaskPopupShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
         API.signal_timeline_task_create.listen(this.onTaskCreate);
+        API.signal_projectpoup_show.listen(this.onProjectPopupShow);
 
         Promise.all([
             Request.getData(Request.getMockupAPI('get_projects.json')),
@@ -53,6 +54,7 @@ var PageTask = React.createClass({
         API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
         API.signal_page_refresh.unlisten(this.onPageRefresh);
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
+        API.signal_projectpoup_show.unlisten(this.onProjectPopupShow);
     },
 
     onPageRefresh: function(e){
