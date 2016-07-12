@@ -14,6 +14,7 @@ var StaticalAssistorPopup = React.createClass({
     },
     componentDidMount: function() {
         this.updateJqueryComponent();
+        this.refs.msgbox.show();
     },
 
     updateJqueryComponent: function() {

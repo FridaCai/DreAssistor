@@ -96,9 +96,13 @@ var PageTask = React.createClass({
     },
     
     onPropertyAssistorShow:function(){
-        this.refs.staticalAssistorPopup.show({
+        /*this.refs.staticalAssistorPopup.show({
             title: '统计助手',
-        });
+        });*/
+
+
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<StaticalAssistorPopup title='统计助手'/>, this.refs.popup);   
     },
     
     onPeopleAssistorShow:function(){
@@ -132,10 +136,16 @@ var PageTask = React.createClass({
                 <ProjectPopup ref='projectpopup'/>
                 <ContextMenu ref='contextmenu'/>
                 <PeopleAssistorPopup ref='peopleAssistorPopup'/> 
-                <StaticalAssistorPopup ref='staticalAssistorPopup'/>
+                
                 <MessageBox ref='msgbox' msg='请先登录' cName='msg_4_2'/>
+
+
+                <div ref='popup'></div>
             </div>
         );    
+
+
+        //<StaticalAssistorPopup ref='staticalAssistorPopup'/>
     }
 });
 
