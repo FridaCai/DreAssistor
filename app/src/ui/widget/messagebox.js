@@ -15,11 +15,11 @@ var MessageBox = React.createClass({
              contentsSelectable: false,
              tabindex: 0,
              msg: this.props.msg || '',
-             okHandler: this.props.okHandler || function(){},
+             okHandler: this.props.okHandler || function(){return Promise.resolve()},
              isShow: false,
              width: this.props.width || 400,
              cName: this.props.cName,
-             hideFooter: this.props.hideFooter
+             hideFooter: this.props.hideFooter,
         }
     },
     componentWillReceiveProps: function(newProps) {
@@ -36,6 +36,14 @@ var MessageBox = React.createClass({
         })
     },
     onOKBtnClk: function() {
+        //please do not show/hide popup but create/destroy...
+        if(!this.state.okHandler){
+            this.hide();
+            return;
+        }
+
+
+
         this.state.okHandler().then((function(){
             this.hide();    
         }).bind(this));

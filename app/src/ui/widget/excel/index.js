@@ -1,4 +1,5 @@
 import './index.less';
+import Util from './util.js';
 import Table from './table.js';
 
 //# load, no files
@@ -86,17 +87,12 @@ var UploadExcelComponent = React.createClass({
           var COLORS = ['#46aac4','#f69240', '#4a7ebb', '#a7c36f', '#be4b48', '#7d60a0', '#ff0000', '#00ff00', '#0000ff', '#04fced'];
           var worksheet = workbook.Sheets[SHEET_NAME];
 
-          var range =  (function(raw){
-            var reg = /^([A-Z]*)(\d*)\:([A-Z]*)(\d*)$/;
-            var result = raw.match(reg);
 
-            return {
-              lineMin: parseInt(result[2]),
-              lineMax: parseInt(result[4]),
-              columnMin: result[1],
-              columnMax: result[3],
-            }
-          })(worksheet['!ref']);
+          var range = Util.getRange(worksheet['!ref']);
+
+
+
+         
 
           var getColumn = function(min, max, columnName){
             var returnLabel = [];

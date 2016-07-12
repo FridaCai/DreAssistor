@@ -12,7 +12,8 @@ var TemplateTaskList = React.createClass({
         }
     },
     onAddTaskBtnClk: function(){
-        this.refs.msgbox.show();
+        this.refs.msgbox.show({
+        });
         return;
 
 
