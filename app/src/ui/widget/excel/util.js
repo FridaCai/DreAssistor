@@ -38,7 +38,16 @@ var Util = {
 	        n = (n-1) / 26;
 	    }
 	    return res;
-  	}
+  	},
+
+  	//5/13/13
+	convertYYYYMMDD2UnixTime: function(yyyyddmm){
+		return parseInt(moment(yyyyddmm, 'MM-DD-YYYY').format('x'));
+	},
+
+	convertUnixTime2YYYYMMDD: function(unixtime){
+		return new Date(unixtime).toLocaleDateString();
+	}
 }
 
 module.exports = Util;

@@ -90,17 +90,14 @@ var PageTask = React.createClass({
     },
 
     onProjectPopupShow: function(e, param){
-        this.refs.projectpopup.show({
-            title: '添加项目',
-        });
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<ProjectPopup title={param.title} project={param.project}/>, this.refs.popup);  
     },
     
     onPropertyAssistorShow:function(){
         /*this.refs.staticalAssistorPopup.show({
             title: '统计助手',
         });*/
-
-
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<StaticalAssistorPopup title='统计助手'/>, this.refs.popup);   
     },
@@ -122,8 +119,6 @@ var PageTask = React.createClass({
                     <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
                     <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
                 </div> 
-
-
                 {
                     API.getProjectArr().map(function(project){
                         return (
@@ -133,7 +128,7 @@ var PageTask = React.createClass({
                 }
 
                 <TaskPopup ref='taskpopup'/>
-                <ProjectPopup ref='projectpopup'/>
+                
                 <ContextMenu ref='contextmenu'/>
                 <PeopleAssistorPopup ref='peopleAssistorPopup'/> 
                 
@@ -146,6 +141,7 @@ var PageTask = React.createClass({
 
 
         //<StaticalAssistorPopup ref='staticalAssistorPopup'/>
+        //<ProjectPopup ref='projectpopup'/>
     }
 });
 

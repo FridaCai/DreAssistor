@@ -59,6 +59,8 @@ var Util = {
 		};
 	}(),
 
+
+	
 	convertDateToUnixTime: function(d) {
 		var unixTime = Date.parse(d);
 		unixTime = unixTime || undefined;

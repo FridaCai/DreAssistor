@@ -25,7 +25,10 @@ var ProjectPopup = React.createClass({
             <Table projectObj={null} ref='datatable'/>
 	    );   
     },
-
+    componentDidMount: function(){
+        this.updateJqueryComponent();
+        this.refs.msgbox.show();
+    },
     updateJqueryComponent: function() {
     	return;
     },

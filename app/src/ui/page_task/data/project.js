@@ -18,7 +18,7 @@ module.exports = class Project {
 		this.bpmax = param.bpmax;
 
 
-		this.sop = param.sop; //need or not? need to discuss on meeting.
+		this.sorp = param.sorp; //need or not? need to discuss on meeting.
 		
 		this.children = [];
 		param.children && param.children.map((function(sp){
@@ -65,7 +65,7 @@ module.exports = class Project {
 			id: this.id,
 			label: this.label,
 			creatorId: this.creatorId,
-			sop: this.sop,
+			sorp: this.sorp,
 			ec: this.ec,
 			bpmin: this.bpmin,
 			bpmax: this.bpmax,
