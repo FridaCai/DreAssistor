@@ -1,6 +1,7 @@
 import Util from '../../widget/excel/util.js';
 import Request from '../../../request.js';
 import moment from 'moment';
+import SaveAs from 'browser-saveas';
 
 var Table = React.createClass({
 	getInitialState: function() {
@@ -182,7 +183,7 @@ var Table = React.createClass({
 				
 				<div className='addOn'>
 					<label>可以将excel文件拖入表格</label>
-					<button class="btn btn-primary" onClick={this.export}>导出excel</button>
+					<button className="btn btn-primary" onClick={this.export}>导出excel</button>
 				</div>
 	    		<div className='dataTable' >
 	        		<ul className="nav nav-tabs">
@@ -211,34 +212,90 @@ var Table = React.createClass({
             </div>
 		)
 	},
-	
+
+
+	//convert this.state.projectObj to excel file.
 	export: function(){
-		//convert this.state.projectObj to excel file.
-		var ws = {};
-		var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
-		for(var R = 0; R != data.length; ++R) {
-			for(var C = 0; C != data[R].length; ++C) {
-				if(range.s.r > R) range.s.r = R;
-				if(range.s.c > C) range.s.c = C;
-				if(range.e.r < R) range.e.r = R;
-				if(range.e.c < C) range.e.c = C;
-				var cell = {v: data[R][C] };
-				if(cell.v == null) continue;
-				var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
-				
-				if(typeof cell.v === 'number') cell.t = 'n';
-				else if(typeof cell.v === 'boolean') cell.t = 'b';
-				else if(cell.v instanceof Date) {
-					cell.t = 'n'; cell.z = XLSX.SSF._table[14];
-					cell.v = datenum(cell.v);
+		var sheet_from_array_of_arrays = function(data){
+			var ws = {};
+			var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
+			for(var R = 0; R != data.length; ++R) {
+				for(var C = 0; C != data[R].length; ++C) {
+					if(range.s.r > R) range.s.r = R;
+					if(range.s.c > C) range.s.c = C;
+					if(range.e.r < R) range.e.r = R;
+					if(range.e.c < C) range.e.c = C;
+					var cell = {v: data[R][C] };
+					if(cell.v == null) continue;
+					var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+					
+					if(typeof cell.v === 'number') cell.t = 'n';
+					else if(typeof cell.v === 'boolean') cell.t = 'b';
+					else if(cell.v instanceof Date) {
+						cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+						cell.v = datenum(cell.v);
+					}
+					else cell.t = 's';
+					
+					ws[cell_ref] = cell;
 				}
-				else cell.t = 's';
-				
-				ws[cell_ref] = cell;
 			}
+			if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+			return ws;
 		}
-		if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
-		return ws;
+
+
+
+        var s2ab = function(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+
+
+        var generatePropertyData = (function(data){
+            var returnValue = [['property', 'value']];
+            
+            for(var key in data){
+                if(key === 'children'){
+                    continue;
+                }
+                var value = data[key];
+                returnValue.push([key, value]);
+            }
+            return returnValue;
+        }).bind(this);
+
+
+
+        var generateTagsData = (function(tags){
+            var returnValue = [['Week', 'DATE', 'Update Program Milestone']];
+            tags.map((function(tag){
+                returnValue.push([tag.week, new Date(tag.time).toLocaleDateString(), tag.label]);
+            }).bind(this));
+            return returnValue;
+        }).bind(this);
+
+        
+        
+        var sheets = (function(){
+            var sheets = {};
+            sheets[this.PROPERTY_SHEETNAME] = sheet_from_array_of_arrays(generatePropertyData(this.state.projectObj));
+            sheets[this.TAGS_SHEETNAME] = sheet_from_array_of_arrays(generateTagsData(this.state.projectObj.children[0].children));
+            return sheets;
+        }).call(this);
+
+        var wb = {
+            SheetNames:[
+                this.PROPERTY_SHEETNAME,
+                this.TAGS_SHEETNAME
+            ], Sheets: sheets
+        };
+
+		var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
+		saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "test.xlsx")
 	},
 
     render_according_to_excel: function(){
