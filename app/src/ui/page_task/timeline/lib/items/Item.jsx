@@ -410,7 +410,7 @@ debugger;
            onTouchStart={this.onTouchStart.bind(this)}
            onTouchEnd={this.onTouchEnd.bind(this)}
            onDoubleClick={this.handleDoubleClick.bind(this)}
-           style={style} className={this.props.item.instance.class}>
+           style={style} >
         <div className='rct-item-overflow'>
           <div className='rct-item-content'>
             {this.itemTitle}

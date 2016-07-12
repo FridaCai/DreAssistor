@@ -44,6 +44,7 @@ var Table = React.createClass({
 		var PROPERTY_SHEETNAME = 'property';
         var TAGS_SHEETNAME = 'tags';
 
+        var projectObj = {};
         var workbook = XLSX.read(data, {type: 'binary'});
 
         (function parsePropertySheet(){
@@ -82,13 +83,12 @@ var Table = React.createClass({
             //need range of column and line.
             //find lines where content in F column is not null or title ('Update Program Milestone')
             //get week(label) and time and tag label from the line.
-            var columnName = 'Update Program Milestone';
             var tagsheet = workbook.Sheets[TAGS_SHEETNAME];
             var range = Util.getRange(tagsheet['!ref']);
-            for(var i = range.lineMin; i<range.lineMax; i++){
+            for(var i = range.lineMin+1; i<range.lineMax+1; i++){
                 var cell = tagsheet[`C${i}`];
 
-                if(cell && cell.v != columnName){
+                if(cell){
                     var label = cell.v;
                     var week = tagsheet[`A${i}`].v;
                     var date = parseInt(moment(tagsheet[`B${i}`].w,'MM-DD-YYYY').format('x')); //5/13/13
