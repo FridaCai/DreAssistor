@@ -102,7 +102,7 @@ module.exports = class BaseTask {
 			subtasks: subtasks,
 			privacy: this.privacy,
 			template: this.template,
-			type: 'task',
+			class: 'Task',
 			statical: this.statical
 		}
 	}
