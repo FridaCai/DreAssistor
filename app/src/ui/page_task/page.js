@@ -22,6 +22,43 @@ var PageTask = React.createClass({
         }
     },
 
+    componentDidMount: function(){
+        API.signal_taskpopup_show.listen(this.onTaskPopupShow);
+        API.signal_page_refresh.listen(this.onPageRefresh);
+        API.signal_timeline_task_create.listen(this.onTaskCreate);
+
+        Promise.all([
+            Request.getData(Request.getMockupAPI('get_projects.json')),
+            Request.getData(Request.getMockupAPI('get_template_enum.json')),
+            Request.getData(Request.getMockupAPI('get_users.json'))
+        ]).then((function(param){
+            var projectsResponse = param[0];
+            var templateEnumResponse = param[1];
+            var usersResponse = param[2];
+
+            if(projectsResponse.errCode == -1){
+                API.setProjects(projectsResponse.projects);    
+            }
+            if(templateEnumResponse.errCode == -1){
+                API.setTemplateEnum(templateEnumResponse.templateenum);       
+            }
+            if(usersResponse.errCode == -1){
+                API.setUsers(usersResponse.users);
+            }
+            this.forceUpdate();
+        }).bind(this));
+    },
+
+    componentDidUnMount: function(){
+        API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
+        API.signal_page_refresh.unlisten(this.onPageRefresh);
+        API.signal_timeline_task_create.unlisten(this.onTaskCreate);
+    },
+
+    onPageRefresh: function(e){
+        this.forceUpdate();
+    },
+
     onTaskCreate: function(e, param){
         if(!SuperAPI.isLogin()){
             this.refs.msgbox.show();
@@ -46,89 +83,38 @@ var PageTask = React.createClass({
         this.forceUpdate();
     },
 
-    componentDidMount: function(){
-        API.signal_taskpopup_show.listen(this.onTaskPopupShow);
-        API.signal_page_refresh.listen(this.onPageRefresh);
-        API.signal_projectpoup_show.listen(this.onProjectShow);
-        API.signal_timeline_task_create.listen(this.onTaskCreate);
-        API.signal_statical_assistor_popup_show.listen(this.onStaticalAssistorPopupShow);
-        API.signal_people_assistor_popup_show.listen(this.onPeopleAssistorPopupShow);
-
-        Promise.all([
-            Request.getData(Request.getMockupAPI('get_projects.json')),
-            Request.getData(Request.getMockupAPI('get_template_enum.json')),
-            Request.getData(Request.getMockupAPI('get_users.json'))
-        ]).then((function(param){
-            var projectsResponse = param[0];
-            var templateEnumResponse = param[1];
-            var usersResponse = param[2];
-
-            if(projectsResponse.errCode == -1){
-                API.setProjects(projectsResponse.projects);    
-            }
-            if(templateEnumResponse.errCode == -1){
-                API.setTemplateEnum(templateEnumResponse.templateenum);       
-            }
-            if(usersResponse.errCode == -1){
-                API.setUsers(usersResponse.users);
-            }
-            this.forceUpdate();
-        }).bind(this));
-    },
-    componentDidUnMount: function(){
-        API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
-        API.signal_page_refresh.unlisten(this.onPageRefresh);
-        API.signal_projectpoup_show.unlisten(this.onProjectShow);
-        API.signal_timeline_task_create.unlisten(this.onTaskCreate);
-        API.signal_statical_assistor_popup_show.unlisten(this.onStaticalAssistorPopupShow);
-        API.signal_people_assistor_popup_show.unlisten(this.onPeopleAssistorPopupShow);
-    },
-    onPageRefresh: function(e){
-        this.forceUpdate();
-    },
     onTaskPopupShow: function(e, param){
         this.refs.taskpopup.show(param);
     },
-    onProjectShow: function(e, param){
-        this.refs.projectpopup.show(param);
-    },
-    onStaticalAssistorPopupShow: function(e, param){
-        this.refs.staticalAssistorPopup.show(param);
-    },
-    onPeopleAssistorPopupShow: function(e, param){
-        this.refs.peopleAssistorPopup.show(param);  
-    },
-    
-    onShowPropertyAssistor:function(){
-         API.signal_statical_assistor_popup_show.dispatch({
-            title: '统计助手',
-          })
-    },
-    onShowPeopleAssistor:function(){
-        API.signal_people_assistor_popup_show.dispatch({
-            title: '前辈助手',
-          })
-    },
-    
-    onAddProjectClk:function(){
-        API.signal_projectpoup_show.dispatch({
+
+    onProjectPopupShow: function(e, param){
+        this.refs.projectpopup.show({
             title: '添加项目',
         });
     },
-
+    
+    onPropertyAssistorShow:function(){
+        this.refs.staticalAssistorPopup.show({
+            title: '统计助手',
+        });
+    },
+    
+    onPeopleAssistorShow:function(){
+        this.refs.peopleAssistorPopup.show({
+            title: '前辈助手',
+        });  
+    },
+    
     render: function() {
         //todo: create popup when needed. otherwise, avoid loading data for the not necessary rendering.
         return (
             <div className='pageTask'>
                 <TemplateTaskList/>
 
-
-
-
                 <div className="btn-group" role="group" aria-label="Basic example"> 
-                    <button type="button" className="btn btn-default" onClick={this.onAddProjectClk}>添加项目</button> 
-                    <button type="button" className="btn btn-default" onClick={this.onShowPropertyAssistor}>查看属性助手</button> 
-                    <button type="button" className="btn btn-default" onClick={this.onShowPeopleAssistor}>查看前辈助手</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onProjectPopupShow}>添加项目</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
                 </div> 
 
 

@@ -1,5 +1,6 @@
 import SubTask from './subtask.js';
 import Attachment from './attachment.js';
+import Util from '../../../util.js';
 
 module.exports = class BaseTask {
 	constructor(){
@@ -7,13 +8,13 @@ module.exports = class BaseTask {
 	}
 
 	init(param){
-		this.id = param.id;
+		this.id = param.id || Util.generateUUID();
 		this.label = param.label;
 		this.startTime=param.startTime;
 		this.endTime = param.endTime;
 		this.desc = param.desc;
 		this.markColor = param.markColor;
-		this.type = 'task';
+		this.class = 'Task';
 		
 		this.attachments = param.attachments;
 		param.attachments.map((function(attachment){

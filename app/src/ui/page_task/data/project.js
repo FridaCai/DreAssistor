@@ -1,5 +1,5 @@
 import SubProject from './subproject.js';
-
+import Util from '../../../util.js';
 
 
 module.exports = class Project {
@@ -8,12 +8,17 @@ module.exports = class Project {
 	}
 
 	init(param){
-		this.id = param.id;
+		this.id = param.id || Util.generateUUID();
 		this.label = param.label;
 		this.creatorId=param.creatorId;
-		this.sop = param.sop;
+		
 		this.ec = param.ec;
-		this.bprange = param.bprange; //[min, max]
+		
+		this.bpmin = param.bpmin;
+		this.bpmax = param.bpmax;
+
+
+		this.sop = param.sop; //need or not? need to discuss on meeting.
 		
 		this.children = [];
 		param.children && param.children.map((function(sp){
@@ -62,10 +67,8 @@ module.exports = class Project {
 			creatorId: this.creatorId,
 			sop: this.sop,
 			ec: this.ec,
-			bprange: {
-				min: this.bprange.min,
-				max: this.bprange.max
-			},
+			bpmin: this.bpmin,
+			bpmax: this.bpmax,
 			children: children
 		};
 	}

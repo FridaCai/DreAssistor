@@ -7,7 +7,7 @@ module.exports = class SubProject {
 	}
 
 	init(param){
-		this.id = param.id;
+		this.id = param.id || Util.generateUUID();
 		this.label = param.label;
 		this.parent = undefined;
 
@@ -34,8 +34,6 @@ module.exports = class SubProject {
 		this.parent = parent;
 	}
 
-
-//{template.type: 'a'}
 	findTasks(condition){
 		return this.children.filter(function(task){
 			if(!(task instanceof Task)){

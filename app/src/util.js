@@ -9,7 +9,9 @@ var Util = {
 	    'template.param.heavy.value': '重量(Kg)',
 	    'template.param.snorkelNoiseXls': 'Snorkel Noise'
 	},
-
+	TAG_WIDTH: 50,
+	TAG_COLOR: 255,
+	
 	getValue: function(obj, keys){
 		var target = obj;
 		var arr = keys.split('.');

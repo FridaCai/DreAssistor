@@ -1,4 +1,5 @@
 import Project from './project.js';
+import Util from '../../../util.js';
 
 module.exports = class Projects {
 	constructor(){
@@ -40,5 +41,10 @@ module.exports = class Projects {
 		});
 		
 		return JSON.stringify(obj);
+	}
+	add(project){
+		project.id = project.id || Util.generateUUID();
+		this.arr.unshift(project);
+		project.setParent(this);
 	}
 }

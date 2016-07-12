@@ -8,7 +8,8 @@
       "creatorId": 2,
       "sop": 1466049352000,
       "ec": "1.0T",
-      "bprange": {},
+      "bpmin": 10,
+      "bpmax": 20,
       "children": [
         {
           "id": "0",
@@ -18,24 +19,18 @@
               "id": "tag_1",
               "label": "DSI",
               "time": 1452430100237,
-              "width": 50,
-              "markColor": 255,
               "class": "Tag"
             },
             {
               "id": "tag_2",
               "label": "VPI",
               "time": 1463921464187,
-              "width": 50,
-              "markColor": 255,
               "class": "Tag"
             },
             {
               "id": "tag_3",
               "label": "DSO",
               "time": 1478436664187,
-              "width": 50,
-              "markColor": 255,
               "class": "Tag"
             }
           ]
@@ -306,7 +301,8 @@
       "creatorId": 2,
       "sop": 1466049352000,
       "ec": "1.0T",
-      "bprange": {},
+      "bpmin": 20,
+      "bpmax": 30,
       "children": [
         {
           "id": "0",

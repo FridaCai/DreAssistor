@@ -398,7 +398,7 @@ export default class Item extends React.Component {
       lineHeight: `${dimensions.height}px`,
       backgroundColor: this.props.item.color,
     }
-
+debugger;
     return (
       <div key={this.itemId}
            ref='item'
@@ -410,7 +410,7 @@ export default class Item extends React.Component {
            onTouchStart={this.onTouchStart.bind(this)}
            onTouchEnd={this.onTouchEnd.bind(this)}
            onDoubleClick={this.handleDoubleClick.bind(this)}
-           style={style}>
+           style={style} className={this.props.item.instance.class}>
         <div className='rct-item-overflow'>
           <div className='rct-item-content'>
             {this.itemTitle}

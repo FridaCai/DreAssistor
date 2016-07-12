@@ -1,19 +1,22 @@
 {
   "label": "项目模版",
-  "pbmax": 100,
-  "pbmin": 10,
+  "bpmax": 100,
+  "bpmin": 10,
   "ec": "1.0T",
   "children": [
     {
+      "id": 0,
       "label": "Mast Timing",
       "children": [
         {
+          "id": 0,
           "label": "Action1",
           "time": 1368374400000,
           "week": 176,
           "class": "Tag"
         },
         {
+          "id": 1,
           "label": "Action2",
           "time": 1376841600000,
           "week": 162,
@@ -22,6 +25,7 @@
       ]
     },
     {
+      "id":1,
       "label": "AIS Development",
       "children": []
     }

@@ -15,6 +15,10 @@ var Table = React.createClass({
         };
     },
 
+    getData: function(){
+        return this.state.projectObj;
+    },  
+
     onSwitchSheet: function(index){
     	this.setState({
     		sheetIndex: index,
@@ -40,73 +44,69 @@ var Table = React.createClass({
 		var PROPERTY_SHEETNAME = 'property';
         var TAGS_SHEETNAME = 'tags';
 
-
         var workbook = XLSX.read(data, {type: 'binary'});
-        this.setState({workbook: workbook});
 
-
-        //ignore first line of header.
-        var projectObj = {};
-        var propertysheet = workbook.Sheets[PROPERTY_SHEETNAME];
-        var range = Util.getRange(propertysheet['!ref']);
-        for (var i=range.lineMin+1; i<range.lineMax+1; i++){
-            var property = propertysheet[`A${i}`].v;
-            var value = propertysheet[`B${i}`].v;
-            switch(property){
-                case 'label':
-                    projectObj.label = value;
-                    break;
-                case 'bpmax':
-                    projectObj.pbmax = Math.round(value * 100) / 100;
-                    break;
-                case 'bpmin':
-                    projectObj.pbmin = Math.round(value * 100) / 100;
-                    break;
-                case 'ec':
-                    projectObj.ec = value;
-                    break;
+        (function parsePropertySheet(){
+            var propertysheet = workbook.Sheets[PROPERTY_SHEETNAME];
+            var range = Util.getRange(propertysheet['!ref']);
+            for (var i=range.lineMin+1; i<range.lineMax+1; i++){
+                var property = propertysheet[`A${i}`].v;
+                var value = propertysheet[`B${i}`].v;
+                switch(property){
+                    case 'label':
+                        projectObj.label = value;
+                        break;
+                    case 'bpmax':
+                        projectObj.bpmax = Math.round(value * 100) / 100;
+                        break;
+                    case 'bpmin':
+                        projectObj.bpmin = Math.round(value * 100) / 100;
+                        break;
+                    case 'ec':
+                        projectObj.ec = value;
+                        break;
+                }
             }
-        }
-        projectObj.children = [{
-            "label": "Mast Timing",
-            "children": [],
-        },{
-            "label": "AIS Development",
-            "children": [],
-        }];
+            projectObj.children = [{
+                "label": "Mast Timing",
+                "children": [],
+            },{
+                "label": "AIS Development",
+                "children": [],
+            }];
+        })();
+        
 
 
-        //need range of column and line.
-        //find lines where content in F column is not null or title ('Update Program Milestone')
-        //get week(label) and time and tag label from the line.
-        var columnName = 'Update Program Milestone';
-        var tagsheet = workbook.Sheets[TAGS_SHEETNAME];
-        var range = Util.getRange(tagsheet['!ref']);
-        for(var i = range.lineMin; i<range.lineMax; i++){
-            var cell = tagsheet[`C${i}`];
+        (function parseTagsSheet(){
+            //need range of column and line.
+            //find lines where content in F column is not null or title ('Update Program Milestone')
+            //get week(label) and time and tag label from the line.
+            var columnName = 'Update Program Milestone';
+            var tagsheet = workbook.Sheets[TAGS_SHEETNAME];
+            var range = Util.getRange(tagsheet['!ref']);
+            for(var i = range.lineMin; i<range.lineMax; i++){
+                var cell = tagsheet[`C${i}`];
 
-            if(cell && cell.v != columnName){
-                var label = cell.v;
-                var week = tagsheet[`A${i}`].v;
-                var date = parseInt(moment(tagsheet[`B${i}`].w,'MM-DD-YYYY').format('x')); //5/13/13
-
-
-                projectObj.children[0].children.push({
-                    "label": label,
-                    "time": date, 
-                    "week": week,
-                    //"width": 50, 
-                    //"markColor": 255,
-                    "class": "Tag"
-                })
+                if(cell && cell.v != columnName){
+                    var label = cell.v;
+                    var week = tagsheet[`A${i}`].v;
+                    var date = parseInt(moment(tagsheet[`B${i}`].w,'MM-DD-YYYY').format('x')); //5/13/13
+                    projectObj.children[0].children.push({
+                        "label": label,
+                        "time": date, 
+                        "week": week,
+                        //"width": 50, 
+                        //"markColor": 255,
+                        "class": "Tag",
+                    })
+                }
             }
-        }
+        })()
         this.setState({projectObj: projectObj});
 	},
 
-	onDragOver(e){
-		e.preventDefault();
-	},
+	onDragOver(e){e.preventDefault();},
 
 	componentDidMount: function(){
 		this.loadTemplateData();
@@ -120,7 +120,6 @@ var Table = React.createClass({
 			this.setState({projectObj: result});
 		}).bind(this))
 	},
-
 
 	render:function(){
     	if(!this.state.projectObj){
@@ -137,7 +136,6 @@ var Table = React.createClass({
         		if(key === 'children'){
         			continue;
         		}
-
 
         		var value = this.state.projectObj[key];
         		dom.push((<tr key={key}>
@@ -163,12 +161,8 @@ var Table = React.createClass({
 	    			<td>{tag.label}</td>	
 	    		</tr>))
     		}).bind(this))
-
     		return dom;
-
     	}).bind(this);
-
-
 
         var getTableDom = (function(){
         	if(this.state.sheetIndex === 0){
@@ -180,7 +174,6 @@ var Table = React.createClass({
 
 		return (
 			<div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
-				
 				<div className='addOn'>
 					<label>可以将excel文件拖入表格</label>
 					<button className="btn btn-primary" onClick={this.export}>导出excel</button>
@@ -201,10 +194,7 @@ var Table = React.createClass({
 	            	<div className='sheet'>
 						<table>
 							<tbody>
-							{
-								getTableDom()
-								
-							}
+							{getTableDom()}
 							</tbody>
 						</table>
 	                </div>
@@ -244,16 +234,12 @@ var Table = React.createClass({
 			return ws;
 		}
 
-
-
         var s2ab = function(s) {
             var buf = new ArrayBuffer(s.length);
             var view = new Uint8Array(buf);
             for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
-
-
 
         var generatePropertyData = (function(data){
             var returnValue = [['property', 'value']];
@@ -268,8 +254,6 @@ var Table = React.createClass({
             return returnValue;
         }).bind(this);
 
-
-
         var generateTagsData = (function(tags){
             var returnValue = [['Week', 'DATE', 'Update Program Milestone']];
             tags.map((function(tag){
@@ -277,8 +261,6 @@ var Table = React.createClass({
             }).bind(this));
             return returnValue;
         }).bind(this);
-
-        
         
         var sheets = (function(){
             var sheets = {};

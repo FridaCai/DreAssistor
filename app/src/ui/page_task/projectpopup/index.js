@@ -3,6 +3,9 @@ import UploadFileComponent from '../../widget/uploadfile/index.js';
 import Util from '../../widget/excel/util.js';
 import moment from 'moment';
 import Table from './table.js';
+import API from '../api.js';
+import Project from '../data/project.js';
+import GlobalUtil from '../../../util.js';
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
@@ -19,7 +22,7 @@ var ProjectPopup = React.createClass({
 	getContent: function() {
         //todo: send projectObj here.
 	    return (
-            <Table projectObj={null}/>
+            <Table projectObj={null} ref='datatable'/>
 	    );   
     },
 
@@ -28,6 +31,14 @@ var ProjectPopup = React.createClass({
     },
 
     onOkClk:function() {
+        //has login? if not, return.
+        var projectObj = this.refs.datatable.getData();
+        
+        var project = new Project();
+        project.init($.extend(true, {id: GlobalUtil.generateUUID()}, projectObj)); //append creatorID.
+        API.getProjects().add(project);
+
+        API.signal_page_refresh.dispatch();
         return Promise.resolve();
     },
     render: function() {
