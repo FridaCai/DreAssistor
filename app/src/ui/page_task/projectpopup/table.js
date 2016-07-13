@@ -70,9 +70,9 @@ var Table = React.createClass({
                 continue;
 
             var week = parseInt(line[0]);
-            var autoTime = line[1];
+            var autoTime = this.getTimeBySorpWeek(projectObj.sorp, week);
             var adjustTime = line[2];
-            var time = Util.convertYYYYMMDD2UnixTime(adjustTime || autoTime);
+            var time = adjustTime ? Util.convertYYYYMMDD2UnixTime(adjustTime): autoTime;
 
             projectObj.children[0].children.push({
                 "label": label,
@@ -150,7 +150,11 @@ var Table = React.createClass({
         project.init(projectObj);
         return project;
     },
-
+    getTimeBySorpWeek: function(sorp, week){
+        var substract = moment(sorp, 'x').subtract(week, 'weeks');
+        var ux = substract.valueOf();
+        return ux;
+    },
     datamodel2ui: function(project){
         var sheetNames = [this.PROPERTY_SHEETNAME, this.TAGS_SHEETNAME, this.TASKS_SHEETNAME];
         var sheets = {};
@@ -176,14 +180,10 @@ var Table = React.createClass({
                 return tag.week === week;
             })
         }
-        var getTime = function(sorp, week){
-            var substract = moment(sorp, 'x').subtract(week, 'weeks');
-            var ux = substract.valueOf();
-            return Util.convertUnixTime2YYYYMMDD(ux); //convert  to unix.
-        }
+  
         for(var i=loop; i>=0; i--){
             var tag = findTagByWeek(tags, i);
-            var autoTime = getTime(project.sorp, i);
+            var autoTime = Util.convertUnixTime2YYYYMMDD(this.getTimeBySorpWeek(project.sorp, i));
             
             var tagui = [i, autoTime, '', ''];
             if(tag){
@@ -271,17 +271,10 @@ var Table = React.createClass({
                 sheets[sheetName][i-1] = [];
                 for(var j=columnMin; j<=columnMax; j++){
                     var key = `${Util.index2Alphabet(j)}${i}`;
-
-
-
                     var value = sheet[key] ? sheet[key].v : '';
-
-
                     if(isDate(sheet[key])){
                         value = sheet[key].w;
                     }
-
-
                     sheets[sheetName][i-1].push(value);
                 }
             }
@@ -366,9 +359,14 @@ var Table = React.createClass({
 	  		var data = e.target.result;
             var workbook = XLSX.read(data, {type: 'binary'});
 
+
+            //deal with sorp_week in dm.
+            var tempUI = this.excel2ui(workbook);
+            var dm = this.ui2datamodel(tempUI);
+            var ui = this.datamodel2ui(dm) 
             
             this.setState({
-                ui: this.excel2ui(workbook)
+                ui: ui
             })
 	  	}).bind(this);
 		reader.readAsBinaryString(file);

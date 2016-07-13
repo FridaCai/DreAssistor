@@ -11,6 +11,7 @@ var ProjectPopup = React.createClass({
 	getInitialState: function() {
         return {
             title: this.props.title,
+
         };
     },
     
@@ -48,7 +49,7 @@ var ProjectPopup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} okHandler={this.onOkClk} ref='msgbox' children={content}/>);
+        return (<MessageBox width={700} title={title} okHandler={this.onOkClk} ref='msgbox' cName='projectPopupContainer' children={content}/>);
     },
 });
 
