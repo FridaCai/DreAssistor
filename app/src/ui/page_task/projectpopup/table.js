@@ -41,8 +41,8 @@ var Table = React.createClass({
         var propertyRaw = ui.sheets[this.PROPERTY_SHEETNAME];
         for(var i=1; i<propertyRaw.length; i++){
             var line = propertyRaw[i];
-            var key = line[0];
-            var value = line[1];
+            var key = line[0].v;
+            var value = line[1].v;
 
             switch(key){
                 case 'label':
@@ -65,13 +65,13 @@ var Table = React.createClass({
         for(var i=1; i<tagRaw.length; i++){
             var line = tagRaw[i];
 
-            var label = line[3];
+            var label = line[3].v;
             if(!label)
                 continue;
 
-            var week = parseInt(line[0]);
+            var week = parseInt(line[0].v);
             var autoTime = this.getTimeBySorpWeek(projectObj.sorp, week);
-            var adjustTime = line[2];
+            var adjustTime = line[2].v;
             var time = adjustTime ? Util.convertYYYYMMDD2UnixTime(adjustTime): autoTime;
 
             projectObj.children[0].children.push({
@@ -88,7 +88,7 @@ var Table = React.createClass({
         var taskSheetNames = [];
         var sheetNamesRaw = ui.sheets[this.TASKS_SHEETNAME];
         for(var i=0; i<sheetNamesRaw.length; i++){
-            var sheetNameRaw = sheetNamesRaw[i][0];
+            var sheetNameRaw = sheetNamesRaw[i][0].v;
             var reg = /\$\{(.*)\}/;
             var name = sheetNameRaw.match(reg)[1];
             taskSheetNames.push(name);
@@ -97,8 +97,8 @@ var Table = React.createClass({
             var taskObj = {};
             var sheet = ui.sheets[name];
             for(var i = 1; i<sheet.length; i++){
-                var key = sheet[i][0];
-                var value = sheet[i][1];
+                var key = sheet[i][0].v;
+                var value = sheet[i][1].v;
 
                 switch(key){
                     case 'label':
@@ -161,17 +161,17 @@ var Table = React.createClass({
 
         //property sheet.
         sheets[this.PROPERTY_SHEETNAME] = [
-            ['property', 'value'],
-            ['label', project['label']],
-            ['bpmax', project['bpmax']],
-            ['bpmin', project['bpmin']],
-            ['ec', project['ec']],
-            ['sorp', Util.convertUnixTime2YYYYMMDD(project['sorp'])],
+            [{v: 'property'}, {v:'value'}],
+            [{v: 'label'}, {v: project['label']}],
+            [{v: 'bpmax'}, {v: project['bpmax']}],
+            [{v: 'bpmin'}, {v: project['bpmin']}],
+            [{v: 'ec'}, {v: project['ec']}],
+            [{v: 'sorp'}, {v:Util.convertUnixTime2YYYYMMDD(project['sorp']), isEditable:true}],
         ];
 
 
         //tags sheet.
-        sheets[this.TAGS_SHEETNAME] = [['Week', 'Date(Sorp-Week)', 'Date(Adjusted)', 'Update Program Milestone']];
+        sheets[this.TAGS_SHEETNAME] = [[{v: 'Week'}, {v: 'Date(Sorp-Week)'}, {v:'Date(Adjusted)'}, {v:'Update Program Milestone'}]];
         //precondition: tags are desc order.
         var tags = project.children[0].children;
         var loop = tags[0].week;
@@ -185,13 +185,13 @@ var Table = React.createClass({
             var tag = findTagByWeek(tags, i);
             var autoTime = Util.convertUnixTime2YYYYMMDD(this.getTimeBySorpWeek(project.sorp, i));
             
-            var tagui = [i, autoTime, '', ''];
+            var tagui = [{v: i}, {v:autoTime}, {v:'', isEditable:true}, {v:''}];
             if(tag){
                 tagui = [
-                    tag.week, 
-                    autoTime, 
-                    Util.convertUnixTime2YYYYMMDD(tag.time), 
-                    tag.label
+                    {v: tag.week}, 
+                    {v: autoTime}, 
+                    {v: Util.convertUnixTime2YYYYMMDD(tag.time), isEditable:true}, 
+                    {v: tag.label}
                 ];
             }
             sheets[this.TAGS_SHEETNAME].push(tagui);
@@ -201,7 +201,7 @@ var Table = React.createClass({
         var tasks = project.findTasks();
         sheets[this.TASKS_SHEETNAME] = [];
         tasks.map((function(task, index){
-            sheets[this.TASKS_SHEETNAME].push([`\$\{auto_task_${index}\}`]);
+            sheets[this.TASKS_SHEETNAME].push([{v: `\$\{auto_task_${index}\}`}]);
         }).bind(this))
 
 
@@ -212,12 +212,12 @@ var Table = React.createClass({
             var sheetName = `auto_task_${i}`;
             sheetNames.push(sheetName);
             sheets[sheetName] = [
-                ['property', 'value'],
-                ['label', task['label']],
-                ['startTime', Util.convertUnixTime2YYYYMMDD(task['startTime'])],
-                ['endTime', Util.convertUnixTime2YYYYMMDD(task['endTime'])],
-                ['desc', task['desc']],
-                ['template', task['template']['type']],
+                [{v: 'property'}, {v: 'value'}],
+                [{v: 'label'}, {v: task['label']}],
+                [{v: 'startTime'}, {v: Util.convertUnixTime2YYYYMMDD(task['startTime'])}],
+                [{v: 'endTime'}, {v: Util.convertUnixTime2YYYYMMDD(task['endTime'])}],
+                [{v: 'desc'}, {v: task['desc']}],
+                [{v: 'template'}, {v: task['template']['type']}],
             ];
 
 
@@ -229,13 +229,13 @@ var Table = React.createClass({
             }
             switch(task['template']['type']){
                 case TASK_TEMPLATE.MULE:
-                    sheets[sheetName].push(['snorkelNoiseXls', '${auto_snorkelNoiseXls}']);//todo: append snorkel noise sheet.
+                    sheets[sheetName].push([{v: 'snorkelNoiseXls'}, {v: '${auto_snorkelNoiseXls}'}]);//todo: append snorkel noise sheet.
                     break;
                 case TASK_TEMPLATE.HOTISSUE: 
-                    sheets[sheetName].push(['rootCause', task['template']['param']['rootCause']]);
-                    sheets[sheetName].push(['solution', task['template']['param']['solution']]);
-                    sheets[sheetName].push(['execute', task['template']['param']['execute']]);
-                    sheets[sheetName].push(['feedback', task['template']['param']['feedback']]);
+                    sheets[sheetName].push([{v: 'rootCause'}, {v: task['template']['param']['rootCause']}]);
+                    sheets[sheetName].push([{v: 'solution'}, {v: task['template']['param']['solution']}]);
+                    sheets[sheetName].push([{v: 'execute'}, {v: task['template']['param']['execute']}]);
+                    sheets[sheetName].push([{v: 'feedback'}, {v: task['template']['param']['feedback']}]);
                     break;
                 case TASK_TEMPLATE.EWO:
                 case TASK_TEMPLATE.NORMAL:
@@ -275,7 +275,7 @@ var Table = React.createClass({
                     if(isDate(sheet[key])){
                         value = sheet[key].w;
                     }
-                    sheets[sheetName][i-1].push(value);
+                    sheets[sheetName][i-1].push({v: value});
                 }
             }
         }
@@ -287,20 +287,12 @@ var Table = React.createClass({
             var ws = {};
             var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
             for(var R = 0; R != data.length; ++R) {
-                console.log(R);
-                console.log(data[R]);
-
-
-
                 for(var C = 0; C != data[R].length; ++C) {
-                    console.log(R);
-                    
-
                     if(range.s.r > R) range.s.r = R;
                     if(range.s.c > C) range.s.c = C;
                     if(range.e.r < R) range.e.r = R;
                     if(range.e.c < C) range.e.c = C;
-                    var cell = {v: data[R][C] };
+                    var cell = {v: data[R][C].v };
                     if(cell.v == null) continue;
                     var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
                     
@@ -322,8 +314,6 @@ var Table = React.createClass({
         var sheets = {};
         for(var key in ui.sheets){
             var sheet = ui.sheets[key];
-
-            console.log(key);
             sheets[key] = sheet_from_array_of_arrays(sheet);
         }
 
@@ -388,6 +378,16 @@ var Table = React.createClass({
 		}).bind(this))
 	},
 
+    onChange: function(cell, event){
+        var inputValue = event.target.value;
+        cell.v = inputValue;
+    },
+    onBlur: function(){
+        var dm = this.ui2datamodel(this.state.ui);
+        var ui = this.datamodel2ui(dm);
+        this.setState({ui: ui});
+    },
+
 	render:function(){
     	if(!this.state.ui){
     		return null;
@@ -398,19 +398,24 @@ var Table = React.createClass({
             var sheet = this.state.ui.sheets[sheetName];
 
             var dom = [];
-            sheet.map(function(line, i){
+            sheet.map((function(line, i){
                 var tr = [];
 
-                line.map(function(cell, j){
+                line.map((function(cell, j){
+                    var dom = cell.isEditable ? (
+                        <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur}/>
+                    ) : (<span>{cell.v}</span>);
+
+
                     tr.push((
-                        <td key={j}>{cell}</td>
-                    ))
-                })
+                        <td key={j}>{dom}</td>
+                    ));
+                }).bind(this))
 
                 dom.push((
                     <tr key={i}>{tr}</tr>
                 ));
-            })
+            }).bind(this))
             return dom;
         }).bind(this);
 
