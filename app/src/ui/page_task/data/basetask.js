@@ -13,33 +13,34 @@ module.exports = class BaseTask {
 		this.startTime=param.startTime;
 		this.endTime = param.endTime;
 		this.desc = param.desc;
-		this.markColor = param.markColor;
+		this.markColor = param.markColor || 6076508;
 		this.class = 'Task';
 		
-		this.attachments = param.attachments;
-		param.attachments.map((function(attachment){
+		this.attachments = [];
+		param.attachments && param.attachments.map((function(attachment){
 			var att = new Attachment();
 			att.init({
 				id: attachment.id,
 				url: attachment.url
 			});
+			this.attachments.push(att);
 		}).bind(this))
 
 
 		this.creatorId = param.creatorId;
-		this.priority = param.priority;
+		this.priority = param.priority || 0;
 		
 		this.subtasks = [];
-		param.subtasks.map((function(subtask){
+		param.subtasks && param.subtasks.map((function(subtask){
 			var st = new SubTask();
 			st.init(subtask);
 			st.setParent(this);
 			this.subtasks.push(st);
 		}).bind(this));
 
-		this.privacy = param.privacy;
+		this.privacy = param.privacy || 0;
 		this.template = param.template;
-		this.statical = param.statical;
+		this.statical = param.statical || [];
 		this.parent = undefined;
 	}
 	update(param){

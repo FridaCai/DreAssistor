@@ -13,7 +13,7 @@
       "children": [
         {
           "id": "0",
-          "label": "Mast Timing",
+          "label": "Master Timing",
           "children": [
             {
               "id": "tag_1",
@@ -306,7 +306,7 @@
       "children": [
         {
           "id": "0",
-          "label": "Mast Timing",
+          "label": "Master Timing",
           "children": [
             {
               "id": "tag_4",

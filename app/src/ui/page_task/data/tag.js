@@ -14,7 +14,9 @@ module.exports = class Tag {
 		this.markColor = Util.TAG_COLOR;
 		this.class = 'Tag';
 	}
-
+	setParent(parent){
+		this.parent = parent;
+	}
 	dump(){
 		return {
 			id: this.id,

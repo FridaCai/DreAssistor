@@ -21,6 +21,7 @@ module.exports = class SubProject {
 				child = new Task();
 			}
 			child.init(c);
+			child.setParent(this);
 			this.children.push(child);
 		}).bind(this));
 	}

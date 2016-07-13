@@ -90,6 +90,11 @@ var PageTask = React.createClass({
     },
 
     onProjectPopupShow: function(e, param){
+        if(!SuperAPI.isLogin()){
+            this.refs.msgbox.show();
+            return;
+        }
+        
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<ProjectPopup title={param.title} project={param.project}/>, this.refs.popup);  
     },
@@ -115,7 +120,7 @@ var PageTask = React.createClass({
                 <TemplateTaskList/>
 
                 <div className="btn-group" role="group" aria-label="Basic example"> 
-                    <button type="button" className="btn btn-default" onClick={this.onProjectPopupShow}>添加项目</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onProjectPopupShow.bind(this, event, {title:'添加项目'})}>添加项目</button> 
                     <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
                     <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
                 </div> 

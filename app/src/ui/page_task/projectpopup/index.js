@@ -10,6 +10,7 @@ import GlobalUtil from '../../../util.js';
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
         return {
+            title: this.props.title,
         };
     },
     

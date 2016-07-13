@@ -7,7 +7,7 @@
   "children": [
     {
       "id": 0,
-      "label": "Mast Timing",
+      "label": "Master Timing",
       "children": [
         {
           "id": 0,
@@ -37,12 +37,11 @@
           "desc": "",
           "markColor": 15773006,
           "attachments": [],
-          "creatorId": 2,
           "priority": "0",
           "subtasks": [],
           "privacy": "0",
           "template": {
-            "type": "3",
+            "type": 3,
             "param": {
               "bom": {
                 "isDone": false,
@@ -93,12 +92,11 @@
           "desc": "",
           "markColor": 6013150,
           "attachments": [],
-          "creatorId": 2,
           "priority": "0",
           "subtasks": [],
           "privacy": "0",
           "template": {
-            "type": "2",
+            "type": 2,
             "param": {
               "rootCause": "rootCause",
               "solution": "solution",
@@ -116,7 +114,6 @@
           "desc": "",
           "markColor": 6076508,
           "attachments": [],
-          "creatorId": 2,
           "priority": "0",
           "subtasks": [
             {
@@ -127,7 +124,7 @@
           ],
           "privacy": "0",
           "template": {
-            "type": "1"
+            "type": 1
           },
           "class": "Task"
         },
@@ -139,7 +136,6 @@
           "desc": "",
           "markColor": 6076508,
           "attachments": [],
-          "creatorId": 2,
           "priority": "0",
           "subtasks": [
             {
@@ -150,7 +146,7 @@
           ],
           "privacy": "0",
           "template": {
-            "type": "0"
+            "type": 0
           },
           "class": "Task"
         }

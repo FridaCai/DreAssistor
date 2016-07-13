@@ -24,7 +24,10 @@ var AddOn = React.createClass({
         //API.signal_addProjectPopup_show.dispatch();
     },
     onProjectClk: function(){
-        API.signal_projectpoup_show.dispatch({project: this.props.project});
+        API.signal_projectpoup_show.dispatch({
+            project: this.props.project,
+            title:'编辑项目',
+        });
     },
     render: function() {
         var project = this.props.project;

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 var Util = {
  	getRange: function(raw){
 	    var reg = /^([A-Z]*)(\d*)\:([A-Z]*)(\d*)$/;
@@ -40,9 +42,9 @@ var Util = {
 	    return res;
   	},
 
-  	//5/13/13
+  	//5/13/13; 2013/8/29
 	convertYYYYMMDD2UnixTime: function(yyyyddmm){
-		return parseInt(moment(yyyyddmm, 'MM-DD-YYYY').format('x'));
+		return parseInt(moment(yyyyddmm, ['YYYY/M/D', 'M/D/YY'], true).format('x'));
 	},
 
 	convertUnixTime2YYYYMMDD: function(unixtime){
