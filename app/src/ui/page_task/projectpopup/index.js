@@ -11,7 +11,6 @@ var ProjectPopup = React.createClass({
 	getInitialState: function() {
         return {
             title: this.props.title,
-
         };
     },
     
@@ -24,7 +23,7 @@ var ProjectPopup = React.createClass({
 	getContent: function() {
         //todo: send projectObj here.
 	    return (
-            <Table projectObj={null} ref='datatable'/>
+            <Table project={this.props.project} ref='datatable'/>
 	    );   
     },
     componentDidMount: function(){

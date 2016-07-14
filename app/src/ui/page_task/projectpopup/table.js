@@ -11,16 +11,17 @@ var Table = React.createClass({
 		this.TAGS_SHEETNAME = 'auto_tags';
         this.TASKS_SHEETNAME='auto_tasks';
 
+        var project = this.props.project;
+        var ui = this.datamodel2ui(project);
         return {
         	sheetIndex: 0,
-        	ui: undefined,
+        	ui: ui,
+
         };
     },
 
     ui2datamodel: function(ui){
         var project = new Project();
-
-
         var creator = SuperAPI.getLoginUser();
         var projectObj = {
             creatorId: creator.id,
@@ -34,8 +35,6 @@ var Table = React.createClass({
                 "children": []
             }]
         };
-
-
 
         //property sheet
         var propertyRaw = ui.sheets[this.PROPERTY_SHEETNAME];

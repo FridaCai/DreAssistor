@@ -100,9 +100,6 @@ var PageTask = React.createClass({
     },
     
     onPropertyAssistorShow:function(){
-        /*this.refs.staticalAssistorPopup.show({
-            title: '统计助手',
-        });*/
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<StaticalAssistorPopup title='统计助手'/>, this.refs.popup);   
     },
