@@ -155,6 +155,9 @@ var Table = React.createClass({
         return ux;
     },
     datamodel2ui: function(project){
+        if(!project)
+            return undefined;
+        
         var sheetNames = [this.PROPERTY_SHEETNAME, this.TAGS_SHEETNAME, this.TASKS_SHEETNAME];
         var sheets = {};
 

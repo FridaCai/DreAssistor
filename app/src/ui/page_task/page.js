@@ -96,7 +96,7 @@ var PageTask = React.createClass({
         }
         
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<ProjectPopup title={param.title} project={param.project}/>, this.refs.popup);  
+        ReactDOM.render(<ProjectPopup title={param.title} project={param.project} onOkClk={param.onOkClk}/>, this.refs.popup);  
     },
     
     onPropertyAssistorShow:function(){
@@ -110,6 +110,18 @@ var PageTask = React.createClass({
         });  
     },
     
+
+    onAddProjectPopupShow: function(e){
+        this.onProjectPopupShow(e, {
+            title: '添加项目', 
+            onOkClk: function(project){
+                project.setId(Util.generateUUID());
+                API.getProjects().add(project);
+                API.signal_page_refresh.dispatch();                
+            }
+        })
+    },
+
     render: function() {
         //todo: create popup when needed. otherwise, avoid loading data for the not necessary rendering.
         return (
@@ -117,7 +129,7 @@ var PageTask = React.createClass({
                 <TemplateTaskList/>
 
                 <div className="btn-group" role="group" aria-label="Basic example"> 
-                    <button type="button" className="btn btn-default" onClick={this.onProjectPopupShow.bind(this, event, {title:'添加项目'})}>添加项目</button> 
+                    <button type="button" className="btn btn-default" onClick={this.onAddProjectPopupShow}>添加项目</button> 
                     <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
                     <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
                 </div> 

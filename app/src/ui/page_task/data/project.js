@@ -6,7 +6,9 @@ module.exports = class Project {
 	constructor(){
 		
 	}
-
+	setId(id){
+		this.id = id;
+	}
 	init(param){
 		this.id = param.id || Util.generateUUID();
 		this.label = param.label;

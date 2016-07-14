@@ -27,6 +27,9 @@ var AddOn = React.createClass({
         API.signal_projectpoup_show.dispatch({
             project: this.props.project,
             title:'编辑项目',
+            onOkClk: function(){
+                //edit.
+            },
         });
     },
     render: function() {

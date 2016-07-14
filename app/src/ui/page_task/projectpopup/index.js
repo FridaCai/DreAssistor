@@ -35,16 +35,11 @@ var ProjectPopup = React.createClass({
     },
 
     onOkClk:function() {
-        //has login? if not, return.
-        var projectObj = this.refs.datatable.getData();
-        
-        var project = new Project();
-        project.init($.extend(true, {id: GlobalUtil.generateUUID()}, projectObj)); //append creatorID.
-        API.getProjects().add(project);
-
-        API.signal_page_refresh.dispatch();
+        var project = this.refs.datatable.getData();
+        this.props.onOkClk(project);
         return Promise.resolve();
     },
+
     render: function() {
         var content = this.getContent();
         var title = this.state.title;

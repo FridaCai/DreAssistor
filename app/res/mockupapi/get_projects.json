@@ -6,7 +6,7 @@
       "id": "0",
       "label": "凯迪拉克",
       "creatorId": 2,
-      "sop": 1466049352000,
+      "sorp": 1466049352000,
       "ec": "1.0T",
       "bpmin": 10,
       "bpmax": 20,
@@ -19,18 +19,21 @@
               "id": "tag_1",
               "label": "DSI",
               "time": 1452430100237,
+              "week": 30,
               "class": "Tag"
             },
             {
               "id": "tag_2",
               "label": "VPI",
               "time": 1463921464187,
+              "week": 20,
               "class": "Tag"
             },
             {
               "id": "tag_3",
               "label": "DSO",
               "time": 1478436664187,
+              "week": 10,
               "class": "Tag"
             }
           ]
@@ -299,7 +302,7 @@
       "id": "1",
       "label": "项目模版",
       "creatorId": 2,
-      "sop": 1466049352000,
+      "sorp": 1466049352000,
       "ec": "1.0T",
       "bpmin": 20,
       "bpmax": 30,
@@ -312,24 +315,21 @@
               "id": "tag_4",
               "label": "DSI",
               "time": 1452430100237,
-              "width": 50,
-              "markColor": 255,
-              "class": "Tag"
+              "class": "Tag",
+              "week": 10
             },
             {
               "id": "tag_5",
               "label": "VPI",
               "time": 1463921464187,
-              "width": 50,
-              "markColor": 255,
+              "week": 10,
               "class": "Tag"
             },
             {
               "id": "tag_6",
               "label": "DSO",
               "time": 1478436664187,
-              "width": 50,
-              "markColor": 255,
+              "week": 10,
               "class": "Tag"
             }
           ]
