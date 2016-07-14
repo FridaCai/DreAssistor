@@ -398,7 +398,6 @@ export default class Item extends React.Component {
       lineHeight: `${dimensions.height}px`,
       backgroundColor: this.props.item.color,
     }
-debugger;
     return (
       <div key={this.itemId}
            ref='item'

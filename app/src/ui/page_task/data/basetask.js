@@ -39,9 +39,26 @@ module.exports = class BaseTask {
 		}).bind(this));
 
 		this.privacy = param.privacy || 0;
-		this.template = param.template;
-		this.statical = param.statical || [];
+		
+		
+
 		this.parent = undefined;
+
+
+
+		this.template = param.template;
+		this.statical = param.statical || ['duration'].concat(
+			(function(type){
+				switch(type){
+					case 0: //normal
+					case 1: //ewo
+					case 2: //hot issue
+						return [];
+					case 3: //mule
+						return ["template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]
+				}
+			})(param.template.type)
+		);
 	}
 	update(param){
 		//might have problem for array copy. 

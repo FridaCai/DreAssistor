@@ -16,7 +16,7 @@ var MessageBox = React.createClass({
              tabindex: 0,
              msg: this.props.msg || '',
              okHandler: this.props.okHandler || function(){return Promise.resolve()},
-             isShow: false,
+             isShow: this.props.isShow || false,
              width: this.props.width || 400,
              cName: this.props.cName,
              hideFooter: this.props.hideFooter,

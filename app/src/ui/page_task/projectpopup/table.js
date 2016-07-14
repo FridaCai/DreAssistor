@@ -116,7 +116,7 @@ var Table = React.createClass({
                     case 'snorkelNoiseXls':
                         taskObj['template'] = taskObj['template'] || {};
                         taskObj['template']['param'] = taskObj['template']['param'] || {}; 
-                        taskObj['template']['param']['snorkelNoiseXls'] = value; 
+                        taskObj['template']['param']['snorkelNoiseXls'] = [value]; 
                         break;
                     case 'rootCause': 
                         taskObj['template'] = taskObj['template'] || {};

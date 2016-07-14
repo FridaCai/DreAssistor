@@ -3,16 +3,16 @@
   "errMsg": "",
   "templateenum": [
   	{
-  		"id": "0",
+  		"id": 0,
   		"label": "普通"
   	},{
-  		"id": "1",
+  		"id": 1,
   		"label": "EWO"
   	},{
-  		"id": "2",
+  		"id": 2,
   		"label": "HotIssue"
   	},{
-  		"id": "3",
+  		"id": 3,
   		"label": "Mule"
   	}
   ]

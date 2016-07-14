@@ -19,7 +19,7 @@
             }],
             "privacy": "0",
             "template": {
-                "type": "0"
+                "type": 0
             },
             "statical":["duration"]
         },
@@ -40,7 +40,7 @@
             }],
     		"privacy": "0",
     		"template": {
-    			"type": "1"
+    			"type": 1
     		},
             "statical":["duration"]
 		},{
@@ -56,7 +56,7 @@
             "subtasks": [],
             "privacy": "0",
             "template": {
-                "type": "2",
+                "type": 2,
                 "param": {
                     "rootCause": "rootCause",
                     "solution": "solution",
@@ -78,7 +78,7 @@
             "subtasks": [],
             "privacy": "0",
             "template": {
-                "type": "3",
+                "type": 3,
                 "param": {
                     "bom":{
                         "isDone": false,

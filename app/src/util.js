@@ -19,7 +19,7 @@ var Util = {
 		for(var i=0; i<arr.length; i++){
 			var key = arr[i];
 			target = target[key];
-			if(!target){
+			if(target == undefined || target == null){
 				return undefined;
 			}
 		}

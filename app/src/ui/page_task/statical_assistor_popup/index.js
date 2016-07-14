@@ -9,7 +9,7 @@ import moment from 'moment';
 var StaticalAssistorPopup = React.createClass({
     getInitialState: function() {
         return {
-            templateType: '-1', //-1: all; 0: normal; 1: ewo; 2: hotissue; 3: mule
+            templateType: -1, //-1: all; 0: normal; 1: ewo; 2: hotissue; 3: mule
         };
     },
     componentDidMount: function() {
@@ -24,7 +24,7 @@ var StaticalAssistorPopup = React.createClass({
             var container = this.refs[id];
 
             var options = [{
-                id: '-1',
+                id: -1,
                 label: '全部'
             }].concat(API.getTemplateEnum());
             
@@ -45,13 +45,13 @@ var StaticalAssistorPopup = React.createClass({
     },
     onSearch: function(){
         this.setState({
-            templateType: this.typeDropdown.getValue(),
+            templateType: parseInt(this.typeDropdown.getValue()),
         });
 
         this.refs.chart.hideChart();
     },
     getContent: function() {
-        var condition = (this.state.templateType === '-1' ? null: {
+        var condition = (this.state.templateType === -1 ? null: {
             key: 'template.type',
             value: this.state.templateType
         });
@@ -102,7 +102,7 @@ var StaticalAssistorPopup = React.createClass({
         var content = this.getContent();
         var title = this.state.title;
         var className = 'assistorMsg';
-        return (<MessageBox title={title} 
+        return (<MessageBox title={title} isShow={true}
             okHandler={this.onOkClk} ref='msgbox' children={content} cName={className} hideFooter={true}/>
         );
     },

@@ -149,6 +149,12 @@ var UploadExcelComponent = React.createClass({
           var arr = new Array();
           for(var i = 0; i != data.length; ++i) 
             arr[i] = String.fromCharCode(data[i]);
+          
+          if(!arr.length){
+            reject();
+            return;
+          }
+
           var bstr = arr.join("");
           
  

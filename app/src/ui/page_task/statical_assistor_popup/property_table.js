@@ -23,23 +23,22 @@ var Table = React.createClass({
         return (
             <div className='panel panel-default tableSession'>
             {
-               	groups.map((function(group){
+               	groups.map((function(group, i){
                     var lines = group.lines;
                     var header = group.label;
                     {
                         if(lines.length){
                             return (
-                                <div className='projectDom' key={header}>
+                                <div className='projectDom' key={i}>
                                     <div className="panel-heading">项目： {header}</div>
                                     <table className="table"> 
                                         <thead> 
                                             <tr>
                                                 <th>#</th>
                                                 {
-                                                    allpropertyKeys.map((function(column){
-                                                        var key = `column_${column}`;
+                                                    allpropertyKeys.map((function(column, j){
                                                         var label = Util.COLUMN_LABLE_MAP[column];
-                                                        return (<th key={key}>{label}</th>)
+                                                        return (<th key={j}>{label}</th>)
                                                     }).bind(this))
                                                 }
                                             </tr> 
@@ -52,10 +51,9 @@ var Table = React.createClass({
                                                     <tr key={lineId}>
                                                         <th scope="row">{lineNum++}</th>
                                                         {
-                                                            allpropertyKeys.map((function(column){
-                                                                var columnKey = `${lineId}_${column}`;
+                                                            allpropertyKeys.map((function(column, k){
                                                                 return (
-                                                                    <td key={columnKey}>{getStaticalValueHandler(line, column)}</td>
+                                                                    <td key={k}>{getStaticalValueHandler(line, column)}</td>
                                                                 )
                                                             }).bind(this))
                                                         }
