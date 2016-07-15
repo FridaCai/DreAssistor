@@ -11,16 +11,10 @@ var ProjectPopup = React.createClass({
 	getInitialState: function() {
         return {
             title: this.props.title,
-            onOkClk: this.props.onOkClk,
+            onOK: this.props.onOK,
         };
     },
     
-    show: function(state) {
-    	var newState = state || this.state;
-        this.setState(newState, this.updateJqueryComponent);
-        this.refs.msgbox.show();
-    },
-
 	getContent: function() {
         //todo: send projectObj here.
 	    return (
@@ -28,23 +22,19 @@ var ProjectPopup = React.createClass({
 	    );   
     },
     componentDidMount: function(){
-        this.updateJqueryComponent();
-        this.refs.msgbox.show();
-    },
-    updateJqueryComponent: function() {
-    	return;
+        
     },
 
-    onOkClk:function() {
+    onOK:function() {
         var project = this.refs.datatable.getData();
-        this.state.onOkClk(project);
+        this.state.onOK(project);
         return Promise.resolve();
     },
 
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} okHandler={this.onOkClk} ref='msgbox' cName='projectPopupContainer' children={content}/>);
+        return (<MessageBox width={700} title={title} okHandler={this.onOK} isShow={true} ref='msgbox' cName='projectPopupContainer' children={content}/>);
     },
 });
 

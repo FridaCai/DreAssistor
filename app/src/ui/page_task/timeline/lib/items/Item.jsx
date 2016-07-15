@@ -300,7 +300,7 @@ export default class Item extends React.Component {
           API.signal_taskpopup_show.dispatch({
               title: '修改豆豆',
               taskObj: $.extend(true, {}, task),
-              onOKHandler: (function(taskObj){
+              onOK: (function(taskObj){
                   task.update(taskObj);
                   API.signal_page_refresh.dispatch();
               }).bind(this),

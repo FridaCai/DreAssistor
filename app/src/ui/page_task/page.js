@@ -63,7 +63,8 @@ var PageTask = React.createClass({
 
     onTaskCreate: function(e, param){
         if(!SuperAPI.isLogin()){
-            this.refs.msgbox.show();
+            ReactDOM.unmountComponentAtNode(this.refs.popup);    
+            ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
             return;
         }
 
@@ -86,35 +87,35 @@ var PageTask = React.createClass({
     },
 
     onTaskPopupShow: function(e, param){
-        this.refs.taskpopup.show(param);
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<TaskPopup title={param.title} taskObj={param.taskObj} onOK={param.onOK}/>, this.refs.popup);  
     },
 
     onProjectPopupShow: function(e, param){
         if(!SuperAPI.isLogin()){
-            this.refs.msgbox.show();
+            ReactDOM.unmountComponentAtNode(this.refs.popup);    
+            ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
             return;
         }
-        
+
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<ProjectPopup title={param.title} project={param.project} onOkClk={param.onOkClk}/>, this.refs.popup);  
+        ReactDOM.render(<ProjectPopup title={param.title} project={param.project} onOK={param.onOK}/>, this.refs.popup);  
     },
     
     onPropertyAssistorShow:function(){
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<StaticalAssistorPopup title='统计助手'/>, this.refs.popup);   
+        ReactDOM.render(<StaticalAssistorPopup title={'统计助手'}/>, this.refs.popup);   
     },
     
     onPeopleAssistorShow:function(){
-        this.refs.peopleAssistorPopup.show({
-            title: '前辈助手',
-        });  
+        ReactDOM.unmountComponentAtNode(this.refs.popup);
+        ReactDOM.render(<PeopleAssistorPopup title={'前辈助手'}/>, this.refs.popup);
     },
-    
 
     onAddProjectPopupShow: function(e){
         this.onProjectPopupShow(e, {
             title: '添加项目', 
-            onOkClk: function(project){
+            onOK: function(project){
                 API.getProjects().add(project);
                 API.signal_page_refresh.dispatch();                
             }
@@ -139,22 +140,9 @@ var PageTask = React.createClass({
                         )
                     })
                 }
-
-                <TaskPopup ref='taskpopup'/>
-                
-                <ContextMenu ref='contextmenu'/>
-                <PeopleAssistorPopup ref='peopleAssistorPopup'/> 
-                
-                <MessageBox ref='msgbox' msg='请先登录' cName='msg_4_2'/>
-
-
                 <div ref='popup'></div>
             </div>
         );    
-
-
-        //<StaticalAssistorPopup ref='staticalAssistorPopup'/>
-        //<ProjectPopup ref='projectpopup'/>
     }
 });
 

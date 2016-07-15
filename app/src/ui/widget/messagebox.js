@@ -15,7 +15,7 @@ var MessageBox = React.createClass({
              contentsSelectable: false,
              tabindex: 0,
              msg: this.props.msg || '',
-             okHandler: this.props.okHandler || function(){return Promise.resolve()},
+             onOK: this.props.onOK || function(){return Promise.resolve()},
              isShow: this.props.isShow || false,
              width: this.props.width || 400,
              cName: this.props.cName,
@@ -26,7 +26,7 @@ var MessageBox = React.createClass({
         this.setState({
             title: newProps.title,
             width: newProps.width,
-            okHandler: newProps.okHandler,
+            onOK: newProps.onOK,
         }); 
     },
 
@@ -35,16 +35,14 @@ var MessageBox = React.createClass({
             isShow: true,
         })
     },
-    onOKBtnClk: function() {
+    onOK: function() {
         //please do not show/hide popup but create/destroy...
-        if(!this.state.okHandler){
+        if(!this.state.onOK){
             this.hide();
             return;
         }
 
-
-
-        this.state.okHandler().then((function(){
+        this.state.onOK().then((function(){
             this.hide();    
         }).bind(this));
     },
@@ -71,7 +69,6 @@ var MessageBox = React.createClass({
         var disablemask = this.state.disablemask;
         var contentsSelectable = this.state.contentsSelectable;
         var tabindex = this.state.tabindex;
-        var okHandler = this.state.okHandler;
         var okBtnLabel = '确定';
         var cancelBtnLabel = '取消';
 
@@ -87,7 +84,7 @@ var MessageBox = React.createClass({
 
             return (
                 <div className='MsgBoxBtns'>
-                    <button className='btn btn-primary msgboxactive' onClick={this.onOKBtnClk}>{okBtnLabel}</button>
+                    <button className='btn btn-primary msgboxactive' onClick={this.onOK}>{okBtnLabel}</button>
                     <button className='btn btn-default msgboxdefault' onClick={this.hide}>{cancelBtnLabel}</button>
                 </div>
             )

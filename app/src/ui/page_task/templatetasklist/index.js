@@ -19,7 +19,7 @@ var TemplateTaskList = React.createClass({
         API.signal_taskpopup_show.dispatch({
             title: '编辑豆豆',
             taskObj: $.extend(true, {}, task),
-            onOKHandler: (function(taskObj){
+            onOK: (function(taskObj){
                 task.update(taskObj);
                 this.forceUpdate();
             }).bind(this),

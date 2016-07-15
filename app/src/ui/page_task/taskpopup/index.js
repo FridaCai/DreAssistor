@@ -17,21 +17,16 @@ var TaskPopup = React.createClass({
     priorityDropdown: undefined,
 
 	getInitialState: function() {
-        return {};
+        return {
+            taskObj: this.props.taskObj,
+            title: this.props.title,
+            onOK: this.props.onOK,
+        };
     },
     
-    show: function(state) {
-    	var newState = state || this.state;
-        this.setState(newState, this.updateJqueryComponent);
-        this.refs.msgbox.show();
-    },
-
 	getContent: function() {
-        if(!this.state.taskObj)
-            return null;
-
         const {
-          label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template, onOKHandler,
+          label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
         } = this.state.taskObj;
 
         var color = Util.convertIntColorToHex(markColor);
@@ -95,6 +90,9 @@ var TaskPopup = React.createClass({
 	        </div>
 	    );   
     },
+    componentDidMount: function(){
+        this.updateJqueryComponent();
+    },
     updateJqueryComponent: function() {
     	(function updatePriorityDropdown(){
             var defaultKey = this.state.taskObj.priority;
@@ -122,7 +120,7 @@ var TaskPopup = React.createClass({
     	}).call(this);
     },
 
-    onOkClk:function() {
+    onOK:function() {
         var label = this.refs.labelInput.value;
         var desc = this.refs.descTA.value;
         var startTime = this.refs.startTimeDT.state.selectedDate.valueOf();
@@ -134,7 +132,7 @@ var TaskPopup = React.createClass({
         var privacy = this.refs.privacyRadioGroup.getValue();
         var template = this.refs.templatePanel.getValue();
 
-        this.state.onOKHandler({
+        this.state.onOK({
             label: label,
             desc: desc,
             startTime: startTime,
@@ -152,7 +150,7 @@ var TaskPopup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} okHandler={this.onOkClk} ref='msgbox' children={content}/>);
+        return (<MessageBox width={700} title={title} onOK={this.onOK} ref='msgbox' children={content} isShow={true}/>);
     },
 });
 

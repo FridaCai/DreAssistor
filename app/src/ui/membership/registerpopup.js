@@ -13,12 +13,6 @@ var RegisterPopup = React.createClass({
         }
     },
 
-    show: function(state) {
-        var newState = state || this.state;
-        this.setState(newState, this.updateAfterMount);
-        this.refs.msgbox.show();
-    },
-    
     getContent: function() {
 		var style = this.state.isValid ? {visibility: 'hidden'} : {visibility: 'visible'};
 		var errorMsg = this.state.errorMsg;
@@ -46,7 +40,7 @@ var RegisterPopup = React.createClass({
         )
     },
 
-    onOkClk:function() {
+    onOK:function() {
         var errorMap = { 
             c0: '请输入用户名',
             c1: '请输入邮箱',
@@ -137,7 +131,7 @@ var RegisterPopup = React.createClass({
         var title = this.state.title;
         var className = 'registerMsg';
         return (<MessageBox title={title} 
-            okHandler={this.onOkClk} ref='msgbox' children={content} cName={className}/>
+            onOK={this.onOK} ref='msgbox' children={content} cName={className} isShow={true}/>
         );
     },
 });

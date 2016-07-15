@@ -95,15 +95,15 @@ var StaticalAssistorPopup = React.createClass({
         )
     },
 
-    onOkClk:function() {
+    onOK:function() {
     },
 
     render: function() {
         var content = this.getContent();
-        var title = this.state.title;
+        var title = this.props.title;
         var className = 'assistorMsg';
         return (<MessageBox title={title} isShow={true}
-            okHandler={this.onOkClk} ref='msgbox' children={content} cName={className} hideFooter={true}/>
+            okHandler={this.onOK} ref='msgbox' children={content} cName={className} hideFooter={true}/>
         );
     },
 });

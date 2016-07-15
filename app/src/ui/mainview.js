@@ -23,14 +23,15 @@ var MainView = React.createClass({
         this.refs.menu.forceUpdate();
     },
     showRegisterPopup: function(){
-        this.refs.registerpopup.show();
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<RegisterPopup/>, this.refs.popup);  
     },
     render: function() {
     	return (
     		<div>
 				<Menu ref='menu'/>
 				<Page/>
-                <RegisterPopup ref='registerpopup'/>
+                <div ref='popup'/>
     		</div>
 		);
     }
