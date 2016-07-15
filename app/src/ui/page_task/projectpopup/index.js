@@ -34,7 +34,7 @@ var ProjectPopup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} okHandler={this.onOK} isShow={true} ref='msgbox' cName='projectPopupContainer' children={content}/>);
+        return (<MessageBox width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='projectPopupContainer' children={content}/>);
     },
 });
 

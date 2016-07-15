@@ -74,7 +74,7 @@ export default class Sidebar extends React.Component {
  
     API.signal_msgbox_show.dispatch({
       msg: msg,
-      okHandler: function() {
+      onOK: function() {
         API.deleteProject(projectId, mobileYearId);
         
         API.signal_page_refresh.dispatch();
