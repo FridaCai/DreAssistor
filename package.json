@@ -4,10 +4,8 @@
   "description": "Floorplan design tool app",
   "main": "index.js",
   "scripts": {
-    "start-webpack": "webpack -d --watch",
-    "build": "cnpm install && webpack -d --watch",
-    "build-ec2": "npm install && webpack -p",
-    "deploy": "http-server -p 8001 -c-1 ./",
+    "deploy-dev": "cnpm install && webpack -d --watch & http-server -p 8001 -c-1 ./",
+    "deploy-ec2": "npm install && webpack -p && http-server -p 8001 -c-1 ./",
     "stop": "killall node"
   },
   "repository": {
