@@ -441,6 +441,9 @@ var Table = React.createClass({
             )
 
         }).bind(this);
+
+
+        var xlsFileType = ['.csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'].join(',');
 		return (
 			<div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
             {
@@ -469,14 +472,39 @@ var Table = React.createClass({
 						</table>
 	                </div>
 	            </div>
+
+
+                <input type="file" ref='xlsFileUploadInput'  accept={xlsFileType} style={{display: 'none'}} onChange={this.onXlsUpload}/>
             </div>
 		)
 	},
 
-    import: function(){
-        //todo
+    onXlsUpload: function(e){
+      var files = e.target.files;
+      var i,f;
+      for (i = 0, f = files[i]; i != files.length; ++i) {
+        var reader = new FileReader();
+        var name = f.name;
+        reader.onload = (function(e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {type: 'binary'});
+
+            //deal with sorp_week in dm.
+            var tempUI = this.excel2ui(workbook);
+            var dm = this.ui2datamodel(tempUI);
+            var ui = this.datamodel2ui(dm) 
+
+            this.setState({
+                ui: ui
+            })
+        }).bind(this);
+        reader.readAsBinaryString(f);
+      }
     },
-	//convert this.state.projectObj to excel file.
+
+    import: function(){
+        this.refs.xlsFileUploadInput.click();
+    },
 	export: function(){
         var s2ab = function(s) {
             var buf = new ArrayBuffer(s.length);
