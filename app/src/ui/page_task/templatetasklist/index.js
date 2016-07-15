@@ -12,37 +12,7 @@ var TemplateTaskList = React.createClass({
         }
     },
     onAddTaskBtnClk: function(){
-        this.refs.msgbox.show({
-        });
-        return;
-
-
-        var id = Util.generateUUID();
-
-		API.signal_taskpopup_show.dispatch({
-            title: '添加豆豆',
-			taskObj: {
-                label: '未命名',
-                desc: '',
-                startTime: moment().add(-6, 'months').valueOf(),
-                endTime: moment().add(6, 'months').valueOf(),
-                markColor: 0,
-                attachments: [],
-                creatorId: '',
-                priority: 0,
-                subtasks: [],
-                privacy: 0,
-                template: {
-                    type: 0,
-                }
-            },
-			onOKHandler: (function(taskObj){
-                var task = new TemplateTask();
-				task.init($.extend(true, {id: id}, taskObj));
-				API.getTemplateTasks().addTask(task);
-                this.forceUpdate();                
-			}).bind(this),
-		});
+        this.refs.msgbox.show({});
     },
 
     onEditTaskClk: function(task){

@@ -11,6 +11,7 @@ var ProjectPopup = React.createClass({
 	getInitialState: function() {
         return {
             title: this.props.title,
+            onOkClk: this.props.onOkClk,
         };
     },
     
@@ -36,7 +37,7 @@ var ProjectPopup = React.createClass({
 
     onOkClk:function() {
         var project = this.refs.datatable.getData();
-        this.props.onOkClk(project);
+        this.state.onOkClk(project);
         return Promise.resolve();
     },
 

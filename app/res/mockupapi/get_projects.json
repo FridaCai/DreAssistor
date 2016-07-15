@@ -39,16 +39,6 @@
           ]
         },
         {
-          "id": "1",
-          "label": "Vehicle Building",
-          "children": []
-        },
-        {
-          "id": "2",
-          "label": "PT Cai",
-          "children": []
-        },
-        {
           "id": "3",
           "label": "AIS Development",
           "children": [
@@ -333,16 +323,6 @@
               "class": "Tag"
             }
           ]
-        },
-        {
-          "id": "1",
-          "label": "Vehicle Building",
-          "children": []
-        },
-        {
-          "id": "2",
-          "label": "PT Cai",
-          "children": []
         },
         {
           "id": "3",
