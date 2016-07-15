@@ -17,6 +17,14 @@ module.exports = class Tag {
 	setParent(parent){
 		this.parent = parent;
 	}
+	update(param){
+		this._updateMeta(param);
+	}
+	_updateMeta(param){
+		this.label = param.label;
+		this.time=param.time;
+		this.week = param.week;
+	}
 	dump(){
 		return {
 			id: this.id,

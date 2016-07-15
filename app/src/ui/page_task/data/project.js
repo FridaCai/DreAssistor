@@ -6,22 +6,16 @@ module.exports = class Project {
 	constructor(){
 		
 	}
-	setId(id){
-		this.id = id;
-	}
+
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		this.label = param.label;
 		this.creatorId=param.creatorId;
 		
+		this.label = param.label;
 		this.ec = param.ec;
-		
 		this.bpmin = param.bpmin;
 		this.bpmax = param.bpmax;
-
-
-		this.sorp = param.sorp; //need or not? need to discuss on meeting.
-		
+		this.sorp = param.sorp;
 		this.children = [];
 		param.children && param.children.map((function(sp){
 			var subproject = new SubProject();
@@ -31,15 +25,31 @@ module.exports = class Project {
 			this.children.push(subproject);
 		}).bind(this));
 	}
-	update(param){
-		//might have problem for array copy. 
-		//$.extend(true, [], templateList);
-		Object.assign(this, param); 
-	}
-
-	
 	setParent(parent){
 		this.parent = parent;
+	}
+
+	/**
+	** suppose only project property and tags are allowed to update. if user want to update task, use another UI.
+	**/
+	_updateMeta(param){
+		this.label = param.label;
+		this.ec = param.ec;
+		this.bpmin = param.bpmin;
+		this.bpmax = param.bpmax;
+		this.sorp = param.sorp;
+
+		var tagObjs = param.children[0].children;
+		for(var i=0; i<tagObjs.length; i++){
+			var tagObj = tagObjs[i];
+
+			var tag = this.children[0].children[i];
+			tag.update(tagObj);
+		}
+	}
+
+	update(param){
+		this._updateMeta(param);
 	}
 
 	findChildByIndex(index){

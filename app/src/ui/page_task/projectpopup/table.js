@@ -16,7 +16,6 @@ var Table = React.createClass({
         return {
         	sheetIndex: 0,
         	ui: ui,
-
         };
     },
 
@@ -340,6 +339,9 @@ var Table = React.createClass({
     },	
 
     onDrop: function(e){
+        if(this.isEdit())
+            return;
+        
 	  	e.stopPropagation();
 	  	e.preventDefault();
 	  	var files = e.dataTransfer.files;
@@ -389,7 +391,11 @@ var Table = React.createClass({
         var ui = this.datamodel2ui(dm);
         this.setState({ui: ui});
     },
-
+    isEdit: function(){
+        if(this.props.project)
+            return true;
+        return false;
+    },
 	render:function(){
     	if(!this.state.ui){
     		return null;
@@ -422,12 +428,25 @@ var Table = React.createClass({
         }).bind(this);
 
 
+        var getAddOn = (function(){
+            if(this.isEdit()){
+               return null 
+            }
+
+            return (
+                <div className='addOn'>
+                    <button className="btn btn-primary" onClick={this.import}>导入excel</button> 
+                    <button className="btn btn-primary" onClick={this.export}>导出excel</button>
+                </div>
+            )
+
+        }).bind(this);
 		return (
 			<div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
-				<div className='addOn'>
-					<button className="btn btn-primary" onClick={this.import}>导入excel</button> 
-					<button className="btn btn-primary" onClick={this.export}>导出excel</button>
-				</div>
+            {
+                getAddOn()
+            }
+				
 	    		<div className='dataTable' >
 	        		<ul className="nav nav-tabs">
 	        		{

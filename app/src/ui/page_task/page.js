@@ -115,7 +115,6 @@ var PageTask = React.createClass({
         this.onProjectPopupShow(e, {
             title: '添加项目', 
             onOkClk: function(project){
-                project.setId(Util.generateUUID());
                 API.getProjects().add(project);
                 API.signal_page_refresh.dispatch();                
             }
