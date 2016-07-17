@@ -9,7 +9,6 @@ var Table = React.createClass({
 	getInitialState: function() {
 		this.PROPERTY_SHEETNAME = 'auto_property';
 		this.TAGS_SHEETNAME = 'auto_tags';
-        this.TASKS_SHEETNAME='auto_tasks';
 
         var project = this.props.project;
         var ui = this.datamodel2ui(project);
@@ -17,6 +16,18 @@ var Table = React.createClass({
         	sheetIndex: 0,
         	ui: ui,
         };
+    },
+
+    getSheetName: function(name){
+        if(!name)
+            return undefined;
+
+        var reg = /\$\{(.*)\}/;
+        var match = name.match(reg);
+        if(match.length != 2)
+            return undefined;
+
+        return match[1];
     },
 
     ui2datamodel: function(ui){
@@ -59,41 +70,45 @@ var Table = React.createClass({
    
 
         //tag sheet
+        var taskInfoList = [];
         var tagRaw = ui.sheets[this.TAGS_SHEETNAME];
         for(var i=1; i<tagRaw.length; i++){
             var line = tagRaw[i];
 
             var label = line[3].v;
-            if(!label)
-                continue;
-
             var week = parseInt(line[0].v);
-            var autoTime = this.getTimeBySorpWeek(projectObj.sorp, week);
-            var adjustTime = line[2].v;
-            var time = adjustTime ? Util.convertYYYYMMDD2UnixTime(adjustTime): autoTime;
 
-            projectObj.children[0].children.push({
+            var time = (function(sorp, week, adjustTime){
+                var autoTime = this.getTimeBySorpWeek(sorp, week);
+                return adjustTime ? Util.convertYYYYMMDD2UnixTime(adjustTime): autoTime;
+            }).call(this, projectObj.sorp, week, line[2].v)
+
+
+            var taskSheetName = this.getSheetName(line[4].v); //todo.
+            label && projectObj.children[0].children.push({
                 "label": label,
-                "time": time, 
                 "week": week,
+                "time": time, 
                 "class": "Tag",
             })
+
+
+           
+            taskSheetName!=undefined && taskInfoList.push({
+                sheetName: taskSheetName,
+                startTime: line[6].v,
+                endTime: line[7].v,
+            });
         }
 
-
-
-        //task sheet
-        var taskSheetNames = [];
-        var sheetNamesRaw = ui.sheets[this.TASKS_SHEETNAME];
-        for(var i=0; i<sheetNamesRaw.length; i++){
-            var sheetNameRaw = sheetNamesRaw[i][0].v;
-            var reg = /\$\{(.*)\}/;
-            var name = sheetNameRaw.match(reg)[1];
-            taskSheetNames.push(name);
-        }
-        taskSheetNames.map(function(name){
+        taskInfoList.map((function(taskInfo){
             var taskObj = {};
-            var sheet = ui.sheets[name];
+            
+            taskObj['startTime'] = Util.convertYYYYMMDD2UnixTime(taskInfo.startTime);
+            taskObj['endTime'] = Util.convertYYYYMMDD2UnixTime(taskInfo.endTime);
+
+
+            var sheet = ui.sheets[taskInfo.sheetName];
             for(var i = 1; i<sheet.length; i++){
                 var key = sheet[i][0].v;
                 var value = sheet[i][1].v;
@@ -102,10 +117,6 @@ var Table = React.createClass({
                     case 'label':
                     case 'desc':
                         taskObj[key] = value;
-                        break;
-                    case 'startTime':
-                    case 'endTime':
-                        taskObj[key] = Util.convertYYYYMMDD2UnixTime(value);
                         break;
                     case 'template':
                         taskObj['template'] = taskObj['template'] || {};
@@ -143,21 +154,23 @@ var Table = React.createClass({
             taskObj["creatorId"] = creator.id;
 
             projectObj.children[1].children.push(taskObj);
-        })
+        }).bind(this));
 
         project.init(projectObj);
         return project;
     },
+
     getTimeBySorpWeek: function(sorp, week){
         var substract = moment(sorp, 'x').subtract(week, 'weeks');
         var ux = substract.valueOf();
         return ux;
     },
+
     datamodel2ui: function(project){
         if(!project)
             return undefined;
         
-        var sheetNames = [this.PROPERTY_SHEETNAME, this.TAGS_SHEETNAME, this.TASKS_SHEETNAME];
+        var sheetNames = [this.PROPERTY_SHEETNAME, this.TAGS_SHEETNAME];
         var sheets = {};
 
         //property sheet.
@@ -171,8 +184,22 @@ var Table = React.createClass({
         ];
 
 
+
+
+
+
         //tags sheet.
-        sheets[this.TAGS_SHEETNAME] = [[{v: 'Week'}, {v: 'Date(Sorp-Week)'}, {v:'Date(Adjusted)'}, {v:'Update Program Milestone'}]];
+        sheets[this.TAGS_SHEETNAME] = [[
+            {v: 'Week'}, 
+            {v: 'Date(Sorp-Week)'}, 
+            {v: 'Date(Adjusted)'}, 
+            {v: 'Update Program Milestone'},
+            {v: 'Task'},
+            {v: 'Task Duration(Week)'},
+            {v: 'Task Start Time(Sorp-Week)'},
+            {v: 'Task End Time(Start Time + Duration)'}
+        ]];
+
         //precondition: tags are desc order.
         var tags = project.children[0].children;
         var loop = tags[0].week;
@@ -181,34 +208,54 @@ var Table = React.createClass({
                 return tag.week === week;
             })
         }
+
+        var tasks = project.findTasks();
+        var findTaskByTimeScope = function(tasks, minTime, maxTime){
+            for(var i=0; i<tasks.length; i++){
+                var startTime = tasks[i].startTime;
+                if(startTime >= minTime && startTime <maxTime)
+                    return tasks[i];
+            }
+            return undefined;
+        }
   
+
+        var taskList = [];
         for(var i=loop; i>=0; i--){
             var tag = findTagByWeek(tags, i);
             var autoTime = Util.convertUnixTime2YYYYMMDD(this.getTimeBySorpWeek(project.sorp, i));
+            var line = [{v: i}, {v:autoTime}, {v:'', isEditable:true}, {v:''}, {v:''}, {v:''},{v:''}, {v:''}];
             
-            var tagui = [{v: i}, {v:autoTime}, {v:'', isEditable:true}, {v:''}];
             if(tag){
-                tagui = [
-                    {v: tag.week}, 
-                    {v: autoTime}, 
-                    {v: Util.convertUnixTime2YYYYMMDD(tag.time), isEditable:true}, 
-                    {v: tag.label}
-                ];
+                line[2] = {v: Util.convertUnixTime2YYYYMMDD(tag.time), isEditable:true};
+                line[3] = {v: tag.label}
             }
-            sheets[this.TAGS_SHEETNAME].push(tagui);
+
+            var task = findTaskByTimeScope(
+                tasks, 
+                this.getTimeBySorpWeek(project.sorp, i),
+                this.getTimeBySorpWeek(project.sorp, i-1)
+            );
+            if(task){
+                taskList.push(task);
+                line[4] = {v: `\$\{auto_task_${taskList.length - 1}\}`}; //problem here. task sheet name is fixed to be 'auto_task_index'
+
+                var w = (task.endTime - task.startTime) / (7 * 24 * 3600 * 1000);
+                line[5] = {v: Math.round(w*10)/10};
+
+                line[6] = {v: Util.convertUnixTime2YYYYMMDD(task.startTime)};
+                line[7] = {v: Util.convertUnixTime2YYYYMMDD(task.endTime)};
+            }
+
+            sheets[this.TAGS_SHEETNAME].push(line);
         }
 
-        //tasks catalog sheet.
-        var tasks = project.findTasks();
-        sheets[this.TASKS_SHEETNAME] = [];
-        tasks.map((function(task, index){
-            sheets[this.TASKS_SHEETNAME].push([{v: `\$\{auto_task_${index}\}`}]);
-        }).bind(this))
+        
 
 
         //for auto_tasks, auto_task_0, auto_task_1...
-        for(var i=0; i<tasks.length; i++){
-            var task = tasks[i];
+        for(var i=0; i<taskList.length; i++){
+            var task = taskList[i];
 
             var sheetName = `auto_task_${i}`;
             sheetNames.push(sheetName);

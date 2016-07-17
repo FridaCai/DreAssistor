@@ -3,7 +3,7 @@
 	"errMsg": "",
 	"tasks": [
         {
-            "id": "0",
+            "id": 0,
             "label": "普通",
             "desc": "",
             "startTime": 1465718720000,
@@ -24,7 +24,7 @@
             "statical":["duration"]
         },
 		{
-			"id": "1",
+			"id": 1,
     		"label": "EWO",
     		"desc": "",
     		"startTime": 1465718720000,
@@ -44,7 +44,7 @@
     		},
             "statical":["duration"]
 		},{
-            "id": "2",
+            "id": 2,
             "label": "HotIssue",
             "desc": "",
             "startTime": 1465718720000,
@@ -66,7 +66,7 @@
             },
             "statical":["duration"]
         },{
-            "id": "3",
+            "id": 3,
             "label": "Mule",
             "desc": "",
             "startTime": 1465718720000,
@@ -120,7 +120,31 @@
                 }
             },
             "statical":["duration", "template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]
-            }
+        },
+        {
+            "id": 4,
+            "label": "竞争车型",
+            "desc": "",
+            "startTime": 1465718720000,
+            "endTime": 1465718924000,
+            "markColor": 6076508,
+            "attachments": [],
+            "creatorId": "",
+            "priority": "0",
+            "subtasks": [{
+                "id": "0",
+                "label": "豆豆子项",
+                "isDone": true
+            }],
+            "privacy": "0",
+            "template": {
+                "type": 4,
+                "param":{
+
+                }
+            },
+            "statical":["duration"]
+        }
 
 	]
 }	
