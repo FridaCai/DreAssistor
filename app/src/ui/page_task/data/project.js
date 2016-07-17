@@ -81,7 +81,8 @@ module.exports = class Project {
 			ec: this.ec,
 			bpmin: this.bpmin,
 			bpmax: this.bpmax,
-			children: children
+			children: children,
+			comment: `sorp: ${new Date(this.sorp)}`
 		};
 	}
 }

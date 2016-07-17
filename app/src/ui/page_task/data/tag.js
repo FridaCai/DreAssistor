@@ -34,6 +34,8 @@ module.exports = class Tag {
 			width: this.width,
 			markColor: this.markColor,
 			class: 'Tag',
+
+			comment: `time: ${new Date(time)}`
 		}
 	}
 }

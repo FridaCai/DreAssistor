@@ -125,7 +125,9 @@ module.exports = class BaseTask {
 			privacy: this.privacy,
 			template: this.template,
 			class: 'Task',
-			statical: this.statical
+			statical: this.statical,
+
+			comment: `startTime: ${new Date(this.startTime)}, endTime: ${new Date(this.endTime)}`,
 		}
 	}
 }
