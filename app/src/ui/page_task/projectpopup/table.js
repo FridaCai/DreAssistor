@@ -513,27 +513,25 @@ var Table = React.createClass({
             var sheet = this.state.ui.sheets[sheetName];
 
             var dom = [];
-            sheet.map((function(line, i){
+            for(var i=1; i<sheet.length; i++){
+                var line = sheet[i];
                 var tr = [];
 
+                var percentage = `${1/line.length*100}%`;
                 line.map((function(cell, j){
                     var dom = cell.isEditable ? (
                         <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur.bind(this, cell)}/>
                     ) : (<span>{cell.v}</span>);
-
-
                     tr.push((
-                        <td key={j}>{dom}</td>
+                        <td key={j} style={{width: percentage}}>{dom}</td>
                     ));
                 }).bind(this))
-
                 dom.push((
                     <tr key={i}>{tr}</tr>
                 ));
-            }).bind(this))
+            }
             return dom;
         }).bind(this);
-
 
         var getAddOn = (function(){
             if(this.isEdit()){
@@ -546,9 +544,23 @@ var Table = React.createClass({
                     <button className="btn btn-primary" onClick={this.export}>导出excel</button>
                 </div>
             )
-
         }).bind(this);
 
+        var getTableHeader = (function(){
+            var sheetName = this.state.ui.sheetNames[this.state.sheetIndex];
+            var sheet = this.state.ui.sheets[sheetName];
+            var line = sheet[0];
+
+            var percentage = `${1/line.length*100}%`;
+            var dom = line.map(function(cell, j){
+                return (<th key={j} style={{width: percentage}}><span>{cell.v}</span></th>)
+            });
+            return (
+                <tr>
+                  {dom}
+                </tr>
+            )
+        }).bind(this)
 
         var xlsFileType = ['.csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'].join(',');
 		return (
@@ -571,10 +583,14 @@ var Table = React.createClass({
 	        		}
 	            	</ul>
 
+                            
 	            	<div className='sheet'>
 						<table>
+                            <thead className="thead-inverse">
+                                {getTableHeader()}
+                            </thead>
 							<tbody>
-							{getSheetDom()}
+							     {getSheetDom()}
 							</tbody>
 						</table>
 	                </div>
