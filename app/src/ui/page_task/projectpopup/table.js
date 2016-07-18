@@ -5,6 +5,7 @@ import SaveAs from 'browser-saveas';
 import Project from '../data/project.js';
 import SuperAPI from '../../../api.js';
 
+
 var Table = React.createClass({
 	getInitialState: function() {
 		this.PROPERTY_SHEETNAME = 'auto_property';
@@ -198,13 +199,13 @@ var Table = React.createClass({
             //tags sheet.
             sheets[this.TAGS_SHEETNAME] = [[
                 {v: 'Week'}, 
-                {v: 'Date(Sorp-Week)'}, 
-                {v: 'Date(Adjusted)'}, 
+                {v: 'Date (Sorp-Week)'}, 
+                {v: 'Date (Adjusted)'}, 
                 {v: 'Update Program Milestone'},
                 {v: 'Task'},
-                {v: 'Task Duration(Week)'},
-                {v: 'Task Start Time(Sorp-Week)'},
-                {v: 'Task End Time(Start Time + Duration)'}
+                {v: 'Task Duration (Week)'},
+                {v: 'Task Start Time (Sorp-Week)'},
+                {v: 'Task End Time (StartTime + Duration)'}
             ]];
 
             //precondition: tags are desc order.
@@ -433,7 +434,7 @@ var Table = React.createClass({
     onSwitchSheet: function(index){
     	this.setState({
     		sheetIndex: index,
-    	})
+    	}, this.updateAfterRender)
     },	
 
     onDrop: function(e){
@@ -459,16 +460,57 @@ var Table = React.createClass({
             
             this.setState({
                 ui: ui
-            })
+            }, this.updateAfterRender)
 	  	}).bind(this);
 		reader.readAsBinaryString(file);
 	},
 
 	onDragOver(e){e.preventDefault();},
+    _$: function(selector){
+        if(!selector)
+            return $(ReactDOM.findDOMNode(this));
+        else return $(ReactDOM.findDOMNode(this)).find(selector);
+    },
 
-	componentDidMount: function(){
-		this.loadTemplateData();
-	},
+
+    componentDidMount: function(){
+        this.loadTemplateData();
+
+        SuperAPI.sigal_window_resizeend.listen(this.updateAfterRender);
+    },
+    componentDidUnMount: function(){
+        SuperAPI.sigal_window_resizeend.unlisten(this.updateAfterRender);
+    },
+
+    updateAfterRender: function(){
+        this.updateTBodyHeight();
+        this.updateTableCellWidth();
+    },
+
+    updateTBodyHeight: function(){
+        var h = $('.projectPopup').height()
+                - $('.addOn').outerHeight() 
+                - parseInt($('.dataTable').css('marginTop'))
+                - $('.nav-tabs').outerHeight()
+                - $('.thead-inverse').outerHeight();
+        $('tbody').height(h);
+    },
+    updateTableCellWidth: function(){
+        var widthList = [];
+        $.each($(this.refs.tableBody).find('tr:first td'), function(index, td){
+            widthList.push($(this).width());
+        })
+
+
+        var magicOffset = 2;
+        $.each($(this.refs.tableHeader).find('th'), function(index, th){
+            var width = widthList[index];
+            $(this).width(width + magicOffset);
+        })
+
+
+
+    },
 
 	loadTemplateData: function(){
 		if(this.state.ui)
@@ -476,7 +518,7 @@ var Table = React.createClass({
 		Request.getData(Request.getMockupAPI('template_project.json')).then((function(result){
             var project = new Project();
             project.init(result);
-			this.setState({ui: this.datamodel2ui(project)});
+			this.setState({ui: this.datamodel2ui(project)}, this.updateAfterRender);
 		}).bind(this))
 	},
 
@@ -496,13 +538,14 @@ var Table = React.createClass({
         
 
         var ui = this.datamodel2ui(project);
-        this.setState({ui: ui});
+        this.setState({ui: ui}, this.updateAfterRender);
     },
     isEdit: function(){
         if(this.props.project)
             return true;
         return false;
     },
+
 	render:function(){
     	if(!this.state.ui){
     		return null;
@@ -551,7 +594,7 @@ var Table = React.createClass({
             var line = sheet[0];
 
             var dom = line.map(function(cell, j){
-                return (<th key={j} ><span>{cell.v}</span></th>)
+                return (<th key={j}><span>{cell.v}</span></th>)
             });
             return (
                 <tr>
@@ -584,10 +627,10 @@ var Table = React.createClass({
                             
 	            	<div className='sheet'>
 						<table>
-                            <thead className="thead-inverse">
+                            <thead className="thead-inverse" ref='tableHeader'>
                                 {getTableHeader()}
                             </thead>
-							<tbody>
+							<tbody ref='tableBody'>
 							     {getSheetDom()}
 							</tbody>
 						</table>
@@ -617,7 +660,7 @@ var Table = React.createClass({
 
             this.setState({
                 ui: ui
-            })
+            }, this.updateAfterRender)
         }).bind(this);
         reader.readAsBinaryString(f);
       }
