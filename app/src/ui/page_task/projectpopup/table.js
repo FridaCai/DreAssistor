@@ -517,13 +517,12 @@ var Table = React.createClass({
                 var line = sheet[i];
                 var tr = [];
 
-                var percentage = `${1/line.length*100}%`;
                 line.map((function(cell, j){
                     var dom = cell.isEditable ? (
                         <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur.bind(this, cell)}/>
                     ) : (<span>{cell.v}</span>);
                     tr.push((
-                        <td key={j} style={{width: percentage}}>{dom}</td>
+                        <td key={j}>{dom}</td>
                     ));
                 }).bind(this))
                 dom.push((
@@ -551,9 +550,8 @@ var Table = React.createClass({
             var sheet = this.state.ui.sheets[sheetName];
             var line = sheet[0];
 
-            var percentage = `${1/line.length*100}%`;
             var dom = line.map(function(cell, j){
-                return (<th key={j} style={{width: percentage}}><span>{cell.v}</span></th>)
+                return (<th key={j} ><span>{cell.v}</span></th>)
             });
             return (
                 <tr>
