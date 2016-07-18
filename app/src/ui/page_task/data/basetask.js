@@ -25,6 +25,17 @@ module.exports = class BaseTask {
  			}
 		})(param.template.type);
 
+
+
+		/**
+		** property used in spread sheet.
+		**/
+		this.week = param.week || 0;
+		this.duration = param.duration || 0;
+		this.spreadsheetName = param.spreadsheetName || '';
+
+
+
 		this._updateMeta(param);
 	}
 
@@ -126,6 +137,10 @@ module.exports = class BaseTask {
 			template: this.template,
 			class: 'Task',
 			statical: this.statical,
+
+			spreadsheetName: this.spreadsheetName,
+			week: this.week,
+			duration: this.duration,
 
 			comment: `startTime: ${new Date(this.startTime)}, endTime: ${new Date(this.endTime)}`,
 		}

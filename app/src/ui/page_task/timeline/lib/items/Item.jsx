@@ -291,6 +291,11 @@ export default class Item extends React.Component {
   };
 
   onContextMenu(task, e) {
+    e.preventDefault();
+    
+    if(task.class != 'Task')
+      return;
+
     this.props.onContextMenu({
       left: e.clientX,
       top: e.clientY,
@@ -340,7 +345,7 @@ export default class Item extends React.Component {
 
       ],
     });
-    e.preventDefault();
+    
   }
 
   onMouseUp (e) {
