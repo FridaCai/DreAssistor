@@ -37,9 +37,41 @@ if(Promise != undefined){
 })(jQuery);
 
 (function() {
+   (function bindWindowResizeEvent(signal){
+        var rtime;
+        var timeout = false;
+        var delta = 200;
+        $(window).resize(function (event) {
+            rtime = new Date();
+            if (timeout === false) {
+                timeout = true;
+                setTimeout(function(){
+                    resizeend(event);
+                }, delta);
+            }
+        });
+
+        var resizeend = function(event) {
+            if (new Date() - rtime < delta) {
+                setTimeout(function(){
+                    resizeend(event);
+                }, delta);
+            } else {
+                timeout = false;
+                signal.dispatch();
+            }
+        };
+    })(API.sigal_window_resizeend)
+
+
+    
     API.initLoginStatus().then(function(){
         ReactDOM.render(<MainView/>, $("#domContainer")[0]);    
     })
+
+
+ 
+    
 })();
 
 

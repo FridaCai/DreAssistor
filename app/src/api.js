@@ -6,7 +6,7 @@ var API = {
 	signal_page_refresh: new Signal(),
 	signal_registerpopup_show: new Signal(),
 	sigal_loginHeader_update: new Signal(),
-
+	sigal_window_resizeend: new Signal(),
 
 	PAGE_NAMES: {
 		PROJECT_TIME: 'PROJECT_TIME',
