@@ -217,70 +217,84 @@ form.upload{
 			.MsgBoxContent{
 				overflow-y:hidden;
 
-				.projectPopup{
-					height: 100%;
 
-					.addOn{
-						button{
-							margin-left: 10px;
+				.importExcelPopup{
+					padding-left:20px;
+
+					.MsgBoxMain{
+						width: 500px;
+						height: 500px;
+						top: 10%;
+
+						.line{
+							.cdropdown > ul li a{
+							    color: #a7a7a7;
+    							font-size: 13px;
+							}
 						}
 					}
+				}
 
-					.dataTable{
-						margin-top: 10px;
-						height: 100%;
+				.addOn{
+					button{
+						margin-left: 10px;
+					}
+				}
 
-						.sheet{
-						    background: white;
+				.dataTable{
+					margin-top: 10px;
+					height: 100%;
 
-						    table{
-						    	width: 100%;
-						    	display:block;
-						    	font-size: 12px;
+					.sheet{
+					    background: white;
 
-						    	thead{
-					    			tr{
-					    				background: #888;
-									    color: white;
-								   	    display: block;
-									   	width: 100%;
+					    table{
+					    	width: 100%;
+					    	display:block;
+					    	font-size: 12px;
 
-									    th{
-											display:inline-block;
-						    	    	    padding: 2px;
-    										text-align: center;
+					    	thead{
+				    			tr{
+				    				background: #888;
+								    color: white;
+							   	    display: block;
+								   	width: 100%;
+
+								    th{
+										display:inline-block;
+					    	    	    padding: 2px;
+										text-align: center;
+								    }
+				    			}
+				    		}
+					    	tbody{
+							    overflow: scroll;
+							    display: block;
+
+					    		>tr{
+									/*display: block; */
+								   	width: 100%;
+
+					    			td{
+									    padding: 2px;
+									    height: 25px;
+									    text-overflow: ellipsis;
+									    overflow: hidden;
+									    white-space: nowrap;
+									    width: 1000px;
+									    border: solid 1px;
+									    text-align: center;
+									    display: table-cell;
+
+									    input{
+								    	    width: 100%;
+										    border: none;
+										    text-align: inherit;
 									    }
 					    			}
 					    		}
-						    	tbody{
-								    overflow: scroll;
-								    display: block;
-
-						    		>tr{
-										/*display: block; */
-									   	width: 100%;
-
-						    			td{
-										    padding: 2px;
-										    height: 25px;
-										    text-overflow: ellipsis;
-										    overflow: hidden;
-										    white-space: nowrap;
-										    width: 1000px;
-										    border: solid 1px;
-										    text-align: center;
-										    display: table-cell;
-
-										    input{
-									    	    width: 100%;
-											    border: none;
-											    text-align: inherit;
-										    }
-						    			}
-						    		}
-						    	}
-						    }
-						}
+					    	}
+					    }
 					}
 				}
 			}
