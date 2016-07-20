@@ -26,26 +26,7 @@ var Table = React.createClass({
                 }]
             };
 
-            //property sheet
-            var propertyRaw = ui.sheets[this.PROPERTY_SHEETNAME];
-            for(var i=1; i<propertyRaw.length; i++){
-                var line = propertyRaw[i];
-                var key = line[0].v;
-                var value = line[1].v;
-
-                switch(key){
-                    case 'label':
-                    case 'ec':
-                        projectObj[key] = value;
-                        break;
-                    case 'bpmax':
-                    case 'bpmin':
-                        projectObj[key] = Math.round(parseFloat(value) * 100) / 100;
-                        break;
-                    case 'sorp':
-                        projectObj.sorp = Util.convertYYYYMMDD2UnixTime(value);
-                }
-            }
+//property sheet.            
 
        
 
@@ -160,14 +141,7 @@ var Table = React.createClass({
             var sheets = {};
 
             //property sheet. //suppose only one line for table header.
-            sheets[this.PROPERTY_SHEETNAME] = [
-                [{v: 'property'}, {v:'value'}],
-                [{v: 'label'}, {v: project['label']}],
-                [{v: 'bpmax'}, {v: project['bpmax']}],
-                [{v: 'bpmin'}, {v: project['bpmin']}],
-                [{v: 'ec'}, {v: project['ec']}],
-                [{v: 'sorp'}, {v:Util.convertUnixTime2YYYYMMDD(project['sorp']), isEditable:true, ref: 'sorp'}],
-            ];
+            
 
 
             //tags sheet.

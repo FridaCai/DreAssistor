@@ -24,7 +24,6 @@ var ProjectPopup = React.createClass({
             <div className='addProjectDiv'>
                 {getExcelImExPortDom}
                 <div ref='popup'/>
-                
             </div>
 	    );   
 

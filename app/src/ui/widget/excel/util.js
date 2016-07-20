@@ -1,6 +1,20 @@
 import moment from 'moment';
 
-var Util = {
+class Cell {
+	constructor(){
+	
+	}
+
+	init(param){
+		this.id = param.id || undefined;
+		this.v = param.v || '';
+		this.isEditable = param.isEditable || false;
+	}
+}
+exports.Cell = Cell;
+
+
+exports.Util = {
  	getRange: function(raw){
 	    var reg = /^([A-Z]*)(\d*)\:([A-Z]*)(\d*)$/;
 	    var result = raw.match(reg);
@@ -12,9 +26,6 @@ var Util = {
 	      columnMax: result[3],
 	    }
   	},
-
-
-
 
   	/*
 		Util.alphabet2Index('A'); // 1
@@ -49,7 +60,57 @@ var Util = {
 
 	convertUnixTime2YYYYMMDD: function(unixtime){
 		return new Date(unixtime).toLocaleDateString();
-	}
+	},
+
+    ui2excel: function(){
+
+    },
+	excel2ui: function(sheet){
+        var ui = [];
+
+        var isDate = function(value){
+            if(!value || value.t != 'n')
+                return false;
+            var m = moment(value.w, 'MM-DD-YYYY');
+            return m.isValid();
+        }
+
+        var range = this.getRange(sheet['!ref']); 
+
+        for (var i=range.lineMin; i<=range.lineMax; i++) {
+            var columnMin = this.alphabet2Index(range.columnMin);
+            var columnMax = this.alphabet2Index(range.columnMax);
+            
+            ui[i-1] = [];
+            for(var j=columnMin; j<=columnMax; j++){
+                var key = `${this.index2Alphabet(j)}${i}`;
+                var value = sheet[key] ? sheet[key].v : '';
+                if(isDate(sheet[key])){
+                    value = sheet[key].w;
+                }
+                var cell = new Cell();
+                cell.init({v: value});
+                ui[i-1].push(cell);
+            }
+        }
+		console.table(ui);
+        return ui;
+    },
+    getSheetName: function(name){
+        if(!name)
+            return undefined;
+
+        var reg = /\$\{(.*)\}/;
+        var match = name.match(reg);
+        if(match.length != 2)
+            return undefined;
+
+        return match[1];
+    },  
+    getTimeBySorpWeek: function(sorp, week){
+        var substract = moment(sorp, 'x').subtract(week, 'weeks');
+        var ux = substract.valueOf();
+        return ux;
+    },
 }
 
-module.exports = Util;

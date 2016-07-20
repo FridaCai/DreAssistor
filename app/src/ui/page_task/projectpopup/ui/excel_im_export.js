@@ -4,43 +4,6 @@ import SaveAs from 'browser-saveas';
 import API from '../api.js';
 
 var ExcelIExport = React.createClass({
-	    //might have problem for time. 
-    excel2ui: function(workbook){
-        var sheetNames = [];
-        var sheets = {};
-
-        var isDate = function(value){
-            if(!value || value.t != 'n')
-                return false;
-            var m = moment(value.w, 'MM-DD-YYYY');
-            return m.isValid();
-        }
-
-        for(var sheetName in workbook.Sheets){
-            sheetNames.push(sheetName);
-
-            var sheet = workbook.Sheets[sheetName];
-            var range = ExcelUtil.getRange(sheet['!ref']); 
-            sheets[sheetName] = [];
-
-            for(var i=range.lineMin; i<=range.lineMax; i++){
-                var columnMin = ExcelUtil.alphabet2Index(range.columnMin);
-                var columnMax = ExcelUtil.alphabet2Index(range.columnMax);
-                
-                sheets[sheetName][i-1] = [];
-                for(var j=columnMin; j<=columnMax; j++){
-                    var key = `${ExcelUtil.index2Alphabet(j)}${i}`;
-                    var value = sheet[key] ? sheet[key].v : '';
-                    if(isDate(sheet[key])){
-                        value = sheet[key].w;
-                    }
-                    sheets[sheetName][i-1].push({v: value});
-                }
-            }
-        }
-        return {sheetNames: sheetNames, sheets: sheets};
-    },
-
     ui2excel: function(ui){
         var sheet_from_array_of_arrays = function(data){
             var ws = {};

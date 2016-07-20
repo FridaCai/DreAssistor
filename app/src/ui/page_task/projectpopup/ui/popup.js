@@ -1,9 +1,9 @@
 import MessageBox from '../../../widget/messagebox.js';
 import CDropDown from '../../../widget/dropdown/dropdown.js';
+import API from '../api.js';
 
 var Popup = React.createClass({
 	getInitialState: function() {
-		
     	this.dropdownComponents =[];
     	this.options = [{
 	    	id: 'property', label: '项目属性'
@@ -11,13 +11,14 @@ var Popup = React.createClass({
 	    	id: 'tag', label:'master timing时间节点'
 	    }, {
 	    	id: 'task', label: '豆豆'
+	    },{
+	    	id: 'no', label:'无'
 	    }];
 
         return {
             title: this.props.title,
             onOK: this.props.onOK,
             workbook: this.props.workbook,
-            
         };
     },
 	
@@ -46,39 +47,64 @@ var Popup = React.createClass({
 
 	},
 
-	checkExcelFile: function(){
-		return {
-			errorCode: -1,
-			errorMsg: ''
-		}
-	},
-
 	getContent: function() {
 	    return (
 	    	<div className='importExcelPopup'>
 	    		<div className='line'>请选择需要导入的excel及数据类型</div>
 			    {
 			    	this.state.workbook.SheetNames.map((function(sheetName, index){
-			    		return (<div className='line' key={index}>
-			    			<label>{sheetName} </label>
-			    			<span ref={`dropdown_${index}`}>dropdown occupation</span>
-		    			</div>)
+			    		var drowpdownRef = `dropdown_${index}`;
+
+
+			    		return (
+			    			<div className='line' key={index}>
+			    				<label>{sheetName}</label>
+			    				<span ref={drowpdownRef}/>
+		    				</div>
+	    				)
+
+
 			    	}).bind(this))
 			    }
             </div>
-	    );   
+
+	    )
     },
-    
+
+	checkExcelFile: function(sheetType){
+    	var getSheets = (function(workbook, sheetType, key){
+			var indices = sheetType[key];
+			return indices.map(function(index){
+				var sheetName = workbook.SheetNames[index];
+	    		return workbook.Sheets[sheetName];
+			})
+    	}).bind(this, this.state.workbook, sheetType)
+
+
+    	var propertySheets = getSheets('property');
+    	var propertySheetCheck = API.property.checkSheet(propertySheets[0]);
+
+    	return propertySheetCheck;
+    	//similar 4 tag and task.
+	},
+
+	getUIData: function(sheetType){
+		
+	},
+
+
     onOK:function() {
     	var sheetType = {property: [], tag: [], task: []}; //{property: [sheetIndex, sheetIndex], tag: [sheetIndex, sheetIndex], tasks: [sheetIndex, sheetIndex]}
     	this.dropdownComponents.map((function(dropdown, index){
     		var key = dropdown.getValue();
-    		sheetType[key].push(index);
+    		if (key && key!=='no') {
+				sheetType[key].push(index);
+    		}  
     	}).bind(this))
 
-		if(this.checkExcelFile().errorCode === -1){
-			//convert excel 2 ui datamodel and save in api.js
-			this.state.onOK();
+		if(this.checkExcelFile(sheetType).errorCode === -1){
+			var ui = this.getUIData(sheetType);
+			this.state.onOK(ui);
         	return Promise.resolve();	
 		}
     },
