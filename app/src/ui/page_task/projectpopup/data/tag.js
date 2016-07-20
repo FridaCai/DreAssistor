@@ -1,5 +1,5 @@
 import Base from './base.js';
-import Tag from '../../data/tag.js';
+import DataTag from '../../data/tag.js';
 import {Cell} from '../../../widget/excel/util.js'; 
 import {Util} from '../../../widget/excel/util.js';
 
@@ -22,7 +22,7 @@ module.exports = class Tag extends Base {
             }).call(this, project.sorp, week, line[2].v)
 
             if(label){
-            	var tag = new Tag();
+            	var tag = new DataTag();
             	tag.init({ 
 	                "label": label,
 	                "week": week,

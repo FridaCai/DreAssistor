@@ -63,27 +63,26 @@ var API = {
 		var errorMsg = '';
 
 		try{
-			debugger;
 			//overwrite data strategy for now. for multiple task sheet case, think about other strategy.
-			var property = new Property();
+			
 			if(propertySheet){
-				property.xls2ui(propertySheet);	
+				var property = new Property();
+				property.xls2ui(propertySheet);
+				this.uidata.property = property;	
 			}
 
-			var tag = new Tag();			
+			
 			if(tagSheet){
+				var tag = new Tag();			
 				tag.xls2ui(tagSheet);	
+				this.uidata.tag = tag;
 			}
 
-			var tasks = new Tasks();
+			
 			if(taskSheets){
-				tasks.xls2ui(taskSheets);	
-			}
-
-			this.uidata = {
-				property: property,
-				tag: tag,
-				tasks: tasks
+				var tasks = new Tasks();
+				tasks.xls2ui(taskSheets);
+				this.uidata.tasks = tasks;	
 			}
 
 		}catch(e){

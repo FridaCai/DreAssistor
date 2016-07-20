@@ -2,7 +2,7 @@ import {Util} from '../../../widget/excel/util.js';
 
 module.exports = class Base {
 	constructor(){
-		this.ui = undefined;	
+		this.ui = [];	
 		this.sheetName = '';
 	}
 
