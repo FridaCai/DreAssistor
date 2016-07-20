@@ -26,11 +26,7 @@ var Table = React.createClass({
                 }]
             };
 
-//property sheet.            
 
-       
-
-            //tag sheet
             var taskInfoList = [];
             var tagRaw = ui.sheets[this.TAGS_SHEETNAME];
             for(var i=1; i<tagRaw.length; i++){
@@ -144,29 +140,15 @@ var Table = React.createClass({
             
 
 
-            //tags sheet.
-            sheets[this.TAGS_SHEETNAME] = [[
-                {v: 'Week'}, 
-                {v: 'Date (Sorp-Week)'}, 
-                {v: 'Date (Adjusted)'}, 
-                {v: 'Update Program Milestone'},
-                {v: 'Task'},
-                {v: 'Task Duration (Week)'},
-                {v: 'Task Start Time (Sorp-Week)'},
-                {v: 'Task End Time (StartTime + Duration)'}
-            ]];
+    
 
             //precondition: tags are desc order.
-            var tags = project.children[0].children;
+            
             var tasks = project.findTasks();
-            var loop = tags[0].week;
+            
 
 
-            var findByWeek = function(targets, week){ //can be task or tag.
-                return targets.find(function(target){
-                    return target.week === week;
-                })
-            }
+
 
             var taskList = [];
             for(var i=loop; i>=0; i--){

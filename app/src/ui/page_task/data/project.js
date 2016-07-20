@@ -4,7 +4,14 @@ import Util from '../../../util.js';
 
 module.exports = class Project {
 	constructor(){
-		
+		//by default, exist mastertiming and ais development.
+		var mastertiming = new SubProject();
+		mastertiming.init({label: 'Master Timing'});
+
+		var aisdevelopment = new SubProject();
+		aisdevelopment.init({label: 'AIS Development'});
+
+		this.children = [mastertiming, aisdevelopment];
 	}
 
 	init(param){
@@ -15,9 +22,12 @@ module.exports = class Project {
 		this.ec = param.ec;
 		this.bpmin = param.bpmin;
 		this.bpmax = param.bpmax;
-		this.sorp = param.sorp;
+		this.sorp = param.sorp || 0;
 		this.children = [];
-		param.children && param.children.map((function(sp){
+		param.children && param.children.map((function(sp, index){
+			
+
+
 			var subproject = new SubProject();
 			subproject.init(sp);
 
@@ -65,6 +75,17 @@ module.exports = class Project {
 	}
 	hasTask(condition){
 		return this.findTasks(condition).length === 0 ? false: true;
+	}
+
+	clearTags(){
+		this.children[0].clearTags();
+	}
+
+	addTag(tag){
+		this.children[0].addChild(tag);
+	}
+	getTags(handler){
+		return this.children[0].getTags(handler);
 	}
 
 	dump(){

@@ -102,6 +102,7 @@ var XlsIExport = React.createClass({
     onFileInputClk: function(){
         this.refs.xlsFileUploadInput.value = null;  
     },
+    
 	render: function(){
 		return (
             <div className='addOn'>

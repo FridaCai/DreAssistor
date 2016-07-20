@@ -44,9 +44,22 @@ module.exports = class SubProject {
 			return task.meetCondition(condition);
 		})
 	}
+
+
 	hasTask(condition){
 		return this.findTasks(condition).length === 0 ? false: true;
 	}
+
+	clearTags(){
+		this.children = [];
+	}
+
+	//filter/order.
+	getTags(orderHandler){
+		this.children.sort(orderHandler);
+		return this.children;
+	}
+
 	dump(){
 		var children = [];
 		this.children.map(function(child){
