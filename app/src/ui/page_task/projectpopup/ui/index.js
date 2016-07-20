@@ -6,10 +6,12 @@ import API from '../api.js';
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
-        //if no this.props.project, retun undefined. 
-        //else return 
-        //draw table by uidata.
-        var uidata = API.getUIDataByProject(this.props.project);  
+        var uidata = (function(p){
+            if(!p)
+                return undefined;
+            API.dm2ui(p);      
+            return API.uidata;
+        }).call(this.props.project);
 
         return {
             title: this.props.title,
@@ -41,8 +43,9 @@ var ProjectPopup = React.createClass({
         if(this.props.project)
             return;
 
-        API.getUIDataByTemplate().then((function(uidata){
-            this.refs.table.updateT({
+        API.loadTemplate().then((function(){
+            var uidata = API.uidata;
+            this.refs.table.update({
                 uidata: uidata
             })
         }).bind(this));
@@ -55,12 +58,11 @@ var ProjectPopup = React.createClass({
     onPopupShow: function(e, param){
         var workbook = param.workbook;
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<Popup title={'导入excel'} workbook={workbook} onOK={(function(property){
+        ReactDOM.render(<Popup title={'导入excel'} workbook={workbook} onOK={(function(){
             //todo:
-            API.property.ui2dm(API.project);
-            API.property.dm2ui(API.project);
-
-            this.refs.table.forceUpdate();
+            API.ui2dm();
+            API.dm2ui();
+            this.refs.table.update({uidata: API.uidata});
 
         }).bind(this)}/>, this.refs.popup);  
     },

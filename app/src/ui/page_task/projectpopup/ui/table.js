@@ -11,7 +11,7 @@ var Table = React.createClass({
         };
     },
     onSwitchSheet: function(index){
-        this.updateT({
+        this.update({
             sheetIndex: index,
         });
     },  
@@ -25,7 +25,7 @@ var Table = React.createClass({
     },
 
     updateAfterRender: function(){
-        (function updateTBodyHeight(){
+        (function updateTableBodyHeight(){
             var h = $('.projectPopupContainer .MsgBoxContent').height()
                     - $('.addOn').outerHeight() 
                     - parseInt($('.dataTable').css('marginTop'))
@@ -66,7 +66,7 @@ var Table = React.createClass({
             var dm = this.ui2datamodel(tempUI);
             var ui = this.datamodel2ui(dm) 
             
-            this.updateT({
+            this.update({
                 ui: ui
             });
         }).bind(this);
@@ -97,7 +97,7 @@ var Table = React.createClass({
         this.setState({ui: ui}, this.updateAfterRender);*/
     },
 
-    updateT:function(param){
+    update:function(param){
         this.setState(param, this.updateAfterRender);
     },
 

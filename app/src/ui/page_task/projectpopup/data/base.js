@@ -1,3 +1,4 @@
+import {Util} from '../../../widget/excel/util.js';
 
 module.exports = class Base {
 	constructor(){
@@ -5,27 +6,9 @@ module.exports = class Base {
 		this.sheetName = '';
 	}
 
-	tryXls2ui(param){
-		var errorCode = -1;
-		var errorMsg = '';
-
-		try{
-			this.ui = this._xls2ui(param.sheet);
-			this.sheetName = param.sheetName;
-		}catch(e){
-			this.ui = undefined;
-			this.sheetName = '';
-			console.error(e);
-		}
-
-		return {
-			errorCode: errorCode,
-			errorMsg: errorMsg
-		}		
-	}
-
-	_xls2ui(sheet){
-		return Util.excel2ui(sheet);
+	xls2ui(param){
+		this.ui = Util.excel2ui(param.sheet);
+		this.sheetName = param.sheetName;
 	}
 
 	ui2dm(project){
