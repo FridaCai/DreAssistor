@@ -1,36 +1,12 @@
 import {Util, Cell} from '../../../widget/excel/util.js';
+import Base from './base.js';
 
-module.exports = class Property {
+module.exports = class Property extends Base{
 	constructor(){
-		this.ui = undefined;	
-		this.sheetName = undefined;
+		super()
 	}
 
-	checkSheet(sheet){
-		var errorCode = -1;
-		var errorMsg = '';
-
-		try{
-			this._importFromSheet(sheet);
-		}catch(e){
-			console.error(e);
-		}
-
-		return {
-			errorCode: errorCode,
-			errorMsg: errorMsg
-		}		
-	}
-
-	initBySheet(sheetName){
-		this.sheetName = sheetName;
-	}
-
-	_importFromSheet(sheet){
-		this.ui = Util.excel2ui(sheet);
-	}
-
-	_exportToDataModel(project){
+	ui2dm(project){
 	    for(var i=1; i<this.ui.length; i++){
 	        var line = this.ui[i];
 	        var key = line[0].v;
@@ -51,15 +27,23 @@ module.exports = class Property {
 	    }
 	}
 
-//problem here. (new Cell()).init() return undefined
-	importFromDataModel(project){
+	dm2ui(project){
+		this.sheetName = `property`;
+
+		var sorp = Util.convertUnixTime2YYYYMMDD(project['sorp']);
+		var label = project['label'];
+		var bpmax = project['bpmax'];
+		var bpmin = project['bpmin'];
+		var ec = project['ec'];
+
 		this.ui = [
-            [(new Cell()).init({v: 'property'}), (new Cell()).init({v: 'value'})],
-            [(new Cell()).init({v: 'label'}), (new Cell()).init({v: project['label']})],
-            [(new Cell()).init({v: 'bpmax'}), (new Cell()).init({v: project['bpmax']})],
-            [(new Cell()).init({v: 'bpmin'}), (new Cell()).init({v: project['bpmin']})],
-            [(new Cell()).init({v: 'ec'}), (new Cell()).init({v: project['ec']})],
-            [(new Cell()).init({v: 'sorp'}), (new Cell()).init({v: Util.convertUnixTime2YYYYMMDD(project['sorp']), isEditable: true, ref:'sorp'})],
+            [Cell.create({v: 'property'}), Cell.create({v: 'value'})],
+            [Cell.create({v: 'label'}), Cell.create({v: label})],
+            [Cell.create({v: 'bpmax'}), Cell.create({v: bpmax})],
+            [Cell.create({v: 'bpmin'}), Cell.create({v: bpmin})],
+            [Cell.create({v: 'ec'}), Cell.create({v: ec})],
+            [Cell.create({v: 'sorp'}), Cell.create({v: sorp, isEditable: true, id:'sorp'})],
         ];
+
 	}
 }

@@ -72,26 +72,24 @@ var Popup = React.createClass({
     },
 
 	checkExcelFile: function(sheetType){
-    	var getSheets = (function(workbook, sheetType, key){
-			var indices = sheetType[key];
+    	var getSheets = (function(workbook, indices){
 			return indices.map(function(index){
 				var sheetName = workbook.SheetNames[index];
-	    		return workbook.Sheets[sheetName];
+				var sheet = workbook.Sheets[sheetName];
+				return {
+					sheetName: sheetName,
+					sheet: sheet
+				}
 			})
-    	}).bind(this, this.state.workbook, sheetType)
+    	}).bind(this, this.state.workbook)
 
 
-    	var propertySheets = getSheets('property');
-    	var propertySheetCheck = API.property.checkSheet(propertySheets[0]);
+    	var propertySheets = getSheets(sheetType['property']);
+    	var propertySheetCheck = API.property.tryXls2ui(propertySheets[0]);
 
     	return propertySheetCheck;
     	//similar 4 tag and task.
 	},
-
-	getUIData: function(sheetType){
-		
-	},
-
 
     onOK:function() {
     	var sheetType = {property: [], tag: [], task: []}; //{property: [sheetIndex, sheetIndex], tag: [sheetIndex, sheetIndex], tasks: [sheetIndex, sheetIndex]}
@@ -103,8 +101,7 @@ var Popup = React.createClass({
     	}).bind(this))
 
 		if(this.checkExcelFile(sheetType).errorCode === -1){
-			var ui = this.getUIData(sheetType);
-			this.state.onOK(ui);
+			this.state.onOK();
         	return Promise.resolve();	
 		}
     },

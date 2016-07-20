@@ -1,9 +1,9 @@
-import ExcelUtil from '../../../widget/excel/util.js';
+import {Util} from '../../../widget/excel/util.js';
 import moment from 'moment';
 import SaveAs from 'browser-saveas';
 import API from '../api.js';
 
-var ExcelIExport = React.createClass({
+var XlsIExport = React.createClass({
     ui2excel: function(ui){
         var sheet_from_array_of_arrays = function(data){
             var ws = {};
@@ -110,4 +110,4 @@ var ExcelIExport = React.createClass({
         )
 	}
 })
-module.exports = ExcelIExport;
+module.exports = XlsIExport;

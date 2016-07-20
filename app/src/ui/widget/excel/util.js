@@ -1,6 +1,12 @@
 import moment from 'moment';
 
 class Cell {
+    static create(param){
+        var cell = new Cell();
+        cell.init(param);
+        return cell;
+    }
+
 	constructor(){
 	
 	}

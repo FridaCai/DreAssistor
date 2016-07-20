@@ -1,40 +1,38 @@
-var Table = React.createClass({
-	getInitialState: function() {
-		this.PROPERTY_SHEETNAME = 'auto_property';
-		this.TAGS_SHEETNAME = 'auto_tags';
+import API from '../api.js';
+import SuperAPI from '../../../../api.js';
 
-        var project = this.props.project;
-        var ui = this.datamodel2ui(project);
+var Table = React.createClass({
+
+    //only depend on ui data.
+	getInitialState: function() {
         return {
         	sheetIndex: 0,
-        	ui: ui,
+        	uidata: this.props.uidata,
         };
     },
     onSwitchSheet: function(index){
-        this.setState({
+        this.updateT({
             sheetIndex: index,
-        }, this.updateAfterRender)
+        });
     },  
 
     componentDidMount: function(){
-        this.loadTemplateData();
         SuperAPI.sigal_window_resizeend.listen(this.updateAfterRender);
     },
+    
     componentDidUnMount: function(){
         SuperAPI.sigal_window_resizeend.unlisten(this.updateAfterRender);
     },
 
-
     updateAfterRender: function(){
         (function updateTBodyHeight(){
-            var h = $('.projectPopup').height()
+            var h = $('.projectPopupContainer .MsgBoxContent').height()
                     - $('.addOn').outerHeight() 
                     - parseInt($('.dataTable').css('marginTop'))
                     - $('.nav-tabs').outerHeight()
                     - $('.thead-inverse').outerHeight();
             $('tbody').height(h);
         })();
-
 
         (function updateTableCellWidth(){
             var widthList = [];
@@ -47,23 +45,10 @@ var Table = React.createClass({
                 var width = widthList[index];
                 $(this).width(width + magicOffset);
             })
-        })();
+        }).call(this);
     },
-    
-    loadTemplateData: function(){
-        if(this.state.ui)
-            return;
-        Request.getData(Request.getMockupAPI('template_project.json')).then((function(result){
-            var project = new Project();
-            project.init(result);
-            this.setState({ui: this.datamodel2ui(project)}, this.updateAfterRender);
-        }).bind(this))
-    },
-    
-    onDrop: function(e){
-        if(this.isEdit())
-            return;
-        
+
+    onDrop: function(e){//for edit case, do nothing for drop.
         e.stopPropagation();
         e.preventDefault();
         var files = e.dataTransfer.files;
@@ -81,9 +66,9 @@ var Table = React.createClass({
             var dm = this.ui2datamodel(tempUI);
             var ui = this.datamodel2ui(dm) 
             
-            this.setState({
+            this.updateT({
                 ui: ui
-            }, this.updateAfterRender)
+            });
         }).bind(this);
         reader.readAsBinaryString(file);
     },
@@ -91,12 +76,14 @@ var Table = React.createClass({
     onDragOver(e){e.preventDefault();},
 
     onChange: function(cell, event){
-        var inputValue = event.target.value;
-        cell.v = inputValue;
+        return;
+        /*var inputValue = event.target.value;
+        cell.v = inputValue;*/
     },
 
     onBlur: function(cell, event){
-        var project = this.ui2datamodel(this.state.ui);
+        return;
+        /*var project = this.ui2datamodel(this.state.ui);
 
         if(cell.ref === 'sorp'){
             project.findTasks().map(function(task){
@@ -107,23 +94,24 @@ var Table = React.createClass({
         
 
         var ui = this.datamodel2ui(project);
-        this.setState({ui: ui}, this.updateAfterRender);
+        this.setState({ui: ui}, this.updateAfterRender);*/
     },
-    isEdit: function(){
-        if(this.props.project)
-            return true;
-        return false;
+
+    updateT:function(param){
+        this.setState(param, this.updateAfterRender);
     },
 
     render:function(){
-        if(!this.state.ui){
+        if(!this.state.uidata){
             return null;
         }
-     
-        var getSheetDom = (function(){
-            var sheetName = this.state.ui.sheetNames[this.state.sheetIndex];
-            var sheet = this.state.ui.sheets[sheetName];
 
+        var ui = {
+            sheetNames: [this.state.uidata.property.sheetName],
+            sheets: [this.state.uidata.property.ui]
+        }
+        
+        var getSheetDom = (function(sheet){
             var dom = [];
             for(var i=1; i<sheet.length; i++){
                 var line = sheet[i];
@@ -146,9 +134,7 @@ var Table = React.createClass({
 
 
 
-        var getTableHeader = (function(){
-            var sheetName = this.state.ui.sheetNames[this.state.sheetIndex];
-            var sheet = this.state.ui.sheets[sheetName];
+        var getTableHeader = (function(sheet){
             var line = sheet[0];
 
             var dom = line.map(function(cell, j){
@@ -167,7 +153,7 @@ var Table = React.createClass({
                 <div className='dataTable' >
                     <ul className="nav nav-tabs">
                     {
-                        this.state.ui.sheetNames.map((function(sheetName, index){
+                        ui.sheetNames.map((function(sheetName, index){
                             var className = (index === this.state.sheetIndex ? 'active': '');
                             return (
                                 <li role="presentation" className={className} key={index.toString()} onClick={this.onSwitchSheet.bind(this, index)}>
@@ -182,10 +168,10 @@ var Table = React.createClass({
                     <div className='sheet'>
                         <table>
                             <thead className="thead-inverse" ref='tableHeader'>
-                                {getTableHeader()}
+                                {getTableHeader(ui.sheets[this.state.sheetIndex])}
                             </thead>
                             <tbody ref='tableBody'>
-                                 {getSheetDom()}
+                                {getSheetDom(ui.sheets[this.state.sheetIndex])}
                             </tbody>
                         </table>
                     </div>
