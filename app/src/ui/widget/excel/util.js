@@ -13,7 +13,7 @@ class Cell {
 
 	init(param){
 		this.id = param.id || undefined;
-		this.v = param.v || '';
+		this.v = param.v;
 		this.isEditable = param.isEditable || false;
 	}
 }
