@@ -99,13 +99,16 @@ var XlsIExport = React.createClass({
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 	].join(','),
 
+    onFileInputClk: function(){
+        this.refs.xlsFileUploadInput.value = null;  
+    },
 	render: function(){
 		return (
             <div className='addOn'>
                 <button className="btn btn-primary" onClick={this.import}>导入excel</button> 
                 <button className="btn btn-primary" onClick={this.export}>导出excel</button>
                 <input type="file" ref='xlsFileUploadInput'  accept={this._acceptedformat} style={{display: 'none'}} 
-                	onChange={this.onXlsUpload}/>
+                	onChange={this.onXlsUpload} onClick={this.onFileInputClk}/>
             </div>
         )
 	}
