@@ -31,7 +31,7 @@ var ProjectPopup = React.createClass({
 	    return (
             <div className='addProjectDiv'>
                 {getXlsImExPortDom}
-                <div ref='popup'/>
+                <div className='t_popup' ref='t_popup'/>
                 <Table ref='table' uidata={this.state.uidata}/>     
             </div>
 	    );   
@@ -57,14 +57,17 @@ var ProjectPopup = React.createClass({
 
     onPopupShow: function(e, param){
         var workbook = param.workbook;
-        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+
+
+        //todo: fail to find this.refs.t_popup after close addProjectPopup. very strange. try to unmount dom element after message box hide.
+        ReactDOM.unmountComponentAtNode($('.t_popup')[0]);    
         ReactDOM.render(<Popup title={'导入excel'} workbook={workbook} onOK={(function(){
             //todo:
             API.ui2dm();
             API.dm2ui();
             this.refs.table.update({uidata: API.uidata});
 
-        }).bind(this)}/>, this.refs.popup);  
+        }).bind(this)}/>, $('.t_popup')[0]);  
     },
     onOK:function() {
         /*var project = this.refs.datatable.getData();
