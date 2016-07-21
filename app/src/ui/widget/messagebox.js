@@ -44,7 +44,10 @@ var MessageBox = React.createClass({
 
         this.state.onOK().then((function(){
             this.hide();    
-        }).bind(this));
+        }).bind(this)).catch(function(e){
+            console.log('error msg swallow by promise?');
+            console.log(e.stack);
+        })
     },
 
     hide: function() {

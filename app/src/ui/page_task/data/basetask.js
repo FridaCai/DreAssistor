@@ -12,7 +12,8 @@ module.exports = class BaseTask {
 		this.class = 'Task';
 		this.creatorId = param.creatorId;
 		this.parent = undefined;
-		this.template = param.template;
+		this.template = param.template || {type: 0, param:{}};
+
 		this.statical = (function(templateType){
 			var returnValue = ['duration'];
  			switch(templateType){
@@ -23,17 +24,15 @@ module.exports = class BaseTask {
 				case 3: //mule
 					return returnValue.concat(["template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]);
  			}
-		})(param.template.type);
+		})(this.template.type);
 
 
 
 		/**
 		** property used in spread sheet.
 		**/
-		this.week = param.week || 0;
-		this.duration = param.duration || 0;
-		this.spreadsheetName = param.spreadsheetName || '';
-
+		this.startWeek = param.startWeek || 0;
+		this.endWeek = param.endWeek || 0;
 
 
 		this._updateMeta(param);
@@ -138,9 +137,8 @@ module.exports = class BaseTask {
 			class: 'Task',
 			statical: this.statical,
 
-			spreadsheetName: this.spreadsheetName,
-			week: this.week,
-			duration: this.duration,
+			startWeek: this.startWeek,
+			endWeek: this.endWeek,
 
 			comment: `startTime: ${new Date(this.startTime)}, endTime: ${new Date(this.endTime)}`,
 		}

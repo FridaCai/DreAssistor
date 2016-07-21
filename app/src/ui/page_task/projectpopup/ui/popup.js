@@ -12,7 +12,7 @@ var Popup = React.createClass({
 	    }, {
 	    	id: 'task', label: '豆豆'
 	    },{
-	    	id: 'no', label:'无'
+	    	id: 'no', label:'不导入'
 	    }];
 
         return {
@@ -50,7 +50,7 @@ var Popup = React.createClass({
 	getContent: function() {
 	    return (
 	    	<div className='importExcelPopup'>
-	    		<div className='line'>请选择需要导入的excel及数据类型</div>
+	    		<div className='line'>请选择需要导入的sheet及数据类型</div>
 			    {
 			    	this.state.workbook.SheetNames.map((function(sheetName, index){
 			    		var drowpdownRef = `dropdown_${index}`;
@@ -78,9 +78,9 @@ var Popup = React.createClass({
 			})
     	}).bind(this, this.state.workbook)
 
-    	var propertySheet = getSheets(sheetType['property'])[0];
+    	var propertySheet = getSheets(sheetType['property'])[0]; 
     	var tagSheet = getSheets(sheetType['tag'])[0];
-    	var taskSheets = getSheets(sheetType['task'])[0];
+    	var taskSheets = getSheets(sheetType['task']);
 
     	var checkResult = API.tryXls2ui({
     		propertySheet: propertySheet,

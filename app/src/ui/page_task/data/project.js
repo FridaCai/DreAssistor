@@ -66,6 +66,9 @@ module.exports = class Project {
 		return this.children[index];
 	}
 
+	getTasks(handler){
+		return this.children[1].getChildren(handler);
+	}
 	findTasks(condition){
 		var tasks = [];
 		this.children.map(function(sp){
@@ -77,15 +80,20 @@ module.exports = class Project {
 		return this.findTasks(condition).length === 0 ? false: true;
 	}
 
-	clearTags(){
-		this.children[0].clearTags();
+	addTask(task){
+		this.children[1].addChild(task);
 	}
-
+	clearTags(){
+		this.children[0].clearChildren();
+	}
+	clearTasks(){
+		this.children[1].clearChildren();
+	}
 	addTag(tag){
 		this.children[0].addChild(tag);
 	}
 	getTags(handler){
-		return this.children[0].getTags(handler);
+		return this.children[0].getChildren(handler);
 	}
 
 	dump(){

@@ -47,7 +47,6 @@ module.exports = class Tag extends Base {
 
 		var tags = project.getTags(function(tag1, tag2){
 			return tag2.week - tag1.week;
-			//order by week desc
 		});
 
         var findByWeek = function(targets, week) { //can be task or tag.

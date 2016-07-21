@@ -50,12 +50,12 @@ module.exports = class SubProject {
 		return this.findTasks(condition).length === 0 ? false: true;
 	}
 
-	clearTags(){
+	clearChildren(){
 		this.children = [];
 	}
 
 	//filter/order.
-	getTags(orderHandler){
+	getChildren(orderHandler){
 		this.children.sort(orderHandler);
 		return this.children;
 	}

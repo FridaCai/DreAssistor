@@ -1,6 +1,6 @@
 import Signal from '../../../signal.js';
 import Request from '../../../request.js';
-import Tasks from './data/tasks.js';
+import Task from './data/task.js';
 import Tag from './data/tag.js';
 import Property from './data/property.js';
 import Project from '../data/project.js';
@@ -13,7 +13,7 @@ var API = {
 	uidata: {
 		property: new Property(), 
 		tag: new Tag(),
-		tasks: new Tasks(),
+		task: new Task(),
 	},
 
 
@@ -29,10 +29,7 @@ var API = {
 	ui2dm: function(){
 		this.uidata.property.ui2dm(this.project);
 		this.uidata.tag.ui2dm(this.project);
-		//todo: tag and tasks.
-
-
-
+		this.uidata.task.ui2dm(this.project);
 	},
 
 	dm2ui: function(){
@@ -46,13 +43,13 @@ var API = {
 		var tag = new Tag();
 		tag.dm2ui(this.project);
 
-		var tasks = new Tasks();
-		tasks.dm2ui(this.project);
+		var task = new Task();
+		task.dm2ui(this.project);
 
 		this.uidata = {
 			property: property,
 			tag: tag,
-			tasks: tasks,
+			task: task,
 		}
 	},
 
@@ -80,9 +77,9 @@ var API = {
 
 			
 			if(taskSheets){
-				var tasks = new Tasks();
-				tasks.xls2ui(taskSheets);
-				this.uidata.tasks = tasks;	
+				var task = new Task();
+				task.xls2ui(taskSheets);
+				this.uidata.task = task;	
 			}
 
 		}catch(e){

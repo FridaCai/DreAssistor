@@ -107,8 +107,8 @@ var Table = React.createClass({
         }
 
         var ui = {
-            sheetNames: [this.state.uidata.property.sheetName, this.state.uidata.tag.sheetName],
-            sheets: [this.state.uidata.property.ui, this.state.uidata.tag.ui],
+            sheetNames: [this.state.uidata.property.sheetName, this.state.uidata.tag.sheetName, this.state.uidata.task.sheetName],
+            sheets: [this.state.uidata.property.ui, this.state.uidata.tag.ui, this.state.uidata.task.ui],
         }
         
         var getSheetDom = (function(sheet){
