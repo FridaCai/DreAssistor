@@ -9,9 +9,10 @@ var ProjectPopup = React.createClass({
         var uidata = (function(p){
             if(!p)
                 return undefined;
+            API.setProject(p);
             API.dm2ui(p);      
             return API.uidata;
-        }).call(this.props.project);
+        })(this.props.project);
 
         return {
             title: this.props.title,
@@ -21,16 +22,10 @@ var ProjectPopup = React.createClass({
     },
 
 	getContent: function() {
-        var getXlsImExPortDom = (function(p){
-            if(p){
-                return null;
-            }
-            return <XlsImExPort/>
-        })(this.props.project)
-
+        var disableXlsImExPort = this.props.project ? true: false;
 	    return (
             <div className='addProjectDiv'>
-                {getXlsImExPortDom}
+                <XlsImExPort disabled={disableXlsImExPort}/>
                 <div className='t_popup' ref='t_popup'/>
                 <Table ref='table' uidata={this.state.uidata}/>     
             </div>

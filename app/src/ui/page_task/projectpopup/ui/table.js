@@ -51,19 +51,9 @@ var Table = React.createClass({
         var file = files[0];
         var fileName = file.name;
         reader.onload = (function(e){
-            debugger;
             var data = e.target.result;
             var workbook = XLSX.read(data, {type: 'binary'});
-
-
-            //deal with sorp_week in dm.
-            var tempUI = this.excel2ui(workbook);
-            var dm = this.ui2datamodel(tempUI);
-            var ui = this.datamodel2ui(dm) 
-            
-            this.update({
-                ui: ui
-            });
+            API.signal_popup_show.dispatch({workbook: workbook});
         }).bind(this);
         reader.readAsBinaryString(file);
     },
@@ -74,13 +64,10 @@ var Table = React.createClass({
         var inputValue = event.target.value;
         cell.v = inputValue;
 
-
         API.ui2dm();
         API.dm2ui();
 
     },
-
-
 
     onBlur: function(cell, event){
         return;

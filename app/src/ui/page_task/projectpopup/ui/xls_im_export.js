@@ -62,22 +62,7 @@ var XlsIExport = React.createClass({
         reader.onload = (function(e) {
             var data = e.target.result;
             var workbook = XLSX.read(data, {type: 'binary'});
-
-
             API.signal_popup_show.dispatch({workbook: workbook});
-
-            //popup.
-            //check excel valid.
-            //send sigal and send ui data.
-
-            /*var tempUI = this.excel2ui(workbook);
-            var dm = this.ui2datamodel(tempUI);
-            var ui = this.datamodel2ui(dm) 
-            this.setState({
-                ui: ui
-            }, this.updateAfterRender)*/
-
-
         }).bind(this);
         reader.readAsBinaryString(f);
       }
@@ -109,10 +94,11 @@ var XlsIExport = React.createClass({
     },
     
 	render: function(){
+        var isDisabled = this.props.disabled;
 		return (
             <div className='addOn'>
-                <button className="btn btn-primary" onClick={this.import}>导入excel</button> 
-                <button className="btn btn-primary" onClick={this.export}>导出excel</button>
+                <button disabled={isDisabled} className="btn btn-primary" onClick={this.import}>导入excel</button> 
+                <button disabled={isDisabled} className="btn btn-primary" onClick={this.export}>导出excel</button>
                 <input type="file" ref='xlsFileUploadInput'  accept={this._acceptedformat} style={{display: 'none'}} 
                 	onChange={this.onXlsUpload} onClick={this.onFileInputClk}/>
             </div>

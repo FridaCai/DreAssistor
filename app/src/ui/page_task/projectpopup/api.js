@@ -18,6 +18,9 @@ var API = {
 	getProject: function(){
 		return this.project;
 	},
+	setProject: function(value){
+		this.project = value;
+	},
 
 	loadTemplate: function(){ 
         return Request.getData(Request.getMockupAPI('template_project.json')).then((function(result){
