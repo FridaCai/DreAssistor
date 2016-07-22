@@ -15,7 +15,9 @@ var API = {
 		tag: new Tag(),
 		task: new Task(),
 	},
-
+	getProject: function(){
+		return this.project;
+	},
 
 	loadTemplate: function(){ 
         return Request.getData(Request.getMockupAPI('template_project.json')).then((function(result){

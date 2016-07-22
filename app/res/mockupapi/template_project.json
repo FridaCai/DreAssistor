@@ -14,14 +14,16 @@
           "label": "Action1",
           "time": 1368374400000,
           "week": 176,
-          "class": "Tag"
+          "class": "Tag",
+          "comment": "Mon May 13 2013 00:00:00 GMT+0800 (CST)"
         },
         {
           "id": 1,
           "label": "Action2",
           "time": 1376841600000,
           "week": 162,
-          "class": "Tag"
+          "class": "Tag",
+          "comment": "Mon Aug 19 2013 00:00:00 GMT+0800 (CST)"
         }
       ]
     },
@@ -41,7 +43,6 @@
           "priority": "0",
           "subtasks": [],
           "privacy": "0",
-          "spreadsheetName": "auto_tasks_0",
           "template": {
             "type": 3,
             "param": {
@@ -98,7 +99,6 @@
           "priority": "0",
           "subtasks": [],
           "privacy": "0",
-          "spreadsheetName": "auto_tasks_0_0",
           "template": {
             "type": 3,
             "param": {
@@ -155,7 +155,6 @@
           "priority": "0",
           "subtasks": [],
           "privacy": "0",
-          "spreadsheetName": "auto_tasks_1",
           "template": {
             "type": 2,
             "param": {
@@ -185,7 +184,6 @@
             }
           ],
           "privacy": "0",
-          "spreadsheetName": "auto_tasks_2",
           "template": {
             "type": 1
           },
@@ -209,7 +207,6 @@
             }
           ],
           "privacy": "0",
-          "spreadsheetName": "auto_tasks_3",
           "template": {
             "type": 0
           },

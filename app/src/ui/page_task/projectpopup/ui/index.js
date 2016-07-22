@@ -70,9 +70,9 @@ var ProjectPopup = React.createClass({
         }).bind(this)}/>, $('.t_popup')[0]);  
     },
     onOK:function() {
-        /*var project = this.refs.datatable.getData();
+        var project = API.getProject();
         this.state.onOK(project);
-        return Promise.resolve();*/
+        return Promise.resolve();
     },
 
     render: function() {

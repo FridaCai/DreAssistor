@@ -1,9 +1,12 @@
 import SubProject from './subproject.js';
 import Util from '../../../util.js';
+import Entity from './entity.js';
 
-
-module.exports = class Project {
+module.exports = class Project extends Entity {
 	constructor(){
+
+		super();
+
 		//by default, exist mastertiming and ais development.
 		var mastertiming = new SubProject();
 		mastertiming.init({label: 'Master Timing'});
@@ -12,6 +15,8 @@ module.exports = class Project {
 		aisdevelopment.init({label: 'AIS Development'});
 
 		this.children = [mastertiming, aisdevelopment];
+
+		this.defineField('sorp');
 	}
 
 	init(param){
@@ -25,9 +30,6 @@ module.exports = class Project {
 		this.sorp = param.sorp || 0;
 		this.children = [];
 		param.children && param.children.map((function(sp, index){
-			
-
-
 			var subproject = new SubProject();
 			subproject.init(sp);
 

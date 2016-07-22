@@ -58,6 +58,7 @@ module.exports = class Task extends Base {
 				"startWeek": startWeek,
 				"endWeek": endWeek,
 			})
+			task.week2time(project.sorp);
 			project.addTask(task);
 		}
 	}
@@ -67,6 +68,8 @@ module.exports = class Task extends Base {
 
 		var tasks = project.findTasks();
 		this.ui = tasks.map((function(task){
+			task.time2week(project.sorp);
+
 			return [
 				Cell.create({isHide: true}),
 				Cell.create({isHide: true}),

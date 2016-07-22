@@ -31,11 +31,6 @@ var Table = React.createClass({
     },
 
     updateAfterRender: function(){
-        /*(function updateTableBodyHeight(){
-            var h = this._$('table').height() - this._$('theader').outerHeight();
-            $('tbody').height(h);
-        }).call(this);*/
-
         (function updateTableBodyHeight(){
             var h = $('.projectPopupContainer .MsgBoxContent').height()
                         - $('.addOn').outerHeight() 
@@ -45,21 +40,6 @@ var Table = React.createClass({
                         - $('.thead-inverse').outerHeight();
             $('tbody').height(h);
         }).call(this)
-
-
-
-        /*(function updateTableCellWidth(){
-            var widthList = [];
-            $.each($(this.refs.tableBody).find('tr:first td'), function(index, td){
-                widthList.push($(this).width());
-            })
-
-            var magicOffset = 2;
-            $.each($(this.refs.tableHeader).find('th'), function(index, th){
-                var width = widthList[index];
-                $(this).width(width + magicOffset);
-            })
-        }).bind(this);*/
     },
 
     onDrop: function(e){//for edit case, do nothing for drop.
@@ -71,6 +51,7 @@ var Table = React.createClass({
         var file = files[0];
         var fileName = file.name;
         reader.onload = (function(e){
+            debugger;
             var data = e.target.result;
             var workbook = XLSX.read(data, {type: 'binary'});
 
@@ -90,14 +71,20 @@ var Table = React.createClass({
     onDragOver(e){e.preventDefault();},
 
     onChange: function(cell, event){
-        return;
-        /*var inputValue = event.target.value;
-        cell.v = inputValue;*/
+        var inputValue = event.target.value;
+        cell.v = inputValue;
+
+
+        API.ui2dm();
+        API.dm2ui();
+
     },
+
+
 
     onBlur: function(cell, event){
         return;
-        /*var project = this.ui2datamodel(this.state.ui);
+        
 
         if(cell.ref === 'sorp'){
             project.findTasks().map(function(task){
@@ -108,7 +95,7 @@ var Table = React.createClass({
         
 
         var ui = this.datamodel2ui(project);
-        this.setState({ui: ui}, this.updateAfterRender);*/
+        this.setState({ui: ui}, this.updateAfterRender);
     },
 
     update:function(param){
@@ -164,8 +151,6 @@ var Table = React.createClass({
             return dom;
         }).bind(this);
 
-
-
         var getTableHeader = (function(header){
             var percentage = getPercentage(header);
             var dom = header.map(function(cell, j){
@@ -196,8 +181,6 @@ var Table = React.createClass({
                         }).bind(this))
                     }
                     </ul>
-
-                            
                     <div className='sheet'>
                         <table>
                             <thead className="thead-inverse" ref='tableHeader'>

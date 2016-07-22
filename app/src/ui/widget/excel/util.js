@@ -76,7 +76,7 @@ exports.Util = {
         var ui = [];
 
         var isDate = function(value){
-            if(!value || value.t != 'n')
+            if(!value)
                 return false;
             var m = moment(value.w, 'MM-DD-YYYY');
             return m.isValid();

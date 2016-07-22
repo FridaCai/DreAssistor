@@ -1,10 +1,12 @@
 import SubTask from './subtask.js';
 import Attachment from './attachment.js';
 import Util from '../../../util.js';
+import Entity from './entity.js';
 
-module.exports = class BaseTask {
+module.exports = class BaseTask extends Entity {
 
 	constructor(){
+		super();
 	}
 
 	init(param){
@@ -36,6 +38,15 @@ module.exports = class BaseTask {
 
 
 		this._updateMeta(param);
+	}
+
+	week2time(ref){
+		this.startTime = parseInt(moment(ref).add(this.startWeek, 'week').format('x'));
+		this.endTime = parseInt(moment(ref).add(this.endWeek, 'week').format('x'));
+	}
+	time2week(ref){
+		this.startWeek = moment(this.startTime).diff(moment(ref), 'w');
+		this.endWeek = moment(this.endTime).diff(moment(ref), 'w');
 	}
 
 	/**
