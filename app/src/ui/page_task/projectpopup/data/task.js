@@ -8,8 +8,10 @@ module.exports = class Task extends Base {
 		super()
 	}
 
-	xls2ui(params){
-		this.ui = [];
+	xls2ui(params, datamode){ //0--replace; 1--append
+		if(datamode === 0)
+			this.ui = [];
+
 		params.map((function(param, index){
 			var ui = Util.excel2ui(param.sheet);
 
@@ -46,16 +48,36 @@ module.exports = class Task extends Base {
 		var tasks = project.findTasks();
 		this.ui = tasks.map((function(task){
 			return [
-				Cell.create({v: task.label}), 
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+
+				Cell.create({v: task.label}),
+
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+
 				Cell.create({v: task.startWeek}),
 				Cell.create({v: task.endWeek})
 			];
 		}).bind(this)).reverse();
 
 		this.ui.unshift([
-			Cell.create({v: 'Label'}), 
-			Cell.create({v: 'Start Week'}), 
-			Cell.create({v: 'End Week'}), 
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+
+				Cell.create({v: 'Label'}), 
+
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				Cell.create({isHide: true}),
+				
+				Cell.create({v: 'Start Week'}), 
+				Cell.create({v: 'End Week'})
 		]);
 	}
 }

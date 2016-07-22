@@ -1,11 +1,35 @@
 import MessageBox from '../../../widget/messagebox.js';
 import CDropDown from '../../../widget/dropdown/dropdown.js';
+import RadioGroup from '../../../widget/radiogroup/index.js';
+import Util from '../../../../util.js';
 import API from '../api.js';
 
-var Popup = React.createClass({
-	getInitialState: function() {
-    	this.dropdownComponents =[];
-    	this.options = [{
+var ControllerGroup = React.createClass({
+	getInitialState: function(){
+		this.radioGroupOptions = {
+            id: `datamode_radiogroup_${Util.generateUUID()}`,
+            selectedId: 0,
+            options: [{
+                id: 0,
+                label:"替换"
+            },{
+                id: 1,
+                label: "添加"
+            }],
+            onChange: (function(selectedId){
+				this.setState({radioSelected: selectedId})
+            }).bind(this),
+        }
+
+        return {
+        	dropdownSelected:undefined,
+        	radioSelected: 0
+        };
+	},
+	componentDidMount: function(){
+		var id = 'dropDown';
+		var container = this.refs.dropDown;
+	    var options = [{
 	    	id: 'property', label: '项目属性'
 	    }, {
 	    	id: 'tag', label:'master timing时间节点'
@@ -15,49 +39,69 @@ var Popup = React.createClass({
 	    	id: 'no', label:'不导入'
 	    }];
 
-        return {
+	    var prompt = '请选择数据类型';
+	    var param = {
+	        id: id, //string.
+	        defaultKey: null, 
+	        prompt: prompt,
+	        options: options,
+	        onchange: (function(key){
+	            this.setState({dropdownSelected: key});
+	        }).bind(this),
+	    };
+
+	    CDropDown.create(container, param);
+	},
+
+	getValue:function(){
+		return this.state;
+	},
+	componentDidUnMount: function(){
+	},
+	radioGroupChange:function(optionId){
+		this.setState({
+			radioSelected: optionId
+		})
+	},
+
+	render:function(){
+		var showRadioGroup = (this.state.dropdownSelected === 'task' ? true: false);
+		var dom = showRadioGroup ? (
+			<RadioGroup style={{float:'left', marginLeft:20}} 
+				param={this.radioGroupOptions} 
+				ref='radioGroup' />
+		): null;
+
+		return (
+			<div className='controllerGroup' style={{float:'left'}}>
+				<span ref='dropDown' className='dropdown'/>
+				{dom}
+			</div>		
+		)
+	}
+})
+
+
+var Popup = React.createClass({
+	getInitialState: function() {
+    	return {
             title: this.props.title,
             onOK: this.props.onOK,
             workbook: this.props.workbook,
         };
     },
-	
-	componentDidMount: function(){
-		var loop = this.props.workbook.SheetNames.length;
-
-		for (var i=0; i<loop; i++) {	
-			var id = `dropdown_${i}`;
-			var container = this.refs[id];
-            var options = this.options;
-            var prompt = '请选择数据类型';
-            var param = {
-                id: id, //string.
-                defaultKey: null, 
-                prompt: prompt,
-                options: options,
-                onchange: (function(key){
-                    
-                }).bind(this),
-            };
-            this.dropdownComponents.push(CDropDown.create(container, param));
-		}
-	},
-
-	componentDidUnMount: function(){
-
-	},
 
 	getContent: function() {
 	    return (
 	    	<div className='importExcelPopup'>
-	    		<div className='line'>请选择需要导入的sheet及数据类型</div>
+	    		<div className='line' style={{margin: '20px 0 10px 0'}}>请选择需要导入的sheet及数据类型</div>
 			    {
 			    	this.state.workbook.SheetNames.map((function(sheetName, index){
-			    		var drowpdownRef = `dropdown_${index}`;
+			    		var controllerGroupRef = `controllerGroup_${index}`;
 			    		return (
 			    			<div className='line' key={index}>
 			    				<label>{sheetName}</label>
-			    				<span ref={drowpdownRef}/>
+			    				<ControllerGroup ref={controllerGroupRef}/>
 		    				</div>
 	    				)
 			    	}).bind(this))
@@ -66,7 +110,7 @@ var Popup = React.createClass({
 	    )
     },
 
-	checkXlsFile: function(sheetType){
+	checkXlsFile: function(sheetType, datamode){
     	var getSheets = (function(workbook, indices){
 			return indices.map(function(index){
 				var sheetName = workbook.SheetNames[index];
@@ -86,7 +130,7 @@ var Popup = React.createClass({
     		propertySheet: propertySheet,
     		tagSheet: tagSheet,
     		taskSheets: taskSheets
-    	});
+    	}, datamode);
 
     	return checkResult;
     	//similar 4 tag and task.
@@ -94,14 +138,18 @@ var Popup = React.createClass({
 
     onOK:function() {
     	var sheetType = {property: [], tag: [], task: []}; //{property: [sheetIndex, sheetIndex], tag: [sheetIndex, sheetIndex], tasks: [sheetIndex, sheetIndex]}
-    	this.dropdownComponents.map((function(dropdown, index){
-    		var key = dropdown.getValue();
-    		if (key && key!=='no') {
-				sheetType[key].push(index);
-    		}  
-    	}).bind(this))
+    	var datamode = {property: 0, tag: 0, task:0};
 
-		if(this.checkXlsFile(sheetType).errorCode === -1){
+    	var loop = this.state.workbook.SheetNames.length;
+    	for(var i=0; i<loop; i++){
+    		var {dropdownSelected, radioSelected} = this.refs[`controllerGroup_${i}`].getValue();
+    		if(dropdownSelected && dropdownSelected!='no'){
+    			sheetType[dropdownSelected].push(i);
+    			datamode[dropdownSelected] = radioSelected;
+    		}
+    	}
+
+		if(this.checkXlsFile(sheetType, datamode).errorCode === -1){
 			this.state.onOK();
         	return Promise.resolve();	
 		}

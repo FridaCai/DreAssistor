@@ -8,13 +8,14 @@ class Cell {
     }
 
 	constructor(){
-	
+	   
 	}
 
 	init(param){
 		this.id = param.id || undefined;
 		this.v = param.v;
 		this.isEditable = param.isEditable || false;
+        this.isHide = param.isHide || false;
 	}
 }
 exports.Cell = Cell;

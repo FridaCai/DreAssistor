@@ -53,8 +53,9 @@ var API = {
 		}
 	},
 
-	tryXls2ui: function(param){
+	tryXls2ui: function(param, datamode){
 		var {propertySheet, tagSheet, taskSheets} = param;
+		var taskMode = datamode.task;
 
 		var errorCode = -1;
 		var errorMsg = '';
@@ -76,9 +77,12 @@ var API = {
 			}
 
 			
-			if(taskSheets){
+			if(taskSheets && taskSheets.length!=0){
 				var task = new Task();
-				task.xls2ui(taskSheets);
+				if(taskMode ==1)
+					task = this.uidata.task;
+
+				task.xls2ui(taskSheets, taskMode);
 				this.uidata.task = task;	
 			}
 

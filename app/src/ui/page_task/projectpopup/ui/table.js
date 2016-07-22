@@ -110,6 +110,15 @@ var Table = React.createClass({
             sheetNames: [this.state.uidata.property.sheetName, this.state.uidata.tag.sheetName, this.state.uidata.task.sheetName],
             sheets: [this.state.uidata.property.ui, this.state.uidata.tag.ui, this.state.uidata.task.ui],
         }
+
+        var cell2dom = (function(cell){
+            if(cell.isHide){
+                return null;
+            }
+            return cell.isEditable ? (
+                <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur.bind(this, cell)}/>
+            ) : (<span>{cell.v}</span>);
+        }).bind(this);
         
         var getSheetDom = (function(sheet){
             var dom = [];
@@ -118,13 +127,13 @@ var Table = React.createClass({
                 var tr = [];
 
                 line.map((function(cell, j){
-                    var dom = cell.isEditable ? (
-                        <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur.bind(this, cell)}/>
-                    ) : (<span>{cell.v}</span>);
-                    tr.push((
-                        <td key={j}>{dom}</td>
-                    ));
+                    if(!cell.isHide){
+                        tr.push((
+                            <td key={j}>{cell2dom(cell)}</td>
+                        ));    
+                    }
                 }).bind(this))
+
                 dom.push((
                     <tr key={i}>{tr}</tr>
                 ));
@@ -138,7 +147,10 @@ var Table = React.createClass({
             var line = sheet[0];
 
             var dom = line.map(function(cell, j){
-                return (<th key={j}><span>{cell.v}</span></th>)
+                if(!cell.isHide){
+                    return (<th key={j}><span>{cell2dom(cell)}</span></th>)    
+                }
+                
             });
             return (
                 <tr>
