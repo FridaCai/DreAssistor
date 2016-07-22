@@ -6,10 +6,17 @@ import {Util} from '../../../widget/excel/util.js';
 module.exports = class Tag extends Base {
 	constructor(){
 		super()
+		this.header = [
+			Cell.create({v: 'Week'}), 
+			Cell.create({v: 'Date (Sorp-Week)'}), 
+			Cell.create({v: 'Date (Adjusted)'}), 
+			Cell.create({v: 'Update Program Milestone'})
+		];
+		this.sheetName = `tag`;
 	}
+
 	ui2dm(project){
 		project.clearTags();
-
 
 		for(var i=0; i<this.ui.length; i++){
 			var line = this.ui[i];
@@ -35,14 +42,7 @@ module.exports = class Tag extends Base {
 		
 	}
 	dm2ui(project){
-		this.sheetName = `tag`;
-
-		this.ui = [[
-			Cell.create({v: 'Week'}), 
-			Cell.create({v: 'Date (Sorp-Week)'}), 
-			Cell.create({v: 'Date (Adjusted)'}), 
-			Cell.create({v: 'Update Program Milestone'})]
-		];
+		this.ui = [];
 		
 
 		var tags = project.getTags(function(tag1, tag2){

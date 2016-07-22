@@ -3,11 +3,13 @@ import Base from './base.js';
 
 module.exports = class Property extends Base{
 	constructor(){
-		super()
+		super();
+		this.header = [Cell.create({v: 'property'}), Cell.create({v: 'value'})];
+		this.sheetName = `property`;
 	}
 
 	ui2dm(project){
-	    for(var i=1; i<this.ui.length; i++){
+	    for(var i=0; i<this.ui.length; i++){
 	        var line = this.ui[i];
 	        var key = line[0].v;
 	        var value = line[1].v;
@@ -28,8 +30,6 @@ module.exports = class Property extends Base{
 	}
 
 	dm2ui(project){
-		this.sheetName = `property`;
-
 		var sorp = Util.convertUnixTime2YYYYMMDD(project['sorp']);
 		var label = project['label'];
 		var bpmax = project['bpmax'];
@@ -37,7 +37,6 @@ module.exports = class Property extends Base{
 		var ec = project['ec'];
 
 		this.ui = [
-            [Cell.create({v: 'property'}), Cell.create({v: 'value'})],
             [Cell.create({v: 'label'}), Cell.create({v: label})],
             [Cell.create({v: 'bpmax'}), Cell.create({v: bpmax})],
             [Cell.create({v: 'bpmin'}), Cell.create({v: bpmin})],
