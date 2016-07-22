@@ -24,17 +24,31 @@ var Table = React.createClass({
         SuperAPI.sigal_window_resizeend.unlisten(this.updateAfterRender);
     },
 
+    _$: function(selector){
+        if(!selector)
+            return $(ReactDOM.findDOMNode(this));
+        else return $(ReactDOM.findDOMNode(this)).find(selector);
+    },
+
     updateAfterRender: function(){
+        /*(function updateTableBodyHeight(){
+            var h = this._$('table').height() - this._$('theader').outerHeight();
+            $('tbody').height(h);
+        }).call(this);*/
+
         (function updateTableBodyHeight(){
             var h = $('.projectPopupContainer .MsgBoxContent').height()
-                    - $('.addOn').outerHeight() 
-                    - parseInt($('.dataTable').css('marginTop'))
-                    - $('.nav-tabs').outerHeight()
-                    - $('.thead-inverse').outerHeight();
+                        - $('.addOn').outerHeight() 
+                        - parseInt($('.addOn').css('marginTop')) 
+                        - parseInt($('.dataTable').css('marginTop'))
+                        - $('.nav-tabs').outerHeight()
+                        - $('.thead-inverse').outerHeight();
             $('tbody').height(h);
-        })();
+        }).call(this)
 
-        (function updateTableCellWidth(){
+
+
+        /*(function updateTableCellWidth(){
             var widthList = [];
             $.each($(this.refs.tableBody).find('tr:first td'), function(index, td){
                 widthList.push($(this).width());
@@ -45,7 +59,7 @@ var Table = React.createClass({
                 var width = widthList[index];
                 $(this).width(width + magicOffset);
             })
-        }).call(this);
+        }).bind(this);*/
     },
 
     onDrop: function(e){//for edit case, do nothing for drop.
@@ -109,6 +123,7 @@ var Table = React.createClass({
         var ui = {
             sheetNames: [this.state.uidata.property.sheetName, this.state.uidata.tag.sheetName, this.state.uidata.task.sheetName],
             sheets: [this.state.uidata.property.ui, this.state.uidata.tag.ui, this.state.uidata.task.ui],
+            headers: [this.state.uidata.property.header, this.state.uidata.tag.header, this.state.uidata.task.header]
         }
 
         var cell2dom = (function(cell){
@@ -117,19 +132,27 @@ var Table = React.createClass({
             }
             return cell.isEditable ? (
                 <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur.bind(this, cell)}/>
-            ) : (<span>{cell.v}</span>);
+            ) : (<span title={cell.v}>{cell.v}</span>);
         }).bind(this);
+
+        var getPercentage = (function(cellArr){
+            var tmp = cellArr.filter(function(cell){
+                return !cell.isHide;
+            })
+            return `${(1/tmp.length)*100}%`;
+        });
         
         var getSheetDom = (function(sheet){
             var dom = [];
-            for(var i=1; i<sheet.length; i++){
+            for(var i=0; i<sheet.length; i++){
                 var line = sheet[i];
                 var tr = [];
 
+                var percentage = getPercentage(line);
                 line.map((function(cell, j){
                     if(!cell.isHide){
                         tr.push((
-                            <td key={j}>{cell2dom(cell)}</td>
+                            <td key={j} style={{width:percentage}}>{cell2dom(cell)}</td>
                         ));    
                     }
                 }).bind(this))
@@ -143,14 +166,12 @@ var Table = React.createClass({
 
 
 
-        var getTableHeader = (function(sheet){
-            var line = sheet[0];
-
-            var dom = line.map(function(cell, j){
+        var getTableHeader = (function(header){
+            var percentage = getPercentage(header);
+            var dom = header.map(function(cell, j){
                 if(!cell.isHide){
-                    return (<th key={j}><span>{cell2dom(cell)}</span></th>)    
+                    return (<th style={{width:percentage}} key={j}>{cell2dom(cell)}</th>)    
                 }
-                
             });
             return (
                 <tr>
@@ -180,7 +201,7 @@ var Table = React.createClass({
                     <div className='sheet'>
                         <table>
                             <thead className="thead-inverse" ref='tableHeader'>
-                                {getTableHeader(ui.sheets[this.state.sheetIndex])}
+                                {getTableHeader(ui.headers[this.state.sheetIndex])}
                             </thead>
                             <tbody ref='tableBody'>
                                 {getSheetDom(ui.sheets[this.state.sheetIndex])}

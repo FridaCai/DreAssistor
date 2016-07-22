@@ -4,7 +4,7 @@ import SaveAs from 'browser-saveas';
 import API from '../api.js';
 
 var XlsIExport = React.createClass({
-    ui2excel: function(ui){
+    ui2excel: function(){
         var sheet_from_array_of_arrays = function(data){
             var ws = {};
             var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
@@ -33,15 +33,20 @@ var XlsIExport = React.createClass({
             return ws;
         }
 
+        
         var sheets = {};
-        for(var key in ui.sheets){
-            var sheet = ui.sheets[key];
+        var sheetNames = [];
+        
+        var raw = API.uidata;
+        for(var key in raw){
+            var sheet = raw[key].ui;
             sheets[key] = sheet_from_array_of_arrays(sheet);
+            sheetNames.push(key);
         }
 
 
         var workbook = {
-            SheetNames: ui.sheetNames,
+            SheetNames: sheetNames,
             Sheets: sheets,
         }
 
@@ -89,7 +94,7 @@ var XlsIExport = React.createClass({
             for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
-        var wb = this.ui2excel(this.state.ui);
+        var wb = this.ui2excel();
 		var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
 		saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), "test.xlsx")
 	},
