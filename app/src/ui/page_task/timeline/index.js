@@ -114,12 +114,13 @@ var CTimeLine = React.createClass({
             var spId = sp.id;
             sp.children.map(function(child){
                 if(child instanceof Tag) {
+                    var tagTime = API.getTagTime(child);
                     items.push({
                         id: projectId + '_' + spId + '_' + child.id,
                         group: projectId + '_' + spId,
                         title: child.label,
-                        start_time: child.time,
-                        end_time: child.time+1,
+                        start_time: tagTime,
+                        end_time: tagTime + 1,
                         color: Util.convertIntColorToHex(child.markColor),
                         instance: child,
                     })

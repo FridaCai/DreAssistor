@@ -61,28 +61,28 @@ var Table = React.createClass({
     onDragOver(e){e.preventDefault();},
 
     onChange: function(cell, event){
+        console.log('================onchange================');
+        
+
         var inputValue = event.target.value;
         cell.v = inputValue;
 
-        API.ui2dm();
-        API.dm2ui();
+        console.log(JSON.stringify(cell.dump(),'',2));
+        console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
+
+        
 
     },
 
     onBlur: function(cell, event){
-        return;
+        console.log('================onblur================');
+        console.log(JSON.stringify(cell.dump(),'',2));
+        console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
         
+        API.ui2dm();
+        API.dm2ui();
 
-        if(cell.ref === 'sorp'){
-            project.findTasks().map(function(task){
-                task.startTime = undefined;
-                task.endTime = undefined;
-            })    
-        }
-        
-
-        var ui = this.datamodel2ui(project);
-        this.setState({ui: ui}, this.updateAfterRender);
+        this.forceUpdate();
     },
 
     update:function(param){
@@ -95,9 +95,9 @@ var Table = React.createClass({
         }
 
         var ui = {
-            sheetNames: [this.state.uidata.property.sheetName, this.state.uidata.tag.sheetName, this.state.uidata.task.sheetName],
-            sheets: [this.state.uidata.property.ui, this.state.uidata.tag.ui, this.state.uidata.task.ui],
-            headers: [this.state.uidata.property.header, this.state.uidata.tag.header, this.state.uidata.task.header]
+            sheetNames: [API.uidata.property.sheetName, API.uidata.tag.sheetName, API.uidata.task.sheetName],
+            sheets: [API.uidata.property.ui, API.uidata.tag.ui, API.uidata.task.ui],
+            headers: [API.uidata.property.header, API.uidata.tag.header, API.uidata.task.header]
         }
 
         var cell2dom = (function(cell){

@@ -106,6 +106,8 @@ var API = {
 		this.project = new Project();
 	},
 }
-
+window.dre.projectpopup = {
+	data: API	
+};
 module.exports = API;
 

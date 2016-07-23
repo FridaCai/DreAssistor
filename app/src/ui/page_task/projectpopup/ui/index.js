@@ -65,6 +65,7 @@ var ProjectPopup = React.createClass({
         }).bind(this)}/>, $('.t_popup')[0]);  
     },
     onOK:function() {
+        console.log('onOK');
         var project = API.getProject();
         this.state.onOK(project);
         return Promise.resolve();

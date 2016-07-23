@@ -17,6 +17,11 @@ class Cell {
 		this.isEditable = param.isEditable || false;
         this.isHide = param.isHide || false;
 	}
+    dump(){
+        return {
+            v: this.v,
+        }
+    }
 }
 exports.Cell = Cell;
 
@@ -66,6 +71,8 @@ exports.Util = {
 	},
 
 	convertUnixTime2YYYYMMDD: function(unixtime){
+        if(!unixtime)
+            return '';
 		return new Date(unixtime).toLocaleDateString();
 	},
 

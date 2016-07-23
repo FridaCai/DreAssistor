@@ -23,10 +23,8 @@ module.exports = class Tag extends Base {
 	        
 	        var label = line[3].v;
             var week = parseInt(line[0].v);
-            var time = (function(sorp, week, adjustTime){
-                var autoTime = Util.getTimeBySorpWeek(sorp, week);
-                return adjustTime ? Util.convertYYYYMMDD2UnixTime(adjustTime): autoTime;
-            }).call(this, project.sorp, week, line[2].v)
+            var time = line[2].v ? Util.convertYYYYMMDD2UnixTime(line[2].v) : undefined;
+
 
             if(label){
             	var tag = new DataTag();
@@ -40,6 +38,19 @@ module.exports = class Tag extends Base {
             } 
 		}
 		
+	}
+	dump(){
+		var obj = [];
+
+		this.ui.map(function(line){
+			var lineObj = [];
+			line.map(function(cell){
+				lineObj.push(JSON.stringify(cell.dump(), '', 2));
+			})
+			obj.push(lineObj)
+		})
+
+		console.table(obj);
 	}
 	dm2ui(project){
 		this.ui = [];
@@ -70,7 +81,7 @@ module.exports = class Tag extends Base {
             if(tag){
             	var adjustTime = Util.convertUnixTime2YYYYMMDD(tag.time);
                 line[2] = Cell.create({v: adjustTime, isEditable:true});
-                line[3] = {v: tag.label}
+                line[3] = Cell.create({v:tag.label});
             }
             this.ui.push(line);
         }

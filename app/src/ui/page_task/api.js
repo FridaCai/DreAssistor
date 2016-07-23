@@ -3,6 +3,7 @@ import Task from './data/task.js';
 import TemplateTasks from './data/templatetasks.js';
 import Projects from './data/projects.js';
 import Users from '../../data/users.js';
+import {Util} from '../widget/excel/util.js';
 
 var API = {
 	signal_page_refresh: new Signal(),
@@ -164,6 +165,17 @@ var API = {
 		}
 		return filtered;
 	},
+
+	getTagTime: function(tag){
+		var project = tag.parent.parent;
+
+        var time = (function(sorp, week, adjustTime){
+            var autoTime = Util.getTimeBySorpWeek(sorp, week);
+            return adjustTime || autoTime;
+        }).call(this, project.sorp, tag.week, tag.time)
+
+        return time;
+	}
 }
 
 //need more sophisticate design.
