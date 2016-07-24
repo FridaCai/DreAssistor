@@ -1,7 +1,9 @@
 {
   "label": "项目模版",
-  "bpmax": 100,
-  "bpmin": 10,
+  "bpMax": 100,
+  "bpMin": 10,
+  "massMin": 30,
+  "massMax":40,
   "ec": "1.0T",
   "sorp": 1451577600000,
   "children": [

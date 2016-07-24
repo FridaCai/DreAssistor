@@ -22,7 +22,7 @@ module.exports = class Task extends Base {
 			Cell.create({v: 'Start Week'}), 
 			Cell.create({v: 'End Week'})
 		];
-		this.sheetName = `task`;
+		this.sheetName = `豆豆`;
 	}
 
 	xls2ui(params, datamode){ //0--replace; 1--append
@@ -64,8 +64,6 @@ module.exports = class Task extends Base {
 	}
 
 	dm2ui(project){
-		this.sheetName = `task`;
-
 		var tasks = project.findTasks();
 		this.ui = tasks.map((function(task){
 			task.time2week(project.sorp);

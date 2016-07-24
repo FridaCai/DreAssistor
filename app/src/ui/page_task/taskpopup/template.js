@@ -2,54 +2,32 @@ import CDropDown from '../../widget/dropdown/dropdown.js';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_hotissue.js';
 import EWOTemplate from './template_ewo.js';
-import MuleTemplate from './template_mule.js';
-import API from '../api.js';
+import MuleMRDTemplate from './template_mule_mrd.js';
+
 
 var TaskTemplatePanel = React.createClass({
-    templatePanel: [NormalTemplate, EWOTemplate, HotIssueTemplate, MuleTemplate],
+    templatePanel: [NormalTemplate, EWOTemplate, HotIssueTemplate, MuleMRDTemplate],
     dom: undefined,
-    templateTypeDropdown: undefined,
 
     getInitialState: function() {
         return {
             type: this.props.template.type,
             param: $.extend(true, {}, this.props.template.param),
+            project: this.props.project,
         }
     },
 
-    updateJqueryComponent: function(){
-        (function updateTaskTemplateDropdown(){
-            var container = this.refs.templateTypeDropdown;
-            var options = API.getTemplateEnum();
-            var defaultKey = this.state.type;
-            var param = {
-                id: "templateTypeDropdown", //string.
-                defaultKey: defaultKey, //string. existed id in options.
-                options: options,
-                onchange: (function(key){
-                    this.setState({
-                        type: key,
-                    })
-                    this.updateTemplatePanelByIndex(key);
-                }).bind(this),
-            };
-            this.templateTypeDropdown = CDropDown.create(container, param);
-        }).call(this);
-    },
-
     componentDidMount: function(){
-        this.updateJqueryComponent();
-
         var type = this.state.type;
         this.updateTemplatePanelByIndex(type);
     },
 
     updateTemplatePanelByIndex: function(index){
-        var el = React.createElement(this.templatePanel[index], this.state.param);
+        var el = React.createElement(this.templatePanel[index], {param: this.state.param, project: this.state.project});
         this.dom = ReactDOM.render(el, this.refs.templatePanel);
     },
     getValue: function(){
-        var type = this.templateTypeDropdown.getValue();
+        var type = this.state.type;
         var param = this.dom.getValue();
 
         return {
@@ -59,13 +37,8 @@ var TaskTemplatePanel = React.createClass({
     },
     render: function(){
         return (
-            <div className='taskTemplateContainer'>
-                <span ref='templateTypeDropdown' className='templateTypeDropdown'/>
-                <div ref='templatePanel' className='templatePanel'></div>
-            </div>
+            <div ref='templatePanel' className='templatePanel'></div>
         )
-        
     }
-
 });
 module.exports = TaskTemplatePanel;

@@ -121,18 +121,6 @@ form.upload{
     		
     	}
     }
-
-    &.taskType{
-    	.taskTemplateContainer{
-    		float:left;
-    		max-width: 550px;
-
-    		.templatePanel{
-    			margin-left:-100px;
-    		}
-    	}
-    }
-    
 }
 
 #MsgBoxWrapper.registerMsg{
@@ -204,6 +192,44 @@ form.upload{
 	.taskPopup{
 		padding-bottom: 100px;
 		
+		.taskType{
+			width:100%;
+
+			.templatePanel{
+				margin-top:20px;
+				width: 100%;
+
+				.mule_mrd{
+
+					table{
+					    width: 100%;
+					    text-align: center;
+					    font-size: 12px;
+
+					    thead{
+					    	tr{
+					    	    background: #888;
+								color: white;
+
+								th{
+									border: solid 1px;
+									text-align:center;
+								}
+					    	}
+					    }
+
+					    tbody{
+					    	tr{
+					    		td{
+					    			border: solid 1px;
+					    		}
+					    	}
+
+					    }
+					}
+				}
+			}
+		}
 
 	}
 

@@ -8,8 +8,10 @@
       "creatorId": 2,
       "sorp": 1466049352000,
       "ec": "1.0T",
-      "bpmin": 10,
-      "bpmax": 20,
+      "bpMin": 10,
+      "bpMax": 20,
+      "massMin": 30,
+      "massMax":40,
       "children": [
         {
           "id": "0",
@@ -294,8 +296,10 @@
       "creatorId": 2,
       "sorp": 1466049352000,
       "ec": "1.0T",
-      "bpmin": 20,
-      "bpmax": 30,
+      "bpMin": 20,
+      "bpMax": 30,
+      "massMin": 30,
+      "massMax":40,
       "children": [
         {
           "id": "0",

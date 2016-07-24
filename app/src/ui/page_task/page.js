@@ -30,19 +30,15 @@ var PageTask = React.createClass({
 
         Promise.all([
             Request.getData(Request.getMockupAPI('get_projects.json')),
-            Request.getData(Request.getMockupAPI('get_template_enum.json')),
             Request.getData(Request.getMockupAPI('get_users.json'))
         ]).then((function(param){
             var projectsResponse = param[0];
-            var templateEnumResponse = param[1];
-            var usersResponse = param[2];
+            var usersResponse = param[1];
 
             if(projectsResponse.errCode == -1){
                 API.setProjects(projectsResponse.projects);    
             }
-            if(templateEnumResponse.errCode == -1){
-                API.setTemplateEnum(templateEnumResponse.templateenum);       
-            }
+            
             if(usersResponse.errCode == -1){
                 API.setUsers(usersResponse.users);
             }
@@ -88,7 +84,7 @@ var PageTask = React.createClass({
 
     onTaskPopupShow: function(e, param){
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<TaskPopup title={param.title} taskObj={param.taskObj} onOK={param.onOK}/>, this.refs.popup);  
+        ReactDOM.render(<TaskPopup title={param.title} task={param.task} onOK={param.onOK}/>, this.refs.popup);  
     },
 
     onProjectPopupShow: function(e, param){

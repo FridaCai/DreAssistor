@@ -5,19 +5,7 @@
         {
             "id": 0,
             "label": "普通",
-            "desc": "",
-            "startTime": 1465718720000,
-            "endTime": 1465718924000,
             "markColor": 6076508,
-            "attachments": [],
-            "creatorId": "",
-            "priority": "0",
-            "subtasks": [{
-                "id": "0",
-                "label": "豆豆子项",
-                "isDone": true
-            }],
-            "privacy": "0",
             "template": {
                 "type": 0
             },
@@ -26,19 +14,7 @@
 		{
 			"id": 1,
     		"label": "EWO",
-    		"desc": "",
-    		"startTime": 1465718720000,
-    		"endTime": 1465718924000,
     		"markColor": 6076508,
-    		"attachments": [],
-    		"creatorId": "",
-    		"priority": "0",
-    		"subtasks": [{
-                "id": "0",
-                "label": "豆豆子项",
-                "isDone": true
-            }],
-    		"privacy": "0",
     		"template": {
     			"type": 1
     		},
@@ -46,15 +22,7 @@
 		},{
             "id": 2,
             "label": "HotIssue",
-            "desc": "",
-            "startTime": 1465718720000,
-            "endTime": 1465718924000,
             "markColor": 6013150,
-            "attachments": [],
-            "creatorId": "",
-            "priority": "0",
-            "subtasks": [],
-            "privacy": "0",
             "template": {
                 "type": 2,
                 "param": {
@@ -67,76 +35,84 @@
             "statical":["duration"]
         },{
             "id": 3,
-            "label": "Mule",
-            "desc": "",
-            "startTime": 1465718720000,
-            "endTime": 1465718924000,
+            "label": "Mule MRD交样",
             "markColor": 15773006,
-            "attachments": [],
-            "creatorId": "",
-            "priority": "0",
-            "subtasks": [],
-            "privacy": "0",
             "template": {
+                "comment": "refKey is to find the target value in project. refKey is the key for project; null means property UI does not need.",
                 "type": 3,
                 "param": {
-                    "bom":{
-                        "isDone": false,
-                        "attachments": []
+                    "muleBomCheck":{
+                        "label": "Mule BOM check",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
                     },
-                    "size": {
-                        "isDone": false,
-                        "attachments": []
+                    "sizeCheck": {
+                        "label": "尺寸检查",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
                     },
                     "bp": {
-                        "isDone": false,
-                        "value": 50,
-                        "attachments": []
+                        "label": "背压／压力将(kpa)",
+                        "status": false,
+                        "refKey": "bpMax",
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
                     },
-                    "tl": {
-                        "isDone": false,
-                        "graphicSrc": "",
-                        "attachments": []   
+                    "transmissionLose": {
+                        "label": "传递损失",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": []
                     },
-                    "heavy": {
-                        "isDone": false,
-                        "value": "",
-                        "attachments": []   
+                    "mass": {
+                        "label": "重量(kg)",
+                        "status": false,
+                        "refKey": "massMax",
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
                     },
-                    "maf":{
-                        "isDone": false,
-                        "graphicSrc": "",
-                        "attachments": []   
+                    "maf": {
+                        "label": "MAF 5*5",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": []
                     },
-                    "sil":{
-                        "isDone": false,
-                        "attachments": []  
+                    "sil": {
+                        "label": "SIL",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
                     },
-                    "doc":{
-                        "isDone": false,
-                        "attachments": []  
-                    },
-                    "snorkelNoiseXls": []
+                    "docCheck":{
+                        "label": "文档检查",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    }
                 }
             },
-            "statical":["duration", "template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]
+            "statical":["duration", "template.param.bp.value", "template.param.mass.value", "template.param.transmissionLose.curve","template.param.maf.curve"]
         },
         {
             "id": 4,
-            "label": "竞争车型",
-            "desc": "",
-            "startTime": 1465718720000,
-            "endTime": 1465718924000,
+            "label": "IV Tuning",
             "markColor": 6076508,
-            "attachments": [],
-            "creatorId": "",
-            "priority": "0",
-            "subtasks": [{
-                "id": "0",
-                "label": "豆豆子项",
-                "isDone": true
-            }],
-            "privacy": "0",
             "template": {
                 "type": 4,
                 "param":{
@@ -144,7 +120,41 @@
                 }
             },
             "statical":["duration"]
-        }
+        },
+        {
+            "id": 5,
+            "label": "Hard tooling",
+            "markColor": 6076508,
+            "template": {
+                "type": 5,
+                "param":{
 
+                }
+            },
+            "statical":["duration"]
+        },
+        {
+            "id": 6,
+            "label": "PPV MRD",
+            "markColor": 6076508,
+            "template": {
+                "type": 6,
+                "param":{
+
+                }
+            },
+            "statical":["duration"]
+        },{
+            "id": 7,
+            "label": "竞争车型",
+            "markColor": 6076508,
+            "template": {
+                "type": 7,
+                "param":{
+
+                }
+            },
+            "statical":["duration"]
+        }
 	]
 }	

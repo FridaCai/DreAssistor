@@ -25,8 +25,11 @@ module.exports = class Project extends Entity {
 		
 		this.label = param.label;
 		this.ec = param.ec;
-		this.bpmin = param.bpmin;
-		this.bpmax = param.bpmax;
+		this.bpMin = param.bpMin;
+		this.bpMax = param.bpMax;
+		this.massMin = param.massMin;
+		this.massMax = param.massMax;
+
 		this.sorp = param.sorp || 0;
 		this.children = [];
 		param.children && param.children.map((function(sp, index){
@@ -47,8 +50,11 @@ module.exports = class Project extends Entity {
 	_updateMeta(param){
 		this.label = param.label;
 		this.ec = param.ec;
-		this.bpmin = param.bpmin;
-		this.bpmax = param.bpmax;
+		this.bpMin = param.bpMin;
+		this.bpMax = param.bpMax;
+		this.massMin = param.massMin;
+		this.massMax = param.massMax;
+
 		this.sorp = param.sorp;
 
 		var tagObjs = param.children[0].children;
@@ -110,8 +116,10 @@ module.exports = class Project extends Entity {
 			creatorId: this.creatorId,
 			sorp: this.sorp,
 			ec: this.ec,
-			bpmin: this.bpmin,
-			bpmax: this.bpmax,
+			bpMin: this.bpMin,
+			bpMax: this.bpMax,
+			massMin: massMin,
+			massMax: massMax,
 			children: children,
 			comment: `sorp: ${new Date(this.sorp)}`
 		};

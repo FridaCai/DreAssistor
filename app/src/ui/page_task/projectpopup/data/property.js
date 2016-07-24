@@ -5,7 +5,7 @@ module.exports = class Property extends Base{
 	constructor(){
 		super();
 		this.header = [Cell.create({v: 'property'}), Cell.create({v: 'value'})];
-		this.sheetName = `property`;
+		this.sheetName = `项目属性`;
 	}
 
 	ui2dm(project){
@@ -19,8 +19,10 @@ module.exports = class Property extends Base{
 	            case 'ec':
 	                project[key] = value;
 	                break;
-	            case 'bpmax':
-	            case 'bpmin':
+	            case 'bpMax':
+	            case 'bpMin':
+	            case 'massMin':
+	            case 'massMax':
 	                project[key] = Math.round(parseFloat(value) * 100) / 100;
 	                break;
 	            case 'sorp':
@@ -32,14 +34,18 @@ module.exports = class Property extends Base{
 	dm2ui(project){
 		var sorp = Util.convertUnixTime2YYYYMMDD(project['sorp']);
 		var label = project['label'];
-		var bpmax = project['bpmax'];
-		var bpmin = project['bpmin'];
+		var bpMax = project['bpMax'];
+		var bpMin = project['bpMin'];
+		var massMax = project['massMax'];
+		var massMin = project['massMin'];
 		var ec = project['ec'];
 
 		this.ui = [
             [Cell.create({v: 'label'}), Cell.create({v: label})],
-            [Cell.create({v: 'bpmax'}), Cell.create({v: bpmax})],
-            [Cell.create({v: 'bpmin'}), Cell.create({v: bpmin})],
+            [Cell.create({v: 'bpMax'}), Cell.create({v: bpMax})],
+            [Cell.create({v: 'bpMin'}), Cell.create({v: bpMin})],
+            [Cell.create({v: 'massMax'}), Cell.create({v: massMax})],
+            [Cell.create({v: 'massMin'}), Cell.create({v: massMin})],
             [Cell.create({v: 'ec'}), Cell.create({v: ec})],
             [Cell.create({v: 'sorp'}), Cell.create({v: sorp, isEditable: true, id:'sorp'})],
         ];

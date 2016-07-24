@@ -1,4 +1,5 @@
 import Util from '../../../util.js';
+import API from '../api.js';
 import MessageBox from '../../widget/messagebox.js';
 
 import Datetime from 'react-datetime';
@@ -18,7 +19,7 @@ var TaskPopup = React.createClass({
 
 	getInitialState: function() {
         return {
-            taskObj: this.props.taskObj,
+            task: this.props.task,
             title: this.props.title,
             onOK: this.props.onOK,
         };
@@ -27,10 +28,15 @@ var TaskPopup = React.createClass({
 	getContent: function() {
         const {
           label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
-        } = this.state.taskObj;
+        } = this.state.task;
 
         var color = Util.convertIntColorToHex(markColor);
-
+        var project = (this.state.task.parent && this.state.task.parent.parent) ? this.state.task.parent.parent: null; 
+        var templateLbl = API.getTemplateEnum()
+            .find((function(item){
+                return item.id == this.state.task.template.type;
+            }).bind(this))
+            .label;
 	    return (
 	        <div className="panel-body taskPopup">
             	<div className='line name'>
@@ -85,7 +91,8 @@ var TaskPopup = React.createClass({
 
                 <div className="line taskType">
                     <label>豆豆类型</label>
-                    <TaskTemplatePanel template={template} ref='templatePanel'/>
+                    <span>{templateLbl}</span>
+                    <TaskTemplatePanel template={template} project={project} ref='templatePanel'/>
                 </div>
 	        </div>
 	    );   
@@ -95,7 +102,7 @@ var TaskPopup = React.createClass({
     },
     updateJqueryComponent: function() {
     	(function updatePriorityDropdown(){
-            var defaultKey = this.state.taskObj.priority;
+            var defaultKey = this.state.task.priority;
     		var container = this.refs.priorityDropdown;
 	        var options = [{
 	            id: 0,
@@ -121,30 +128,18 @@ var TaskPopup = React.createClass({
     },
 
     onOK:function() {
-        var label = this.refs.labelInput.value;
-        var desc = this.refs.descTA.value;
-        var startTime = this.refs.startTimeDT.state.selectedDate.valueOf();
-        var endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
-        var subtasks = this.refs.breakdownList.getValue();
-        var markColor = Util.convertHexColorToInt(this.refs.markColorCP.state.color);
-        var priority = this.priorityDropdown.getValue();  
-        var attachments = this.refs.attachmentlist.getValue();
-        var privacy = this.refs.privacyRadioGroup.getValue();
-        var template = this.refs.templatePanel.getValue();
+        this.state.task.label = this.refs.labelInput.value;
+        this.state.task.desc = this.refs.descTA.value;
+        this.state.task.startTime = this.refs.startTimeDT.state.selectedDate.valueOf();
+        this.state.task.endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
+        this.state.task.subtasks = this.refs.breakdownList.getValue();
+        this.state.task.markColor = Util.convertHexColorToInt(this.refs.markColorCP.state.color);
+        this.state.task.priority = this.priorityDropdown.getValue();  
+        this.state.task.attachments  = this.refs.attachmentlist.getValue();
+        this.state.task.privacy = this.refs.privacyRadioGroup.getValue();
+        this.state.task.template = this.refs.templatePanel.getValue();
 
-        this.state.onOK({
-            label: label,
-            desc: desc,
-            startTime: startTime,
-            endTime: endTime,
-            subtasks: subtasks,
-            markColor: markColor,
-            priority: priority,
-            attachments: attachments,
-            privacy: privacy,
-            template: template,
-        });
-
+        this.state.onOK();
         return Promise.resolve();
     },
     render: function() {

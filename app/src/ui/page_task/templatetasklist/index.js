@@ -18,9 +18,8 @@ var TemplateTaskList = React.createClass({
     onEditTaskClk: function(task){
         API.signal_taskpopup_show.dispatch({
             title: '编辑豆豆',
-            taskObj: $.extend(true, {}, task),
-            onOK: (function(taskObj){
-                task.update(taskObj);
+            task: task,
+            onOK: (function(){
                 this.forceUpdate();
             }).bind(this),
         });
@@ -33,8 +32,16 @@ var TemplateTaskList = React.createClass({
     		if(param.errCode !== -1)
     			return;
 
+            var tasks = param.tasks;
+    		API.setTemplateTasks(tasks);
+            
 
-    		API.setTemplateTasks(param.tasks);
+            var templateenum = tasks.map(function(task){
+                return {id: task.id, label: task.label}
+            });
+            API.setTemplateEnum(templateenum);
+
+
     		this.forceUpdate();
     	}).bind(this));
     },

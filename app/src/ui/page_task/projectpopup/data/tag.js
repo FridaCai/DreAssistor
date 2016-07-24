@@ -12,7 +12,7 @@ module.exports = class Tag extends Base {
 			Cell.create({v: 'Date (Adjusted)'}), 
 			Cell.create({v: 'Update Program Milestone'})
 		];
-		this.sheetName = `tag`;
+		this.sheetName = `Master timing`;
 	}
 
 	ui2dm(project){
