@@ -1,7 +1,8 @@
 import MessageBox from '../../../widget/messagebox.js';
+import XlsImExPort from '../../../widget/excel/xls_im_export.js';
+import Popup from '../../../widget/excel/popup.js';
+
 import Table from './table.js';
-import XlsImExPort from './xls_im_export.js';
-import Popup from './popup.js';
 import API from '../api.js';
 
 var ProjectPopup = React.createClass({
@@ -21,11 +22,14 @@ var ProjectPopup = React.createClass({
         };
     },
 
+    onXlsImport: function(param){
+        API.signal_popup_show.dispatch(param);
+    },
 	getContent: function() {
         var disableXlsImExPort = this.props.project ? true: false;
 	    return (
             <div className='addProjectDiv'>
-                <XlsImExPort disabled={disableXlsImExPort}/>
+                <XlsImExPort disabled={disableXlsImExPort} next={this.onXlsImport}/>
                 <div className='t_popup' ref='t_popup'/>
                 <Table ref='table' uidata={this.state.uidata}/>     
             </div>
@@ -56,7 +60,7 @@ var ProjectPopup = React.createClass({
 
         //todo: fail to find this.refs.t_popup after close addProjectPopup. very strange. try to unmount dom element after message box hide.
         ReactDOM.unmountComponentAtNode($('.t_popup')[0]);    
-        ReactDOM.render(<Popup title={'导入excel'} workbook={workbook} onOK={(function(){
+        ReactDOM.render(<Popup tryXls2ui={API.tryXls2ui.bind(API)} title={'导入excel'} workbook={workbook} onOK={(function(){
             //todo:
             API.ui2dm();
             API.dm2ui();

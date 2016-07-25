@@ -11,6 +11,36 @@ var Util = {
 	},
 	TAG_WIDTH: 50,
 	TAG_COLOR: 255,
+
+	
+	/*tmp:function(){
+		//24 color. http://iro-color.com/colorchart/color-system-24.html
+		var arr = [];
+		var interpret = [];
+		$('.numericalvalue tr').each(function(index){
+			if(index===0)
+				return true;
+			$(this).find('td:nth-child(4)').each(function(){
+				var colorValue = $(this).html();
+				arr.push(parseInt(colorValue.replace('#', '0x')));
+			})
+		})
+		for(var i=0; i<6; i++){
+			for(var j=0; j<4; j++){
+				var index = i+6*j;
+				interpret.push(arr[index]);
+			}
+		}
+		console.log(interpret.join(','));
+	}
+	*/
+
+	COLORS: [
+		15073298,9421599,41193,9570179,15425792,2272312,
+		34513,12451969,15964160,39236,26807,14942335,
+		16566272,39787,18333,15007850,16773376,40598,
+		1908872,15007823,13622016,41153,6297990,15073331],
+	
 	
 	getValue: function(obj, keys){
 		var target = obj;

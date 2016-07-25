@@ -1,8 +1,7 @@
-import MessageBox from '../../../widget/messagebox.js';
-import CDropDown from '../../../widget/dropdown/dropdown.js';
-import RadioGroup from '../../../widget/radiogroup/index.js';
-import Util from '../../../../util.js';
-import API from '../api.js';
+import MessageBox from '../messagebox.js';
+import CDropDown from '../dropdown/dropdown.js';
+import RadioGroup from '../radiogroup/index.js';
+import Util from '../../../util.js';
 
 var ControllerGroup = React.createClass({
 	getInitialState: function(){
@@ -126,7 +125,7 @@ var Popup = React.createClass({
     	var tagSheet = getSheets(sheetType['tag'])[0];
     	var taskSheets = getSheets(sheetType['task']);
 
-    	var checkResult = API.tryXls2ui({
+    	var checkResult = this.props.tryXls2ui({
     		propertySheet: propertySheet,
     		tagSheet: tagSheet,
     		taskSheets: taskSheets

@@ -2,85 +2,43 @@ import './index.less';
 import {Util} from './util.js';
 import Table from './table.js';
 
-//# load, no files
-//# load, has files;
-//# drag and drop;
+import XlsImExport from './xls_im_export.js';
+import Popup from './popup.js';
 
-//load excel files; parse xlsx files; draw chart and table.
+/*
+  labels: [],
+  series: [],
+  caption: '',
+*/
 
+
+var CurveComponent = React.createClass({
+  getInitialState: function(){
+    return {
+      uidata: this.props.uidata, //todo.  
+    }
+  },
+
+  render: function(){
+    var disableXlsImExPort = false;
+    return (
+      <div className='curveComponent'>
+          <XlsImExPort disabled={disableXlsImExPort}/>
+          <div className='t_popup' ref='t_popup'/>
+          <Chart ref='chart' uidata={this.state.uidata}/>
+          <Table ref='table' uidata={this.state.uidata}/>     
+      </div>
+    )
+  }
+})
+
+
+
+
+
+
+/*
 var UploadExcelComponent = React.createClass({
-  getInitialState: function() {
-      return {
-        fileNames: this.props.fileNames,
-        labels: [],
-        series: [],
-        caption: '',
-      }
-  },
-
-  getFileNames: function(){
-    return this.state.fileNames;
-  },
-
-  _chart:undefined,
-  updateChart: function(){
-    var labels = this.state.labels;
-    var _series = this.state.series;
-    var caption = this.state.caption;
-
-    var series = [];
-    for(var i=0; i<_series.length; i++){
-      var serie = _series[i];
-      series.push(serie.data);
-    }
-
-    if(this._chart){
-      this._chart.detach();
-      this._chart.svg.remove();
-    }
-
-    this._chart = new Chartist.Line('.ct-chart', {
-      labels: labels,
-      series: series,
-    }, {
-      fullWidth: true,
-      lineSmooth: false,
-      chartPadding: {
-        right: 20,
-        left: 10
-      },
-      axisX: {
-        labelInterpolationFnc: function(value) {
-          if(value % 500 === 0){
-            return value;  
-          }
-        }
-      }
-    });
-  },
-
-  onDrop: function(e){
-      e.stopPropagation();
-      e.preventDefault();
-      var files = e.dataTransfer.files;
-      //todo: upload to server. load file from server and extract chart and table value;
-      var fileName = files[0].name;
-
-      this.setState({
-        fileNames: [fileName]
-      }, this.execute.bind(this, [fileName]))
-      
-  },
-
-  onDragOver(e){
-    e.preventDefault();
-  },
-
-  onToggleCurve(index, isShow){
-    this.state.series[index].isShow = isShow;
-    $($('.ct-series')[index]).toggle();  
-  },
-    
   parseFile: function(fileName){
       var processWorkbook = (function(workbook, xlsFileName){
           var SHEET_NAME = 'SNORKEL';
@@ -135,38 +93,6 @@ var UploadExcelComponent = React.createClass({
             caption: xlsFileName,
           };
       }).bind(this);
-
-
-      var filePath = `/app/res/${fileName}`;
-      var oReq = new XMLHttpRequest();
-
-      return new Promise(function(resolve, reject){
-        oReq.open("GET", filePath, true);
-        oReq.responseType = "arraybuffer";
-        oReq.onload = (function(e) {
-          var arraybuffer = oReq.response;
-          var data = new Uint8Array(arraybuffer);
-          var arr = new Array();
-          for(var i = 0; i != data.length; ++i) 
-            arr[i] = String.fromCharCode(data[i]);
-          
-          if(!arr.length){
-            reject();
-            return;
-          }
-
-          var bstr = arr.join("");
-          
- 
-          var workbook = XLSX.read(bstr, {type:"binary"});
-          var result = processWorkbook(workbook, fileName);
-
-          resolve(result);
-        }).bind(this);
-
-        oReq.send();  
-      })
-      
   },
 
   execute: function(fileNames){
@@ -209,12 +135,6 @@ var UploadExcelComponent = React.createClass({
 
       return (
         <div className='uploadExcel'>
-
-
-
-          <div style={dragAreaStyle} className='fileArea' onDragOver={this.onDragOver} onDrop={this.onDrop}>
-            请将文件拖至此处上传
-          </div>
           <div className='chartTable' style={chartTableStyle}>
             <div className="ct-chart ct-perfect-fourth" ></div>
             <Table labels={this.state.labels} series={this.state.series} caption={this.state.caption} 
@@ -223,6 +143,6 @@ var UploadExcelComponent = React.createClass({
         </div>
       );
   }
-});
+});*/
 
-module.exports = UploadExcelComponent;
+module.exports = CurveComponent;

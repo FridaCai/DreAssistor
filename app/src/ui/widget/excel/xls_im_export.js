@@ -1,7 +1,5 @@
-import {Util} from '../../../widget/excel/util.js';
 import moment from 'moment';
 import SaveAs from 'browser-saveas';
-import API from '../api.js';
 
 var XlsIExport = React.createClass({
     ui2excel: function(){
@@ -37,7 +35,7 @@ var XlsIExport = React.createClass({
         var sheets = {};
         var sheetNames = [];
         
-        var raw = API.uidata;
+        var raw = this.props.uidata;
         for(var key in raw){
             var sheet = raw[key].ui;
             sheets[key] = sheet_from_array_of_arrays(sheet);
@@ -62,7 +60,11 @@ var XlsIExport = React.createClass({
         reader.onload = (function(e) {
             var data = e.target.result;
             var workbook = XLSX.read(data, {type: 'binary'});
-            API.signal_popup_show.dispatch({workbook: workbook});
+            
+
+
+
+            this.props.next({workbook:workbook});
         }).bind(this);
         reader.readAsBinaryString(f);
       }

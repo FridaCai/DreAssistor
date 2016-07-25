@@ -24,7 +24,24 @@ var Table = React.createClass({
     		series: series,
     	})
     },
+	onDrop: function(e){
+		e.stopPropagation();
+		e.preventDefault();
+		var files = e.dataTransfer.files;
+		//todo: upload to server. load file from server and extract chart and table value;
+		var fileName = files[0].name;
 
+		this.setState({
+			fileNames: [fileName]
+		}, this.execute.bind(this, [fileName]))
+	},
+	onToggleCurve(index, isShow){
+		this.state.series[index].isShow = isShow;
+		$($('.ct-series')[index]).toggle();  
+	},
+	onDragOver(e){
+		e.preventDefault();
+	},
 
     render: function(){
     	var i=-1;
