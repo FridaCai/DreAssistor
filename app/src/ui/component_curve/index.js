@@ -1,16 +1,15 @@
 import './index.less';
-import {Util} from './util.js';
-import Table from './table.js';
+import {Util} from '../widget/excel/util.js';
+import XlsIExport from '../widget/excel/xls_im_export.js';
+import Popup from '../widget/excel/popup.js';
+import API from './api.js';
 
-import XlsImExport from './xls_im_export.js';
-import Popup from './popup.js';
-
+//import Table from './table.js';
 /*
   labels: [],
   series: [],
   caption: '',
 */
-
 
 var CurveComponent = React.createClass({
   getInitialState: function(){
@@ -19,14 +18,41 @@ var CurveComponent = React.createClass({
     }
   },
 
+  onXlsImport: function(param){
+      API.signal_popup_show.dispatch(param);
+  },
+  componentDidUnMount: function(){
+      API.signal_popup_show.unlisten(this.onPopupShow);
+  },
+  
+  componentDidMount: function(){
+      API.signal_popup_show.listen(this.onPopupShow);
+  },
+
+  onPopupShow: function(e, param){
+        var workbook = param.workbook;
+
+
+        //todo: fail to find this.refs.t_popup after close addProjectPopup. very strange. try to unmount dom element after message box hide.
+        ReactDOM.unmountComponentAtNode($('.t_popup')[0]);    
+        ReactDOM.render(<Popup tryXls2ui={API.tryXls2ui.bind(API)} title={'导入excel'} workbook={workbook} onOK={(function(){
+            this.refs.table.update({uidata: API.uidata});
+        }).bind(this)}/>, $('.t_popup')[0]);  
+    },
+
+
   render: function(){
+    /*
+      
+      <Chart ref='chart' uidata={this.state.uidata}/>
+        <Table ref='table' uidata={this.state.uidata}/>
+    */
     var disableXlsImExPort = false;
     return (
       <div className='curveComponent'>
-          <XlsImExPort disabled={disableXlsImExPort}/>
+          <XlsIExport disabled={disableXlsImExPort} next={this.onXlsImport}/>
           <div className='t_popup' ref='t_popup'/>
-          <Chart ref='chart' uidata={this.state.uidata}/>
-          <Table ref='table' uidata={this.state.uidata}/>     
+
       </div>
     )
   }

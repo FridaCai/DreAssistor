@@ -3,8 +3,6 @@ import Page from './page.js';
 import RegisterPopup from './membership/registerpopup.js';
 import API from "../api.js";
 
-import UploadExcelComponent from './widget/excel/index.js';
-
 var MainView = React.createClass({
 	getInitialState: function() {
         return {

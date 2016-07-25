@@ -1,5 +1,5 @@
 import RadioGroup from '../../widget/radiogroup/index.js';
-import UploadExcelComponent from '../../widget/excel/index.js';
+import CurveComponent from '../../component_curve/index.js';
 
 import './template_mule_mrd.less';
 
@@ -60,7 +60,7 @@ var MuleMRDTemplate = React.createClass({
 
 
         this.runExpandCellAmination(key, isOpen).then((function(){
-            var el = React.createElement(UploadExcelComponent); //import UploadExcelComponent
+            var el = React.createElement(CurveComponent); 
             ReactDOM.render(el, container);
         }).bind(this))
         

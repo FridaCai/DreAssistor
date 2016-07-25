@@ -56,11 +56,25 @@ var ProjectPopup = React.createClass({
 
     onPopupShow: function(e, param){
         var workbook = param.workbook;
+        var sheetOptions = [{
+            id: 'property',
+            label: '属性',
+            writeMode: [0]
+        },{
+            id: 'tag',
+            label: 'Master Timing',
+            writeMode: [0]
+        },{
+            id: 'task',
+            label: '豆豆',
+            writeMode: [0,1]
+        }];
 
 
         //todo: fail to find this.refs.t_popup after close addProjectPopup. very strange. try to unmount dom element after message box hide.
         ReactDOM.unmountComponentAtNode($('.t_popup')[0]);    
-        ReactDOM.render(<Popup tryXls2ui={API.tryXls2ui.bind(API)} title={'导入excel'} workbook={workbook} onOK={(function(){
+        ReactDOM.render(<Popup tryXls2ui={API.tryXls2ui.bind(API)} 
+            title={'导入excel'} workbook={workbook} sheetOptions={sheetOptions} onOK={(function(){
             //todo:
             API.ui2dm();
             API.dm2ui();

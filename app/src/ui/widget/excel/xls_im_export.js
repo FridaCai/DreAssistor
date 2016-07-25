@@ -1,5 +1,6 @@
 import moment from 'moment';
 import SaveAs from 'browser-saveas';
+import './xls_im_export.less';
 
 var XlsIExport = React.createClass({
     ui2excel: function(){
@@ -64,7 +65,7 @@ var XlsIExport = React.createClass({
 
 
 
-            this.props.next({workbook:workbook});
+            this.props.next && this.props.next({workbook:workbook});
         }).bind(this);
         reader.readAsBinaryString(f);
       }

@@ -22,13 +22,17 @@ var ControllerGroup = React.createClass({
 
         return {
         	dropdownSelected:undefined,
-        	radioSelected: 0
+        	radioSelected: 0,
+        	sheetOptions: this.props.sheetOptions,
         };
 	},
 	componentDidMount: function(){
 		var id = 'dropDown';
 		var container = this.refs.dropDown;
-	    var options = [{
+	    var options = this.state.sheetOptions;
+	    /*
+			//todo:
+			[{
 	    	id: 'property', label: '项目属性'
 	    }, {
 	    	id: 'tag', label:'master timing时间节点'
@@ -37,6 +41,7 @@ var ControllerGroup = React.createClass({
 	    },{
 	    	id: 'no', label:'不导入'
 	    }];
+	    */
 
 	    var prompt = '请选择数据类型';
 	    var param = {
@@ -55,8 +60,7 @@ var ControllerGroup = React.createClass({
 	getValue:function(){
 		return this.state;
 	},
-	componentDidUnMount: function(){
-	},
+
 	radioGroupChange:function(optionId){
 		this.setState({
 			radioSelected: optionId
@@ -64,7 +68,13 @@ var ControllerGroup = React.createClass({
 	},
 
 	render:function(){
-		var showRadioGroup = (this.state.dropdownSelected === 'task' ? true: false);
+		var selectedKey = this.state.dropdownSelected;
+		var option = this.selectedOptions.find(function(option){
+			return (option.id === selectedKey)
+		})
+		var showRadioGroup = (option.writeMode.length === 1 ? false:true);
+
+
 		var dom = showRadioGroup ? (
 			<RadioGroup style={{float:'left', marginLeft:20}} 
 				param={this.radioGroupOptions} 
@@ -87,6 +97,8 @@ var Popup = React.createClass({
             title: this.props.title,
             onOK: this.props.onOK,
             workbook: this.props.workbook,
+
+			sheetOptions: this.props.sheetOptions,
         };
     },
 
@@ -100,7 +112,7 @@ var Popup = React.createClass({
 			    		return (
 			    			<div className='line' key={index}>
 			    				<label>{sheetName}</label>
-			    				<ControllerGroup ref={controllerGroupRef}/>
+			    				<ControllerGroup ref={controllerGroupRef} sheetOptions={this.state.sheetOptions}/>
 		    				</div>
 	    				)
 			    	}).bind(this))
@@ -121,24 +133,24 @@ var Popup = React.createClass({
 			})
     	}).bind(this, this.state.workbook)
 
-    	var propertySheet = getSheets(sheetType['property'])[0]; 
-    	var tagSheet = getSheets(sheetType['tag'])[0];
-    	var taskSheets = getSheets(sheetType['task']);
 
-    	var checkResult = this.props.tryXls2ui({
-    		propertySheet: propertySheet,
-    		tagSheet: tagSheet,
-    		taskSheets: taskSheets
-    	}, datamode);
+
+
+    	var param = this.state.sheetOptions.map(function(option){
+    		return getSheets(sheetType[option.id], option.writeMode);
+    	})
+
+    	/*var propertySheet = getSheets(sheetType['property'])[0]; 
+    	var tagSheet = getSheets(sheetType['tag'])[0];
+    	var taskSheets = getSheets(sheetType['task']);*/
+
+    	var checkResult = this.props.tryXls2ui(param, datamode);
 
     	return checkResult;
     	//similar 4 tag and task.
 	},
 
     onOK:function() {
-    	var sheetType = {property: [], tag: [], task: []}; //{property: [sheetIndex, sheetIndex], tag: [sheetIndex, sheetIndex], tasks: [sheetIndex, sheetIndex]}
-    	var datamode = {property: 0, tag: 0, task:0};
-
     	var loop = this.state.workbook.SheetNames.length;
     	for(var i=0; i<loop; i++){
     		var {dropdownSelected, radioSelected} = this.refs[`controllerGroup_${i}`].getValue();

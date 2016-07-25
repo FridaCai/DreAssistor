@@ -1,4 +1,4 @@
-import UploadExcelComponent from '../../widget/excel/index.js';
+//import UploadExcelComponent from '../../widget/excel/index.js';
 import CDropDown from '../../widget/dropdown/dropdown.js';
 import Util from '../../../util.js';
 import API from '../api.js';
