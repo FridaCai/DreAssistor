@@ -39,14 +39,6 @@ exports.Util = {
 	    }
   	},
 
-  	/*
-		Util.alphabet2Index('A'); // 1
-		Util.alphabet2Index('BC'); //2*26+3=55
-		Util.alphabet2Index('CDE');//3*26^2+4*26+5=2137
-		Util.index2Alphabet(1); 
-		Util.index2Alphabet(55);  
-		Util.index2Alphabet(2137); 
-  	*/
   	alphabet2Index:function(alphabet){
   		var ans = 0;
 

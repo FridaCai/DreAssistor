@@ -1,5 +1,5 @@
 import './index.less';
-import Util from './util.js';
+import {Util} from './util.js';
 import Table from './table.js';
 
 //# load, no files
