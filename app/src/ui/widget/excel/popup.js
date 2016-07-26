@@ -2,6 +2,7 @@ import MessageBox from '../messagebox.js';
 import CDropDown from '../dropdown/dropdown.js';
 import RadioGroup from '../radiogroup/index.js';
 import Util from '../../../util.js';
+import './popup.less';
 
 var ControllerGroup = React.createClass({
 	getInitialState: function(){
@@ -138,7 +139,7 @@ var Popup = React.createClass({
     		}
 		}
 
-		
+
 
 		var checkResult = this.props.tryXls2ui(result);
 		if(checkResult.errorCode === -1){

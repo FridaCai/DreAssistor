@@ -13,7 +13,7 @@ class Cell {
 
 	init(param){
 		this.id = param.id || undefined;
-		this.v = param.v;
+		this.v = param.v || '';
 		this.isEditable = param.isEditable || false;
         this.isHide = param.isHide || false;
 	}
@@ -22,6 +22,7 @@ class Cell {
             v: this.v,
         }
     }
+
 }
 exports.Cell = Cell;
 
@@ -99,7 +100,6 @@ exports.Util = {
                 ui[i-1].push(cell);
             }
         }
-		console.table(ui);
         return ui;
     },
     getSheetName: function(name){

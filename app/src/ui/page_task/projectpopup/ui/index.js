@@ -4,6 +4,7 @@ import Popup from '../../../widget/excel/popup.js';
 
 import Table from './table.js';
 import API from '../api.js';
+import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
@@ -11,7 +12,7 @@ var ProjectPopup = React.createClass({
             if(!p)
                 return undefined;
             API.setProject(p);
-            API.dm2ui(p);      
+            API.dm2ui();      
             return API.uidata;
         })(this.props.project);
 
@@ -42,7 +43,13 @@ var ProjectPopup = React.createClass({
         if(this.props.project)
             return;
 
-        API.loadTemplate().then((function(){
+        API.loadTemplate().then((function(result){
+            var project = new Project(); 
+            project.init(result);
+            
+            API.setProject(project); 
+            API.dm2ui();
+
             var uidata = API.uidata;
             this.refs.table.update({
                 uidata: uidata
@@ -73,14 +80,17 @@ var ProjectPopup = React.createClass({
 
         //todo: fail to find this.refs.t_popup after close addProjectPopup. very strange. try to unmount dom element after message box hide.
         ReactDOM.unmountComponentAtNode($('.t_popup')[0]);    
-        ReactDOM.render(<Popup tryXls2ui={API.tryXls2ui.bind(API)} 
-            title={'导入excel'} workbook={workbook} sheetOptions={sheetOptions} onOK={(function(){
-            //todo:
-            API.ui2dm();
-            API.dm2ui();
-            this.refs.table.update({uidata: API.uidata});
-
-        }).bind(this)}/>, $('.t_popup')[0]);  
+        ReactDOM.render(
+            <Popup tryXls2ui={API.tryXls2ui.bind(API)} 
+                title={'导入excel'} 
+                workbook={workbook} 
+                sheetOptions={sheetOptions} 
+                onOK={(function(){
+                    API.ui2dm();
+                    API.dm2ui();
+                    this.refs.table.update({uidata: API.uidata});
+                }).bind(this)}/>, 
+            $('.t_popup')[0]);  
     },
     onOK:function() {
         console.log('onOK');

@@ -61,27 +61,19 @@ var Table = React.createClass({
     onDragOver(e){e.preventDefault();},
 
     onChange: function(cell, event){
-        console.log('================onchange================');
-        
-
+        //console.log('================onchange================');
         var inputValue = event.target.value;
         cell.v = inputValue;
-
-        console.log(JSON.stringify(cell.dump(),'',2));
-        console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
-
-        
-
+        //console.log(JSON.stringify(cell.dump(),'',2));
+        //console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
     },
 
     onBlur: function(cell, event){
-        console.log('================onblur================');
-        console.log(JSON.stringify(cell.dump(),'',2));
-        console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
-        
+        //console.log('================onblur================');
+        //console.log(JSON.stringify(cell.dump(),'',2));
+        //console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
         API.ui2dm();
         API.dm2ui();
-
         this.forceUpdate();
     },
 

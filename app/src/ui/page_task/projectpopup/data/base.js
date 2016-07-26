@@ -9,7 +9,7 @@ module.exports = class Base {
 
 	xls2ui(param){
 		var ui = Util.excel2ui(param);
-		ui.splice(0,1);
+		ui.splice(0,1); //todo: bad. assume only one line for header...search for a better solution...
 		this.ui = this.ui.concat(ui);
 	}
 

@@ -189,7 +189,7 @@ form.upload{
 	    }
 	}
 
-	#MsgBoxWrapper.taskPopup{
+	#MsgBoxWrapper.taskPopup .MsgBoxMain{
 		width:100%;
 		height: 100%;
 		top:0;
@@ -230,6 +230,17 @@ form.upload{
 						    		}
 						    	}
 
+						    	.MsgBox.importExcelPopup{
+						    		.MsgBoxMain{
+							    		position: fixed;
+									    width: 50%;
+									    height: 50%;
+									    margin-top: 20%;
+									    margin-left: 25%;
+						    		}
+
+						    	}
+
 						    }
 						}
 					}
@@ -249,37 +260,6 @@ form.upload{
 			top: 0;
 			.MsgBoxContent{
 				overflow-y:hidden;
-
-
-				.importExcelPopup{
-					padding-left:20px;
-
-					.MsgBoxMain{
-						width: 500px;
-						height: 500px;
-						top: 10%;
-
-						.line{
-							>label{
-								width: 150px;
-							    overflow: hidden;
-							    float: left;
-							    white-space: nowrap;
-							    text-overflow: ellipsis;
-							}
-							.cdropdown{
-								> ul li a{
-								    color: #a7a7a7;
-	    							font-size: 13px;
-								}
-
-								button{
-									width: 180px;
-								}
-							} 
-						}
-					}
-				}
 
 				
 				.projectPopup{

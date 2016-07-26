@@ -1,72 +1,134 @@
-/*<Table labels={this.state.labels} series={this.state.series} caption={this.state.caption} onToggleCurve={this.onToggleCurve}/>*/
-  /*onToggleCurve(index, isShow){*/
+import API from './api.js';
 
 var Table = React.createClass({
     getInitialState: function() {
         return {
-        	labels: this.props.labels,
-        	series: this.props.series,
+        	uidata: this.props.uidata,
+        	sheetIndex:0,
         }
     },
+    _$: function(selector){
+        if(!selector)
+            return $(ReactDOM.findDOMNode(this));
+        else return $(ReactDOM.findDOMNode(this)).find(selector);
+    },
+    update:function(param){
+    	this.setState(param);
+    },
+    /*
 	componentWillReceiveProps: function(newProps){
 		this.setState({
 			labels: newProps.labels,
 			series: newProps.series,
 		})
-	},
+	},*/
     onChange: function(index, isShow){
-    	this.props.onToggleCurve(index, isShow);
-
-    	var series = this.state.series;
+    	//this.props.onToggleCurve(index, isShow);
+    	//todo:
+    	API.signal_curve_toggle.dispatch({
+    		index: index,
+    		isShow: isShow,
+    	})
+    	var series = this.state.uidata.series;
     	series[index].isShow = isShow;
 
-    	this.setState({
+    	/*this.setState({
     		series: series,
-    	})
+    	})*/
     },
 	onDrop: function(e){
-		e.stopPropagation();
-		e.preventDefault();
-		var files = e.dataTransfer.files;
-		//todo: upload to server. load file from server and extract chart and table value;
-		var fileName = files[0].name;
+        e.stopPropagation();
+        e.preventDefault();
+        var files = e.dataTransfer.files;
+        var reader = new FileReader();
 
-		this.setState({
-			fileNames: [fileName]
-		}, this.execute.bind(this, [fileName]))
+        var file = files[0];
+        var fileName = file.name;
+        reader.onload = (function(e){
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {type: 'binary'});
+            API.signal_popup_show.dispatch({workbook: workbook});
+        }).bind(this);
+        reader.readAsBinaryString(file);
 	},
-	onToggleCurve(index, isShow){
-		this.state.series[index].isShow = isShow;
-		$($('.ct-series')[index]).toggle();  
-	},
+
+
 	onDragOver(e){
 		e.preventDefault();
 	},
 
-    render: function(){
-    	var i=-1;
+	render: function(){
+		if(!this.state.uidata){
+            return null;
+        }
+
+        var ui = {
+            sheetNames: [this.state.uidata.sheetName],
+            sheets: [this.state.uidata.ui],
+            headers: [this.state.uidata.header]
+        }
+
+        return (
+            <div className='excelTable' >
+                <table>
+                    <tbody>
+                        {
+                            ui.headers[this.state.sheetIndex].map((function(header, i){
+                                //var isChecked = serie.isShow;
+                                var label = header.v;
+                                
+                                //i++;
+                                var className=`markcolor color${i}`;
+                                //<input type="checkbox" checked={isChecked} onChange={this.onChange.bind(this, i, !isChecked)}></input>  
+                                return (
+                                    <tr key={i}>
+                                        <td>
+                                            <input type="checkbox"></input>  
+                                            <span className={className}></span>
+                                            <span>{label}</span>
+                                        </td>
+                                        {
+                                            ui.sheets[this.state.sheetIndex].map(function(row, j){
+                                                var cell = row[i];
+                                                if(cell.isHide){
+                                                    return null;
+                                                }
+                                                return (<td key={j}>{cell.v}</td>)    
+                                            })                                                
+                                        }
+                                    </tr>
+                                )       
+                            }).bind(this))
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+        )
+	},
+
+    render_deprecated: function(){
+    	var i = -1;
+    	var {labels, series, caption} = this.state.uidata;
 
 	    return (
 			<div className='excelTable' >
 				<table>
-					<caption>{this.props.caption}</caption>
+					<caption>{caption}</caption>
 					<tbody>
 						<tr>
 							<th scope="col" role="columnheader"></th>
 							<th scope="col" role="columnheader">rpm</th>
 							{
-								this.state.labels.map((function(label){
+								labels && labels.map((function(label){
 									return (
 										<th scope="col" role="columnheader" key={label}>{label}</th>
 									)
 								}).bind(this))
 							}
 						</tr>
-
-
-
 						{
-							this.state.series.map((function(serie){
+							series && series.map((function(serie){
 								var isChecked = serie.isShow;
 								var label = serie.label;
 								

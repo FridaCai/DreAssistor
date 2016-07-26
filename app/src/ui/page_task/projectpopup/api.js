@@ -23,10 +23,9 @@ var API = {
 	},
 
 	loadTemplate: function(){ 
-        return Request.getData(Request.getMockupAPI('template_project.json')).then((function(result){
-            this.project = new Project();
-            this.project.init(result);
-            this.dm2ui();
+		var url = Request.getMockupAPI('template_project.json');
+        return Request.getData(url).then((function(result){
+ 			return result;
         }).bind(this))
 	},
 
