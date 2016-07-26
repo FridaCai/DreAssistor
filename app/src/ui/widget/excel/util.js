@@ -13,7 +13,7 @@ class Cell {
 
 	init(param){
 		this.id = param.id || undefined;
-		this.v = param.v || '';
+		this.v = (param.v == undefined || param.v === null) ? '' : param.v;
 		this.isEditable = param.isEditable || false;
         this.isHide = param.isHide || false;
 	}
@@ -78,7 +78,9 @@ exports.Util = {
         var isDate = function(value){
             if(!value)
                 return false;
-            var m = moment(value.w, 'MM-DD-YYYY');
+            //var m = moment(value.w, 'MM-DD-YYYY');
+            var m = moment(value.w, ['YYYY/M/D', 'M/D/YY'], true);
+            
             return m.isValid();
         }
 

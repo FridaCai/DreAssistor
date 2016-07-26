@@ -118,8 +118,8 @@ module.exports = class Project extends Entity {
 			ec: this.ec,
 			bpMin: this.bpMin,
 			bpMax: this.bpMax,
-			massMin: massMin,
-			massMax: massMax,
+			massMin: this.massMin,
+			massMax: this.massMax,
 			children: children,
 			comment: `sorp: ${new Date(this.sorp)}`
 		};
