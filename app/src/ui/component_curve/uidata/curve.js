@@ -39,19 +39,19 @@ module.exports = class CurveUI extends Base{ //refactor.
 
 		var labels = getColumn(0, this.ui);
 		var series = [{
-			label: this.header[0].v,
+			label: this.header[1].v,
 			isShow: true,
 			data: getColumn(1, this.ui),
 		}, {
-			label: this.header[1].v,
+			label: this.header[2].v,
 			isShow: true,
 			data: getColumn(2, this.ui),
 		}, {
-			label: this.header[2].v,
+			label: this.header[3].v,
 			isShow: true,
 			data: getColumn(3, this.ui),
 		}, {
-			label: this.header[3].v,
+			label: this.header[4].v,
 			isShow: true,
 			data: getColumn(4, this.ui),
 		}];

@@ -6,6 +6,7 @@ import API from './api.js';
 import Table from './table.js';
 import CurveUI from './uidata/curve.js';
 import Curve from './data/curve.js';
+import Chart from './chart.js';
 
 //todo: template mode? very similar with project popup.
 var CurveComponent = React.createClass({
@@ -19,7 +20,7 @@ var CurveComponent = React.createClass({
     })(this.props.curve);
 
     return {
-        curveui: curveui,
+
     };
   },
 
@@ -29,10 +30,14 @@ var CurveComponent = React.createClass({
 
   componentDidUnMount: function(){
       API.signal_popup_show.unlisten(this.onPopupShow);
+      API.signal_curve_toggle.unlisten(this.onCurveToggle);
   },
-  
+  onCurveToggle: function(e, param){
+    this.refs.chart.onCurveToggle(param);
+  },
   componentDidMount: function(){
       API.signal_popup_show.listen(this.onPopupShow);
+      API.signal_curve_toggle.listen(this.onCurveToggle);
 
       if(this.props.curve)
             return;
@@ -44,9 +49,8 @@ var CurveComponent = React.createClass({
           API.setCurve(curve); 
           API.dm2ui();
 
-          this.refs.table.update({
-              uidata: API.curveui
-          })
+          this.refs.table.forceUpdate();
+          this.refs.chart.update();
       }).bind(this));
   },
 
@@ -71,7 +75,8 @@ var CurveComponent = React.createClass({
               API.ui2dm();
               API.dm2ui();
 
-              this.refs.table.update({uidata: API.curveui});
+              this.refs.table.forceUpdate();
+              this.refs.chart.update();
             }).bind(this)}/>, 
         $('.t_popup')[0]);
   },
@@ -83,15 +88,13 @@ var CurveComponent = React.createClass({
   },
 
   render: function(){
-    /*
-      <Chart ref='chart' uidata={this.state.uidata}/>
-    */
     var disableXlsImExPort = false;
     return (
       <div className='curveComponent'>
           <XlsIExport disabled={disableXlsImExPort} next={this.onXlsImport}/>
           <div className='t_popup' ref='t_popup'/>
-          <Table ref='table' uidata={this.state.curveui}/>
+          <Chart ref='chart' />
+          <Table ref='table' />
       </div>
     )
   }
@@ -109,54 +112,6 @@ var UploadExcelComponent = React.createClass({
           var SHEET_NAME = 'SNORKEL';
           var COLORS = ['#46aac4','#f69240', '#4a7ebb', '#a7c36f', '#be4b48', '#7d60a0', '#ff0000', '#00ff00', '#0000ff', '#04fced'];
           var worksheet = workbook.Sheets[SHEET_NAME];
-
-
-          var range = Util.getRange(worksheet['!ref']);
-
-
-
-         
-
-          var getColumn = function(min, max, columnName){
-            var returnLabel = [];
-            for(var i=min; i<=max; i++){
-              var key = `${columnName}${i}`;
-
-              var value = worksheet[key];
-
-              if(value && value.t == 'n'){
-                var tmp = Math.round(value.v * 100) / 100;
-                returnLabel.push(tmp);
-              }
-            }
-            return returnLabel;
-          }
-          
-
-          var labels = getColumn(range.lineMin, range.lineMax, 'A'); // a9-a259
-          var series = [{
-            label: worksheet['B3'].v,
-            isShow: true,
-            data: getColumn(range.lineMin, range.lineMax, 'B')
-          }, {
-            label: worksheet['C3'].v,
-            isShow: true,
-            data: getColumn(range.lineMin, range.lineMax, 'C')
-          }, {
-            label: worksheet['D3'].v,
-            isShow: true,
-            data: getColumn(range.lineMin, range.lineMax, 'D')
-          }, {
-            label: worksheet['E3'].v,
-            isShow: true,
-            data: getColumn(range.lineMin, range.lineMax, 'E')
-          }];
-
-          return {
-            labels: labels,
-            series: series,
-            caption: xlsFileName,
-          };
       }).bind(this);
   },
 
@@ -201,7 +156,7 @@ var UploadExcelComponent = React.createClass({
       return (
         <div className='uploadExcel'>
           <div className='chartTable' style={chartTableStyle}>
-            <div className="ct-chart ct-perfect-fourth" ></div>
+            
             <Table labels={this.state.labels} series={this.state.series} caption={this.state.caption} 
               onToggleCurve={this.onToggleCurve}/>
           </div>

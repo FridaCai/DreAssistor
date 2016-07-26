@@ -1,25 +1,33 @@
+import API from './api.js';
 
 var Chart = React.createClass({
   getInitialState: function(){
-    return {}
-  }
-  componentDidMount:function(){
+    this._chart = null;
 
-  }
-  updateChart: function(){
-    var labels = this.state.labels;
-    var _series = this.state.series;
-    var caption = this.state.caption;
+    return {
+      
+    }
+  },
+
+  componentDidMount:function(){
+    this.update();
+  },
+  
+  update: function(){
+    var labels = API.curve.labels || [];
+    var _series = API.curve.series || [];
+    var caption = API.curve.caption || [];
 
     var series = [];
     for(var i=0; i<_series.length; i++){
       var serie = _series[i];
+
       series.push(serie.data);
     }
 
     if(this._chart){
-      this._chart.detach();
       this._chart.svg.remove();
+      this._chart.detach();
     }
 
     this._chart = new Chartist.Line('.ct-chart', {
@@ -41,7 +49,23 @@ var Chart = React.createClass({
       }
     });
   },
+  onCurveToggle:function(param){
+    var index = param.index;
+    var isShow = param.isShow;
+
+    if(isShow){
+      $($('.ct-series')[index]).show();     
+    }else{
+      $($('.ct-series')[index]).hide();   
+    }
+    
+  },
+
+  
   render: function(){
-    return ()
+    return (
+        <div className="ct-chart ct-perfect-fourth" ></div>
+    )
   }
 })
+module.exports = Chart;

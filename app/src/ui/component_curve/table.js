@@ -3,7 +3,6 @@ import API from './api.js';
 var Table = React.createClass({
     getInitialState: function() {
         return {
-        	uidata: this.props.uidata,
         	sheetIndex:0,
         }
     },
@@ -22,15 +21,19 @@ var Table = React.createClass({
 			series: newProps.series,
 		})
 	},*/
-    onChange: function(index, isShow){
+    onChange: function(index){
     	//this.props.onToggleCurve(index, isShow);
     	//todo:
-    	API.signal_curve_toggle.dispatch({
-    		index: index,
-    		isShow: isShow,
-    	})
-    	var series = this.state.uidata.series;
-    	series[index].isShow = isShow;
+    	index--; //bad
+    	API.curve.series[index].isShow = !API.curve.series[index].isShow;
+
+        API.dm2ui();
+
+        API.signal_curve_toggle.dispatch({
+        	index: index,
+        	isShow: API.curve.series[index].isShow,
+        });
+    	
 
     	/*this.setState({
     		series: series,
@@ -58,15 +61,36 @@ var Table = React.createClass({
 	},
 
 	render: function(){
-		if(!this.state.uidata){
+		if(!API.curveui){
             return null;
         }
 
         var ui = {
-            sheetNames: [this.state.uidata.sheetName],
-            sheets: [this.state.uidata.ui],
-            headers: [this.state.uidata.header]
+            sheetNames: [API.curveui.sheetName],
+            sheets: [API.curveui.ui],
+            headers: [API.curveui.header]
         }
+
+        var dom = (function(i, label, className){
+            if(i===0){
+                return (
+                    <th><span>{label}</span></th>
+                )
+            }else{
+                debugger;//todo: think over here.
+                if(!API.curve.series || !API.curve.series[i-1])
+                    return null;
+
+                var isCheck = API.curve.series[i-1].isShow;
+                return (
+                    <th>
+                        <input type="checkbox" defaultChecked={isCheck} onChange={this.onChange.bind(this, i)}></input>  
+                        <span className={className}></span>
+                        <span>{label}</span>
+                    </th>
+                )
+            }
+        }).bind(this);
 
         return (
             <div className='excelTable' >
@@ -78,19 +102,16 @@ var Table = React.createClass({
                                 var label = header.v;
                                 
                                 //i++;
-                                var className=`markcolor color${i}`;
+                                var className=`markcolor color${i-1}`; //todo: color css is not good.
                                 //<input type="checkbox" checked={isChecked} onChange={this.onChange.bind(this, i, !isChecked)}></input>  
                                 return (
                                     <tr key={i}>
-                                        <td>
-                                            <input type="checkbox"></input>  
-                                            <span className={className}></span>
-                                            <span>{label}</span>
-                                        </td>
+                                        {dom(i, label, className)}
+                                        
                                         {
                                             ui.sheets[this.state.sheetIndex].map(function(row, j){
                                                 var cell = row[i];
-                                                if(cell.isHide){
+                                                if(!cell || cell.isHide){
                                                     return null;
                                                 }
                                                 return (<td key={j}>{cell.v}</td>)    
@@ -109,7 +130,7 @@ var Table = React.createClass({
 
     render_deprecated: function(){
     	var i = -1;
-    	var {labels, series, caption} = this.state.uidata;
+    	var {labels, series, caption} = API.curveui;
 
 	    return (
 			<div className='excelTable' >
