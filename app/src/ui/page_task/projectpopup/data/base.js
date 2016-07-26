@@ -8,8 +8,9 @@ module.exports = class Base {
 	}
 
 	xls2ui(param){
-		this.ui = Util.excel2ui(param.sheet);
-		this.ui.splice(0,1);
+		var ui = Util.excel2ui(param);
+		ui.splice(0,1);
+		this.ui = this.ui.concat(ui);
 	}
 
 	ui2dm(project){

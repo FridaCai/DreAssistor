@@ -20,29 +20,21 @@ var ControllerGroup = React.createClass({
             }).bind(this),
         }
 
+        var ops = this.props.sheetOptions.concat([{
+            id: 'no',
+            label: '无',
+            writeMode: [0]
+        }]);
         return {
         	dropdownSelected:undefined,
         	radioSelected: 0,
-        	sheetOptions: this.props.sheetOptions,
+        	sheetOptions: ops,
         };
 	},
 	componentDidMount: function(){
 		var id = 'dropDown';
 		var container = this.refs.dropDown;
 	    var options = this.state.sheetOptions;
-	    /*
-			//todo:
-			[{
-	    	id: 'property', label: '项目属性'
-	    }, {
-	    	id: 'tag', label:'master timing时间节点'
-	    }, {
-	    	id: 'task', label: '豆豆'
-	    },{
-	    	id: 'no', label:'不导入'
-	    }];
-	    */
-
 	    var prompt = '请选择数据类型';
 	    var param = {
 	        id: id, //string.
@@ -68,12 +60,14 @@ var ControllerGroup = React.createClass({
 	},
 
 	render:function(){
-		var selectedKey = this.state.dropdownSelected;
-		var option = this.selectedOptions.find(function(option){
-			return (option.id === selectedKey)
-		})
-		var showRadioGroup = (option.writeMode.length === 1 ? false:true);
-
+		var showRadioGroup = (function(sheetOptions, selectedKey){
+			if(!selectedKey)
+				return false;
+			var option = sheetOptions.find(function(option){
+				return (option.id === selectedKey)
+			})
+			return (option.writeMode.length != 1)
+		})(this.state.sheetOptions, this.state.dropdownSelected)
 
 		var dom = showRadioGroup ? (
 			<RadioGroup style={{float:'left', marginLeft:20}} 
@@ -121,46 +115,33 @@ var Popup = React.createClass({
 	    )
     },
 
-	checkXlsFile: function(sheetType, datamode){
-    	var getSheets = (function(workbook, indices){
-			return indices.map(function(index){
-				var sheetName = workbook.SheetNames[index];
-				var sheet = workbook.Sheets[sheetName];
-				return {
-					sheetName: sheetName,
-					sheet: sheet
-				}
-			})
-    	}).bind(this, this.state.workbook)
-
-
-
-
-    	var param = this.state.sheetOptions.map(function(option){
-    		return getSheets(sheetType[option.id], option.writeMode);
-    	})
-
-    	/*var propertySheet = getSheets(sheetType['property'])[0]; 
-    	var tagSheet = getSheets(sheetType['tag'])[0];
-    	var taskSheets = getSheets(sheetType['task']);*/
-
-    	var checkResult = this.props.tryXls2ui(param, datamode);
-
-    	return checkResult;
-    	//similar 4 tag and task.
-	},
 
     onOK:function() {
-    	var loop = this.state.workbook.SheetNames.length;
-    	for(var i=0; i<loop; i++){
-    		var {dropdownSelected, radioSelected} = this.refs[`controllerGroup_${i}`].getValue();
-    		if(dropdownSelected && dropdownSelected!='no'){
-    			sheetType[dropdownSelected].push(i);
-    			datamode[dropdownSelected] = radioSelected;
-    		}
-    	}
+    	var result = (function(options){
+    		var r = {};
+    		options.map(function(option){
+    			r[option.id] = r[option.id] || [];
+    		})
+    		return r;
+    	}).call(this, this.state.sheetOptions)
 
-		if(this.checkXlsFile(sheetType, datamode).errorCode === -1){
+
+
+    	var sheets = this.state.workbook.Sheets;
+    	var sheetNames = this.state.workbook.SheetNames;    	
+		for(var i=0; i<sheetNames.length; i++){
+			var {dropdownSelected, radioSelected} = this.refs[`controllerGroup_${i}`].getValue();
+			if(dropdownSelected && dropdownSelected!='no'){
+    			var sn = sheetNames[i];
+    			var s = sheets[sn];
+    			result[dropdownSelected].push({sheetName: sn, sheet: s, mode: radioSelected})
+    		}
+		}
+
+		
+
+		var checkResult = this.props.tryXls2ui(result);
+		if(checkResult.errorCode === -1){
 			this.state.onOK();
         	return Promise.resolve();	
 		}

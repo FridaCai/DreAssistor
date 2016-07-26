@@ -58,9 +58,10 @@ var API = {
 		}
 	},
 
-	tryXls2ui: function(param, datamode){
-		var {propertySheet, tagSheet, taskSheets} = param;
-		var taskMode = datamode.task;
+	tryXls2ui: function(param){
+		var propertySheet = param.property;
+		var tagSheet = param.tag;
+		var taskSheet = param.task;
 
 		var errorCode = -1;
 		var errorMsg = '';
@@ -68,29 +69,26 @@ var API = {
 		try{
 			//overwrite data strategy for now. for multiple task sheet case, think about other strategy.
 			
-			if(propertySheet){
+			propertySheet.map((function(sheet){
 				var property = new Property();
-				property.xls2ui(propertySheet);
+				property.xls2ui(sheet.sheet);
 				this.uidata.property = property;	
-			}
+			}).bind(this))
 
-			
-			if(tagSheet){
+			tagSheet.map((function(sheet){
 				var tag = new Tag();			
-				tag.xls2ui(tagSheet);	
-				this.uidata.tag = tag;
-			}
-
+				tag.xls2ui(sheet.sheet);
+				this.uidata.tag = tag;	
+			}).bind(this))
 			
-			if(taskSheets && taskSheets.length!=0){
+			taskSheet.map((function(sheet){
 				var task = new Task();
-				if(taskMode ==1)
+				if(sheet.mode ==1)
 					task = this.uidata.task;
 
-				task.xls2ui(taskSheets, taskMode);
+				task.xls2ui(sheet.sheet);
 				this.uidata.task = task;	
-			}
-
+			}).bind(this))
 		}catch(e){
 			console.error(e);
 		}

@@ -25,24 +25,6 @@ module.exports = class Task extends Base {
 		this.sheetName = `豆豆`;
 	}
 
-	xls2ui(params, datamode){ //0--replace; 1--append
-		//add;
-		//append;
-		//extend to base.js???
-
-		if(datamode === 0){
-			this.ui = [];
-			this.header = [];
-		}
-			
-
-		params.map((function(param){
-			var ui = Util.excel2ui(param.sheet);
-			ui.splice(0,1);
-			this.ui = this.ui.concat(ui);
-		}).bind(this));
-	}
-
 	ui2dm(project){
 		project.clearTasks();
 		for(var i=0; i<this.ui.length; i++){
