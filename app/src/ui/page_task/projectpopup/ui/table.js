@@ -60,119 +60,99 @@ var Table = React.createClass({
 
     onDragOver(e){e.preventDefault();},
 
-    onChange: function(cell, event){
-        //console.log('================onchange================');
-        var inputValue = event.target.value;
-        cell.v = inputValue;
-        //console.log(JSON.stringify(cell.dump(),'',2));
-        //console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
-    },
-
-    onBlur: function(cell, event){
-        //console.log('================onblur================');
-        //console.log(JSON.stringify(cell.dump(),'',2));
-        //console.log(JSON.stringify(API.uidata.tag.dump(), '',2));
-        API.ui2dm();
-        API.dm2ui();
-        this.forceUpdate();
-    },
-
     update:function(param){
         this.setState(param, this.updateAfterRender);
     },
 
     render:function(){
-        if(!this.state.uidata){
-            return null;
-        }
 
-        var ui = {
-            sheetNames: [API.uidata.property.sheetName, API.uidata.tag.sheetName, API.uidata.task.sheetName],
-            sheets: [API.uidata.property.ui, API.uidata.tag.ui, API.uidata.task.ui],
-            headers: [API.uidata.property.header, API.uidata.tag.header, API.uidata.task.header]
-        }
+        try{
 
-        var cell2dom = (function(cell){
-            if(cell.isHide){
+
+            if(!this.state.uidata){
                 return null;
             }
-            return cell.isEditable ? (
-                <input defaultValue={cell.v} type='text' onChange={this.onChange.bind(this, cell)} onBlur={this.onBlur.bind(this, cell)}/>
-            ) : (<span title={cell.v}>{cell.v}</span>);
-        }).bind(this);
 
-        var getPercentage = (function(cellArr){
-            var tmp = cellArr.filter(function(cell){
-                return !cell.isHide;
-            })
-            return `${(1/tmp.length)*100}%`;
-        });
-        
-        var getSheetDom = (function(sheet){
-            var dom = [];
-            for(var i=0; i<sheet.length; i++){
-                var line = sheet[i];
-                var tr = [];
-
-                var percentage = getPercentage(line);
-                line.map((function(cell, j){
-                    if(!cell.isHide){
-                        tr.push((
-                            <td key={j} style={{width:percentage}}>{cell2dom(cell)}</td>
-                        ));    
-                    }
-                }).bind(this))
-
-                dom.push((
-                    <tr key={i}>{tr}</tr>
-                ));
+            var ui = {
+                sheetNames: [API.uidata.property.sheetName, API.uidata.tag.sheetName, API.uidata.task.sheetName],
+                sheets: [API.uidata.property.ui, API.uidata.tag.ui, API.uidata.task.ui],
+                headers: [API.uidata.property.header, API.uidata.tag.header, API.uidata.task.header]
             }
-            return dom;
-        }).bind(this);
 
-        var getTableHeader = (function(header){
-            var percentage = getPercentage(header);
-            var dom = header.map(function(cell, j){
-                if(!cell.isHide){
-                    return (<th style={{width:percentage}} key={j}>{cell2dom(cell)}</th>)    
-                }
+            var getPercentage = (function(cellArr){
+                var tmp = cellArr.filter(function(cell){
+                    return !cell.isHide;
+                })
+                return `${(1/tmp.length)*100}%`;
             });
-            return (
-                <tr>
-                  {dom}
-                </tr>
-            )
-        }).bind(this)
+            
+            var getSheetDom = (function(sheet){
+                var dom = [];
+                for(var i=0; i<sheet.length; i++){
+                    var line = sheet[i];
+                    var tr = [];
 
-        
-        return (
-            <div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
-                <div className='dataTable' >
-                    <ul className="nav nav-tabs">
-                    {
-                        ui.sheetNames.map((function(sheetName, index){
-                            var className = (index === this.state.sheetIndex ? 'active': '');
-                            return (
-                                <li role="presentation" className={className} key={index.toString()} onClick={this.onSwitchSheet.bind(this, index)}>
-                                    <a href="javascript:void(0);">{sheetName}</a>
-                                </li>
-                            )
-                        }).bind(this))
-                    }
-                    </ul>
-                    <div className='sheet'>
-                        <table>
-                            <thead className="thead-inverse" ref='tableHeader'>
-                                {getTableHeader(ui.headers[this.state.sheetIndex])}
-                            </thead>
-                            <tbody ref='tableBody'>
-                                {getSheetDom(ui.sheets[this.state.sheetIndex])}
-                            </tbody>
-                        </table>
+                    var percentage = getPercentage(line);
+                    line.map((function(cell, j){
+                        if(!cell.isHide){
+                            tr.push((
+                                <td key={j} style={{width:percentage}}>{cell.getDom()}</td>
+                            ));    
+                        }
+                    }).bind(this))
+
+                    dom.push((
+                        <tr key={i}>{tr}</tr>
+                    ));
+                }
+                return dom;
+            }).bind(this);
+
+            var getTableHeader = (function(header){
+                var percentage = getPercentage(header);
+                var dom = header.map(function(cell, j){
+                    return (<th style={{width:percentage}} key={j}>{cell.getDom()}</th>)    
+                });
+                return (
+                    <tr>
+                      {dom}
+                    </tr>
+                )
+            }).bind(this)
+
+            
+            return (
+                <div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
+                    <div className='dataTable' >
+                        <ul className="nav nav-tabs">
+                        {
+                            ui.sheetNames.map((function(sheetName, index){
+                                var className = (index === this.state.sheetIndex ? 'active': '');
+                                return (
+                                    <li role="presentation" className={className} key={index.toString()} onClick={this.onSwitchSheet.bind(this, index)}>
+                                        <a href="javascript:void(0);">{sheetName}</a>
+                                    </li>
+                                )
+                            }).bind(this))
+                        }
+                        </ul>
+                        <div className='sheet'>
+                            <table>
+                                <thead className="thead-inverse" ref='tableHeader'>
+                                    {getTableHeader(ui.headers[this.state.sheetIndex])}
+                                </thead>
+                                <tbody ref='tableBody'>
+                                    {getSheetDom(ui.sheets[this.state.sheetIndex])}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }catch(e){
+            debugger;
+            console.log(e.stack);
+        }
     },
 })
 

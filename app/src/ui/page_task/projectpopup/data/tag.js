@@ -2,8 +2,9 @@ import Base from './base.js';
 import DataTag from '../../data/tag.js';
 import {Cell} from '../../../widget/excel/util.js'; 
 import {Util} from '../../../widget/excel/util.js';
+import Signal from '../../../../signal.js';
 
-module.exports = class Tag extends Base {
+class Tag extends Base {
 	constructor(){
 		super()
 		this.header = [
@@ -74,16 +75,39 @@ module.exports = class Tag extends Base {
             var line = [
             	Cell.create({v: i}), 
             	Cell.create({v:autoTime}), 
-            	Cell.create({v:'', isEditable: true}), 
-        		Cell.create({v:''}), 
+				Cell.create({v: ''}),
+        		Cell.create({v:''})
     		];
             
             if(tag){
             	var adjustTime = Util.convertUnixTime2YYYYMMDD(tag.time);
-                line[2] = Cell.create({v: adjustTime, isEditable:true});
+                line[2] = Cell.create({
+	            	id:'', 
+	            	v: adjustTime,
+	            	components:[{
+		        		type: Cell.ComponentEnum.Input,
+		        		onChange: function(e){
+		        			var value = e.target.value;
+		        			Tag.signal_adjusttime_change.dispatch({
+		        				cell: this,
+		        				value: value
+		        			});
+		        		},
+		        		onBlur: function(){
+		        			Tag.signal_adjusttime_blur.dispatch({
+		        				cell: this,
+		        			});
+		        		},
+		        	}]
+                });
                 line[3] = Cell.create({v:tag.label});
             }
             this.ui.push(line);
         }
 	}
 }
+
+Tag.signal_adjusttime_change = new Signal();
+Tag.signal_adjusttime_blur = new Signal();
+
+module.exports = Tag;

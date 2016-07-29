@@ -1,7 +1,8 @@
 import {Util, Cell} from '../../../widget/excel/util.js';
 import Base from './base.js';
+import Signal from '../../../../signal.js';
 
-module.exports = class Property extends Base{
+class Property extends Base{
 	constructor(){
 		super();
 		this.header = [Cell.create({v: 'property'}), Cell.create({v: 'value'})];
@@ -47,8 +48,29 @@ module.exports = class Property extends Base{
             [Cell.create({v: 'massMax'}), Cell.create({v: massMax})],
             [Cell.create({v: 'massMin'}), Cell.create({v: massMin})],
             [Cell.create({v: 'ec'}), Cell.create({v: ec})],
-            [Cell.create({v: 'sorp'}), Cell.create({v: sorp, isEditable: true, id:'sorp'})],
-        ];
+            [
+            	Cell.create({v: 'sorp'}), 
+            	Cell.create({
+	            	id:'sorp', 
+	            	v: sorp,
+	            	components:[{
+		        		type: Cell.ComponentEnum.Input,
+		        		onChange: function(e){
+		        			var value = e.target.value;
+		        			Property.signal_sorp_change.dispatch({cell: this, value: value});	
 
+		        		},
+		        		onBlur: function(e){
+		        			Property.signal_sorp_blur.dispatch();
+		        		}
+		        	}]
+        		})
+    		]
+        ];
 	}
 }
+
+Property.signal_sorp_change = new Signal();
+Property.signal_sorp_blur = new Signal();
+
+module.exports = Property;

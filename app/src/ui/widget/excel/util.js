@@ -1,4 +1,6 @@
 import moment from 'moment';
+import GlobalUtil from '../../../util.js';
+import Signal from '../../../signal.js';
 
 class Cell {
     static create(param){
@@ -12,11 +14,54 @@ class Cell {
 	}
 
 	init(param){
-		this.id = param.id || undefined;
+		this.id = param.id || GlobalUtil.generateUUID();
 		this.v = (param.v == undefined || param.v === null) ? '' : param.v;
-		this.isEditable = param.isEditable || false;
-        this.isHide = param.isHide || false;
+        this.isHide = param.isHide || false; //for occupation purpose.
+        this.components = param.components || [];
 	}
+
+    getDom(){
+        if(this.isHide){
+            return null;
+        }
+        if(this.components.length === 0){
+            return (<span title={this.v}>{this.v}</span>);
+        }
+
+
+        var scope = {};
+        return (
+            <div className='cellGroup'>
+            {
+                this.components.map((function(component, index){
+                    switch (component.type){
+                        case Cell.ComponentEnum.Input: 
+                            return (
+                                <input defaultValue={this.v} key={this.id}
+                                    type='text' 
+                                    onChange={component.onChange.bind(this)} //todo: onchange and onblur.
+                                    onBlur={component.onBlur.bind(this)}/>
+                            );
+                            break;
+                        case Cell.ComponentEnum.CheckBox:
+                            //todo.
+                            return null;
+                            break;
+                        case Cell.ComponentEnum.ColorBox:
+                            return null; //todo.
+                            break;
+                        case Cell.ComponentEnum.RadioGroup:
+                            return null; //todo.
+                            break;
+                        case Cell.ComponentEnum.Expand:
+                            return null;
+                            break;
+                    }
+                }).bind(this))
+            }
+            </div>
+        )
+    }
     dump(){
         return {
             v: this.v,
@@ -24,6 +69,18 @@ class Cell {
     }
 
 }
+
+Cell.ComponentEnum = {
+    Input: 'Input',
+    CheckBox: 'CheckBox',
+    ColorBox: 'ColorBox',
+    RadioGroup: 'RadioGroup',
+    Expand: 'Expand',
+}
+Cell.signal_cell_change = new Signal();
+Cell.signal_cell_blur = new Signal();
+
+
 exports.Cell = Cell;
 
 

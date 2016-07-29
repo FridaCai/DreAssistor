@@ -6,6 +6,11 @@ import Table from './table.js';
 import API from '../api.js';
 import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
 
+
+import Property from '../data/property.js';
+import Tag from '../data/tag.js';
+
+
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
         var uidata = (function(p){
@@ -38,7 +43,25 @@ var ProjectPopup = React.createClass({
     },
 
     componentDidMount: function(){
+        var self = this;
+
         API.signal_popup_show.listen(this.onPopupShow);
+        Property.signal_sorp_change.listen(function(e, param){
+            param.cell.v = param.value;
+        });
+
+        Property.signal_sorp_blur.listen(function(e, param){
+            API.ui2dm();
+            API.dm2ui();
+        });
+        Tag.signal_adjusttime_change.listen(function(e, param){
+            param.cell.v = param.value;
+        })
+        Tag.signal_adjusttime_blur.listen((function(e, param){
+            API.ui2dm();
+            API.dm2ui();
+            this.refs.table.forceUpdate(); //when API.ui2dm and API.dm2ui called, cells will be new. but if table is not updated, the user-changed cell is not consistent with cells in dm.
+        }).bind(this));
 
         if(this.props.project)
             return;
@@ -54,6 +77,8 @@ var ProjectPopup = React.createClass({
             this.refs.table.update({
                 uidata: uidata
             })
+        }).bind(this)).catch((function(e){
+            console.log(e.stack);
         }).bind(this));
     },
 
