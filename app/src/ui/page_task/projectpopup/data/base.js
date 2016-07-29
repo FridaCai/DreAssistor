@@ -1,4 +1,4 @@
-import {Util} from '../../../widget/excel/util.js';
+import Util from '../../../widget/excel/util.js';
 
 module.exports = class Base {
 	constructor(){

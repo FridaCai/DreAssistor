@@ -1,4 +1,5 @@
-import {Util, Cell} from '../../../widget/excel/util.js';
+import Util from '../../../widget/excel/util.js';
+import Cell from '../../../widget/table/cell.js';
 import Base from './base.js';
 import Signal from '../../../../signal.js';
 

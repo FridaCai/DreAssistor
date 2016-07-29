@@ -1,7 +1,7 @@
 import Base from './base.js';
 import DataTag from '../../data/tag.js';
-import {Cell} from '../../../widget/excel/util.js'; 
-import {Util} from '../../../widget/excel/util.js';
+import Cell from '../../../widget/table/cell.js'; 
+import Util from '../../../widget/excel/util.js';
 import Signal from '../../../../signal.js';
 
 class Tag extends Base {

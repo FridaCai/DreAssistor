@@ -3,7 +3,7 @@ import Task from './data/task.js';
 import TemplateTasks from './data/templatetasks.js';
 import Projects from './data/projects.js';
 import Users from '../../data/users.js';
-import {Util} from '../widget/excel/util.js';
+import Util from '../widget/excel/util.js';
 
 var API = {
 	signal_page_refresh: new Signal(),

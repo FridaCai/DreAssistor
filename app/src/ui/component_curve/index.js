@@ -1,5 +1,5 @@
 import './index.less';
-import {Util} from '../widget/excel/util.js';
+import Util from '../widget/excel/util.js';
 import XlsIExport from '../widget/excel/xls_im_export.js';
 import Popup from '../widget/excel/popup.js';
 import API from './api.js';

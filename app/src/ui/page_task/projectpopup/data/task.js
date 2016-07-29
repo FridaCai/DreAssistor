@@ -1,7 +1,7 @@
 import Base from './base.js';
 import TaskData from '../../data/task.js';
-import {Cell} from '../../../widget/excel/util.js';
-import {Util} from '../../../widget/excel/util.js';
+import Cell from '../../../widget/table/cell.js';
+import Util from '../../../widget/excel/util.js';
 
 module.exports = class Task extends Base {
 	constructor(){
