@@ -2,9 +2,12 @@ import API from '../api.js';
 import MessageBox from '../../widget/messagebox.js';
 import Table from './property_table.js';
 import Chart from './property_chart.js';
-import CDropDown from '../../widget/dropdown/dropdown.js';
+
 import Util from '../../../util.js';
 import moment from 'moment';
+
+import CDropDown from 'CDropDown';
+
 
 var StaticalAssistorPopup = React.createClass({
     getInitialState: function() {

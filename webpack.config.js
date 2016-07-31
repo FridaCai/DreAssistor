@@ -38,5 +38,13 @@ module.exports = {
             ReactDOM: "react-dom",
         })
     ],
+   
     cache: false,
+    resolve: {
+        alias: {
+            CDropDown: path.join(__dirname, "/app/src/ui/widget/dropdown/dropdown.js"),
+        }
+    }
 };
+
+
