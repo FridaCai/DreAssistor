@@ -1,11 +1,12 @@
 import {sigal_window_resizeend} from '../../../api.js';
+import './style.less';
 
 var Table = React.createClass({
 	getInitialState: function() {
         return {
         	sheetIndex: 0,
         	uidata: this.props.uidata,
-            onDrop: this.props.onDrop,
+            onDrop: this.props.onDrop || function(){},
         };
     },
     onSwitchSheet: function(index){
@@ -60,10 +61,22 @@ var Table = React.createClass({
             }
 
             var ui = (function(uidata){
+
+                var sheetNames = [];
+                var sheets = [];
+                var headers = [];
+
+                Object.keys(uidata).map(function(key){
+                    sheetNames.push(uidata[key].sheetName);
+                    sheets.push(uidata[key].ui);
+                    headers.push(uidata[key].header);
+                })
+
+
                 return {
-                    sheetNames: [uidata.property.sheetName, uidata.tag.sheetName, uidata.task.sheetName],
-                    sheets: [uidata.property.ui, uidata.tag.ui, uidata.task.ui],
-                    headers: [uidata.property.header, uidata.tag.header, uidata.task.header]
+                    sheetNames: sheetNames,
+                    sheets: sheets,
+                    headers: headers
                 }
             })(this.state.uidata);
 
@@ -79,6 +92,9 @@ var Table = React.createClass({
                 for(var i=0; i<sheet.length; i++){
                     var line = sheet[i];
                     var tr = [];
+                    dom.push((
+                        <tr key={i}>{tr}</tr>
+                    ));
 
                     var percentage = getPercentage(line);
                     line.map((function(cell, j){
@@ -87,11 +103,24 @@ var Table = React.createClass({
                                 <td key={j} style={{width:percentage}}>{cell.getDom()}</td>
                             ));    
                         }
+
+
+                        if(cell.needExpand()){
+                            var key = `expandContainer_${j}`;
+                            var className = `expandContainer ${key}`; //must have???
+                            var expandTr = (
+                                <tr key={key} className={className}>
+                                    <td colSpan='5'>
+                                        <div className='expandDiv'></div>
+                                    </td>
+                                </tr>
+                            );
+                            cell.setExpand(expandTr);
+                            dom.push(expandTr);
+                        }
                     }).bind(this))
 
-                    dom.push((
-                        <tr key={i}>{tr}</tr>
-                    ));
+                    
                 }
                 return dom;
             }).bind(this);
@@ -111,11 +140,13 @@ var Table = React.createClass({
             }).bind(this)
             
             return (
-                <div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
-                    <div className='dataTable' >
+                <div className='panel-body dataTable' onDragOver={this.onDragOver} onDrop={this.onDrop}>
                         <ul className="nav nav-tabs">
                         {
                             ui.sheetNames.map((function(sheetName, index){
+                                if(!sheetName)
+                                    return null;
+                                
                                 var className = (index === this.state.sheetIndex ? 'active': '');
                                 return (
                                     <li role="presentation" className={className} key={index.toString()} onClick={this.onSwitchSheet.bind(this, index)}>
@@ -135,11 +166,9 @@ var Table = React.createClass({
                                 </tbody>
                             </table>
                         </div>
-                    </div>
                 </div>
             )
         }catch(e){
-            debugger;
             console.log(e.stack);
         }
     },

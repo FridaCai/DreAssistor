@@ -18,7 +18,16 @@ class Cell {
         this.isHide = param.isHide || false; //for occupation purpose.
         this.components = param.components || [];
 	}
+    //todo:
+    needExpand(){
+        if(this.components.length === 0){
+            return false;
+        }
+    }
+    //todo:
+    setExpand(){
 
+    }
     getDom(){
         if(this.isHide){
             return null;
@@ -52,7 +61,7 @@ class Cell {
                         case Cell.ComponentEnum.RadioGroup:
                             return null; //todo.
                             break;
-                        case Cell.ComponentEnum.Expand:
+                        case Cell.ComponentEnum.ExpandCell:
                             return null;
                             break;
                     }
@@ -74,7 +83,7 @@ Cell.ComponentEnum = {
     CheckBox: 'CheckBox',
     ColorBox: 'ColorBox',
     RadioGroup: 'RadioGroup',
-    Expand: 'Expand',
+    ExpandCell: 'ExpandCell',
 }
 Cell.signal_cell_change = new Signal();
 Cell.signal_cell_blur = new Signal();
