@@ -1,12 +1,12 @@
-import Util from '../../../util.js';
+import Util from 'Util';
 import API from '../api.js';
-import MessageBox from '../../widget/messagebox.js';
+import MessageBox from 'MessageBox';
 
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import ColorPicker from 'react-colors-picker';
 import 'react-colors-picker/assets/index.css';
-import CDropDown from '../../widget/dropdown/dropdown.js';
+import CDropDown from 'CDropDown';
 import moment from 'moment';
 
 import BreakDownList from './breakdown_list.js';

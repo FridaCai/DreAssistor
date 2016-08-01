@@ -1,5 +1,5 @@
 import Project from './project.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 
 module.exports = class Projects {
 	constructor(){

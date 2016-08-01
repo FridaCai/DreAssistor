@@ -2,8 +2,8 @@ import moment from 'moment';
 import API from '../api.js';
 import TemplateTask from '../data/templatetask.js';
 import  Request from '../../../request.js';
-import Util from '../../../util.js';
-import MessageBox from '../../widget/messagebox.js';
+import Util from 'Util';
+import MessageBox from 'MessageBox';
 
 var TemplateTaskList = React.createClass({
 	getInitialState: function() {

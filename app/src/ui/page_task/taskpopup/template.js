@@ -1,4 +1,4 @@
-import CDropDown from '../../widget/dropdown/dropdown.js';
+import CDropDown from 'CDropDown';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_hotissue.js';
 import EWOTemplate from './template_ewo.js';

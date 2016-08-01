@@ -1,6 +1,6 @@
 //import UploadExcelComponent from '../../widget/excel/index.js';
-import CDropDown from '../../widget/dropdown/dropdown.js';
-import Util from '../../../util.js';
+import CDropDown from 'CDropDown';
+import Util from 'Util';
 import API from '../api.js';
 
 var Chart = React.createClass({

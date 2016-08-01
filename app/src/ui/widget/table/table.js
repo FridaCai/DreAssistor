@@ -1,13 +1,11 @@
-import API from '../api.js';
-import SuperAPI from '../../../../api.js';
+import {sigal_window_resizeend} from '../../../api.js';
 
 var Table = React.createClass({
-
-    //only depend on ui data.
 	getInitialState: function() {
         return {
         	sheetIndex: 0,
         	uidata: this.props.uidata,
+            onDrop: this.props.onDrop,
         };
     },
     onSwitchSheet: function(index){
@@ -17,11 +15,11 @@ var Table = React.createClass({
     },  
 
     componentDidMount: function(){
-        SuperAPI.sigal_window_resizeend.listen(this.updateAfterRender);
+        sigal_window_resizeend.listen(this.updateAfterRender);
     },
     
     componentDidUnMount: function(){
-        SuperAPI.sigal_window_resizeend.unlisten(this.updateAfterRender);
+        sigal_window_resizeend.unlisten(this.updateAfterRender);
     },
 
     _$: function(selector){
@@ -46,16 +44,7 @@ var Table = React.createClass({
         e.stopPropagation();
         e.preventDefault();
         var files = e.dataTransfer.files;
-        var reader = new FileReader();
-
-        var file = files[0];
-        var fileName = file.name;
-        reader.onload = (function(e){
-            var data = e.target.result;
-            var workbook = XLSX.read(data, {type: 'binary'});
-            API.signal_popup_show.dispatch({workbook: workbook});
-        }).bind(this);
-        reader.readAsBinaryString(file);
+        this.state.onDrop(files);
     },
 
     onDragOver(e){e.preventDefault();},
@@ -70,11 +59,13 @@ var Table = React.createClass({
                 return null;
             }
 
-            var ui = {
-                sheetNames: [API.uidata.property.sheetName, API.uidata.tag.sheetName, API.uidata.task.sheetName],
-                sheets: [API.uidata.property.ui, API.uidata.tag.ui, API.uidata.task.ui],
-                headers: [API.uidata.property.header, API.uidata.tag.header, API.uidata.task.header]
-            }
+            var ui = (function(uidata){
+                return {
+                    sheetNames: [uidata.property.sheetName, uidata.tag.sheetName, uidata.task.sheetName],
+                    sheets: [uidata.property.ui, uidata.tag.ui, uidata.task.ui],
+                    headers: [uidata.property.header, uidata.tag.header, uidata.task.header]
+                }
+            })(this.state.uidata);
 
             var getPercentage = (function(cellArr){
                 var tmp = cellArr.filter(function(cell){
@@ -108,6 +99,8 @@ var Table = React.createClass({
             var getTableHeader = (function(header){
                 var percentage = getPercentage(header);
                 var dom = header.map(function(cell, j){
+                    if(cell.isHide)
+                        return null;
                     return (<th style={{width:percentage}} key={j}>{cell.getDom()}</th>)    
                 });
                 return (
@@ -116,7 +109,6 @@ var Table = React.createClass({
                     </tr>
                 )
             }).bind(this)
-
             
             return (
                 <div className='panel-body projectPopup' onDragOver={this.onDragOver} onDrop={this.onDrop}>
@@ -152,5 +144,4 @@ var Table = React.createClass({
         }
     },
 })
-
 module.exports = Table;

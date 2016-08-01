@@ -1,7 +1,7 @@
-import Util from '../../../util.js';
+import Util from 'Util';
 import API from '../api.js';
 import SubTask from '../data/subtask.js';
-import RadioGroup from '../../widget/radiogroup/index.js';
+import RadioGroup from 'RadioGroup';
 
 var BreakDownList = React.createClass({
     getInitialState: function() {

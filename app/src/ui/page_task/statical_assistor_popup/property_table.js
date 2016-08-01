@@ -1,6 +1,6 @@
 
 import API from '../api.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 
 var Table = React.createClass({
     getInitialState: function() {

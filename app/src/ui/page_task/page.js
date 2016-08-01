@@ -5,10 +5,10 @@ import ProjectPopup from './projectpopup/ui/index.js';
 import StaticalAssistorPopup from './statical_assistor_popup/index.js';
 import PeopleAssistorPopup from './people_assistor_popup/index.js';
 import ContextMenu from './contextmenu.jsx';
-import MessageBox from '../widget/messagebox.js';
+import MessageBox from 'MessageBox';
 
 
-import Util from '../../util.js';
+import Util from 'Util';
 import Task from './data/task.js';
 import Project from './data/project.js';
 

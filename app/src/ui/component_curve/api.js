@@ -5,7 +5,6 @@ import CurveUI from './uidata/curve.js';
 
 //todo: template mode??? very similar with projectpopup/api
 var API = {
-	signal_popup_show: new Signal(), 
 	signal_curve_toggle: new Signal(),
 
 	curveui: new CurveUI(),
@@ -30,7 +29,7 @@ var API = {
 		this.curveui.dm2ui(this.curve);
 	},
 
-	tryXls2ui:function(param){
+	xls2ui:function(param){
 		//todo.
 		var curveSheet = param.curve;
 

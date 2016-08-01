@@ -5,7 +5,7 @@
     var msgBox = MessageBox.create("hello world !",["OK","Cancel"],0,{title:"test",disablemask:true});
     msgBox.show(callback);
 ***/
-import './messagebox.css';
+import './style.css';
 
 var MessageBox = React.createClass({
   getInitialState: function() {

@@ -1,5 +1,5 @@
 import moment from 'moment';
-
+import {Cell} from 'Table';
 
 var Util = {
  	getRange: function(raw){

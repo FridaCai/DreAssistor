@@ -1,6 +1,6 @@
 import SubTask from './subtask.js';
 import Attachment from './attachment.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 import Entity from './entity.js';
 
 module.exports = class BaseTask extends Entity {

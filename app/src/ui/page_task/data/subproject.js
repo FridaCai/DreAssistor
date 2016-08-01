@@ -1,6 +1,6 @@
 import Task from './task.js';
 import Tag from './tag.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 
 module.exports = class SubProject {
 	constructor(){

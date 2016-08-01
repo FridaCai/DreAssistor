@@ -1,5 +1,5 @@
 import BaseTask from './basetask.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 
 module.exports = class Task extends BaseTask{
 	constructor(){

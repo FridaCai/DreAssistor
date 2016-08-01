@@ -1,5 +1,5 @@
 import API from '../api.js';
-import MessageBox from '../../widget/messagebox.js';
+import MessageBox from 'MessageBox';
 import CTimeLine from '../timeline/index.js';
 
 var PeopleAssistorPopup = React.createClass({

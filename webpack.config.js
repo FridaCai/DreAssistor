@@ -1,6 +1,9 @@
 var path = require('path');
 var webpack = require("webpack");
 
+var widgetPath = '/app/src/ui/widget';
+var toolPath = '/app/src';
+
 module.exports = {
     entry: {
         app:['./app/src/app.js'],
@@ -42,7 +45,12 @@ module.exports = {
     cache: false,
     resolve: {
         alias: {
-            CDropDown: path.join(__dirname, "/app/src/ui/widget/dropdown/dropdown.js"),
+            CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
+            XlsIExport: path.join(__dirname, widgetPath, "/excel/index.js"),
+            RadioGroup: path.join(__dirname, widgetPath, "/radiogroup/index.js"),
+            MessageBox: path.join(__dirname, widgetPath, "/message/index.js"),
+            Table: path.join(__dirname, widgetPath, "/table/index.js"),
+            Util: path.join(__dirname, toolPath, "/util.js"),
         }
     }
 };

@@ -1,9 +1,10 @@
 import './index.less';
 import Util from '../widget/excel/util.js';
-import XlsIExport from '../widget/excel/xls_im_export.js';
+import XlsIExport from 'XlsIExport';
+import {Table} from 'Table';
 import Popup from '../widget/excel/popup.js';
 import API from './api.js';
-import Table from './table.js';
+
 import CurveUI from './uidata/curve.js';
 import Curve from './data/curve.js';
 import Chart from './chart.js';
@@ -24,19 +25,13 @@ var CurveComponent = React.createClass({
     };
   },
 
-  onXlsImport: function(param){
-      API.signal_popup_show.dispatch(param);
-  },
-
   componentDidUnMount: function(){
-      API.signal_popup_show.unlisten(this.onPopupShow);
       API.signal_curve_toggle.unlisten(this.onCurveToggle);
   },
   onCurveToggle: function(e, param){
     this.refs.chart.onCurveToggle(param);
   },
   componentDidMount: function(){
-      API.signal_popup_show.listen(this.onPopupShow);
       API.signal_curve_toggle.listen(this.onCurveToggle);
 
       if(this.props.curve)
@@ -65,8 +60,9 @@ var CurveComponent = React.createClass({
 
       //todo: fail to find this.refs.t_popup after close addProjectPopup. very strange. try to unmount dom element after message box hide.
       ReactDOM.unmountComponentAtNode($('.t_popup')[0]);    
+      //todo: can be 
       ReactDOM.render(
-        <Popup tryXls2ui={API.tryXls2ui.bind(API)} 
+        <Popup xls2ui={API.xls2ui.bind(API)} 
             title={'导入excel'} 
             workbook={workbook} 
             sheetOptions={sheetOptions} 

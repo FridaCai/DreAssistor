@@ -1,6 +1,6 @@
 import Base from '../../page_task/projectpopup/data/base.js';
 import Util from '../../widget/excel/util.js';
-import Cell from '../../widget/table/cell.js';
+import {Cell} from 'Table';
 import Curve from '../data/curve.js';
 
 module.exports = class CurveUI extends Base{ //refactor.

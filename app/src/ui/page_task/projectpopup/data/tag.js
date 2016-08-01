@@ -1,6 +1,6 @@
 import Base from './base.js';
 import DataTag from '../../data/tag.js';
-import Cell from '../../../widget/table/cell.js'; 
+import {Cell} from 'Table'; 
 import Util from '../../../widget/excel/util.js';
 import Signal from '../../../../signal.js';
 

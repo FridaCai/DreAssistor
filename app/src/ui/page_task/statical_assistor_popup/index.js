@@ -1,9 +1,9 @@
 import API from '../api.js';
-import MessageBox from '../../widget/messagebox.js';
+import MessageBox from 'MessageBox';
 import Table from './property_table.js';
 import Chart from './property_chart.js';
 
-import Util from '../../../util.js';
+import Util from 'Util';
 import moment from 'moment';
 
 import CDropDown from 'CDropDown';

@@ -1,5 +1,5 @@
 import SubProject from './subproject.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 import Entity from './entity.js';
 
 module.exports = class Project extends Entity {

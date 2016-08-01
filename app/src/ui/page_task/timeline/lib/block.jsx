@@ -1,5 +1,5 @@
 import API from '../../../api.js';
-import Util from '../../../../../util.js';
+import Util from 'Util';
 import Task from '../../../data/task.js';
 
 

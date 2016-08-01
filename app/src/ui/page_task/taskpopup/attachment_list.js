@@ -1,5 +1,5 @@
 import Attachment from '../data/attachment.js';
-import Util from '../../../util.js';
+import Util from 'Util';
 
 var AttachmentList = React.createClass({
   getInitialState: function(){

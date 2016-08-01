@@ -1,6 +1,6 @@
-import MessageBox from '../widget/messagebox.js';
+import MessageBox from 'MessageBox';
 import API from '../../api.js';
-import Util from '../../util.js';
+import Util from 'Util';
 import Request from '../../request.js';
 import {ENUM, CError} from '../../exception.js';
 import User from '../../data/user.js';
