@@ -1,5 +1,7 @@
 import Signal from '../../../signal.js';
 import GlobalUtil from '../../../util.js';
+import RadioGroup from 'RadioGroup';
+import {ExpandCell} from 'Table';
 
 class Cell {
     static create(param){
@@ -18,16 +20,7 @@ class Cell {
         this.isHide = param.isHide || false; //for occupation purpose.
         this.components = param.components || [];
 	}
-    //todo:
-    needExpand(){
-        if(this.components.length === 0){
-            return false;
-        }
-    }
-    //todo:
-    setExpand(){
-
-    }
+   
     getDom(){
         if(this.isHide){
             return null;
@@ -52,18 +45,19 @@ class Cell {
                             );
                             break;
                         case Cell.ComponentEnum.CheckBox:
-                            //todo.
                             return null;
                             break;
                         case Cell.ComponentEnum.ColorBox:
-                            return null; //todo.
+                            return null; 
                             break;
                         case Cell.ComponentEnum.RadioGroup:
-                            return null; //todo.
+                            return (<RadioGroup param={component.param} key={this.id}/>);
                             break;
                         case Cell.ComponentEnum.ExpandCell:
-                            return null;
+                            return (<ExpandCell param={component.param} key={this.id}/>);
                             break;
+                        case Cell.ComponentEnum.ExpandCellTR:
+                            return (<div className='expandDiv' key={this.id}></div>);
                     }
                 }).bind(this))
             }
@@ -84,9 +78,11 @@ Cell.ComponentEnum = {
     ColorBox: 'ColorBox',
     RadioGroup: 'RadioGroup',
     ExpandCell: 'ExpandCell',
+    ExpandCellTR: 'ExpandCellTR',
 }
 Cell.signal_cell_change = new Signal();
 Cell.signal_cell_blur = new Signal();
 
 
 module.exports = Cell;
+

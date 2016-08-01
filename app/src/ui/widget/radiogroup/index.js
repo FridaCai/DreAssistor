@@ -1,3 +1,5 @@
+import './style.less';
+
 var RadioGroup = React.createClass({
     getInitialState: function() {
         return {
@@ -22,7 +24,6 @@ var RadioGroup = React.createClass({
         var label = this.props.param.label;
         var options = this.props.param.options;
         var selectedId = this.state.selectedId;
-
 
         return (
             <div className='radioGroup'>

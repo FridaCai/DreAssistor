@@ -104,23 +104,7 @@ var Table = React.createClass({
                             ));    
                         }
 
-
-                        if(cell.needExpand()){
-                            var key = `expandContainer_${j}`;
-                            var className = `expandContainer ${key}`; //must have???
-                            var expandTr = (
-                                <tr key={key} className={className}>
-                                    <td colSpan='5'>
-                                        <div className='expandDiv'></div>
-                                    </td>
-                                </tr>
-                            );
-                            cell.setExpand(expandTr);
-                            dom.push(expandTr);
-                        }
                     }).bind(this))
-
-                    
                 }
                 return dom;
             }).bind(this);

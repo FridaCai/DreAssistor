@@ -1,6 +1,6 @@
 import Base from '../../projectpopup/data/base.js'; //todo.
 import {Cell} from 'Table';
-
+import CurveComponent from '../../../component_curve/index.js';
 
 module.exports = class MuleMRD extends Base{
 	constructor(){
@@ -39,26 +39,46 @@ module.exports = class MuleMRD extends Base{
 	            }).bind(this),
 	        }
 
-	        var curveCellParam = {};
-	        var attachmentCellParam = {};
+	        var curveCellParam = {
+	        	label: '曲线图',
+	        	component: CurveComponent,
+	        	componentParam: {}
+	        };
+
+	        var attachmentCellParam = {
+	        	label: '附件', 
+	        	component: '',
+	        	componentParam: {}
+	        };
+
 			//todo: radio hard code value.
 			//todo: work on radio group and expand Cell.
 			//todo: input should read component.v not cell.v;
-			var isCurve = function(){
-				if(value.value == null && value.curve != null){
+			var isCurve = (function(v){
+				var {value, curve} = v;
+
+				if(value == null && curve != null){
 					return true;
 				}
+
 				return false
-			}
+			})(value);
+
 			var line = [
 				Cell.create({v: label}), 
 				Cell.create({v: ref}), 
-				Cell.create({components: [{type: Cell.RadioGroup, param: radioGroupParam}]}),
-				isCurve ? Cell.create({components: [{type: Cell.ExpandCell, param: curveCellParam}]}): Cell.create({v: value.value, components:[{type: Cell.Input}]}),
-				Cell.create({components: [{type: Cell.ExpandCell, param: attachmentCellParam}]})
+				Cell.create({components: [{type: Cell.ComponentEnum.RadioGroup, param: radioGroupParam}]}),
+				isCurve ? Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: curveCellParam}]}): 
+					Cell.create({v: value.value, components:[{type: Cell.ComponentEnum.Input, onChange: function(){}, onBlur:function(){}}]}),
+				Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: attachmentCellParam}]})
 			];
 	       
 	      	this.ui.push(line);
+
+      	
+      		this.ui.push([
+      			Cell.create({components: [{type: Cell.ComponentEnum.ExpandCellTR}]})
+  			])
 
 		}).bind(this));
 	}
