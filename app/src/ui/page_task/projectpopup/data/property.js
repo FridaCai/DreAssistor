@@ -1,20 +1,25 @@
 import Util from '../../../widget/excel/util.js';
 import {Cell} from 'Table';
+import {Line} from 'Table';
 import Base from './base.js';
 import Signal from '../../../../signal.js';
 
 class Property extends Base{
 	constructor(){
 		super();
-		this.header = [Cell.create({v: 'property'}), Cell.create({v: 'value'})];
+
+		this.header = new Line({
+			cells: [Cell.create({v: 'property'}), Cell.create({v: 'value'})],
+		});
+
 		this.sheetName = `项目属性`;
 	}
 
 	ui2dm(project){
 	    for(var i=0; i<this.ui.length; i++){
 	        var line = this.ui[i];
-	        var key = line[0].v;
-	        var value = line[1].v;
+	        var key = line.getCellAt(0).getValue();
+	        var value = line.getCellAt(1).getValue();
 
 	        switch(key){
 	            case 'label':
@@ -42,7 +47,7 @@ class Property extends Base{
 		var massMin = project['massMin'];
 		var ec = project['ec'];
 
-		this.ui = [
+		this.ui = [//todo. LIne.
             [Cell.create({v: 'label'}), Cell.create({v: label})],
             [Cell.create({v: 'bpMax'}), Cell.create({v: bpMax})],
             [Cell.create({v: 'bpMin'}), Cell.create({v: bpMin})],

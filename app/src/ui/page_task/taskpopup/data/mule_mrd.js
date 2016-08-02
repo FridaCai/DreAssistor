@@ -1,17 +1,24 @@
 import Base from '../../projectpopup/data/base.js'; //todo.
 import {Cell} from 'Table';
+import {LineGroup} from 'Table';
+import {Line} from 'Table';
+import {ExpandLine} from 'Table';
 import CurveComponent from '../../../component_curve/index.js';
+import AttachmentList from '../attachment_list.js';
 
 module.exports = class MuleMRD extends Base{
 	constructor(){
 		super();
-		this.header = [
+
+		var line = Line.create({cells: [
 			Cell.create({v: '属性'}), 
             Cell.create({v: '目标'}),
             Cell.create({v: '状态'}),
             Cell.create({v: '实测'}),
             Cell.create({v: '附件'})
-        ];
+		]});
+		this.header = line;
+
 		this.sheetName = '';
 	}
 
@@ -50,29 +57,41 @@ module.exports = class MuleMRD extends Base{
 			})(value);
 
 
-			var expandLine = Cell.create({components: [{type: Cell.ComponentEnum.ExpandCellTR}]});
+			var expandLine = ExpandLine.create({
+				cells: [Cell.create({components: [{type: Cell.ComponentEnum.ExpandCellTR}]})]
+			});
 
 	        var curveCellParam = {
 	        	label: '曲线图',
-	        	expandComponent: CurveComponent,
+	        	expandComponent: CurveComponent, //todo: need???
+	        	onToggle: function(isOpen){
+	        		cell.signal_expand_toggle.dispatch({isOpen:isOpen, expandComponent: CurveComponent});
+	        	}
 	        };
 
 	        var attachmentCellParam = {
 	        	label: '附件', 
-	        	expandComponent: '',
+	        	expandComponent: AttachmentList,
 	        };
 
-			var line = [
-				Cell.create({v: label}), 
-				Cell.create({v: ref}), 
-				Cell.create({components: [{type: Cell.ComponentEnum.RadioGroup, param: radioGroupParam}]}),
-				isCurve ? Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: curveCellParam}]}): 
-					Cell.create({v: value.value, components:[{type: Cell.ComponentEnum.Input, onChange: function(){}, onBlur:function(){}}]}),
-				Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: attachmentCellParam}]})
-			];
-	       
-	      	this.ui.push(line);
-      		this.ui.push([expandLine]);
+	        var inputParam = {
+	        	onChange: function(){}, 
+	        	onBlur:function(){}
+	        }
+			var line = Line.create({
+				cells: [
+					Cell.create({v: label}), 
+					Cell.create({v: ref}), 
+					Cell.create({components: [{type: Cell.ComponentEnum.RadioGroup, param: radioGroupParam}]}),
+					isCurve ? Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: curveCellParam}]}): 
+						Cell.create({v: value.value, components:[{type: Cell.ComponentEnum.Input, param: inputParam}]}),
+					Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: attachmentCellParam}]})
+				]
+			});
+
+
+	       	var group = LineGroup.create({lines: [line, expandLine]});
+	      	this.ui.push(group);
 		}).bind(this));
 	}
 

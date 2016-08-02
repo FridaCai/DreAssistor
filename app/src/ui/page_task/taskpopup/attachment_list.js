@@ -4,7 +4,7 @@ import Util from 'Util';
 var AttachmentList = React.createClass({
   getInitialState: function(){
     return {
-      attachments: this.props.attachments,
+      attachments: this.props.attachments || [],
     }
   },
   getValue: function(){

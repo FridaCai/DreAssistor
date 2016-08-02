@@ -45,12 +45,16 @@ module.exports = {
     cache: false,
     resolve: {
         alias: {
+            Util: path.join(__dirname, toolPath, "/util.js"),
+            Signal: path.join(__dirname, toolPath, "/signal.js"),
             CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
             XlsIExport: path.join(__dirname, widgetPath, "/excel/index.js"),
             RadioGroup: path.join(__dirname, widgetPath, "/radiogroup/index.js"),
+            Input: path.join(__dirname, widgetPath, "/input/index.js"),
+            Label: path.join(__dirname, widgetPath, "/label/index.js"),
             MessageBox: path.join(__dirname, widgetPath, "/message/index.js"),
-            Table: path.join(__dirname, widgetPath, "/table/index.js"),
-            Util: path.join(__dirname, toolPath, "/util.js"),
+            Table: path.join(__dirname, widgetPath, "/table/index.js")
+
         }
     }
 };

@@ -1,3 +1,6 @@
+//more like a component like radio group rather than table cell;
+import Signal from 'Signal';
+
 var ExpandCell = React.createClass({
     getInitialState() {
         return {
@@ -7,7 +10,7 @@ var ExpandCell = React.createClass({
         }
     },
 
-    _$: function(selector){
+/*    _$: function(selector){
         if(!selector)
             return $(ReactDOM.findDOMNode(this));
         else return $(ReactDOM.findDOMNode(this)).find(selector);
@@ -20,45 +23,19 @@ var ExpandCell = React.createClass({
             return container;
         else return container.find(selector);
     },
-
+*/
     componentDidMount(){
-        this._$container().hide();
-        this._$container('td').css({height:'100%'});
+  //      this._$container().hide();
+   //     this._$container('td').css({height:'100%'});
     },
 
     onToggle(){
         var isOpen = !this.state.isOpen;
-        this.setState({
-            isOpen: isOpen
-        })
-
-        //var container = this._expandContainer().find('.expandDiv')[0];
-        if(!isOpen){
-            //ReactDOM.unmountComponentAtNode(container);  
-            
-            this.runExpandAmination(isOpen).then((function(){
-                this._$container().hide();    
-            }).bind(this));    
-        }else{
-            this._$container().show();
-            this.runExpandAmination(isOpen).then((function(){
-                //var el = React.createElement(this.state.expandComponent); 
-                //ReactDOM.render(el, container);
-            }).bind(this));
-        }
-    },
-
-    runExpandAmination(isOpen){
-        var h = isOpen ? 500 : 0;
-        var duration = 500;
-
-        return new Promise((function(resolve, reject){
-            this._$container().animate({
-                height:h
-            }, duration, function() {
-                resolve();
-            });
-        }).bind(this))
+        var expandComponent = this.state.expandComponent;
+        this.props.signal_expand_toggle.dispatch({
+            isOpen: isOpen, 
+            expandComponent: expandComponent
+        });
     },
 
     render(){
@@ -74,6 +51,9 @@ var ExpandCell = React.createClass({
         </div>)
     },
 })
+
+ExpandCell.signal_expand_toggle = new Signal();
+
 module.exports = ExpandCell;
 
 

@@ -1,4 +1,5 @@
 import {sigal_window_resizeend} from '../../../api.js';
+import {LineGroup} from 'Table';
 import './style.less';
 
 var Table = React.createClass({
@@ -80,48 +81,29 @@ var Table = React.createClass({
                 }
             })(this.state.uidata);
 
-            var getPercentage = (function(cellArr){
-                var tmp = cellArr.filter(function(cell){
-                    return !cell.isHide;
-                })
-                return `${(1/tmp.length)*100}%`;
-            });
+          
             
             var getSheetDom = (function(sheet){
                 var dom = [];
+
+                var lines = [];
                 for(var i=0; i<sheet.length; i++){
                     var line = sheet[i];
-                    var tr = [];
-                    dom.push((
-                        <tr key={i}>{tr}</tr>
-                    ));
+                    if(line instanceof LineGroup){
+                        lines = lines.concat(line.lines);
+                    }else{
+                        lines.push(line);
+                    }
+                }
 
-                    var percentage = getPercentage(line);
-                    line.map((function(cell, j){
-                        if(!cell.isHide){
-                            tr.push((
-                                <td key={j} style={{width:percentage}}>{cell.getDom()}</td>
-                            ));    
-                        }
-
-                    }).bind(this))
+                for(var i=0; i<lines.length; i++){
+                    var line = lines[i];
+                    dom.push(line.getDom());
                 }
                 return dom;
             }).bind(this);
 
-            var getTableHeader = (function(header){
-                var percentage = getPercentage(header);
-                var dom = header.map(function(cell, j){
-                    if(cell.isHide)
-                        return null;
-                    return (<th style={{width:percentage}} key={j}>{cell.getDom()}</th>)    
-                });
-                return (
-                    <tr>
-                      {dom}
-                    </tr>
-                )
-            }).bind(this)
+
             
             return (
                 <div className='panel-body dataTable' onDragOver={this.onDragOver} onDrop={this.onDrop}>
@@ -143,7 +125,7 @@ var Table = React.createClass({
                         <div className='sheet'>
                             <table>
                                 <thead className="thead-inverse" ref='tableHeader'>
-                                    {getTableHeader(ui.headers[this.state.sheetIndex])}
+                                    {ui.headers[this.state.sheetIndex].getDom()}
                                 </thead>
                                 <tbody ref='tableBody'>
                                     {getSheetDom(ui.sheets[this.state.sheetIndex])}
