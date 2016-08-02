@@ -39,21 +39,6 @@ module.exports = class MuleMRD extends Base{
 	            }).bind(this),
 	        }
 
-	        var curveCellParam = {
-	        	label: '曲线图',
-	        	component: CurveComponent,
-	        	componentParam: {}
-	        };
-
-	        var attachmentCellParam = {
-	        	label: '附件', 
-	        	component: '',
-	        	componentParam: {}
-	        };
-
-			//todo: radio hard code value.
-			//todo: work on radio group and expand Cell.
-			//todo: input should read component.v not cell.v;
 			var isCurve = (function(v){
 				var {value, curve} = v;
 
@@ -63,6 +48,19 @@ module.exports = class MuleMRD extends Base{
 
 				return false
 			})(value);
+
+
+			var expandLine = Cell.create({components: [{type: Cell.ComponentEnum.ExpandCellTR}]});
+
+	        var curveCellParam = {
+	        	label: '曲线图',
+	        	expandComponent: CurveComponent,
+	        };
+
+	        var attachmentCellParam = {
+	        	label: '附件', 
+	        	expandComponent: '',
+	        };
 
 			var line = [
 				Cell.create({v: label}), 
@@ -74,12 +72,7 @@ module.exports = class MuleMRD extends Base{
 			];
 	       
 	      	this.ui.push(line);
-
-      	
-      		this.ui.push([
-      			Cell.create({components: [{type: Cell.ComponentEnum.ExpandCellTR}]})
-  			])
-
+      		this.ui.push([expandLine]);
 		}).bind(this));
 	}
 
@@ -87,13 +80,6 @@ module.exports = class MuleMRD extends Base{
 		return this.ui;
 	}
 }
-
-
-/*
-return (<ExpandCell label={'曲线图'} onToggleExpandPanel={this.onToggleCurve.bind(this, key)}/>)
-*/
-
-
 
 
 

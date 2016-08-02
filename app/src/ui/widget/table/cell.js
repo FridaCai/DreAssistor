@@ -19,9 +19,11 @@ class Cell {
 		this.v = (param.v == undefined || param.v === null) ? '' : param.v;
         this.isHide = param.isHide || false; //for occupation purpose.
         this.components = param.components || [];
+
+        this._dom = this._createDom();        
 	}
-   
-    getDom(){
+
+    _createDom(){
         if(this.isHide){
             return null;
         }
@@ -29,8 +31,6 @@ class Cell {
             return (<span title={this.v}>{this.v}</span>);
         }
 
-
-        var scope = {};
         return (
             <div className='cellGroup'>
             {
@@ -57,12 +57,19 @@ class Cell {
                             return (<ExpandCell param={component.param} key={this.id}/>);
                             break;
                         case Cell.ComponentEnum.ExpandCellTR:
-                            return (<div className='expandDiv' key={this.id}></div>);
+                            return (<div ref='expandDiv' className='expandDiv' key={this.id}></div>);
+                            //return (<ExpandContainer param={component.param} key={this.id}/>);
+                            
                     }
                 }).bind(this))
             }
             </div>
         )
+    }
+   
+    getDom(){
+        return this._dom;
+        
     }
     dump(){
         return {
