@@ -10,25 +10,6 @@ var ExpandCell = React.createClass({
         }
     },
 
-/*    _$: function(selector){
-        if(!selector)
-            return $(ReactDOM.findDOMNode(this));
-        else return $(ReactDOM.findDOMNode(this)).find(selector);
-    },
-
-    _$container: function(selector){
-        var container = this._$().parents('tr').next();
-
-        if(!selector)
-            return container;
-        else return container.find(selector);
-    },
-*/
-    componentDidMount(){
-  //      this._$container().hide();
-   //     this._$container('td').css({height:'100%'});
-    },
-
     onToggle(){
         var isOpen = !this.state.isOpen;
         var expandComponent = this.state.expandComponent;

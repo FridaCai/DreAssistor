@@ -83,14 +83,6 @@ var ExpandLindDom = React.createClass({
 				</td>
 			</tr>
 		)
-
-		/*
-			<tr ref='line'>
-				<td style="width: 100%; height: 100%;">
-					<div className='expandDiv'></div>
-				</td>
-			</tr>
-		*/
 	}
 })
 

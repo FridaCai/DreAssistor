@@ -20,7 +20,7 @@ var Table = React.createClass({
         sigal_window_resizeend.listen(this.updateAfterRender);
     },
     
-    componentDidUnMount: function(){
+    componentWillUnmount: function(){
         sigal_window_resizeend.unlisten(this.updateAfterRender);
     },
 

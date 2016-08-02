@@ -13,7 +13,7 @@ var MainView = React.createClass({
         API.signal_registerpopup_show.listen(this.showRegisterPopup);
         API.sigal_loginHeader_update.listen(this.updateLoginHeader);
     },
-    componentDidUnMount: function(){
+    componentWillUnmount: function(){
         API.signal_registerpopup_show.unlisten(this.showRegisterPopup); 
         API.sigal_loginHeader_update.unlisten(this.updateLoginHeader);
     },

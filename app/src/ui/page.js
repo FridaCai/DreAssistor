@@ -19,7 +19,7 @@ var PageView = React.createClass({
         API.signal_page_refresh.listen(this.onPageRefresh);
     },
 
-    componentDidUnMount: function() {
+    componentWillUnmount: function() {
         API.signal_page_refresh.unlisten(this.onPageRefresh);
     },
 
