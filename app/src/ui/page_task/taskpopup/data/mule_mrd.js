@@ -11,25 +11,32 @@ module.exports = class MuleMRD extends Base{
 		super();
 
 		var line = Line.create({cells: [
-			Cell.create({v: '属性'}), 
-            Cell.create({v: '目标'}),
-            Cell.create({v: '状态'}),
-            Cell.create({v: '实测'}),
-            Cell.create({v: '附件'})
+			Cell.create({component:Label, v: '属性'}), 
+			Cell.create({component:Label, v: '目标'}), 
+			Cell.create({component:Label, v: '状态'}), 
+			Cell.create({component:Label, v: '实测'}), 
+			Cell.create({component:Label, v: '附件'}), 
 		]});
 		this.header = line;
-
 		this.sheetName = '';
 	}
 
 	dm2ui(project, param){
 	    Object.keys(param).map((function(key){
 	        var value = param[key];
-	        var label = value.label;
 	        
-	        var ref = (function(refKey, project, label){
+	        var label = value.label;
+
+	        var ref = (function(refKey, project){
 	            return refKey && project ? project[refKey]: '';
-	        }).call(this, value.refKey, project, label)
+	        }).call(this, value.refKey, project);
+	        
+
+	        var inputParam = {
+	        	onChange: function(){}, 
+	        	onBlur:function(){},
+	        	value: '',
+	        };
 
 	        var radioGroupParam = {
 	            id: `${key}_radiogroup`,
@@ -56,36 +63,30 @@ module.exports = class MuleMRD extends Base{
 				return false
 			})(value);
 
-
+			
 			var expandLine = ExpandLine.create({
-				cells: [Cell.create({components: [{type: Cell.ComponentEnum.ExpandCellTR}]})]
+				cells: [Cell.create({component: ExpandContainer, v:''})]
 			});
 
 	        var curveCellParam = {
 	        	label: '曲线图',
-	        	expandComponent: CurveComponent, //todo: need???
-	        	onToggle: function(isOpen){
-	        		cell.signal_expand_toggle.dispatch({isOpen:isOpen, expandComponent: CurveComponent});
-	        	}
+	        	expandComponent: CurveComponent,
 	        };
 
 	        var attachmentCellParam = {
 	        	label: '附件', 
 	        	expandComponent: AttachmentList,
 	        };
+	        
 
-	        var inputParam = {
-	        	onChange: function(){}, 
-	        	onBlur:function(){}
-	        }
 			var line = Line.create({
 				cells: [
-					Cell.create({v: label}), 
-					Cell.create({v: ref}), 
-					Cell.create({components: [{type: Cell.ComponentEnum.RadioGroup, param: radioGroupParam}]}),
-					isCurve ? Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: curveCellParam}]}): 
-						Cell.create({v: value.value, components:[{type: Cell.ComponentEnum.Input, param: inputParam}]}),
-					Cell.create({components: [{type: Cell.ComponentEnum.ExpandCell, param: attachmentCellParam}]})
+					Cell.create({component: Label, v: labelParam}),
+					Cell.create({component: Label, v: refParam}),
+					Cell.create({component: RadioGroup, param: radioGroupParam, v:false}),
+					isCurve ? Cell.create({component: ExpandCell, param: curveCellParam, v:''}): 
+						Cell.create({components: Input, param: inputParam, v:''}),
+					Cell.create({components: ExpandCell, param: attachmentCellParam, v:''})
 				]
 			});
 

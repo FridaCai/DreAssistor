@@ -98,12 +98,16 @@ var Table = React.createClass({
 
                 for(var i=0; i<lines.length; i++){
                     var line = lines[i];
-                    dom.push(line.getDom());
+                    dom.push(
+                        <LineDOM line={line}/>
+                    );
                 }
                 return dom;
             }).bind(this);
 
-
+            var getHeaderDom = (function(header){
+                return (<LineDOM line={header}/>)
+            }).bind(this);
             
             return (
                 <div className='panel-body dataTable' onDragOver={this.onDragOver} onDrop={this.onDrop}>
@@ -125,7 +129,7 @@ var Table = React.createClass({
                         <div className='sheet'>
                             <table>
                                 <thead className="thead-inverse" ref='tableHeader'>
-                                    {ui.headers[this.state.sheetIndex].getDom()}
+                                    {getHeaderDom(ui.headers[this.state.sheetIndex])}
                                 </thead>
                                 <tbody ref='tableBody'>
                                     {getSheetDom(ui.sheets[this.state.sheetIndex])}

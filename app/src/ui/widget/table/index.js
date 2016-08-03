@@ -4,6 +4,7 @@ import Line from './line.js';
 import ExpandLine from './expandline.js';
 import Cell from './cell.js';
 import ExpandCell from './expandcell.js';
+import ExpandContainer from './expandcontainer.js';
 
 exports.Table = Table;
 exports.LineGroup = LineGroup;
@@ -11,3 +12,4 @@ exports.Line = Line;
 exports.ExpandLine = ExpandLine;
 exports.Cell = Cell;
 exports.ExpandCell = ExpandCell;
+exports.ExpandContainer = ExpandContainer;

@@ -1,107 +1,44 @@
-import Signal from '../../../signal.js';
-import GlobalUtil from '../../../util.js';
+import Signal from 'Signal';
 import RadioGroup from 'RadioGroup';
 import {ExpandCell} from 'Table';
+import {ExpandContainer} from 'Table';
 import Input from 'Input';
 import Label from 'Label';
 
-class Cell {
-    static create(param){
-        var cell = new Cell();
-        cell.init(param);
-        return cell;
-    }
 
-	constructor(){
-	   
-	}
+var CellDOM = React.createClass({
+  	getInitialState(){
+  		cell: this.props.cell,
+  		widthStyle: this.props.widthPercentage,
+  	}
 
-    getValue(){
-        this._getDMValue();
-    }
-    _getDMValue(){//todo: component.getValue.
-        return this._dom ? {} : this._dom.getValue();
-    }
+   	/*getValue(){
+   		if(this.refs.component && this.refs.component.getValue)
+   			return this.refs.component.getValue();
+   		return '';
+    }*/
 
-	init(param){
-		this.id = param.id || GlobalUtil.generateUUID();
-		this.v = (param.v == undefined || param.v === null) ? '' : param.v;
-        this.isHide = param.isHide || false; //for occupation purpose.
-        this.components = param.components || [];
+    render(){
+    	var {cell, widthStyle} = this.state;
+    	var ref= 'component';
 
-        this._dom = this._createDom();        
-	}
-
-    _createDom(){
-        
-
-        if(this.isHide){
+    	if(cell.isHide || !cell.component){
             return null;
-        }
+      }
 
-        if(this.components.length === 0){
-            return (<Label param={{v: this.v}}/>);
-        }
+		  var dom = cell.component;
+	    var el = React.createElement(dom, {
+	    	ref: ref,
+	    	key: cell.id,
+	    	cell: cell,
+	    });
 
-        var dom = null;
-        this.components.map((function(component, index){
-            switch (component.type){
-                case Cell.ComponentEnum.Input:  //todo. input widget.
-                    dom = (<Input param={component.param} key={this.id}/>);
-                    break;
-
-
-                    /*return (
-                        <input defaultValue={this.v} key={this.id}
-                            type='text' 
-                            onChange={component.onChange.bind(this)} //todo: onchange and onblur.
-                            onBlur={component.onBlur.bind(this)}/>
-                    );*/
-                case Cell.ComponentEnum.CheckBox:
-                    break;
-                case Cell.ComponentEnum.ColorBox:
-                    break;
-                case Cell.ComponentEnum.RadioGroup:
-                    dom = (<RadioGroup param={component.param} key={this.id}/>);
-                    break;
-                case Cell.ComponentEnum.ExpandCell:
-                    dom = (<ExpandCell param={component.param} key={this.id}/>);
-                    break;
-                case Cell.ComponentEnum.ExpandCellTR:
-                    dom = (<div ref='expandDiv' className='expandDiv' key={this.id}></div>);
-                    break;
-                    //return (<ExpandContainer param={component.param} key={this.id}/>);
-                default:
-                    console.error('undefined cell');
-            }
-        }).bind(this))
-
-        return dom;
+      return (
+          <td key={cell.id} style={widthStyle}>{el}</td>
+      );
     }
-   
-    getDom(){
-        return this._dom;
-        
-    }
-    dump(){
-        return {
-            v: this.v,
-        }
-    }
+})
 
-}
+//CellDOM.signal_expand_toggle = new Signal();
 
-Cell.ComponentEnum = {
-    Input: 'Input',
-    CheckBox: 'CheckBox',
-    ColorBox: 'ColorBox',
-    RadioGroup: 'RadioGroup',
-    ExpandCell: 'ExpandCell',
-    ExpandCellTR: 'ExpandCellTR',
-}
-Cell.signal_cell_change = new Signal();
-Cell.signal_cell_blur = new Signal();
-
-
-module.exports = Cell;
-
+module.exports = CellDOM

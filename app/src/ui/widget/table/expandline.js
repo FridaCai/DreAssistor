@@ -1,40 +1,19 @@
-import Line from './line.js';
-
-module.exports = class ExpandLine extends Line {
-    static create(param){
-        var expandLine = new ExpandLine();
-        expandLine.init(param);
-        return expandLine;
-    }
-
-
-    _createDom(){
-    	//2 status. close; open(load component.);
-    	return (<ExpandLindDom 
-    		key={this.id}
-    		isOpen={false} 
-    		component={null} 
-    		signal_line_expand={this.signal_line_expand}/>
-		);
-    }
-}
-
 var ExpandLindDom = React.createClass({
 	getInitialState(){
 		return {
 			isOpen: this.props.isOpen || false,
 			component: this.props.component || null, 
-			signal_line_expand: this.props.signal_line_expand || null,
+			//signal_line_expand: this.props.signal_line_expand || null,
+			cell: this.props.cell,
 		}
 	},
 
-	//should be called after setState
-	onToggle(e, param){
+	/*onToggle(e, param){
 		var isOpen = param.isOpen;
 		this.setState({isOpen: isOpen}, this.update);
-	},
+	},*/
 
-	update(){
+	update(isOpen, component){
 	    var runExpandAmination = (function(isOpen){
 	        var h = isOpen ? 500 : 0;
 	        var duration = 500;
@@ -52,22 +31,21 @@ var ExpandLindDom = React.createClass({
 
 	    var isOpen = this.state.isOpen;
 		if(!isOpen){
-            ReactDOM.unmountComponentAtNode(this.refs.expandDiv);  
+            //ReactDOM.unmountComponentAtNode(this.refs.expandDiv);  
             runExpandAmination(isOpen).then((function(){
                 $(this.refs.line).hide();    
             }).bind(this));    
         }else{
             $(this.refs.line).show();    
             runExpandAmination(isOpen).then((function(){
-                var el = React.createElement(this.state.expandComponent); 
-                ReactDOM.render(el, this.refs.expandDiv);
+                //var el = React.createElement(this.state.expandComponent); 
+                //ReactDOM.render(el, this.refs.expandDiv);
             }).bind(this));
         }
 	},
 
 	componentDidMount(){
 		//this.state.signal_line_expand.listen(this.onToggle); //todo: signal_line_expand -> signal_expand_toggle
-
 		this.update();
 	},
 
@@ -79,7 +57,7 @@ var ExpandLindDom = React.createClass({
 		return (
 			<tr ref='line' className='expandLine'>
 				<td>
-					<div className='expandDiv' ref='expandDiv'></div>
+					{this.state.cell.getDom()}
 				</td>
 			</tr>
 		)
