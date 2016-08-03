@@ -2,7 +2,8 @@ import RadioGroup from 'RadioGroup';
 import './template_mule_mrd.less';
 //import CurveComponent from '../../component_curve/index.js'; //todo.
 import MuleMRD from './data/mule_mrd.js';
-import {Table} from 'Table';
+import {TableDOM} from 'Table';
+
 var API = {
     param: undefined,
     project: undefined,
@@ -38,7 +39,7 @@ var MuleMRDTemplate = React.createClass({
 
         return (
             <div className='mule_mrd'>
-               <Table ref='table' 
+               <TableDOM ref='table' 
                     uidata={uidata}/>
             </div>
         )

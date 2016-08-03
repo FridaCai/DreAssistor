@@ -1,5 +1,3 @@
-import ExpandCell from './expandcell';
-
 class LineGroup {
     static create(param){
         var lineGroup = new LineGroup();
@@ -23,7 +21,7 @@ class LineGroup {
 
 	init(param){
 		this.lines = param.lines;
-		this.getCells().map((function(cell){ 
+		/*this.getCells().map((function(cell){ 
 			if(cell.hasExpandCell()){
 				//when to unlisten???
 				cell.signal_expand_toggle.listen((function(e, param){
@@ -33,7 +31,7 @@ class LineGroup {
 					cell.update(isOpen);
 				}).bind(this))
 			}
-		}).bind(this))
+		}).bind(this))*/
 
 	}
 }

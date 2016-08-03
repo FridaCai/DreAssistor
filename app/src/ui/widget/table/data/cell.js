@@ -1,13 +1,5 @@
-//todo. clear import;
-
 import Signal from 'Signal';
 import GlobalUtil from 'Util';
-import RadioGroup from 'RadioGroup';
-import {ExpandCell} from 'Table';
-import {ExpandContainer} from 'Table';
-
-import Input from 'Input';
-import Label from 'Label';
 
 class Cell {
     static create(param){
@@ -46,15 +38,6 @@ class Cell {
 
 }
 
-//todo: clear.
-/*Cell.ComponentEnum = {
-    Input: 'Input',
-    CheckBox: 'CheckBox',
-    ColorBox: 'ColorBox',
-    RadioGroup: 'RadioGroup',
-    ExpandCell: 'ExpandCell',
-    ExpandCellTR: 'ExpandCellTR',
-}*/
 //Cell.signal_input_change = new Signal();
 //Cell.signal_input_blur = new Signal();
 

@@ -1,10 +1,18 @@
 import Base from '../../projectpopup/data/base.js'; //todo.
 import {Cell} from 'Table';
 import {LineGroup} from 'Table';
-import {Line} from 'Table';
 import {ExpandLine} from 'Table';
+import {Line} from 'Table';
+
+import {ExpandContainerDOM} from 'Table';
+import {ExpandCellDOM} from 'Table';
+
 import CurveComponent from '../../../component_curve/index.js';
 import AttachmentList from '../attachment_list.js';
+
+import Label from 'Label';
+import RadioGroup from 'RadioGroup';
+import Input from 'Input';
 
 module.exports = class MuleMRD extends Base{
 	constructor(){
@@ -64,9 +72,7 @@ module.exports = class MuleMRD extends Base{
 			})(value);
 
 			
-			var expandLine = ExpandLine.create({
-				cells: [Cell.create({component: ExpandContainer, v:''})]
-			});
+
 
 	        var curveCellParam = {
 	        	label: '曲线图',
@@ -81,15 +87,17 @@ module.exports = class MuleMRD extends Base{
 
 			var line = Line.create({
 				cells: [
-					Cell.create({component: Label, v: labelParam}),
-					Cell.create({component: Label, v: refParam}),
-					Cell.create({component: RadioGroup, param: radioGroupParam, v:false}),
-					isCurve ? Cell.create({component: ExpandCell, param: curveCellParam, v:''}): 
-						Cell.create({components: Input, param: inputParam, v:''}),
-					Cell.create({components: ExpandCell, param: attachmentCellParam, v:''})
+					Cell.create({component: Label, v: label}),
+					Cell.create({component: Label, v: ref}),
+					Cell.create({component: RadioGroup, param: radioGroupParam, v:0}),
+					isCurve ? Cell.create({component: ExpandCellDOM, param: curveCellParam, v:''}): 
+						Cell.create({component: Input, param: inputParam, v:''}),
+					Cell.create({component: ExpandCellDOM, param: attachmentCellParam, v:''})
 				]
 			});
-
+			var expandLine = ExpandLine.create({
+				cells: [Cell.create({component: ExpandContainerDOM, v:''})]
+			});
 
 	       	var group = LineGroup.create({lines: [line, expandLine]});
 	      	this.ui.push(group);

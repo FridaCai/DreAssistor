@@ -1,4 +1,4 @@
-var ExpandLindDom = React.createClass({
+var ExpandLindDOM = React.createClass({
 	getInitialState(){
 		return {
 			isOpen: this.props.isOpen || false,
@@ -65,6 +65,6 @@ var ExpandLindDom = React.createClass({
 })
 
 
-
+module.exports = ExpandLindDOM;
 
 

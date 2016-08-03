@@ -16,14 +16,15 @@ var LineDOM = React.createClass({
 	        var tmp = cells.filter(function(cell){
 	            return !cell.isHide;
 	        })
-	        return `${(1/tmp.length)*100}%`;
+	        var percentage = `${(1/tmp.length)*100}%`;
+	        return {width: percentage};
 		})(line);
 
 		return (
-			<tr key={key}>
+			<tr>
             {
                 line.cells.map(function(cell){
-                	return (<CellDOM cell={cell} widthStyle={widthStyle}/>)
+                	return (<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id}/>)
                 })
             }
             </tr>

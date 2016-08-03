@@ -1,6 +1,6 @@
 import MessageBox from 'MessageBox';
 import XlsIExport from 'XlsIExport';
-import {Table} from 'Table';
+import {TableDOM} from 'Table';
 import API from '../api.js';
 import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
 import Property from '../data/property.js';
@@ -47,7 +47,7 @@ var ProjectPopup = React.createClass({
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
                 />
-                <Table ref='table' 
+                <TableDOM ref='table' 
                     uidata={API.uidata} 
                     onDrop={this.onTableDrop}/>
             </div>

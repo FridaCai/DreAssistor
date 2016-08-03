@@ -1,9 +1,5 @@
-//more like a component like radio group rather than table cell;
-import Signal from 'Signal';
-
-
-
-var ExpandCell = React.createClass({
+//todo: more like a component like radio group rather than table cell; 
+var ExpandCellDOM = React.createClass({
     getInitialState() {
         return {
             label: this.props.param.label,
@@ -44,6 +40,6 @@ var ExpandCell = React.createClass({
 })
 
 
-module.exports = ExpandCell;
+module.exports = ExpandCellDOM;
 
 

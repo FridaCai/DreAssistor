@@ -1,9 +1,9 @@
 var Label = React.createClass({
 	getValue(){
-		return this.props.param.v;
+		return this.props.v;
 	},
 	render(){
-		var v = this.props.param.v;
+		var v = this.props.v;
 		return (<span title={v}>{v}</span>);
 	}
 })

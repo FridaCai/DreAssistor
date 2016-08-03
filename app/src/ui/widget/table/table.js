@@ -1,8 +1,9 @@
 import {sigal_window_resizeend} from '../../../api.js';
 import {LineGroup} from 'Table';
+import {LineDOM} from 'Table';
 import './style.less';
 
-var Table = React.createClass({
+var TableDOM = React.createClass({
 	getInitialState: function() {
         return {
         	sheetIndex: 0,
@@ -62,7 +63,6 @@ var Table = React.createClass({
             }
 
             var ui = (function(uidata){
-
                 var sheetNames = [];
                 var sheets = [];
                 var headers = [];
@@ -72,16 +72,12 @@ var Table = React.createClass({
                     sheets.push(uidata[key].ui);
                     headers.push(uidata[key].header);
                 })
-
-
                 return {
                     sheetNames: sheetNames,
                     sheets: sheets,
                     headers: headers
                 }
             })(this.state.uidata);
-
-          
             
             var getSheetDom = (function(sheet){
                 var dom = [];
@@ -99,14 +95,14 @@ var Table = React.createClass({
                 for(var i=0; i<lines.length; i++){
                     var line = lines[i];
                     dom.push(
-                        <LineDOM line={line}/>
+                        <LineDOM line={line} key={line.id}/>
                     );
                 }
                 return dom;
             }).bind(this);
 
             var getHeaderDom = (function(header){
-                return (<LineDOM line={header}/>)
+                return (<LineDOM line={header} key={header.id}/>)
             }).bind(this);
             
             return (
@@ -143,4 +139,5 @@ var Table = React.createClass({
         }
     },
 })
-module.exports = Table;
+module.exports = TableDOM;
+

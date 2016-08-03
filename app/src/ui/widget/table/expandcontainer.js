@@ -1,5 +1,5 @@
-
-var ExpandContainer = React.createClass({
+//todo: more like a component like radio group rather than table cell; 
+var ExpandContainerDOM = React.createClass({
 	render(){
 		return (
 			<div ref='expandDiv' className='expandDiv'></div>
@@ -8,4 +8,4 @@ var ExpandContainer = React.createClass({
 	
 })
 
-module.exports = ExpandContainer;
+module.exports = ExpandContainerDOM;
