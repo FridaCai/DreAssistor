@@ -1,4 +1,4 @@
-import CellDOM from './cell.js';
+import {CellDOM} from 'Table';
 
 var LineDOM = React.createClass({
 	getInitialState(){

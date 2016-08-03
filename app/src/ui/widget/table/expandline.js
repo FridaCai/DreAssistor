@@ -1,10 +1,12 @@
+import {CellDOM} from 'Table';
+
 var ExpandLindDOM = React.createClass({
 	getInitialState(){
 		return {
 			isOpen: this.props.isOpen || false,
 			component: this.props.component || null, 
 			//signal_line_expand: this.props.signal_line_expand || null,
-			cell: this.props.cell,
+			line: this.props.line,
 		}
 	},
 
@@ -54,12 +56,18 @@ var ExpandLindDOM = React.createClass({
 	},
 	
 	render(){
+		var line = this.state.line;
+		var key = line.id;
+		var widthStyle = {width: '100%'};
+
 		return (
-			<tr ref='line' className='expandLine'>
-				<td>
-					{this.state.cell.getDom()}
-				</td>
-			</tr>
+			<tr ref='line'>
+            {
+                line.cells.map(function(cell){
+                	return (<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id}/>)
+                })
+            }
+            </tr>
 		)
 	}
 })

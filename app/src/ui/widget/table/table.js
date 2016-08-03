@@ -1,6 +1,9 @@
 import {sigal_window_resizeend} from '../../../api.js';
 import {LineGroup} from 'Table';
+import {ExpandLine} from 'Table';
 import {LineDOM} from 'Table';
+import {ExpandLineDOM} from 'Table';
+
 import './style.less';
 
 var TableDOM = React.createClass({
@@ -94,9 +97,12 @@ var TableDOM = React.createClass({
 
                 for(var i=0; i<lines.length; i++){
                     var line = lines[i];
-                    dom.push(
-                        <LineDOM line={line} key={line.id}/>
-                    );
+                    if(line instanceof ExpandLine){
+                        dom.push(<ExpandLineDOM line={line} key={line.id}/>);
+                    }else{
+                        dom.push(<LineDOM line={line} key={line.id}/>);    
+                    }
+                    
                 }
                 return dom;
             }).bind(this);
