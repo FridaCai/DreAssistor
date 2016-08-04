@@ -1,6 +1,7 @@
 import {sigal_window_resizeend} from '../../../api.js';
 import {ExpandLine} from 'Table';
 import {LineDOM} from 'Table';
+import {CellDOM} from 'Table';
 import {ExpandLineDOM} from 'Table';
 import API from './api.js';
 
@@ -12,6 +13,7 @@ var TableDOM = React.createClass({
         	sheetIndex: 0,
         	uidata: this.props.uidata,
             onDrop: this.props.onDrop || function(){},
+            isReverse: this.props.isReverse,
         };
     },
     onSwitchSheet: function(index){
@@ -71,30 +73,8 @@ var TableDOM = React.createClass({
         this.setState(param, this.updateAfterRender);
     },
 
-    render:function(){
-        try{
-            if(!this.state.uidata){
-                return null;
-            }
-
-            var ui = (function(uidata){
-                var sheetNames = [];
-                var sheets = [];
-                var headers = [];
-
-                Object.keys(uidata).map(function(key){
-                    sheetNames.push(uidata[key].sheetName);
-                    sheets.push(uidata[key].ui);
-                    headers.push(uidata[key].header);
-                })
-                return {
-                    sheetNames: sheetNames,
-                    sheets: sheets,
-                    headers: headers
-                }
-            })(this.state.uidata);
-            
-            var getSheetDom = (function(sheet){
+    getNonReverseTableDom:function(ui){
+        var getSheetDom = (function(sheet){
                 var dom = [];
 
                 var lines = [];
@@ -118,6 +98,96 @@ var TableDOM = React.createClass({
             var getHeaderDom = (function(header){
                 return (<LineDOM line={header} key={header.id}/>)
             }).bind(this);
+
+        return (
+            <table>
+                <thead className="thead-inverse" ref='tableHeader'>
+                    {getHeaderDom(ui.headers[this.state.sheetIndex])}
+                </thead>
+                <tbody ref='tableBody'>
+                    {getSheetDom(ui.sheets[this.state.sheetIndex])}
+                </tbody>
+            </table>
+
+        )
+    },
+    getReverseTableDom: function(ui){
+        var headers = ui.headers[this.state.sheetIndex];
+        var sheets = ui.sheets[this.state.sheetIndex];
+
+
+        if(sheets.length === 0)
+            return;
+
+        var table = [];
+        var rowNum = headers.cells.length;
+        var columnNum = sheets.length;
+
+
+
+
+        for(var i=0; i<rowNum; i++){
+            var line = [];
+
+            line.push(headers.cells[i]);
+            for(var j=0; j<columnNum; j++){
+                line.push(sheets[j].cells[i]);
+            }
+            table.push(line);
+        }
+
+
+        return (
+            <table>
+                {
+                    table.map(function(line){
+                        return (<tr>
+                        {
+                            line.map(function(cell){ //todo: width style.
+                                return (<CellDOM cell={cell}/>)
+                            })
+                        }
+                        </tr>)
+                    })
+                }
+
+            </table>
+        )
+    },
+    getTableDom:function(ui){
+        if(this.state.isReverse){
+            return this.getReverseTableDom(ui);
+        }else{
+            return this.getNonReverseTableDom(ui);
+        }
+    },
+    
+
+
+    render:function(){
+        try{
+            if(!this.state.uidata){
+                return null;
+            }
+
+            var ui = (function(uidata){
+                var sheetNames = [];
+                var sheets = [];
+                var headers = [];
+
+                Object.keys(uidata).map(function(key){
+                    sheetNames.push(uidata[key].sheetName);
+                    sheets.push(uidata[key].ui);
+                    headers.push(uidata[key].header);
+                })
+                return {
+                    sheetNames: sheetNames,
+                    sheets: sheets,
+                    headers: headers
+                }
+            })(this.state.uidata);
+            
+            
             
             return (
                 <div className='panel-body dataTable' onDragOver={this.onDragOver} onDrop={this.onDrop}>
@@ -137,14 +207,7 @@ var TableDOM = React.createClass({
                         }
                         </ul>
                         <div className='sheet'>
-                            <table>
-                                <thead className="thead-inverse" ref='tableHeader'>
-                                    {getHeaderDom(ui.headers[this.state.sheetIndex])}
-                                </thead>
-                                <tbody ref='tableBody'>
-                                    {getSheetDom(ui.sheets[this.state.sheetIndex])}
-                                </tbody>
-                            </table>
+                            {this.getTableDom(ui)}
                         </div>
                 </div>
             )

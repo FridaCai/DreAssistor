@@ -34,7 +34,8 @@ var CurveComponent = React.createClass({
               />
               <TableDOM ref='table' 
                   uidata={API.uidata} 
-                  onDrop={this.onTableDrop}/>
+                  onDrop={this.onTableDrop}
+                  isReverse={true}/>
           </div>
     );   
   },

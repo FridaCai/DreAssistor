@@ -46,9 +46,3 @@ var MuleMRDTemplate = React.createClass({
 	}
 });
 module.exports = MuleMRDTemplate;
-
-/*
-
-          
-
-*/

@@ -14,13 +14,7 @@ var Table = React.createClass({
     update:function(param){
     	this.setState(param);
     },
-    /*
-	componentWillReceiveProps: function(newProps){
-		this.setState({
-			labels: newProps.labels,
-			series: newProps.series,
-		})
-	},*/
+
     onChange: function(index){
     	//this.props.onToggleCurve(index, isShow);
     	//todo:
@@ -33,11 +27,6 @@ var Table = React.createClass({
         	index: index,
         	isShow: API.curve.series[index].isShow,
         });
-    	
-
-    	/*this.setState({
-    		series: series,
-    	})*/
     },
 	onDrop: function(e){
         e.stopPropagation();
@@ -55,16 +44,11 @@ var Table = React.createClass({
         reader.readAsBinaryString(file);
 	},
 
-
 	onDragOver(e){
 		e.preventDefault();
 	},
 
 	render: function(){
-		if(!API.curveui){
-            return null;
-        }
-
         var ui = {
             sheetNames: [API.curveui.sheetName],
             sheets: [API.curveui.ui],
