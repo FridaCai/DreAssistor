@@ -1,5 +1,4 @@
 import {sigal_window_resizeend} from '../../../api.js';
-import {LineGroup} from 'Table';
 import {ExpandLine} from 'Table';
 import {LineDOM} from 'Table';
 import {ExpandLineDOM} from 'Table';
