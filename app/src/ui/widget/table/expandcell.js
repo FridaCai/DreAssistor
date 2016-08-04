@@ -1,11 +1,17 @@
 //todo: more like a component like radio group rather than table cell; 
+import API from './api.js';
+
 var ExpandCellDOM = React.createClass({
+    /*
+        cell.param = {
+            label: '曲线图',
+            expandComponent: CurveComponent,
+            isOpen: false,
+        }
+    */
     getInitialState() {
         return {
-            label: this.props.param.label,
-            expandComponent: this.props.param.expandComponent,
-            isOpen:false,
-            //onToggle: this.props.param.onToggle,
+            cell: this.props.cell,
         }
     },
 
@@ -17,27 +23,31 @@ var ExpandCellDOM = React.createClass({
             expandComponent: expandComponent
         });*/
 
-        /*var isOpen = !this.state.isOpen;
+        var cell = this.state.cell;
+        var isOpen = !cell.param.isOpen;
+
         this.setState({isOpen:isOpen});
-        this.props.cell.signal_expand_toggle.dispatch({
+        API.signal_expand_toggle.dispatch({
             isOpen:isOpen, 
-            expandComponent: this.state.expandComponent,
-            cell: this,
-        });*/
+            cell: cell,
+        });
     },
 
     render(){
-        var label = this.state.label;
+        var cell = this.state.cell;
+        var label = cell.param.label;
+        var isOpen = cell.param.isOpen;
 
-        var glyphiconClass = this.state.isOpen ? 'up': 'down';
+        var glyphiconClass = isOpen ? 'up': 'down';
         var className = `expandBtn glyphicon glyphicon-chevron-${glyphiconClass}`;
         
-        return (<div>
+        return (<div onClick={this.onToggle}>
             <span>{label}</span>
-            <span className={className} onClick={this.onToggle}></span>
+            <span className={className} ></span>
         </div>)
     },
 })
+
 
 
 module.exports = ExpandCellDOM;

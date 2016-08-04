@@ -1,3 +1,4 @@
+//todo: deprecated???
 class LineGroup {
     static create(param){
         var lineGroup = new LineGroup();
@@ -21,17 +22,23 @@ class LineGroup {
 
 	init(param){
 		this.lines = param.lines;
-		/*this.getCells().map((function(cell){ 
+		
+		this.getCells().map((function(cell){
 			if(cell.hasExpandCell()){
-				//when to unlisten???
-				cell.signal_expand_toggle.listen((function(e, param){
-					this.lines[0].updateDOM(param); 
-					this.lines[1].updateDOM(param);
+				//when to unlisten??? //todo. frida . problem here.
 
-					cell.update(isOpen);
+				cell.signal_expand_toggle.listen((function(e, param){
+					var isOpen = param.isOpen;
+					var cell = param.cell;
+
+
+					this.lines[0].updateByExpand(isOpen, cell); 
+					this.lines[1].updateByExpand(isOpen, cell);
+
+					
 				}).bind(this))
 			}
-		}).bind(this))*/
+		}).bind(this))
 
 	}
 }

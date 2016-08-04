@@ -24,8 +24,9 @@ var CellDOM = React.createClass({
 	    var el = React.createElement(dom, {
 	    	ref: ref,
 	    	key: cell.id,
-	    	param: cell.param,
-        v: cell.v,
+	    	cell: cell,
+        v: cell.v, //for data model.
+        param: cell.param, //for component like radio button.
 	    });
 
       return (

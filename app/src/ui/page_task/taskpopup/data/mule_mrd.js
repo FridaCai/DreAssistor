@@ -77,13 +77,19 @@ module.exports = class MuleMRD extends Base{
 	        var curveCellParam = {
 	        	label: '曲线图',
 	        	expandComponent: CurveComponent,
+	        	isOpen: false,
 	        };
 
 	        var attachmentCellParam = {
 	        	label: '附件', 
 	        	expandComponent: AttachmentList,
+	        	isOpen: false,
 	        };
 	        
+
+	        var expandLine = ExpandLine.create({
+				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+			});
 
 			var line = Line.create({
 				cells: [
@@ -93,14 +99,14 @@ module.exports = class MuleMRD extends Base{
 					isCurve ? Cell.create({component: ExpandCellDOM, param: curveCellParam, v:''}): 
 						Cell.create({component: Input, param: inputParam, v:''}),
 					Cell.create({component: ExpandCellDOM, param: attachmentCellParam, v:''})
-				]
+				],
+				expandLine: expandLine,
 			});
-			var expandLine = ExpandLine.create({
-				cells: [Cell.create({component: ExpandContainerDOM, v:''})]
-			});
+			
 
-	       	var group = LineGroup.create({lines: [line, expandLine]});
-	      	this.ui.push(group);
+	      	this.ui.push(line);
+	      	this.ui.push(expandLine);
+	      	
 		}).bind(this));
 	}
 

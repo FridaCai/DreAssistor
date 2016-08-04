@@ -3,6 +3,7 @@ import {LineGroup} from 'Table';
 import {ExpandLine} from 'Table';
 import {LineDOM} from 'Table';
 import {ExpandLineDOM} from 'Table';
+import API from './api.js';
 
 import './style.less';
 
@@ -22,6 +23,18 @@ var TableDOM = React.createClass({
 
     componentDidMount: function(){
         sigal_window_resizeend.listen(this.updateAfterRender);
+
+        API.signal_expand_toggle.listen((function(e, param){
+            var {isOpen, cell} = param;
+
+            var line = cell.line;
+            line.updateByExpand(isOpen, cell);
+
+            var expandLine = line.expandLine;
+            expandLine.updateByExpand(isOpen, cell);
+
+            this.forceUpdate();
+        }).bind(this));
     },
     
     componentWillUnmount: function(){

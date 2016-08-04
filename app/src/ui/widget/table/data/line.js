@@ -1,4 +1,5 @@
 import Util from 'Util';
+import {ExpandCellDOM} from 'Table';
 
 class Line {
     static create(param){
@@ -9,11 +10,35 @@ class Line {
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
+		
+
 		this.cells = param.cells;
+		this.cells.map((function(cell){
+			cell.setLine(this);
+		}).bind(this));
+
+
+		this.expandLine = param.expandLine;
+
 	}
 	
 	constructor(){
-	   this.cells = [];
+	}
+
+	updateByExpand(isOpen, cell){
+		this.cells.map(function(cell){
+			if(cell.component instanceof ExpandCellDOM){
+				cell.param.isOpen = false;
+			}
+		});
+
+		if(!isOpen){
+			return;
+		}
+
+		if(cell){
+			cell.param.isOpen = true;
+		}
 	}
 }
 
