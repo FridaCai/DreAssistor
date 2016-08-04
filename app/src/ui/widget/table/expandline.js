@@ -24,7 +24,7 @@ var ExpandLindDOM = React.createClass({
 
 	    var line = this.state.line;
 	    var isOpen = line.isOpen;
-	    var component = line.cells[0].param.expandComponent;
+	    var component = line.cells[0].param.expandComponent; //todo. component param.
 	    var container = this.refs.cell.refs.component.refs.expandDiv;
 
 		if(!isOpen){

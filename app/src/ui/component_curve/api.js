@@ -1,5 +1,5 @@
-import Signal from '../../signal.js';
-import Request from '../../request.js';
+import Signal from 'Signal';
+import Request from 'Request';
 import Curve from './data/curve.js'; //todo: datamodel should be all together.
 import CurveUI from './uidata/curve.js';
 
@@ -7,7 +7,9 @@ import CurveUI from './uidata/curve.js';
 var API = {
 	signal_curve_toggle: new Signal(),
 
-	curveui: new CurveUI(),
+	uidata: {
+		curve: new CurveUI(),
+	},
 	curve: new Curve(),
 
 	setCurve: function(curve){
@@ -23,10 +25,15 @@ var API = {
         }).bind(this))
 	},
 	ui2dm: function(){
-		this.curveui.ui2dm(this.curve);
+		this.uidata.curve.ui2dm(this.curve);
 	}, 
 	dm2ui:function(){
-		this.curveui.dm2ui(this.curve);
+		this.uidata.curve.dm2ui(this.curve);
+	},
+
+	//todo.
+	ui2xls: function(){
+
 	},
 
 	xls2ui:function(param){
@@ -40,8 +47,8 @@ var API = {
 
 		try{
 			curveSheet.map((function(sheet){
-				this.curveui = new CurveUI();
-				this.curveui.xls2ui(sheet.sheet)
+				this.uidata.curve = new CurveUI();
+				this.uidata.curve.xls2ui(sheet.sheet)
 			}).bind(this))
 		}catch(e){
 			console.error(e);

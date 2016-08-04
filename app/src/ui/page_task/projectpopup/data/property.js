@@ -1,7 +1,7 @@
 import Util from '../../../widget/excel/util.js';
 import {Cell} from 'Table';
 import {Line} from 'Table';
-import Base from './base.js';
+import {Base} from 'Table';
 import Signal from '../../../../signal.js';
 
 class Property extends Base{

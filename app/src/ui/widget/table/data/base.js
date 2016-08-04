@@ -1,5 +1,4 @@
-import Util from '../../../widget/excel/util.js';
-
+import {Util} from 'XlsIExport';
 module.exports = class Base {
 	constructor(){
 		this.ui = [];	

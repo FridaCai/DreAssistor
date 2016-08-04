@@ -1,19 +1,21 @@
-import Base from '../../page_task/projectpopup/data/base.js';
 import Util from '../../widget/excel/util.js';
-import {Cell} from 'Table';
+import {Base} from 'Table';
 import Curve from '../data/curve.js';
+import {Cell} from 'Table';
+import {Line} from 'Table';
+import Label from 'Label';
 
 module.exports = class CurveUI extends Base{ //refactor.
 	constructor(){
 		super();
-
-		this.header = [
-			Cell.create({v: 'rpm'}), 
-			Cell.create({v: 'OA-level'}), 
-			Cell.create({v: '2 order'}), 
-			Cell.create({v: '4 order'}), 
-			Cell.create({v: '6 order'})
-		];
+		var line = Line.create({cells: [
+			Cell.create({component: Label, v: 'rpm'}), 
+			Cell.create({component: Label, v: 'OA-level'}), 
+			Cell.create({component: Label, v: '2 order'}), 
+			Cell.create({component: Label, v: '4 order'}), 
+			Cell.create({component: Label, v: '6 order'})
+		]});
+		this.header = line;
 
 		this.sheetName = `曲线`;
 	}
@@ -23,15 +25,16 @@ module.exports = class CurveUI extends Base{ //refactor.
 		this.ui = this.ui.concat(ui);
 	}
 
-
-	ui2dm(curve){
+	ui2dm(curve){debugger;
 		var pretty = function(value){
       		return Math.round(value * 100) / 100;
 		}
       	var getColumn = function(columnIndex, arr){
             var returnLabel = [];
             for(var i=0; i<arr.length; i++){
-              	var tmp = arr[i][columnIndex].v;
+            	var line = arr[i];
+
+              	var cell = line.cells[columnIndex].v;
               	tmp = pretty(tmp);
                 returnLabel.push(tmp);
             }
@@ -62,7 +65,6 @@ module.exports = class CurveUI extends Base{ //refactor.
 			series: series,
 			caption: 'frida test'
 		})
-		debugger; //create mock up data. curve by default.
 	}
 
 	dm2ui(curve){
@@ -74,25 +76,25 @@ module.exports = class CurveUI extends Base{ //refactor.
 
 		//empty part.
 		for(var i=empty.row.min; i<empty.row.max; i++){
-			var row = [];
+			var cells = [];
 			for(var j=empty.column.min; j<empty.column.max; j++){
-				row.push(Cell.create({isHide: true})); //todo: isHide=true???
+				cells.push(Cell.create({isHide: true})); //todo: isHide=true???
 			}
-			this.ui.push(row);
+			this.ui.push(Line.create({cells: cells}));
 		}
 
 
 		//datamodel 2 ui.
 		var loop = curve.labels.length;
 		for(var i=0; i<loop; i++){
-			var row = [
-				Cell.create({v: curve.labels[i]}),
-				Cell.create({v: curve.series[0].data[i]}),
-				Cell.create({v: curve.series[1].data[i]}),
-				Cell.create({v: curve.series[2].data[i]}),
-				Cell.create({v: curve.series[3].data[i]})
+			var cells = [
+				Cell.create({component: Label, v: curve.labels[i]}),
+				Cell.create({component: Label, v: curve.series[0].data[i]}),
+				Cell.create({component: Label, v: curve.series[1].data[i]}),
+				Cell.create({component: Label, v: curve.series[2].data[i]}),
+				Cell.create({component: Label, v: curve.series[3].data[i]})
 			];
-			this.ui.push(row);
+			this.ui.push(Line.create({cells: cells}));
 		}
 	}
 

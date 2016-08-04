@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {Cell} from 'Table';
+import Label from 'Label';
 
 var Util = {
  	getRange: function(raw){
@@ -43,8 +44,66 @@ var Util = {
 		return new Date(unixtime).toLocaleDateString();
 	},
 
-    ui2excel: function(){
+    ui2excel: function(uidata){
+        var ui2excel = function(raw){
+            var sheet_from_array_of_arrays = function(data){
+                var ws = {};
+                var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
+                for(var R = 0; R != data.length; ++R) {
+                    for(var C = 0; C != data[R].length; ++C) {
+                        if(range.s.r > R) range.s.r = R;
+                        if(range.s.c > C) range.s.c = C;
+                        if(range.e.r < R) range.e.r = R;
+                        if(range.e.c < C) range.e.c = C;
 
+                        debugger;
+                        var cell = {v: data[R].cells[C].v };
+
+
+                        if(cell.v == null) continue;
+                        var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+                        
+                        if(typeof cell.v === 'number') cell.t = 'n';
+                        else if(typeof cell.v === 'boolean') cell.t = 'b';
+                        else if(cell.v instanceof Date) {
+                            cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+                            cell.v = datenum(cell.v);
+                        }
+                        else cell.t = 's';
+                        
+                        ws[cell_ref] = cell;
+                    }
+                }
+                if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+                return ws;
+            }
+            var sheets = {};
+            var sheetNames = [];
+
+            for(var key in raw){
+                var sheet = [raw[key].header].concat(raw[key].ui);
+                sheets[key] = sheet_from_array_of_arrays(sheet);
+                sheetNames.push(key);
+            }
+
+            var workbook = {
+                SheetNames: sheetNames,
+                Sheets: sheets,
+            }
+
+            return workbook;
+        }
+        var s2ab = function(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        var wb = ui2excel(uidata);
+        var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
+        var name = `excel_${Date.parse(new Date())}.xlsx`;
+        saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), name);
     },
 	excel2ui: function(sheet){
         var ui = [];
@@ -52,9 +111,7 @@ var Util = {
         var isDate = function(value){
             if(!value)
                 return false;
-            //var m = moment(value.w, 'MM-DD-YYYY');
             var m = moment(value.w, ['YYYY/M/D', 'M/D/YY'], true);
-            
             return m.isValid();
         }
 
@@ -63,18 +120,17 @@ var Util = {
         for (var i=range.lineMin; i<=range.lineMax; i++) {
             var columnMin = this.alphabet2Index(range.columnMin);
             var columnMax = this.alphabet2Index(range.columnMax);
-            
-            ui[i-1] = [];
+
+            var cells = [];
             for(var j=columnMin; j<=columnMax; j++){
                 var key = `${this.index2Alphabet(j)}${i}`;
                 var value = sheet[key] ? sheet[key].v : '';
                 if(isDate(sheet[key])){
                     value = sheet[key].w;
                 }
-                var cell = new Cell();
-                cell.init({v: value});
-                ui[i-1].push(cell);
+                cells.push(Cell.create({component:Label, v: value}));
             }
+            ui[i-1] = Line.create({cells: cells});
         }
         return ui;
     },

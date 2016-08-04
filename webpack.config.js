@@ -47,6 +47,7 @@ module.exports = {
         alias: {
             Util: path.join(__dirname, toolPath, "/util.js"),
             Signal: path.join(__dirname, toolPath, "/signal.js"),
+            Request: path.join(__dirname, toolPath, "/request.js"),
             CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
             XlsIExport: path.join(__dirname, widgetPath, "/excel/index.js"),
             RadioGroup: path.join(__dirname, widgetPath, "/radiogroup/index.js"),

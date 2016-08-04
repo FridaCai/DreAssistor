@@ -1,4 +1,4 @@
-import Base from './base.js';
+import {Base} from 'Table';
 import TaskData from '../../data/task.js';
 import {Cell} from 'Table';
 import Util from '../../../widget/excel/util.js';

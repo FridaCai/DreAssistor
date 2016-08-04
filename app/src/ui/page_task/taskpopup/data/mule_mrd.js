@@ -1,4 +1,4 @@
-import Base from '../../projectpopup/data/base.js'; //todo.
+import {Base} from 'Table'; 
 import {Cell} from 'Table';
 import {ExpandLine} from 'Table';
 import {Line} from 'Table';
@@ -109,9 +109,6 @@ module.exports = class MuleMRD extends Base{
 		}).bind(this));
 	}
 
-	getUI(){
-		return this.ui;
-	}
 }
 
 

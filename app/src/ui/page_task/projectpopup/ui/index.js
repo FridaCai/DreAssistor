@@ -1,5 +1,5 @@
 import MessageBox from 'MessageBox';
-import XlsIExport from 'XlsIExport';
+import {XlsIExport} from 'XlsIExport';
 import {TableDOM} from 'Table';
 import API from '../api.js';
 import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
@@ -8,18 +8,16 @@ import Tag from '../data/tag.js';
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
-        var uidata = (function(p){
+        (function(p){
             if(!p)
-                return undefined;
+                return;
             API.setProject(p);
             API.dm2ui();      
-            return API.uidata;
         })(this.props.project);
 
         return {
             title: this.props.title,
             onOK: this.props.onOK,
-            uidata: uidata,
         };
     },
 
@@ -57,6 +55,18 @@ var ProjectPopup = React.createClass({
         API.ui2dm();
         API.dm2ui();
         this.refs.table.update({uidata: API.uidata});
+    },
+    onTableDrop: function(files){
+        var reader = new FileReader();
+
+        var file = files[0];
+        var fileName = file.name;
+        reader.onload = (function(e){
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {type: 'binary'});
+            this.refs.xlsIExport.onPopupShow(workbook);
+        }).bind(this);
+        reader.readAsBinaryString(file);
     },
     componentDidMount: function(){
         Property.signal_sorp_change.listen(function(e, param){
@@ -99,18 +109,7 @@ var ProjectPopup = React.createClass({
         }).bind(this));
     },
 
-    onTableDrop: function(files){
-        var reader = new FileReader();
 
-        var file = files[0];
-        var fileName = file.name;
-        reader.onload = (function(e){
-            var data = e.target.result;
-            var workbook = XLSX.read(data, {type: 'binary'});
-            this.refs.xlsIExport.onPopupShow(workbook);
-        }).bind(this);
-        reader.readAsBinaryString(file);
-    },
 
     onOK:function() {
         console.log('onOK');
