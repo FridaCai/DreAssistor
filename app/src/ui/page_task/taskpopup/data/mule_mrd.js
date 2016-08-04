@@ -1,6 +1,5 @@
 import Base from '../../projectpopup/data/base.js'; //todo.
 import {Cell} from 'Table';
-import {LineGroup} from 'Table';
 import {ExpandLine} from 'Table';
 import {Line} from 'Table';
 

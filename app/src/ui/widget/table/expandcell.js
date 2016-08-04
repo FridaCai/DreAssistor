@@ -16,13 +16,6 @@ var ExpandCellDOM = React.createClass({
     },
 
     onToggle(){
-        /*var isOpen = !this.state.isOpen;
-        var expandComponent = this.state.expandComponent;
-        this.props.signal_expand_toggle.dispatch({
-            isOpen: isOpen, 
-            expandComponent: expandComponent
-        });*/
-
         var cell = this.state.cell;
         var isOpen = !cell.param.isOpen;
 

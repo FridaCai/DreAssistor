@@ -47,10 +47,6 @@ var ExpandLindDOM = React.createClass({
 	componentWillUpdate(){
 		this.update();
 	},
-
-	componentWillUnmount(){
-	},
-	
 	render(){
 		var line = this.state.line;
 		var key = line.id;

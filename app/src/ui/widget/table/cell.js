@@ -6,12 +6,6 @@ var CellDOM = React.createClass({
       }
   	},
 
-   	/*getValue(){
-   		if(this.refs.component && this.refs.component.getValue)
-   			return this.refs.component.getValue();
-   		return '';
-    }*/
-
     render(){
     	var {cell, widthStyle} = this.state;
     	var ref= 'component';
@@ -34,7 +28,5 @@ var CellDOM = React.createClass({
       );
     }
 })
-
-//CellDOM.signal_expand_toggle = new Signal();
 
 module.exports = CellDOM

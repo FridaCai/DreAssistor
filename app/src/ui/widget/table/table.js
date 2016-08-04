@@ -100,12 +100,8 @@ var TableDOM = React.createClass({
 
                 var lines = [];
                 for(var i=0; i<sheet.length; i++){
-                    var line = sheet[i];
-                    if(line instanceof LineGroup){
-                        lines = lines.concat(line.lines);
-                    }else{
-                        lines.push(line);
-                    }
+                    var line = sheet[i];                    
+                    lines.push(line);
                 }
 
                 for(var i=0; i<lines.length; i++){
