@@ -1,5 +1,4 @@
 import Util from 'Util';
-import {ExpandCellDOM} from 'Table';
 
 class Line {
     static create(param){
@@ -27,7 +26,7 @@ class Line {
 
 	updateByExpand(isOpen, cell){
 		this.cells.map(function(cell){
-			if(cell.component instanceof ExpandCellDOM){
+			if(cell.component.displayName === 'ExpandCellDOM'){
 				cell.param.isOpen = false;
 			}
 		});

@@ -20,25 +20,25 @@ var TableDOM = React.createClass({
             sheetIndex: index,
         });
     },  
+    onExpandToggle: function(e, param){
+        var {isOpen, cell} = param;
 
+        var line = cell.line;
+        line.updateByExpand(isOpen, cell);
+
+        var expandLine = line.expandLine;
+        expandLine.updateByExpand(isOpen, cell);
+
+        this.forceUpdate();
+    },
     componentDidMount: function(){
         sigal_window_resizeend.listen(this.updateAfterRender);
-
-        API.signal_expand_toggle.listen((function(e, param){
-            var {isOpen, cell} = param;
-
-            var line = cell.line;
-            line.updateByExpand(isOpen, cell);
-
-            var expandLine = line.expandLine;
-            expandLine.updateByExpand(isOpen, cell);
-
-            this.forceUpdate();
-        }).bind(this));
+        API.signal_expand_toggle.listen(this.onExpandToggle);
     },
     
     componentWillUnmount: function(){
         sigal_window_resizeend.unlisten(this.updateAfterRender);
+        API.signal_expand_toggle.unlisten(this.onExpandToggle);
     },
 
     _$: function(selector){
