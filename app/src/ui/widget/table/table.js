@@ -129,28 +129,31 @@ var TableDOM = React.createClass({
         for(var i=0; i<rowNum; i++){
             var line = [];
 
-            line.push(headers.cells[i]);
+            var headerCell = headers.cells[i];
+            !headerCell.isHide && line.push(headerCell);
+
             for(var j=0; j<columnNum; j++){
-                line.push(sheets[j].cells[i]);
+                var cell = sheets[j].cells[i];
+                !cell.isHide && line.push(cell);
             }
             table.push(line);
         }
 
-
         return (
             <table>
-                {
-                    table.map(function(line){
-                        return (<tr>
-                        {
-                            line.map(function(cell){ //todo: width style.
-                                return (<CellDOM cell={cell}/>)
-                            })
-                        }
-                        </tr>)
-                    })
-                }
-
+                <tbody>
+                    {
+                        table.map(function(line, i){
+                            return (<tr key={i}>
+                            {
+                                line.map(function(cell, j){ //todo: width style.
+                                    return (<CellDOM key={j} cell={cell} widthStyle={{width: '100px'}}/>)
+                                })
+                            }
+                            </tr>)
+                        })
+                    }
+                </tbody>
             </table>
         )
     },
