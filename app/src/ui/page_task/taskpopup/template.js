@@ -21,6 +21,9 @@ var TaskTemplatePanel = React.createClass({
         var type = this.state.type;
         this.updateTemplatePanelByIndex(type);
     },
+    componentWillUnmount: function(){
+        var result = ReactDOM.unmountComponentAtNode(this.refs.templatePanel);
+    },
 
     updateTemplatePanelByIndex: function(index){
         var el = React.createElement(this.templatePanel[index], {param: this.state.param, project: this.state.project});

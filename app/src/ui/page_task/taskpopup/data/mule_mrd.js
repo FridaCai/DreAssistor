@@ -13,7 +13,9 @@ import Label from 'Label';
 import RadioGroup from 'RadioGroup';
 import Input from 'Input';
 
-module.exports = class MuleMRD extends Base{
+import Signal from 'Signal';
+
+class MuleMRD extends Base{
 	constructor(){
 		super();
 
@@ -70,25 +72,30 @@ module.exports = class MuleMRD extends Base{
 				return false
 			})(value);
 
-			
 
+	        var expandLine = ExpandLine.create({
+				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+			});
 
+	       
 	        var curveCellParam = {
 	        	label: '曲线图',
 	        	expandComponent: CurveComponent,
 	        	isOpen: false,
+	        	onExpandToggle: function(){
+	        		MuleMRD.signal_expand_toggle.dispatch();
+	        	}
 	        };
 
 	        var attachmentCellParam = {
 	        	label: '附件', 
 	        	expandComponent: AttachmentList,
 	        	isOpen: false,
+	        	onExpandToggle: function(){
+	        		MuleMRD.signal_expand_toggle.dispatch();
+	        	}
 	        };
 	        
-
-	        var expandLine = ExpandLine.create({
-				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-			});
 
 			var line = Line.create({
 				cells: [
@@ -110,7 +117,8 @@ module.exports = class MuleMRD extends Base{
 	}
 
 }
+MuleMRD.signal_expand_toggle = new Signal();
 
 
-
+module.exports = MuleMRD;
 

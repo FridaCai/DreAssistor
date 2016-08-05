@@ -30,7 +30,15 @@ var MuleMRDTemplate = React.createClass({
             return $(ReactDOM.findDOMNode(this));
         else return $(ReactDOM.findDOMNode(this)).find(selector);
     },
-
+    componentDidMount: function(){
+        MuleMRD.signal_expand_toggle.listen(this.onExpandToggle);
+    },
+    onExpandToggle: function(){
+        this.refs.table.forceUpdate();
+    },
+    componentWillUnmount: function(){
+        MuleMRD.signal_expand_toggle.unlisten(this.onExpandToggle);
+    },
 	render(){
         API.param = this.state.param;
         API.project = this.state.project;

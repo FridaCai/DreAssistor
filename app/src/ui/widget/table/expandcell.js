@@ -19,11 +19,13 @@ var ExpandCellDOM = React.createClass({
         var cell = this.state.cell;
         var isOpen = !cell.param.isOpen;
 
-        this.setState({isOpen:isOpen});
-        API.signal_expand_toggle.dispatch({
-            isOpen:isOpen, 
-            cell: cell,
-        });
+        var line = cell.line;
+        line.updateByExpand(isOpen, cell);
+
+        var expandLine = line.expandLine;
+        expandLine.updateByExpand(isOpen, cell);
+
+        cell.param.onExpandToggle();
     },
 
     render(){

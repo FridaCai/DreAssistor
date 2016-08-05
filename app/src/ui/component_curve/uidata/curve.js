@@ -1,22 +1,25 @@
-import Util from '../../widget/excel/util.js';
-import {Base} from 'Table';
-import Curve from '../data/curve.js';
+import {Util} from 'XlsIExport';
+import GlobalUtil from 'Util';
 import {Cell} from 'Table';
 import {Line} from 'Table';
+import {Base} from 'Table';
 import Label from 'Label';
+import Curve from '../data/curve.js';
+import ColorCheckbox from '../widget/colorcheckbox.js';
 
 module.exports = class CurveUI extends Base{ //refactor.
 	constructor(){
 		super();
+
+		var colorIndex = 0;
 		var line = Line.create({cells: [
 			Cell.create({component: Label, v: 'rpm'}), 
-			Cell.create({component: Label, v: 'OA-level'}), 
-			Cell.create({component: Label, v: '2 order'}), 
-			Cell.create({component: Label, v: '4 order'}), 
-			Cell.create({component: Label, v: '6 order'})
+			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: 'OA-level'}, v: 'OA-level'}),
+			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: '2 order'}, v: '2 order'}),
+			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: '4 order'}, v: '4 order'}),
+			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: '6 order'}, v: '6 order'}),
 		]});
 		this.header = line;
-
 		this.sheetName = `曲线`;
 	}
 	xls2ui(param){
@@ -25,13 +28,13 @@ module.exports = class CurveUI extends Base{ //refactor.
 		this.ui = this.ui.concat(ui);
 	}
 
-	ui2dm(curve){debugger;
+	ui2dm(curve){
 		var pretty = function(value){
       		return Math.round(value * 100) / 100;
 		}
-      	var getColumn = function(columnIndex, arr){
+      	var getColumn = function(columnIndex, rowMinIndex, rowMaxIndex, arr){
             var returnLabel = [];
-            for(var i=0; i<arr.length; i++){
+            for(var i=rowMinIndex; i<=rowMaxIndex; i++){
             	var line = arr[i];
 
               	var cell = line.cells[columnIndex].v;
@@ -41,39 +44,35 @@ module.exports = class CurveUI extends Base{ //refactor.
             return returnLabel;
         }
 
-		var labels = getColumn(0, this.ui);
-		var series = [{
-			label: this.header[1].v,
-			isShow: true,
-			data: getColumn(1, this.ui),
-		}, {
-			label: this.header[2].v,
-			isShow: true,
-			data: getColumn(2, this.ui),
-		}, {
-			label: this.header[3].v,
-			isShow: true,
-			data: getColumn(3, this.ui),
-		}, {
-			label: this.header[4].v,
-			isShow: true,
-			data: getColumn(4, this.ui),
-		}];
+        var series = this.header.cells.map(function(h, i){
+        	return {
+        		label: h.v,
+				isShow: true,
+				data: i,
+        	}
+        })
 
+        var data = this.header.cells.map(function(h, i, arr){
+        	var columnIndex = i;
+        	var rowMinIndex = 1;
+        	var rowMaxIndex = arr.length - 1;
+        	return getColumn(columnIndex, rowMinIndex, rowMaxIndex, arr);
+        })
+		
 		curve.init({
-			labels: labels, 
+			caption: 'frida test',
 			series: series,
-			caption: 'frida test'
+			data: data,
 		})
 	}
 
 	dm2ui(curve){
-		var empty = {
+		this.ui = [];
+
+		/*var empty = {
 			row: {min: 0, max: 7},
 			column: {min:0, max:5}
 		}
-		this.ui = [];
-
 		//empty part.
 		for(var i=empty.row.min; i<empty.row.max; i++){
 			var cells = [];
@@ -81,20 +80,24 @@ module.exports = class CurveUI extends Base{ //refactor.
 				cells.push(Cell.create({isHide: true})); //todo: isHide=true???
 			}
 			this.ui.push(Line.create({cells: cells}));
-		}
+		}*/
 
 
 		//datamodel 2 ui.
-		var loop = curve.labels.length;
-		for(var i=0; i<loop; i++){
-			var cells = [
-				Cell.create({component: Label, v: curve.labels[i]}),
-				Cell.create({component: Label, v: curve.series[0].data[i]}),
-				Cell.create({component: Label, v: curve.series[1].data[i]}),
-				Cell.create({component: Label, v: curve.series[2].data[i]}),
-				Cell.create({component: Label, v: curve.series[3].data[i]})
-			];
-			this.ui.push(Line.create({cells: cells}));
+
+		var rowNum = curve.data[0].length; //100000
+		var columnNum = curve.data.length; //5
+
+		for(var i=0; i<rowNum; i++){
+			var cells = [];
+
+			for(var j=0; j<columnNum; j++){
+				var v = curve.data[j][i];				
+				cells.push(Cell.create({component: Label, v: v}));
+			}
+
+			var line = Line.create({cells: cells});
+			this.ui.push(line);
 		}
 	}
 
@@ -103,12 +106,11 @@ module.exports = class CurveUI extends Base{ //refactor.
 
 		this.ui.map(function(rows){
 			var tmp = [];
-			rows.map(function(cell){
+			rows.cells.map(function(cell){
 				tmp.push(cell.v)
 			})
 			dumpui.push(tmp);
 		})
-
 		console.table(dumpui);
 	}
 }

@@ -100,6 +100,9 @@ var TaskPopup = React.createClass({
     componentDidMount: function(){
         this.updateJqueryComponent();
     },
+    componentWillUnmount: function(){
+        debugger;
+    },
     updateJqueryComponent: function() {
     	(function updatePriorityDropdown(){
             var defaultKey = this.state.task.priority;

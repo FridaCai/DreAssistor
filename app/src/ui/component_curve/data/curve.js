@@ -10,7 +10,7 @@ module.exports = class Curve {
 		this.parent = undefined; //todo
 		
 		this.caption = param.caption || '';
-		this.labels = param.labels || [];
+		this.data = param.data || [];
 		this.series = param.series || [];//{label, data, isshow}
 	}
 
@@ -18,7 +18,7 @@ module.exports = class Curve {
 		return {
 			id: this.id,
 			caption: this.caption,
-			labels: this.labels,
+			data: this.data,
 			series: this.series,
 		}
 	}

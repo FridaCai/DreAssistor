@@ -143,8 +143,7 @@ var Table = React.createClass({
 								return (
 									<tr key={i}>
 										<th scope="row" role="rowheader">
-											<input type="checkbox" checked={isChecked} onChange={this.onChange.bind(this, i, !isChecked)}></input>  
-											<span className={className}></span>
+											
 										</th>
 										<th scope="row" role="rowheader">{label}</th>
 										{
