@@ -1,0 +1,42 @@
+{
+  "id": "A72CEA28-2E86-4212-BECF-538A4975BB1D",
+  "caption": "frida test",
+  "data": [[
+    1
+  ],[
+    2
+  ],[
+    3
+  ],[
+    4
+  ],[
+    5
+  ]],
+  "series": [
+    {
+      "label": "rpm",
+      "isShow": true,
+      "data": 0
+    },
+    {
+      "label": "OA-level",
+      "isShow": true,
+      "data": 1
+    },
+    {
+      "label": "2 order",
+      "isShow": true,
+      "data": 2
+    },
+    {
+      "label": "4 order",
+      "isShow": true,
+      "data": 3
+    },
+    {
+      "label": "6 order",
+      "isShow": true,
+      "data": 4
+    }
+  ]
+}

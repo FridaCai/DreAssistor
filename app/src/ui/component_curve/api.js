@@ -7,6 +7,8 @@ import CurveUI from './uidata/curve.js';
 var API = {
 	signal_curve_toggle: new Signal(),
 
+
+	/*will be called when init website. not good.*/
 	uidata: {
 		curve: new CurveUI(),
 	},

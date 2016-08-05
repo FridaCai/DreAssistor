@@ -36,6 +36,7 @@ var CurveComponent = React.createClass({
                   uidata={API.uidata} 
                   onDrop={this.onTableDrop}
                   isReverse={true}/>
+              <Chart ref='chart'/>
           </div>
     );   
   },

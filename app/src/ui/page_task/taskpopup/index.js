@@ -101,7 +101,6 @@ var TaskPopup = React.createClass({
         this.updateJqueryComponent();
     },
     componentWillUnmount: function(){
-        debugger;
     },
     updateJqueryComponent: function() {
     	(function updatePriorityDropdown(){

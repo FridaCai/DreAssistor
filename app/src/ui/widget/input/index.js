@@ -1,3 +1,6 @@
+import './style.less';
+
+
 var Input = React.createClass({
 	getInitialState(){
 		return {
