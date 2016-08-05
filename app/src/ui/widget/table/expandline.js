@@ -9,7 +9,7 @@ var ExpandLindDOM = React.createClass({
 
 	update(){
 	    var runExpandAmination = (function(isOpen){
-	        var h = isOpen ? 500 : 0;
+	        var h = isOpen ? 700 : 0;
 	        var duration = 500;
 
 	        return new Promise((function(resolve, reject){

@@ -11,7 +11,7 @@ module.exports = class Curve {
 		
 		this.caption = param.caption || '';
 		this.data = param.data || [];
-		this.series = param.series || [];//{label, data, isshow}
+		this.series = param.series || [];//{label, data, isShowCurve}
 	}
 
 	dump(){

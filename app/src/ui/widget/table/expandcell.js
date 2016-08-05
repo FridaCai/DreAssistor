@@ -1,5 +1,4 @@
 //todo: more like a component like radio group rather than table cell; 
-import API from './api.js';
 
 var ExpandCellDOM = React.createClass({
     /*

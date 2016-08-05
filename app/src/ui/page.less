@@ -54,6 +54,7 @@ form.upload{
 	    height: 34px;
 	    margin-top: -4px;
 	    padding: 0 5px;
+	    width:auto;
     }
 
     &.desc textarea{
@@ -63,6 +64,7 @@ form.upload{
 	    border-radius: 4px;
 	    padding: 5px;
     }
+
 
     .datetime{
     	width: 172px;
@@ -120,6 +122,9 @@ form.upload{
     		width: 550px;
     		
     	}
+    }
+    &.taskType{
+    	width: 100%;
     }
 }
 
@@ -189,12 +194,12 @@ form.upload{
 	    }
 	}
 
-	#MsgBoxWrapper.taskPopup .MsgBoxMain{
+	#MsgBoxWrapper.taskPopup >.MsgBoxMain{
 		width:100%;
 		height: 100%;
 		top:0;
 
-		.panel-body{
+		>.panel-body{
 			padding-bottom: 100px;
 
 			.taskType{

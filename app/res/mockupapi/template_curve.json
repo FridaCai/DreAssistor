@@ -1272,27 +1272,27 @@
   "series": [
     {
       "label": "rpm",
-      "isShow": true,
+      "isShowCurve": true,
       "data": 0
     },
     {
       "label": "OA-level",
-      "isShow": true,
+      "isShowCurve": true,
       "data": 1
     },
     {
       "label": "2 order",
-      "isShow": true,
+      "isShowCurve": true,
       "data": 2
     },
     {
       "label": "4 order",
-      "isShow": true,
+      "isShowCurve": true,
       "data": 3
     },
     {
       "label": "6 order",
-      "isShow": true,
+      "isShowCurve": true,
       "data": 4
     }
   ]

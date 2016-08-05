@@ -8,7 +8,7 @@ import TableDOM from './table.js';
 import Cell from './data/cell.js';
 import ExpandLine from './data/expandline.js';
 import Line from './data/line.js';
-import Base from './data/base.js';
+import Base from './uidata/base.js';
 
 exports.CellDOM = CellDOM;
 exports.ExpandCellDOM = ExpandCellDOM;

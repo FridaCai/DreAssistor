@@ -27,6 +27,9 @@ module.exports = class CurveUI extends Base{ //refactor.
 		ui.splice(0,8); //todo: bad. assume only one line for header...search for a better solution...
 		this.ui = this.ui.concat(ui);
 	}
+	ui2xls(){
+		//todo. add back spliced 8 lines;
+	}
 
 	ui2dm(curve){
 		var pretty = function(value){
@@ -47,7 +50,7 @@ module.exports = class CurveUI extends Base{ //refactor.
         var series = this.header.cells.map(function(h, i){
         	return {
         		label: h.v,
-				isShow: true,
+				isShowCurve: true,
 				data: i,
         	}
         })
@@ -101,16 +104,4 @@ module.exports = class CurveUI extends Base{ //refactor.
 		}
 	}
 
-	dump(){
-		var dumpui = [];
-
-		this.ui.map(function(rows){
-			var tmp = [];
-			rows.cells.map(function(cell){
-				tmp.push(cell.v)
-			})
-			dumpui.push(tmp);
-		})
-		console.table(dumpui);
-	}
 }

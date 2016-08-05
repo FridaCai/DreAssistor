@@ -3,6 +3,7 @@ import API from './api.js';
 import {XlsIExport} from 'XlsIExport';
 import {TableDOM} from 'Table';
 import Curve from './data/curve.js';
+import Chart from './chart.js';
 
 var CurveComponent = React.createClass({
   getInitialState: function(){
@@ -17,28 +18,36 @@ var CurveComponent = React.createClass({
   },
 
   render: function(){
-    var disableXlsIExport = false;
-    var sheetOptions = [{
-        id: 'curve',
-        label: '曲线',
-        writeMode:[0]
-    }];
-    return (
-          <div className='curveComponent'>
-              <XlsIExport ref='xlsIExport' 
-                  disabled={disableXlsIExport} 
-                  sheetOptions={sheetOptions}
-                  onImportSheetDone={this.onXlsImport}
-                  xls2ui = {API.xls2ui}
-                  ui2xls = {API.ui2xls}
-              />
-              <TableDOM ref='table' 
-                  uidata={API.uidata} 
-                  onDrop={this.onTableDrop}
-                  isReverse={true}/>
-              <Chart ref='chart'/>
-          </div>
-    );   
+    try{
+      var disableXlsIExport = false;
+      var sheetOptions = [{
+          id: 'curve',
+          label: '曲线',
+          writeMode:[0]
+      }];
+
+      /* <Chart ref='chart' 
+                    uidata={API.uidata}/> //todo: import chart.*/
+      return (
+            <div className='curveComponent'>
+                <XlsIExport ref='xlsIExport' 
+                    disabled={disableXlsIExport} 
+                    sheetOptions={sheetOptions}
+                    onImportSheetDone={this.onXlsImport}
+                    xls2ui = {API.xls2ui}
+                    ui2xls = {API.ui2xls}
+                />
+                <TableDOM ref='table' 
+                    uidata={API.uidata} 
+                    onDrop={this.onTableDrop}
+                    isReverse={true}/>
+               <Chart uidata={API.uidata} ref='chart'/>
+            </div>
+      );  
+    }catch(e){
+      console.log(e.stack);
+    }
+       
   },
 
   onImportSheetDone: function(){
@@ -72,8 +81,9 @@ var CurveComponent = React.createClass({
           API.setCurve(curve); 
           API.dm2ui();
 
+
           this.refs.table.forceUpdate();
-          //this.refs.chart.update();
+          this.refs.chart.update();
       }).bind(this)).catch((function(e){
           console.log(e.stack);
       }).bind(this));
