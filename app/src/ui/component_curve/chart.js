@@ -1,4 +1,5 @@
 import API from './api.js';
+import Util from 'Util';
 
 var Chart = React.createClass({
   getInitialState: function(){
@@ -70,6 +71,18 @@ var Chart = React.createClass({
           }
         }
       });  
+
+      this._chart.on('created', function(){
+        var j=0;
+        var asc_a = 'a'.charCodeAt(0);
+        var asc_z = 'z'.charCodeAt(0);
+        for(var i=asc_a; i<=asc_z; i++){
+          var char = String.fromCharCode(i);
+          var color = Util.convertIntColorToHex(Util.COLORS[j++]);
+          $(`.curveid_${id}`).find(`.ct-series.ct-series-${char} .ct-point`).css({'stroke': color});
+          $(`.curveid_${id}`).find(`.ct-series.ct-series-${char} .ct-line`).css({'stroke': color});
+        }
+      })
     }catch(e){
       console.log(e.stack);
     }
