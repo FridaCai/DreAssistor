@@ -5,8 +5,6 @@ import CurveUI from './uidata/curve.js';
 
 //todo: template mode??? very similar with projectpopup/api
 var API = {
-	signal_curve_toggle: new Signal(),
-
 
 	/*will be called when init website. not good.*/
 	uidata: {

@@ -80,10 +80,16 @@ class MuleMRD extends Base{
 	       
 	        var curveCellParam = {
 	        	label: '曲线图',
-	        	expandComponent: CurveComponent,
 	        	isOpen: false,
 	        	onExpandToggle: function(){
 	        		MuleMRD.signal_expand_toggle.dispatch();
+	        	},
+
+
+
+	        	expandComponent: CurveComponent,
+	        	expandComponentParam: {
+	        		id: key
 	        	}
 	        };
 

@@ -1,13 +1,6 @@
 //todo: more like a component like radio group rather than table cell; 
 
 var ExpandCellDOM = React.createClass({
-    /*
-        cell.param = {
-            label: '曲线图',
-            expandComponent: CurveComponent,
-            isOpen: false,
-        }
-    */
     getInitialState() {
         return {
             cell: this.props.cell,

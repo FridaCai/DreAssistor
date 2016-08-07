@@ -3,6 +3,7 @@ import API from './api.js';
 import {XlsIExport} from 'XlsIExport';
 import {TableDOM} from 'Table';
 import Curve from './data/curve.js';
+import CurveUI from './uidata/curve.js';
 import Chart from './chart.js';
 
 var CurveComponent = React.createClass({
@@ -14,7 +15,9 @@ var CurveComponent = React.createClass({
         API.dm2ui();      
     })(this.props.curve);
 
-    return {};
+    return {
+      id: this.props.id,
+    }
   },
 
   render: function(){
@@ -25,6 +28,7 @@ var CurveComponent = React.createClass({
           label: '曲线',
           writeMode:[0]
       }];
+      var id = this.state.id;
 
       /* <Chart ref='chart' 
                     uidata={API.uidata}/> //todo: import chart.*/
@@ -41,7 +45,7 @@ var CurveComponent = React.createClass({
                     uidata={API.uidata} 
                     onDrop={this.onTableDrop}
                     isReverse={true}/>
-               <Chart uidata={API.uidata} ref='chart'/>
+               <Chart uidata={API.uidata} ref='chart' id={id}/>
             </div>
       );  
     }catch(e){
@@ -67,8 +71,9 @@ var CurveComponent = React.createClass({
       }).bind(this);
       reader.readAsBinaryString(file);
   },
+
   componentDidMount: function(){
-      API.signal_curve_toggle.listen(this.onCurveToggle);
+      CurveUI.signal_curve_toggle.listen(this.onCurveToggle);
 
 
       if(this.props.curve)
@@ -90,10 +95,10 @@ var CurveComponent = React.createClass({
   },
 
   componentDidUnMount: function(){
-      API.signal_curve_toggle.unlisten(this.onCurveToggle);
+    CurveUI.signal_curve_toggle.unlisten(this.onCurveToggle);
   },
   onCurveToggle: function(e, param){
-    //this.refs.chart.onCurveToggle(param);
+    this.refs.chart.update();
   },
 })
 

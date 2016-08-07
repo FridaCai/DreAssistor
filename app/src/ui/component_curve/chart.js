@@ -6,6 +6,7 @@ var Chart = React.createClass({
 
     return {
       uidata: this.props.uidata,
+      id: this.props.id,
     }
   },
 
@@ -17,6 +18,8 @@ var Chart = React.createClass({
   update: function(){
     try{
       var curve = this.state.uidata.curve;
+      curve.dump();
+
       var header = curve.header;
       var ui = curve.ui;
     
@@ -31,8 +34,6 @@ var Chart = React.createClass({
 
 
 
-      console.log('====================================');
-      debugger;
       var lineNum = ui[0].cells.length;
       var series = [];
 
@@ -44,29 +45,14 @@ var Chart = React.createClass({
         series.push(serie);
       }
 
-      console.table(series);
-
-
-      /*
-      var series = ui.map(function(line){
-        return line.cells.filter(function(cell,index){
-          return index === 0;
-        })
-      })
-      */
-
-
-
-
-      debugger;
-      //color??
-
       if(this._chart){
         this._chart.svg.remove();
         this._chart.detach();
       }
 
-      this._chart = new Chartist.Line('.ct-chart', {
+      var id = this.state.id;
+      var selector = `.curveid_${id}`;
+      this._chart = new Chartist.Line(selector, {
         labels: labels,
         series: series,
       }, {
@@ -105,8 +91,10 @@ var Chart = React.createClass({
 
   
   render: function(){
+    var id = this.state.id;
+    var className = `ct-chart ct-perfect-fourth curveid_${id}`;
     return (
-        <div className="ct-chart ct-perfect-fourth" ></div>
+        <div className={className} ></div>
     )
   }
 })

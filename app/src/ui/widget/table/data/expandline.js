@@ -15,5 +15,6 @@ module.exports = class ExpandLine extends Line {
     updateByExpand(isOpen, cell){
     	this.isOpen = isOpen;
     	this.cells[0].param.expandComponent = cell.param.expandComponent;
+        this.cells[0].param.expandComponentParam = cell.param.expandComponentParam;
     }
 }

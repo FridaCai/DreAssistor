@@ -6,21 +6,53 @@ import {Base} from 'Table';
 import Label from 'Label';
 import Curve from '../data/curve.js';
 import ColorCheckbox from '../widget/colorcheckbox.js';
+import Signal from 'Signal';
 
-module.exports = class CurveUI extends Base{ //refactor.
+class CurveUI extends Base{ 
 	constructor(){
 		super();
 
 		var colorIndex = 0;
+
+
+		var createLine = function(label){
+			return Cell.create({
+				component: ColorCheckbox, 
+				param: {
+					color: GlobalUtil.COLORS[colorIndex++ % 24], 
+					isCheck: true, 
+					label: label,  
+					onCheckboxChange: function(isCheck){
+						this.isCheck = isCheck;
+						CurveUI.signal_curve_toggle.dispatch();
+					}
+				}, 
+				v: label,
+			})
+		}
+
+
 		var line = Line.create({cells: [
 			Cell.create({component: Label, v: 'rpm'}), 
-			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: 'OA-level'}, v: 'OA-level'}),
-			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: '2 order'}, v: '2 order'}),
-			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: '4 order'}, v: '4 order'}),
-			Cell.create({component: ColorCheckbox, param: {color: GlobalUtil.COLORS[colorIndex++ % 24], isCheck: false, label: '6 order'}, v: '6 order'}),
+			createLine('QA-Level'),
+			createLine('2 order'),
+			createLine('4 order'),
+			createLine('6 order')
 		]});
+
 		this.header = line;
 		this.sheetName = `曲线`;
+	}
+	dump(){
+		var dumpui = [];
+
+		var tmp = [];
+		this.header.cells.map(function(cell){
+			tmp.push(`${cell.v}, ${cell.param.isCheck}`);
+		})
+		dumpui.push(tmp);
+
+		console.table(dumpui);
 	}
 	xls2ui(param){
 		var ui = Util.excel2ui(param);
@@ -70,6 +102,8 @@ module.exports = class CurveUI extends Base{ //refactor.
 	}
 
 	dm2ui(curve){
+		this.id = curve.id;
+		
 		this.ui = [];
 
 		/*var empty = {
@@ -105,3 +139,6 @@ module.exports = class CurveUI extends Base{ //refactor.
 	}
 
 }
+
+CurveUI.signal_curve_toggle = new Signal();
+module.exports = CurveUI;

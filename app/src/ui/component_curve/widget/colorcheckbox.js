@@ -1,5 +1,7 @@
 import './style.less';
 import Util from 'Util';
+import Curve from '../uidata/curve.js';
+
 var ColorCheckbox = React.createClass({
 	getInitialState(){
 		return {
@@ -8,8 +10,12 @@ var ColorCheckbox = React.createClass({
 			label: this.props.param.label,	
 		}
 	},
-	onCheckboxChange(){
+
+	onCheckboxChange(e){
+		var isCheck = e.currentTarget.checked; 
+		this.props.param.onCheckboxChange(isCheck);
 	},
+	
 	render(){
 		var isCheck = this.state.isCheck;
 		var color = this.state.color;
@@ -20,7 +26,7 @@ var ColorCheckbox = React.createClass({
 
 		return (
 			<div className='colorcheckbox'>
-				<input type="checkbox" checked={isCheck} onChange={this.onCheckboxChange}></input>  
+				<input type="checkbox" defaultChecked={isCheck} onChange={this.onCheckboxChange}></input>  
 				<span className='colorBlock' style={style}></span>	
 				<span>{label}</span>
 			</div>

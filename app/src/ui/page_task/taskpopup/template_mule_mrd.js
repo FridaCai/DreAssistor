@@ -1,6 +1,5 @@
 import RadioGroup from 'RadioGroup';
 import './template_mule_mrd.less';
-//import CurveComponent from '../../component_curve/index.js'; //todo.
 import MuleMRD from './data/mule_mrd.js';
 import {TableDOM} from 'Table';
 

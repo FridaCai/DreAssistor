@@ -24,7 +24,8 @@ var ExpandLindDOM = React.createClass({
 
 	    var line = this.state.line;
 	    var isOpen = line.isOpen;
-	    var component = line.cells[0].param.expandComponent; //todo. component param.
+
+	    var {expandComponent, expandComponentParam} = line.cells[0].param;
 	    var container = this.refs.cell.refs.component.refs.expandDiv;
 
 		if(!isOpen){
@@ -35,7 +36,7 @@ var ExpandLindDOM = React.createClass({
         }else{
             $(this.refs.line).show();    
             runExpandAmination(isOpen).then((function(){
-                var el = React.createElement(component); 
+                var el = React.createElement(expandComponent, expandComponentParam); 
                 ReactDOM.render(el, container);
             }).bind(this));
         }
