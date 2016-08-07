@@ -98,7 +98,7 @@ var CurveComponent = React.createClass({
     CurveUI.signal_curve_toggle.unlisten(this.onCurveToggle);
   },
   onCurveToggle: function(e, param){
-    this.refs.chart.update();
+    this.refs.chart.onToggle();
   },
 })
 

@@ -15,6 +15,22 @@ var Chart = React.createClass({
     this.update();
   },
   
+  onToggle: function(){
+    var id = this.state.id;
+    this.state.uidata.curve.header.cells.map(function(cell, index){
+        if(index!=0){
+          var char = String.fromCharCode('a'.charCodeAt(0) + index - 1);
+
+
+
+          if(!cell.param.isCheck){
+            $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).hide();
+          } else{
+            $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).show();
+          } 
+        }
+      })
+  },
   //todo: reverse. head ache.
   update: function(){
     try{
@@ -72,7 +88,7 @@ var Chart = React.createClass({
         }
       });  
 
-      this._chart.on('created', function(){
+      this._chart.on('created', (function(){
         var j=0;
         var asc_a = 'a'.charCodeAt(0);
         var asc_z = 'z'.charCodeAt(0);
@@ -82,7 +98,10 @@ var Chart = React.createClass({
           $(`.curveid_${id}`).find(`.ct-series.ct-series-${char} .ct-point`).css({'stroke': color});
           $(`.curveid_${id}`).find(`.ct-series.ct-series-${char} .ct-line`).css({'stroke': color});
         }
-      })
+
+
+        
+      }).bind(this));
     }catch(e){
       console.log(e.stack);
     }
