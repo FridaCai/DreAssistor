@@ -41,7 +41,7 @@ var ProjectPopup = React.createClass({
                 <XlsIExport ref='xlsIExport' 
                     disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
-                    onImportSheetDone={this.onImportSheetDone}
+                    onXlsImport={this.onXlsImport}
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
                 />
@@ -51,7 +51,7 @@ var ProjectPopup = React.createClass({
             </div>
 	    );   
     },
-    onImportSheetDone: function(){
+    onXlsImport: function(){
         API.ui2dm();
         API.dm2ui();
         this.refs.table.update({uidata: API.uidata});
