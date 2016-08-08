@@ -29,9 +29,6 @@ var CurveComponent = React.createClass({
           writeMode:[0]
       }];
       var id = this.state.id;
-
-      /* <Chart ref='chart' 
-                    uidata={API.uidata}/> //todo: import chart.*/
       return (
             <div className='curveComponent'>
                 <XlsIExport ref='xlsIExport' 

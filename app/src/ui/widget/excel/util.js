@@ -51,7 +51,7 @@ var Util = {
                 var ws = {};
                 var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
                 for(var R = 0; R != data.length; ++R) {
-                    for(var C = 0; C != data[R].length; ++C) {
+                    for(var C = 0; C != data[R].cells.length; ++C) {
                         if(range.s.r > R) range.s.r = R;
                         if(range.s.c > C) range.s.c = C;
                         if(range.e.r < R) range.e.r = R;
@@ -82,7 +82,7 @@ var Util = {
             var sheetNames = [];
 
             for(var key in raw){
-                var sheet = [raw[key].header].concat(raw[key].ui);
+                var sheet = (raw[key].appendLines).concat([raw[key].header]).concat(raw[key].ui);
                 sheets[key] = sheet_from_array_of_arrays(sheet);
                 sheetNames.push(key);
             }

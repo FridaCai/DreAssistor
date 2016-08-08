@@ -31,9 +31,8 @@ var API = {
 		this.uidata.curve.dm2ui(this.curve);
 	},
 
-	//todo.
 	ui2xls: function(){
-
+		API.uidata.curve.ui2xls();
 	},
 
 	xls2ui:function(param){

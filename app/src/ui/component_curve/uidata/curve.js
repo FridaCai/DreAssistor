@@ -53,7 +53,7 @@ class CurveUI extends Base{
 		dumpui.push(tmp);
 
 
-		
+		/*
 		this.ui.map(function(line){
 			var tmp = [];
 			line.cells.map(function(cell){
@@ -61,7 +61,7 @@ class CurveUI extends Base{
 			})
 			dumpui.push(tmp);
 		})
-
+*/
 		console.table(dumpui);
 	}
 	xls2ui(param){
@@ -70,7 +70,23 @@ class CurveUI extends Base{
 		this.ui = this.ui.concat(ui);
 	}
 	ui2xls(){
-		//todo. add back spliced 8 lines;
+		var emptylines = [];
+		for(var i=0; i<8; i++){
+			var cells = [];
+			for(var j=0; j<5; j++){
+				cells.push(Cell.create({component: Label, v: ''}));
+			}
+			emptylines.push(Line.create({cells: cells}));
+		}
+
+		var header = emptylines.concat(this.ui);
+		ExcelUtil.ui2excel({
+			curve: {
+				appendLines: emptylines, 
+				header: this.header,
+				ui: this.ui,
+			}
+		});
 	}
 
 	ui2dm(curve){
@@ -98,13 +114,6 @@ class CurveUI extends Base{
         	data.push(line);
         }
 
-
-
-
-
-
-
-
 		curve.init({
 			caption: 'frida test',
 			series: series,
@@ -114,27 +123,9 @@ class CurveUI extends Base{
 
 	dm2ui(curve){
 		this.id = curve.id;
-		
 		this.ui = [];
-
-		/*var empty = {
-			row: {min: 0, max: 7},
-			column: {min:0, max:5}
-		}
-		//empty part.
-		for(var i=empty.row.min; i<empty.row.max; i++){
-			var cells = [];
-			for(var j=empty.column.min; j<empty.column.max; j++){
-				cells.push(Cell.create({isHide: true})); //todo: isHide=true???
-			}
-			this.ui.push(Line.create({cells: cells}));
-		}*/
-
-
-		//datamodel 2 ui.
-
-		var rowNum = curve.data[0].length; //100000
-		var columnNum = curve.data.length; //5
+		var rowNum = curve.data[0].length; 
+		var columnNum = curve.data.length; 
 
 		for(var i=0; i<rowNum; i++){
 			var cells = [];

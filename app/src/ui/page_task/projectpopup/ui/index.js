@@ -47,7 +47,8 @@ var ProjectPopup = React.createClass({
                 />
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
-                    onDrop={this.onTableDrop}/>
+                    onDrop={this.onTableDrop}
+                    needUpdate = true/>
             </div>
 	    );   
     },

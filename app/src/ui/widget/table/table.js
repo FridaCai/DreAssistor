@@ -13,6 +13,7 @@ var TableDOM = React.createClass({
         	uidata: this.props.uidata,
             onDrop: this.props.onDrop || function(){},
             isReverse: this.props.isReverse,
+            needUpdate: false,
         };
     },
     onSwitchSheet: function(index){
@@ -37,6 +38,9 @@ var TableDOM = React.createClass({
     },
 
     updateAfterRender: function(){
+        if(!this.state.needUpdate)
+            return;
+
         (function updateTableBodyHeight(){
             var h = $('.projectPopupContainer .MsgBoxContent').height()
                         - $('.addOn').outerHeight() 
