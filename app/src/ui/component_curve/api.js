@@ -37,19 +37,15 @@ var API = {
 	},
 
 	xls2ui:function(param){
-		//todo.
 		var curveSheet = param.curve;
-
 		var errorCode = -1;
 		var errorMsg = '';
 
-
-
 		try{
-			curveSheet.map((function(sheet){
-				this.uidata.curve = new CurveUI();
-				this.uidata.curve.xls2ui(sheet.sheet)
-			}).bind(this))
+			curveSheet.map(function(sheet){
+				API.uidata.curve = new CurveUI();
+				API.uidata.curve.xls2ui(sheet.sheet)
+			})
 		}catch(e){
 			console.error(e);
 		}

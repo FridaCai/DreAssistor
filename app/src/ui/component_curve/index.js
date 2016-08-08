@@ -37,7 +37,7 @@ var CurveComponent = React.createClass({
                 <XlsIExport ref='xlsIExport' 
                     disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
-                    onImportSheetDone={this.onXlsImport}
+                    onXlsImport={this.onXlsImport}
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
                 />
@@ -54,7 +54,7 @@ var CurveComponent = React.createClass({
        
   },
 
-  onImportSheetDone: function(){
+  onXlsImport: function(){
       API.ui2dm();
       API.dm2ui();
       this.refs.table.update({uidata: API.uidata});
