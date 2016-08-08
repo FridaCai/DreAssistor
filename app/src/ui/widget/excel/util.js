@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {Cell} from 'Table';
+import {Line} from 'Table';
 import Label from 'Label';
 
 var Util = {

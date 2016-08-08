@@ -1,7 +1,7 @@
 import {Base} from 'Table';
 import DataTag from '../../data/tag.js';
 import {Cell} from 'Table'; 
-import Util from '../../../widget/excel/util.js';
+import {ExcelUtil} from 'XlsIExport';
 import Signal from '../../../../signal.js';
 
 class Tag extends Base {
@@ -24,7 +24,7 @@ class Tag extends Base {
 	        
 	        var label = line[3].v;
             var week = parseInt(line[0].v);
-            var time = line[2].v ? Util.convertYYYYMMDD2UnixTime(line[2].v) : undefined;
+            var time = line[2].v ? ExcelUtil.convertYYYYMMDD2UnixTime(line[2].v) : undefined;
 
 
             if(label){
@@ -71,7 +71,7 @@ class Tag extends Base {
 		var loop = tags[0].week;
 		for(var i=loop; i>=0; i--){
             var tag = findByWeek(tags, i);
-            var autoTime = Util.convertUnixTime2YYYYMMDD(Util.getTimeBySorpWeek(project.sorp, i));
+            var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp, i));
             var line = [
             	Cell.create({v: i}), 
             	Cell.create({v:autoTime}), 
@@ -80,7 +80,7 @@ class Tag extends Base {
     		];
             
             if(tag){
-            	var adjustTime = Util.convertUnixTime2YYYYMMDD(tag.time);
+            	var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
                 line[2] = Cell.create({
 	            	id:'', 
 	            	v: adjustTime,

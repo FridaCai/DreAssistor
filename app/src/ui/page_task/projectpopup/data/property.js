@@ -1,4 +1,4 @@
-import Util from '../../../widget/excel/util.js';
+import {ExcelUtil} from 'XlsIExport';
 import {Cell} from 'Table';
 import {Line} from 'Table';
 import {Base} from 'Table';
@@ -33,13 +33,13 @@ class Property extends Base{
 	                project[key] = Math.round(parseFloat(value) * 100) / 100;
 	                break;
 	            case 'sorp':
-	                project[key] = Util.convertYYYYMMDD2UnixTime(value);
+	                project[key] = ExcelUtil.convertYYYYMMDD2UnixTime(value);
 	        }
 	    }
 	}
 
 	dm2ui(project){
-		var sorp = Util.convertUnixTime2YYYYMMDD(project['sorp']);
+		var sorp = ExcelUtil.convertUnixTime2YYYYMMDD(project['sorp']);
 		var label = project['label'];
 		var bpMax = project['bpMax'];
 		var bpMin = project['bpMin'];

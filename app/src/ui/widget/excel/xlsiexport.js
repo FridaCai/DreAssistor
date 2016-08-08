@@ -181,7 +181,7 @@ var XlsIExport = React.createClass({
                 title={'导入excel'} 
                 workbook={workbook} 
                 sheetOptions={sheetOptions} 
-                onOK={this.props.onImportSheetDone}/>, 
+                onOK={this.props.onXlsImport}/>, 
             $('.t_popup')[0]);  
     },
 

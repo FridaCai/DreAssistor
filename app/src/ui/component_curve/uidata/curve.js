@@ -52,6 +52,16 @@ class CurveUI extends Base{
 		})
 		dumpui.push(tmp);
 
+
+		
+		this.ui.map(function(line){
+			var tmp = [];
+			line.cells.map(function(cell){
+				tmp.push(`${cell.v}`);
+			})
+			dumpui.push(tmp);
+		})
+
 		console.table(dumpui);
 	}
 	xls2ui(param){
@@ -87,13 +97,37 @@ class CurveUI extends Base{
         	}
         })
 
-        var data = this.header.cells.map(function(h, i, arr){
-        	var columnIndex = i;
-        	var rowMinIndex = 1;
-        	var rowMaxIndex = arr.length - 1;
-        	return getColumn(columnIndex, rowMinIndex, rowMaxIndex, arr);
-        })
-		
+        var data = [];
+        var lineNum = this.header.cells.length;
+		var columnNum = this.ui.length;
+
+        for(var i=0; i<lineNum; i++){
+        	var line = [];
+        	for(var j=0; j<columnNum; j++){
+        		line.push(this.ui[j].cells[i].v);
+        	}
+        	data.push(line);
+        }
+
+
+
+
+
+        this.ui.map((function(line){
+        	var tmp = [];
+        	line.cells.map((function(cell, index){
+        		if(index < columnNum){
+        			tmp.push(cell.v);	
+        		}
+        	}).bind(this));
+        	data.push(tmp);
+        }).bind(this));
+
+
+
+
+
+
 		curve.init({
 			caption: 'frida test',
 			series: series,
