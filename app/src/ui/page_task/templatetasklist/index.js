@@ -16,6 +16,7 @@ var TemplateTaskList = React.createClass({
     },
 
     onEditTaskClk: function(task){
+        return;
         API.signal_taskpopup_show.dispatch({
             title: '编辑豆豆',
             task: task,

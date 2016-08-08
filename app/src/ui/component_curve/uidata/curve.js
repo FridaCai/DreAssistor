@@ -77,18 +77,7 @@ class CurveUI extends Base{
 		var pretty = function(value){
       		return Math.round(value * 100) / 100;
 		}
-      	var getColumn = function(columnIndex, rowMinIndex, rowMaxIndex, arr){
-            var returnLabel = [];
-            for(var i=rowMinIndex; i<=rowMaxIndex; i++){
-            	var line = arr[i];
-
-              	var cell = line.cells[columnIndex].v;
-              	tmp = pretty(tmp);
-                returnLabel.push(tmp);
-            }
-            return returnLabel;
-        }
-
+   
         var series = this.header.cells.map(function(h, i){
         	return {
         		label: h.v,
@@ -104,24 +93,12 @@ class CurveUI extends Base{
         for(var i=0; i<lineNum; i++){
         	var line = [];
         	for(var j=0; j<columnNum; j++){
-        		line.push(this.ui[j].cells[i].v);
+        		line.push(pretty(this.ui[j].cells[i].v));
         	}
         	data.push(line);
         }
 
 
-
-
-
-        this.ui.map((function(line){
-        	var tmp = [];
-        	line.cells.map((function(cell, index){
-        		if(index < columnNum){
-        			tmp.push(cell.v);	
-        		}
-        	}).bind(this));
-        	data.push(tmp);
-        }).bind(this));
 
 
 
