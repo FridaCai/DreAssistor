@@ -1,5 +1,5 @@
 import XlsIExport from './xlsiexport.js';
-import Util from './util.js';
+import ExcelUtil from './util.js';
 
 exports.XlsIExport = XlsIExport;
-exports.Util = Util;
+exports.ExcelUtil = ExcelUtil;

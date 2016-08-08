@@ -1,4 +1,4 @@
-import {Util} from 'XlsIExport';
+import {ExcelUtil} from 'XlsIExport';
 import GlobalUtil from 'Util';
 import {Cell} from 'Table';
 import {Line} from 'Table';
@@ -55,7 +55,7 @@ class CurveUI extends Base{
 		console.table(dumpui);
 	}
 	xls2ui(param){
-		var ui = Util.excel2ui(param);
+		var ui = ExcelUtil.excel2ui(param);
 		ui.splice(0,8); //todo: bad. assume only one line for header...search for a better solution...
 		this.ui = this.ui.concat(ui);
 	}
