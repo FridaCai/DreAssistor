@@ -33,16 +33,22 @@ class MuleMRDUI extends Base{
 		for(var i=0; i<this.ui.length; i++){
 			var line = this.ui[i];
 
+			if(line instanceof ExpandLine)
+				continue;
+
+			var id = line.id;
+
 			//todo: cell.getValue. 
-			var label = line.getCellAt(0).getValue();
-			var status = line.getCellAt(1).getValue();
-			var value = line.getCellAt(4).getValue();
+			var status = line.getCellAt(2).getValue();
+			var value = (muleMRD[id].value === null ? null: line.getCellAt(3).getValue());
 
-			var attachments = line.getCellAt(3).getValue();
-
-			var curve = line.getCellAt(5).getValue();
+			var attachments = line.getCellAt(4).getValue();
+			var curve = (muleMRD[id].curve === null ? null : line.getCellAt(3).getValue());
 
 			//todo: muleMRD dm set param.
+
+			muleMRD[line.id].status = status;
+			muleMRD[line.id].value = value; //todo: think twice. value might be null;
 		}
 	}
 	dm2ui(project, muleMRD){
@@ -59,11 +65,9 @@ class MuleMRDUI extends Base{
 
 			var isCurve = (function(v){
 				var {value, curve} = v;
-
 				if(value == null && curve != null){
 					return true;
 				}
-
 				return false
 			})(value);
 
@@ -79,9 +83,6 @@ class MuleMRDUI extends Base{
 	        	onExpandToggle: function(){
 	        		MuleMRDUI.signal_expand_toggle.dispatch();
 	        	},
-
-
-
 	        	expandComponent: CurveComponent,
 	        	expandComponentParam: {
 	        		id: key
@@ -96,18 +97,14 @@ class MuleMRDUI extends Base{
 	        		MuleMRDUI.signal_expand_toggle.dispatch();
 	        	}
 	        };
-	        
 
 
 
 
-
-
-
-
+	        var v = value.status;
 	        var c0 = Cell.create({component: RadioGroup, param:{
 	            id: `${key}_radiogroup`,
-	            selectedId: value.status ? 0: 1,
+	            selectedId: v ? 0: 1,
 	            options: [{
 	                id: 0,
 	                label:"完成"
@@ -119,7 +116,7 @@ class MuleMRDUI extends Base{
 	            	this.v = (selectedId === 0 ? true : false);
 	            },
 	            scope: undefined
-	        }, v:false});
+	        }, v: v});
 			c0.param.scope = c0;
 
 
@@ -128,13 +125,14 @@ class MuleMRDUI extends Base{
 
 
 
+			var v = value.value;
 			var c2 = Cell.create({component: Input, param: {
 				onChange: function(v){
 					this.v = v;
 				}, 
-	        	value: '',
+	        	value: v,
 	        	scope: undefined,
-			}, v:''});
+			}, v: v});
 			c2.param.scope = c2;
 
 
@@ -144,18 +142,8 @@ class MuleMRDUI extends Base{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 			var line = Line.create({
+				id: key,
 				cells: [
 					Cell.create({component: Label, v: label}),
 					Cell.create({component: Label, v: ref}),
@@ -176,8 +164,6 @@ class MuleMRDUI extends Base{
 
 }
 MuleMRDUI.signal_expand_toggle = new Signal();
-MuleMRDUI.signal_doneStatus_change = new Signal();
-MuleMRDUI.signal_value_change = new Signal();
 
 
 //todo:

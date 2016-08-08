@@ -4,7 +4,7 @@ import './style.less';
 var Input = React.createClass({
 	getInitialState(){
 		return {
-			v: this.props.param.v,
+			value: this.props.param.value,
 			onChange: this.props.param.onChange,
 			onBlur: this.props.param.onBlur,	
 			scope: this.props.param.scope,
@@ -21,15 +21,12 @@ var Input = React.createClass({
 	render(){
         return (
             <input ref='input' 
-            	defaultValue={this.state.v}
+            	defaultValue={this.state.value}
                 type='text' 
                 onChange={this.onChange} //todo: onchange and onblur.
                 onBlur={this.onBlur}/>
         )
-	},
-	getValue(){
-		return this.refs.input.value;
-	},
+	}
 })
 module.exports = Input;
 

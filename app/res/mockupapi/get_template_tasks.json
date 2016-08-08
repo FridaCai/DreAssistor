@@ -46,7 +46,7 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": null,
+                        "value": 0,
                         "curve": null
                     },
                     "sizeCheck": {
@@ -54,7 +54,7 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": null,
+                        "value": 0,
                         "curve": null
                     },
                     "bp": {
@@ -94,7 +94,7 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": null,
+                        "value": 0,
                         "curve": null
                     },
                     "docCheck":{
@@ -102,7 +102,7 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": null,
+                        "value": 0,
                         "curve": null
                     }
                 }

@@ -45,7 +45,8 @@ var MuleMRDTemplate = React.createClass({
         MuleMRDUI.signal_expand_toggle.unlisten(this.onExpandToggle);
     },
     getValue(){
-        
+        API.ui2dm();
+        return API.muleMRD;
     },
 	render(){
         API.muleMRD = this.state.param;
