@@ -9,18 +9,17 @@ class Line {
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		
-
 		this.cells = param.cells;
 		this.cells.map((function(cell){
 			cell.setLine(this);
 		}).bind(this));
-
-
 		this.expandLine = param.expandLine;
-
 	}
 	
+	getCellAt(index){
+		return this.cells[index];
+	}
+
 	constructor(){
 	}
 

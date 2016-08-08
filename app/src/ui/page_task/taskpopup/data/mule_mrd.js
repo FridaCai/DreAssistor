@@ -15,7 +15,7 @@ import Input from 'Input';
 
 import Signal from 'Signal';
 
-class MuleMRD extends Base{
+class MuleMRDUI extends Base{
 	constructor(){
 		super();
 
@@ -29,10 +29,25 @@ class MuleMRD extends Base{
 		this.header = line;
 		this.sheetName = '';
 	}
+	ui2dm(muleMRD){
+		for(var i=0; i<this.ui.length; i++){
+			var line = this.ui[i];
 
-	dm2ui(project, param){
-	    Object.keys(param).map((function(key){
-	        var value = param[key];
+			//todo: cell.getValue. 
+			var label = line.getCellAt(0).getValue();
+			var status = line.getCellAt(1).getValue();
+			var value = line.getCellAt(4).getValue();
+
+			var attachments = line.getCellAt(3).getValue();
+
+			var curve = line.getCellAt(5).getValue();
+
+			//todo: muleMRD dm set param.
+		}
+	}
+	dm2ui(project, muleMRD){
+	    Object.keys(muleMRD).map((function(key){
+	        var value = muleMRD[key];
 	        
 	        var label = value.label;
 
@@ -41,26 +56,6 @@ class MuleMRD extends Base{
 	        }).call(this, value.refKey, project);
 	        
 
-	        var inputParam = {
-	        	onChange: function(){}, 
-	        	onBlur:function(){},
-	        	value: '',
-	        };
-
-	        var radioGroupParam = {
-	            id: `${key}_radiogroup`,
-	            selectedId: value.status ? 0: 1,
-	            options: [{
-	                id: 0,
-	                label:"完成"
-	            },{
-	                id: 1,
-	                label: "未完成"
-	            }],
-	            onChange: (function(selectedId){
-	                value.status = (selectedId === 0 ? true: false); 
-	            }).bind(this),
-	        }
 
 			var isCurve = (function(v){
 				var {value, curve} = v;
@@ -82,7 +77,7 @@ class MuleMRD extends Base{
 	        	label: '曲线图',
 	        	isOpen: false,
 	        	onExpandToggle: function(){
-	        		MuleMRD.signal_expand_toggle.dispatch();
+	        		MuleMRDUI.signal_expand_toggle.dispatch();
 	        	},
 
 
@@ -98,18 +93,75 @@ class MuleMRD extends Base{
 	        	expandComponent: AttachmentList,
 	        	isOpen: false,
 	        	onExpandToggle: function(){
-	        		MuleMRD.signal_expand_toggle.dispatch();
+	        		MuleMRDUI.signal_expand_toggle.dispatch();
 	        	}
 	        };
 	        
+
+
+
+
+
+
+
+
+	        var c0 = Cell.create({component: RadioGroup, param:{
+	            id: `${key}_radiogroup`,
+	            selectedId: value.status ? 0: 1,
+	            options: [{
+	                id: 0,
+	                label:"完成"
+	            },{
+	                id: 1,
+	                label: "未完成"
+	            }],
+	            onChange: function(selectedId){
+	            	this.v = (selectedId === 0 ? true : false);
+	            },
+	            scope: undefined
+	        }, v:false});
+			c0.param.scope = c0;
+
+
+
+
+
+
+
+			var c2 = Cell.create({component: Input, param: {
+				onChange: function(v){
+					this.v = v;
+				}, 
+	        	value: '',
+	        	scope: undefined,
+			}, v:''});
+			c2.param.scope = c2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			var line = Line.create({
 				cells: [
 					Cell.create({component: Label, v: label}),
 					Cell.create({component: Label, v: ref}),
-					Cell.create({component: RadioGroup, param: radioGroupParam, v:0}),
+					c0,
 					isCurve ? Cell.create({component: ExpandCellDOM, param: curveCellParam, v:''}): 
-						Cell.create({component: Input, param: inputParam, v:''}),
+						c2,
 					Cell.create({component: ExpandCellDOM, param: attachmentCellParam, v:''})
 				],
 				expandLine: expandLine,
@@ -123,8 +175,14 @@ class MuleMRD extends Base{
 	}
 
 }
-MuleMRD.signal_expand_toggle = new Signal();
+MuleMRDUI.signal_expand_toggle = new Signal();
+MuleMRDUI.signal_doneStatus_change = new Signal();
+MuleMRDUI.signal_value_change = new Signal();
 
 
-module.exports = MuleMRD;
+//todo:
+MuleMRDUI.signal_curve_change = new Signal();
+MuleMRDUI.signal_attachment_change = new Signal();
+
+module.exports = MuleMRDUI;
 

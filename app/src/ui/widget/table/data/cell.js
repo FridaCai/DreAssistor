@@ -29,6 +29,9 @@ class Cell {
             value: this.v,
         }
     }
+    getValue(){
+        return this.v;
+    }
 
 }
 module.exports = Cell;

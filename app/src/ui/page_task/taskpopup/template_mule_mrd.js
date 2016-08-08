@@ -1,20 +1,31 @@
 import RadioGroup from 'RadioGroup';
 import './template_mule_mrd.less';
-import MuleMRD from './data/mule_mrd.js';
+import MuleMRDUI from './data/mule_mrd.js';
 import {TableDOM} from 'Table';
 
 var API = {
-    param: undefined,
     project: undefined,
     uidata: {
-        muleMRD: new MuleMRD(),
+        muleMRDUI: new MuleMRDUI(),
     },
+    muleMRD: undefined,
+
     dm2ui: function(){
-        var muleMRD = new MuleMRD();
-        muleMRD.dm2ui(this.project, this.param);
-        this.uidata.muleMRD = muleMRD;
+        if(!this.muleMRD)
+            return;
+
+        var muleMRDUI = new MuleMRDUI();
+        muleMRDUI.dm2ui(this.project, this.muleMRD);
+        this.uidata.muleMRDUI = muleMRDUI;
+    },
+    ui2dm: function(){
+        this.uidata.muleMRDUI.ui2dm(this.muleMRD);
     }
+    
 }
+window.dre.mulemrd = {
+    data: API
+};
 
 var MuleMRDTemplate = React.createClass({
     getInitialState() {
@@ -24,22 +35,20 @@ var MuleMRDTemplate = React.createClass({
         }
     },
 
-    _$: function(selector){
-        if(!selector)
-            return $(ReactDOM.findDOMNode(this));
-        else return $(ReactDOM.findDOMNode(this)).find(selector);
-    },
     componentDidMount: function(){
-        MuleMRD.signal_expand_toggle.listen(this.onExpandToggle);
+        MuleMRDUI.signal_expand_toggle.listen(this.onExpandToggle);
     },
     onExpandToggle: function(){
         this.refs.table.forceUpdate();
     },
     componentWillUnmount: function(){
-        MuleMRD.signal_expand_toggle.unlisten(this.onExpandToggle);
+        MuleMRDUI.signal_expand_toggle.unlisten(this.onExpandToggle);
+    },
+    getValue(){
+        
     },
 	render(){
-        API.param = this.state.param;
+        API.muleMRD = this.state.param;
         API.project = this.state.project;
         API.dm2ui();
         var uidata = API.uidata;
