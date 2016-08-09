@@ -6,10 +6,14 @@
 	.sheet{
 	    background: white;
 
+
+
+
 	    table{
 	    	width: 100%;
 	    	display:block;
 	    	font-size: 12px;
+	    	text-align: center;
 
 	    	thead{
 	    		display:block;
@@ -22,10 +26,11 @@
 				    td{
 						display:inline-block;
 	    	    	    padding: 2px;
-						text-align: center;
+						/*text-align: center;*/
 				    }
     			}
     		}
+    		
 	    	tbody{
 			    overflow: scroll;
 			    display: block;
@@ -48,10 +53,43 @@
 					    overflow: hidden;
 					    white-space: nowrap;
 					    border: solid 1px;
-					    text-align: center;
+					    /*text-align: center;*/
 					    display: inline-block;
 
-					    
+					    /*
+					    	todo: calc spanwidth: 418; span margin:-209
+					    */
+					    .cdropdown{
+					    	position:absolute;
+
+					    	button{
+					    		font-size: 12px;
+					    		height: 21px;
+					    		text-align: center;
+					    		width: 100%;
+					    		border:none;
+
+					    		.utext{
+					    			margin-left: 20px;
+					    		}
+					    	}
+
+					    	ul{
+					    		padding-bottom:5px;
+					    		text-align: center;
+					    		font-size: 12px;
+
+					    		li{
+					    			height: 21px;
+					    			a{
+					    			    margin-left: 0;
+										margin-bottom: 5px;
+					    			    color: inherit;
+    									font-size: 12px;
+					    			}
+					    		}
+					    	}
+					    }
 	    			}
 	    		}
 	    	}

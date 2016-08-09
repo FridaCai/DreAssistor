@@ -6,6 +6,7 @@ import MuleMRDTemplate from './template_mule_mrd.js';
 import IVTuningTemplate from './template_mule_mrd.js';
 import HardToolingTemplate from './template_mule_mrd.js';
 import PPVMRDTemplate from './template_mule_mrd.js';
+import BenchmarkTemplate from './template_benchmark.js';
 
 
 var TaskTemplatePanel = React.createClass({
@@ -15,7 +16,8 @@ var TaskTemplatePanel = React.createClass({
         MuleMRDTemplate, 
         IVTuningTemplate,
         HardToolingTemplate,
-        PPVMRDTemplate],
+        PPVMRDTemplate,
+        BenchmarkTemplate],
     dom: undefined,
 
     getInitialState: function() {

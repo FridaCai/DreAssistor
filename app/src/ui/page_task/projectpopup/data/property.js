@@ -2,7 +2,7 @@ import {ExcelUtil} from 'XlsIExport';
 import {Cell} from 'Table';
 import {Line} from 'Table';
 import {Base} from 'Table';
-import Signal from '../../../../signal.js';
+import Signal from 'Signal';
 
 class Property extends Base{
 	constructor(){

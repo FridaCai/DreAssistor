@@ -1,5 +1,4 @@
 import RadioGroup from 'RadioGroup';
-import './template_mule_mrd.less';
 import MuleMRDUI from './data/mule_mrd.js';
 import {TableDOM} from 'Table';
 

@@ -1,5 +1,5 @@
 //todo: more like a component like radio group rather than table cell; 
-
+import './style.less';
 var ExpandCellDOM = React.createClass({
     getInitialState() {
         return {
@@ -30,7 +30,7 @@ var ExpandCellDOM = React.createClass({
         
         return (<div onClick={this.onToggle}>
             <span>{label}</span>
-            <span className={className} ></span>
+            <span className={className}></span>
         </div>)
     },
 })
