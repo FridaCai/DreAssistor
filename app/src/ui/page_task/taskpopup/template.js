@@ -4,10 +4,18 @@ import HotIssueTemplate from './template_hotissue.js';
 import EWOTemplate from './template_ewo.js';
 import MuleMRDTemplate from './template_mule_mrd.js';
 import IVTuningTemplate from './template_mule_mrd.js';
+import HardToolingTemplate from './template_mule_mrd.js';
+import PPVMRDTemplate from './template_mule_mrd.js';
 
 
 var TaskTemplatePanel = React.createClass({
-    templatePanel: [NormalTemplate, EWOTemplate, HotIssueTemplate, MuleMRDTemplate, IVTuningTemplate],
+    templatePanel: [NormalTemplate, 
+        EWOTemplate, 
+        HotIssueTemplate, 
+        MuleMRDTemplate, 
+        IVTuningTemplate,
+        HardToolingTemplate,
+        PPVMRDTemplate],
     dom: undefined,
 
     getInitialState: function() {

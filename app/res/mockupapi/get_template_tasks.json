@@ -133,7 +133,7 @@
                         "curve": null
                     },
                     "sample_prepare": {
-                        "label": "样件准备",
+                        "label": "调音样件准备",
                         "status": false,
                         "refKey": null,
                         "attachments": [],
@@ -215,7 +215,78 @@
             "template": {
                 "type": 5,
                 "param":{
-
+                    "design_freeze": {
+                        "label": "设计冻结",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "model_paper_estimate_release": {
+                        "label": "数模和图纸评审和释放",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "ewo_ewo_potential_meeting": {
+                        "label": "EWO和潜在EWO会审",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "model_start_meeting": {
+                        "label": "模具启动会议",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
+                    },
+                    "model_process_plan": {
+                        "label": "模具加工计划",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "track_model_process": {
+                        "label": "定期跟踪模具加工",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "t1_t2_model_live_estimate": {
+                        "label": "T1 &T2 试模现场评审",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "sample_test": {
+                        "label": "样件检测",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "model_done": {
+                        "label": "模具完成",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    }
                 }
             },
             "statical":["duration"]
@@ -227,7 +298,78 @@
             "template": {
                 "type": 6,
                 "param":{
-
+                    "ppv_bom_check": {
+                        "label": "PPV BOM check",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "size_check": {
+                        "label": "尺寸检查",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "bp": {
+                        "label": "背压／压力将(kpa)",
+                        "status": false,
+                        "refKey": "bpMax",
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
+                    },
+                    "transmissionLose": {
+                        "label": "传递损失",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": "curveid_0"
+                    },
+                    "mass": {
+                        "label": "重量(kg)",
+                        "status": false,
+                        "refKey": "massMax",
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
+                    },
+                    "maf": {
+                        "label": "MAF 5*5",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": "curveid_1"
+                    },
+                    "hard_model": {
+                        "label": "硬模",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "test_tool1": {
+                        "label": "检具",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "test_tool2": {
+                        "label": "检具",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    }
                 }
             },
             "statical":["duration"]

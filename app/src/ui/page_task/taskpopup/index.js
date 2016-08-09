@@ -26,76 +26,81 @@ var TaskPopup = React.createClass({
     },
     
 	getContent: function() {
-        const {
-          label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
-        } = this.state.task;
+        try{
+            const {
+              label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
+            } = this.state.task;
 
-        var color = Util.convertIntColorToHex(markColor);
-        var project = (this.state.task.parent && this.state.task.parent.parent) ? this.state.task.parent.parent: null; 
-        var templateLbl = API.getTemplateEnum()
-            .find((function(item){
-                return item.id == this.state.task.template.type;
-            }).bind(this))
-            .label;
-	    return (
-	        <div className="panel-body">
-            	<div className='line name'>
-            		<label>名称</label>
-            		<input type="text" defaultValue={label} ref='labelInput'/>
-            	</div>
-            	
-            	<div className='line desc'>
-            		<label>备注</label>
-            		<textarea defaultValue={desc} ref='descTA'></textarea>
-            	</div>
-
-            	<div className='line startTime'>
-            		<label>起始时间</label>
-            		<div className='datetime'>
-                        <Datetime defaultValue={startTime} ref='startTimeDT'/>
+            var color = Util.convertIntColorToHex(markColor);
+            var project = (this.state.task.parent && this.state.task.parent.parent) ? this.state.task.parent.parent: null; 
+            var templateLbl = API.getTemplateEnum()
+                .find((function(item){
+                    return item.id == this.state.task.template.type;
+                }).bind(this))
+                .label;
+            return (
+                <div className="panel-body">
+                    <div className='line name'>
+                        <label>名称</label>
+                        <input type="text" defaultValue={label} ref='labelInput'/>
                     </div>
-            	</div>
-
-            	<div className='line endTime'>
-            		<label>结束时间</label>
-            		<div className='datetime'>
-                        <Datetime defaultValue={endTime} ref='endTimeDT'/>
+                    
+                    <div className='line desc'>
+                        <label>备注</label>
+                        <textarea defaultValue={desc} ref='descTA'></textarea>
                     </div>
-            	</div>
 
-            	<div className='line breakdownList'>
-            		<label>子豆豆</label>
-                    <BreakDownList subtasks={subtasks} ref='breakdownList'/>
-            	</div>
+                    <div className='line startTime'>
+                        <label>起始时间</label>
+                        <div className='datetime'>
+                            <Datetime defaultValue={startTime} ref='startTimeDT'/>
+                        </div>
+                    </div>
 
-				<div className="line markColor">
-                    <label>颜色</label>
-                    <ColorPicker
-                      animation="slide-up"
-                      color={color} ref='markColorCP'/>
-                </div>
-                <div className="line priority">
-                    <label>优先级</label>
-                    <span ref='priorityDropdown'></span>
-                </div>
+                    <div className='line endTime'>
+                        <label>结束时间</label>
+                        <div className='datetime'>
+                            <Datetime defaultValue={endTime} ref='endTimeDT'/>
+                        </div>
+                    </div>
 
-                <div className="line attachedFiles">
-                	<label>附件</label>
-                    <AttachmentList attachments={attachments} ref='attachmentlist'/>
-                </div>
-                <div className="line privacy">
-                    <label>谁可以看</label>
-                    <PrivacyRadioGroup privacy={privacy} ref='privacyRadioGroup'/>
-                </div>
+                    <div className='line breakdownList'>
+                        <label>子豆豆</label>
+                        <BreakDownList subtasks={subtasks} ref='breakdownList'/>
+                    </div>
+
+                    <div className="line markColor">
+                        <label>颜色</label>
+                        <ColorPicker
+                          animation="slide-up"
+                          color={color} ref='markColorCP'/>
+                    </div>
+                    <div className="line priority">
+                        <label>优先级</label>
+                        <span ref='priorityDropdown'></span>
+                    </div>
+
+                    <div className="line attachedFiles">
+                        <label>附件</label>
+                        <AttachmentList attachments={attachments} ref='attachmentlist'/>
+                    </div>
+                    <div className="line privacy">
+                        <label>谁可以看</label>
+                        <PrivacyRadioGroup privacy={privacy} ref='privacyRadioGroup'/>
+                    </div>
 
 
-                <div className="line taskType">
-                    <label>豆豆类型</label>
-                    <span>{templateLbl}</span>
-                    <TaskTemplatePanel template={template} project={project} ref='templatePanel'/>
+                    <div className="line taskType">
+                        <label>豆豆类型</label>
+                        <span>{templateLbl}</span>
+                        <TaskTemplatePanel template={template} project={project} ref='templatePanel'/>
+                    </div>
                 </div>
-	        </div>
-	    );   
+            );   
+        }catch(e){
+            console.error(e.stack);
+        }
+        
     },
     componentDidMount: function(){
         this.updateJqueryComponent();
