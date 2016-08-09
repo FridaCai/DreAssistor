@@ -8,7 +8,9 @@ import Input from 'Input';
 import {ExpandContainerDOM} from 'Table';
 import {ExpandCellDOM} from 'Table';
 import {ExpandLine} from 'Table';
-import MixComponent from '../../widget/mixcomponent.js';
+import Image from 'Image';
+import AttachmentList from '../../attachment_list.js';
+import CurveComponent from '../../../../component_curve/index.js';
 
 
 class Sheet5 extends Base{
@@ -17,8 +19,11 @@ class Sheet5 extends Base{
 
 		this.header = Line.create({
 			cells: [
+				Cell.create({component: Label, v: ''}),
 				Cell.create({component: Label, v: ''}), 
-				Cell.create({component: Label, v: ''})
+				Cell.create({component: Label, v: ''}),
+				Cell.create({component: Label, v: ''}),
+				Cell.create({component: Label, v: ''}),
 			]
 		});
 		this.sheetName = `性能`;
@@ -29,149 +34,77 @@ class Sheet5 extends Base{
 	}
 
 	dm2ui(benchmark){
-		return;
+		var paramLabel = ['压力降', '系统模态', '进气口噪音', 
+			'辐射噪音', '过滤效率', '容尘量', 
+			'滤芯泄漏量', '减震垫动刚度', '支点动刚度', 
+			'拉拔力', '传递损失', '插入损失'];
 
+		paramLabel.map((function(label, index){
+			var expandLine = ExpandLine.create({
+				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+			});
 
-		var expandLine1 = ExpandLine.create({
-			cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-		});
-		var expandLine2 = ExpandLine.create({
-			cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-		});
-
-		this.ui = [//todo. LIne.
-			Line.create({cells: [
-				Cell.create({component: Label, v: '零件重量'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-			Line.create({cells: [
-				Cell.create({component: Label, v: '零件容积'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-			Line.create({cells: [
-				Cell.create({component: Label, v: '零件壁厚'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-			Line.create({cells: [
-				Cell.create({component: Label, v: '零件材质'}),
-				Cell.create({component: ComboBox, param: {
-				    selectedId: "", //string. existed id in options.
-				    options: [{
-				        id: "0",
-				        label: "PPT20",
-				    },{
-				        id: "1",
-				        label: "EPDM",
-				    }],
-				    prompt: "请选择", //if fail to find item in options by defautlKey, use prompt string.
-				    onchange: function(){} //event triggered when selected item change.
-				}})
-			]}),
-
-			Line.create({cells: [
-				Cell.create({component: Label, v: '工艺'}),
-				Cell.create({component: ComboBox, param: {
-				    selectedId: "", //string. existed id in options.
-				    options: [{
-				        id: "0",
-				        label: "注塑",
-				    },{
-				        id: "1",
-				        label: "吹塑",
-				    }],
-				    prompt: "请选择", //if fail to find item in options by defautlKey, use prompt string.
-				    onchange: function(){} //event triggered when selected item change.
-				}})
-			]}),
-
-			Line.create({cells: [
-				Cell.create({component: Label, v: '落水孔'}),
-				Cell.create({component: ComboBox, param: {
-				    selectedId: "", //string. existed id in options.
-				    options: [{
-				        id: "0",
-				        label: "有",
-				    },{
-				        id: "1",
-				        label: "无",
-				    }],
-				    prompt: "请选择", //if fail to find item in options by defautlKey, use prompt string.
-				    onchange: function(){} //event triggered when selected item change.
-				}})
-			]}),
-
-
-
-
-
-
-
-
-
-
-
-			Line.create({
+			var line = Line.create({
 				cells: [
-					Cell.create({component: Label, v: '谐振器安装点'}),
+					Cell.create({component: Label, v: label}),
+					Cell.create({component: Input, param: {
+					    v: 0
+					}}),
+
 					Cell.create({
 						component: ExpandCellDOM, 
 						param: {
-				        	label: '详情',
+				        	label: '导入Excel',
 				        	isOpen: false, //need?
 				        	onExpandToggle: function(){
 				        		Sheet5.signal_expand_toggle.dispatch();
 				        	},
-				        	expandComponent: MixComponent,
+				        	expandComponent: CurveComponent,
 				        	expandComponentParam: {
-				        		id: 'xiezhenqi2' //todo. 
+				        		id: `performance_${index}_0`
 				        	}
 						}, 
 						v:''
-					})
-				], 
-				expandLine: expandLine1
-			}),
-			expandLine1,
+					}),
 
-
-
-
-
-
-
-			Line.create({
-				cells: [
-					Cell.create({component: Label, v: '谐振器周边零件间隙'}),
 					Cell.create({
 						component: ExpandCellDOM, 
 						param: {
-				        	label: '详情',
+				        	label: '附件',
 				        	isOpen: false, //need?
 				        	onExpandToggle: function(){
 				        		Sheet5.signal_expand_toggle.dispatch();
 				        	},
-				        	expandComponent: MixComponent,
+				        	expandComponent: AttachmentList,
 				        	expandComponentParam: {
-				        		id: 'jinqiguan2' //todo. 
+				        		id: `performance_${index}_1`
+				        	}
+						}, 
+						v:''
+					}),
+
+					Cell.create({
+						component: ExpandCellDOM, 
+						param: {
+				        	label: '图片',
+				        	isOpen: false, //need?
+				        	onExpandToggle: function(){
+				        		Sheet5.signal_expand_toggle.dispatch();
+				        	},
+				        	expandComponent: Image,
+				        	expandComponentParam: {
+				        		id: `performance_${index}_2`
 				        	}
 						}, 
 						v:''
 					})
-				], 
-				expandLine: expandLine2
-			}),
-			expandLine2
+				],
+				expandLine: expandLine
+			});
 
-
-
-				
-		];
+			this.ui.push(line);
+			this.ui.push(expandLine);
+		}).bind(this))
 	}
 }
 Sheet5.signal_expand_toggle = new Signal();
