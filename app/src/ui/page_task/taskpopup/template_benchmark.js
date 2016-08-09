@@ -1,6 +1,7 @@
 import RadioGroup from 'RadioGroup';
 import {TableDOM} from 'Table';
 import Sheet0 from './data/benchmark/sheet0.js';
+import Sheet1 from './data/benchmark/sheet1.js';
 
 /*
     sheet1: new Sheet1(),
@@ -13,6 +14,7 @@ import Sheet0 from './data/benchmark/sheet0.js';
 var API = {
     uidata: {
         sheet0: new Sheet0(),
+        sheet1: new Sheet1(),
     },
     benchmark: undefined,
 
@@ -23,6 +25,10 @@ var API = {
         var sheet0 = new Sheet0();
         sheet0.dm2ui(this.benchmark);
         this.uidata.sheet0 = sheet0;
+
+        var sheet1 = new Sheet1();
+        sheet1.dm2ui(this.benchmark);
+        this.uidata.sheet1 = sheet1;
     },
     ui2dm: function(){
         //this.uidata.sheet0.ui2dm(this.benchmark);
@@ -42,13 +48,13 @@ var BenchmarkTemplate = React.createClass({
     },
 
     componentDidMount: function(){
-       // BenchmarkUI.signal_expand_toggle.listen(this.onExpandToggle);
+       Sheet1.signal_expand_toggle.listen(this.onExpandToggle);
     },
     onExpandToggle: function(){
         this.refs.table.forceUpdate();
     },
     componentWillUnmount: function(){
-        //BenchmarkUI.signal_expand_toggle.unlisten(this.onExpandToggle);
+        Sheet1.signal_expand_toggle.unlisten(this.onExpandToggle);
     },
     getValue(){
         API.ui2dm();

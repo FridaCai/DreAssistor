@@ -56,10 +56,13 @@
 					    /*text-align: center;*/
 					    display: inline-block;
 
-					    /*
-					    	todo: calc spanwidth: 418; span margin:-209
-					    */
-					    .cdropdown{
+					    >input[type=text]{
+						    width: 100%;
+						    border: none;
+						    text-align: inherit;
+						}
+					
+					    >.cdropdown{
 					    	position:absolute;
 
 					    	button{
@@ -88,6 +91,25 @@
     									font-size: 12px;
 					    			}
 					    		}
+					    	}
+					    }
+
+
+
+					    .expandDiv{
+					    	input{
+					    		margin-top:10px;
+					    	    float: left;
+    							clear: both;
+    							width: 150px;
+					    	}
+					    	.cdropdown{
+						    	clear:both;
+						    	margin-top:10px;
+					    	}
+					    	img{
+					    		float:left;
+					    		clear:both;
 					    	}
 					    }
 	    			}
