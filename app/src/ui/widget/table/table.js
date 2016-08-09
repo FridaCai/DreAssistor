@@ -136,7 +136,7 @@ var TableDOM = React.createClass({
                             return (<tr key={i}>
                             {
                                 line.map(function(cell, j){ //todo: width style.
-                                    return (<CellDOM key={j} cell={cell} widthStyle={{width: '100px'}}/>)
+                                    return (<CellDOM key={cell.id} cell={cell} widthStyle={{width: '100px'}}/>)
                                 })
                             }
                             </tr>)

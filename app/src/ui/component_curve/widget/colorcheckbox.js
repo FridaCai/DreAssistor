@@ -8,12 +8,13 @@ var ColorCheckbox = React.createClass({
 			color: this.props.param.color,
 			isCheck: this.props.param.isCheck,
 			label: this.props.param.label,	
+			scope: this.props.param.scope,
 		}
 	},
 
 	onCheckboxChange(e){
 		var isCheck = e.currentTarget.checked; 
-		this.props.param.onCheckboxChange(isCheck);
+		this.props.param.onCheckboxChange.call(this.state.scope, isCheck);
 	},
 	
 	render(){

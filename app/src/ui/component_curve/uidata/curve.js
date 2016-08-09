@@ -11,24 +11,29 @@ import Signal from 'Signal';
 class CurveUI extends Base{ 
 	constructor(){
 		super();
+		this.signal_curve_toggle = new Signal();
+		var me = this;
 
 		var colorIndex = 0;
 
 
 		var createLine = function(label){
-			return Cell.create({
+			var c = Cell.create({
 				component: ColorCheckbox, 
 				param: {
 					color: GlobalUtil.COLORS[colorIndex++ % 24], 
 					isCheck: true, 
 					label: label,  
 					onCheckboxChange: function(isCheck){
-						this.isCheck = isCheck;
-						CurveUI.signal_curve_toggle.dispatch();
-					}
+						this.param.isCheck = isCheck;
+						me.signal_curve_toggle.dispatch();
+					},
+					scope: undefined,
 				}, 
 				v: label,
 			})
+			c.param.scope = c;
+			return c;
 		}
 
 
@@ -142,5 +147,5 @@ class CurveUI extends Base{
 
 }
 
-CurveUI.signal_curve_toggle = new Signal();
+
 module.exports = CurveUI;

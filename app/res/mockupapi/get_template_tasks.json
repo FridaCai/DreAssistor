@@ -116,7 +116,94 @@
             "template": {
                 "type": 4,
                 "param":{
-
+                    "plan": {
+                        "label": "调音计划",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "solution": {
+                        "label": "调音方案",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "sample_prepare": {
+                        "label": "样件准备",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "vehicle_prepare_65": {
+                        "label": "65%调音车辆准备",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
+                    },
+                    "labouratory_worksheet_prepare": {
+                        "label": "试验室资源/工作单准备",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "tuning_test": {
+                        "label": "调音试验",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": "curveid_0"
+                    },
+                    "bp_verify": {
+                        "label": "背压确认",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": 0,
+                        "curve": null
+                    },
+                    "subject_estimation": {
+                        "label": "主观评价",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "NVH_buyoff": {
+                        "label": "NVH buy off",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "scheme_freeze": {
+                        "label": "方案冻结",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    },
+                    "model_change": {
+                        "label": "数模图纸更新",
+                        "status": false,
+                        "refKey": null,
+                        "attachments": [],
+                        "value": null,
+                        "curve": null
+                    }
                 }
             },
             "statical":["duration"]
