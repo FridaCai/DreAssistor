@@ -16,12 +16,19 @@ module.exports = class BaseTask extends Entity {
 		this.parent = undefined;
 		this.template = param.template || {type: 0, param:{}};
 
+
+
+		//todo: bad.
 		this.statical = (function(templateType){
 			var returnValue = ['duration'];
  			switch(templateType){
  				case 0: //normal
 				case 1: //ewo
 				case 2: //hot issue
+				case 4:
+				case 5:
+				case 6:
+				case 7:
 					return returnValue;
 				case 3: //mule
 					return returnValue.concat(["template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]);

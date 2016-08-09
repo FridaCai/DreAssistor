@@ -1,6 +1,7 @@
 import Input from 'Input';
 import ComboBox from 'ComboBox';
 import Image from 'Image';
+import './style.less';
 
 var MixComponent = React.createClass({
 
@@ -26,7 +27,7 @@ var MixComponent = React.createClass({
 	  	}
 
 
-		return (<div>
+		return (<div className='mixComponent'>
 			<Input param={inputParam}/>
 			<ComboBox param={comboboxParam}/>
 			<Image param={imageParam}/>

@@ -244,7 +244,7 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": 0,
+                        "value": null,
                         "curve": null
                     },
                     "model_process_plan": {
