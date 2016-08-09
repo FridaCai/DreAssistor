@@ -38,6 +38,10 @@ var TaskPopup = React.createClass({
                     return item.id == this.state.task.template.type;
                 }).bind(this))
                 .label;
+
+
+
+            var exp = '';
             return (
                 <div className="panel-body">
                     <div className='line name'>
@@ -48,6 +52,11 @@ var TaskPopup = React.createClass({
                     <div className='line desc'>
                         <label>备注</label>
                         <textarea defaultValue={desc} ref='descTA'></textarea>
+                    </div>
+
+                   <div className='line desc'>
+                        <label>经验分享</label>
+                        <textarea defaultValue={exp} ref='descTA'></textarea>
                     </div>
 
                     <div className='line startTime'>
