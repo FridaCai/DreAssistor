@@ -27,26 +27,7 @@ class Sheet1 extends Base{
 	}
 
 	ui2dm(benchmark){
-	    /*for(var i=0; i<this.ui.length; i++){
-	        var line = this.ui[i];
-	        var key = line.getCellAt(0).getValue();
-	        var value = line.getCellAt(1).getValue();
 
-	        switch(key){
-	            case 'label':
-	            case 'ec':
-	                project[key] = value;
-	                break;
-	            case 'bpMax':
-	            case 'bpMin':
-	            case 'massMin':
-	            case 'massMax':
-	                project[key] = Math.round(parseFloat(value) * 100) / 100;
-	                break;
-	            case 'sorp':
-	                project[key] = ExcelUtil.convertYYYYMMDD2UnixTime(value);
-	        }
-	    }*/
 	}
 
 	dm2ui(benchmark){

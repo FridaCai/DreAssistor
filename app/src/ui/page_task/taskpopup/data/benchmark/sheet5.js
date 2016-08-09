@@ -11,7 +11,7 @@ import {ExpandLine} from 'Table';
 import MixComponent from '../../widget/mixcomponent.js';
 
 
-class Sheet3 extends Base{
+class Sheet5 extends Base{
 	constructor(){
 		super();
 
@@ -21,7 +21,7 @@ class Sheet3 extends Base{
 				Cell.create({component: Label, v: ''})
 			]
 		});
-		this.sheetName = `空滤`;
+		this.sheetName = `性能`;
 	}
 
 	ui2dm(benchmark){
@@ -29,6 +29,9 @@ class Sheet3 extends Base{
 	}
 
 	dm2ui(benchmark){
+		return;
+
+
 		var expandLine1 = ExpandLine.create({
 			cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
 		});
@@ -88,31 +91,6 @@ class Sheet3 extends Base{
 			]}),
 
 			Line.create({cells: [
-				Cell.create({component: Label, v: '零件尺寸(长）'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-			Line.create({cells: [
-				Cell.create({component: Label, v: '零件尺寸(宽）'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-			Line.create({cells: [
-				Cell.create({component: Label, v: '零件尺寸(高）'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-			Line.create({cells: [
-				Cell.create({component: Label, v: '滤芯'}),
-				Cell.create({component: Input, param: {
-				    v: 0
-				}})
-			]}),
-
-			Line.create({cells: [
 				Cell.create({component: Label, v: '落水孔'}),
 				Cell.create({component: ComboBox, param: {
 				    selectedId: "", //string. existed id in options.
@@ -128,43 +106,9 @@ class Sheet3 extends Base{
 				}})
 			]}),
 
-			Line.create({cells: [
-				Cell.create({component: Label, v: '高频谐振器'}),
-				Cell.create({component: ComboBox, param: {
-				    selectedId: "", //string. existed id in options.
-				    options: [{
-				        id: "0",
-				        label: "有",
-				    },{
-				        id: "1",
-				        label: "无",
-				    }],
-				    prompt: "请选择", //if fail to find item in options by defautlKey, use prompt string.
-				    onchange: function(){} //event triggered when selected item change.
-				}})
-			]}),
 
-			Line.create({cells: [
-				Cell.create({component: Label, v: '传感器形式'}),
-				Cell.create({component: ComboBox, param: {
-				    selectedId: "", //string. existed id in options.
-				    options: [{
-				        id: "0",
-				        label: "温度传感器",
-				    },{
-				        id: "1",
-				        label: "MAF传感器",
-				    },{
-				    	id: "2",
-				        label: "无",
-				    },{
-				    	id: "3",
-				        label: "其他",
-				    }],
-				    prompt: "请选择", //if fail to find item in options by defautlKey, use prompt string.
-				    onchange: function(){} //event triggered when selected item change.
-				}})
-			]}),
+
+
 
 
 
@@ -174,18 +118,18 @@ class Sheet3 extends Base{
 
 			Line.create({
 				cells: [
-					Cell.create({component: Label, v: '空滤安装点'}),
+					Cell.create({component: Label, v: '谐振器安装点'}),
 					Cell.create({
 						component: ExpandCellDOM, 
 						param: {
 				        	label: '详情',
 				        	isOpen: false, //need?
 				        	onExpandToggle: function(){
-				        		Sheet3.signal_expand_toggle.dispatch();
+				        		Sheet5.signal_expand_toggle.dispatch();
 				        	},
 				        	expandComponent: MixComponent,
 				        	expandComponentParam: {
-				        		id: 'konglv' //todo. 
+				        		id: 'xiezhenqi2' //todo. 
 				        	}
 						}, 
 						v:''
@@ -203,18 +147,18 @@ class Sheet3 extends Base{
 
 			Line.create({
 				cells: [
-					Cell.create({component: Label, v: '空滤周边零件间隙'}),
+					Cell.create({component: Label, v: '谐振器周边零件间隙'}),
 					Cell.create({
 						component: ExpandCellDOM, 
 						param: {
 				        	label: '详情',
 				        	isOpen: false, //need?
 				        	onExpandToggle: function(){
-				        		Sheet3.signal_expand_toggle.dispatch();
+				        		Sheet5.signal_expand_toggle.dispatch();
 				        	},
 				        	expandComponent: MixComponent,
 				        	expandComponentParam: {
-				        		id: 'konglvzhoubianlingjianjianxi' //todo. 
+				        		id: 'jinqiguan2' //todo. 
 				        	}
 						}, 
 						v:''
@@ -230,8 +174,8 @@ class Sheet3 extends Base{
 		];
 	}
 }
-Sheet3.signal_expand_toggle = new Signal();
-module.exports = Sheet3;
+Sheet5.signal_expand_toggle = new Signal();
+module.exports = Sheet5;
 
 
 

@@ -1,4 +1,3 @@
-import './style.less';
 import Input from 'Input';
 import ComboBox from 'ComboBox';
 import Image from 'Image';
