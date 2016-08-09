@@ -36,6 +36,7 @@ var ProjectPopup = React.createClass({
             label: '豆豆',
             writeMode: [0,1]
         }];
+        var needUpdate = true;
 	    return (
             <div className='addProjectDiv'>
                 <XlsIExport ref='xlsIExport' 
@@ -48,7 +49,7 @@ var ProjectPopup = React.createClass({
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
                     onDrop={this.onTableDrop}
-                    needUpdate = true/>
+                    needUpdate = {needUpdate}/>
             </div>
 	    );   
     },
