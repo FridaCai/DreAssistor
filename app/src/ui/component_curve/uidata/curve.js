@@ -79,21 +79,63 @@ class CurveUI extends Base{
 		this.ui = this.ui.concat(ui);
 	}
 	ui2xls(){
-		var emptylines = [];
-		for(var i=0; i<8; i++){
-			var cells = [];
-			for(var j=0; j<5; j++){
-				cells.push(Cell.create({component: Label, v: ''}));
+		//should not change this.ui data.
+
+		var hiddenColumns = this.header.cells.map(function(cell, index){
+			if(cell.component.displayName === 'ColorCheckbox' && !cell.param.isCheck){
+				return index;
 			}
-			emptylines.push(Line.create({cells: cells}));
+			return -1;
+		})
+
+		function filter(arr){
+			return arr.filter(function(cell, index){
+				if(hiddenColumns.indexOf(index) != -1){
+					return false;
+				}
+				return true;
+			})
 		}
 
-		var header = emptylines.concat(this.ui);
+		var header = Line.create({cells: filter(this.header.cells)});
+		var ui = [];
+		this.ui.map(function(line, i){
+			ui.push(
+				Line.create({
+					cells: filter(line.cells)
+				})
+			);
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+		var emptylines = (function appendEmptyLines(){
+			var emptylines = [];
+			for(var i=0; i<8; i++){
+				var cells = [];
+				for(var j=0; j<5; j++){
+					cells.push(Cell.create({component: Label, v: ''}));
+				}
+				emptylines.push(Line.create({cells: cells}));
+			}
+			return emptylines;
+		})()
+		
 		ExcelUtil.ui2excel({
 			curve: {
 				appendLines: emptylines, 
-				header: this.header,
-				ui: this.ui,
+				header: header,
+				ui: ui,
 			}
 		});
 	}
