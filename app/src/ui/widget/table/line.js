@@ -24,7 +24,9 @@ var LineDOM = React.createClass({
 			<tr>
             {
                 line.cells.map(function(cell){
-                	return (<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id}/>)
+                	if(!cell.isHide){
+                		return (<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id}/>)	
+                	}
                 })
             }
             </tr>

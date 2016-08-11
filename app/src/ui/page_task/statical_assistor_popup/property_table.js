@@ -37,7 +37,7 @@ var Table = React.createClass({
                                                 <th>#</th>
                                                 {
                                                     allpropertyKeys.map((function(column, j){
-                                                        var label = Util.COLUMN_LABLE_MAP[column];
+                                                        var label = Util.COLUMN_Label_MAP[column];
                                                         return (<th key={j}>{label}</th>)
                                                     }).bind(this))
                                                 }

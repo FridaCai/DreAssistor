@@ -16,7 +16,8 @@ var Input = React.createClass({
 		this.state.onChange && this.state.onChange.call(scope, value);
 	},
 	onBlur(){
-
+		var scope = this.state.scope;
+		this.state.onBlur && this.state.onBlur.call(scope);
 	},
 	render(){
         return (

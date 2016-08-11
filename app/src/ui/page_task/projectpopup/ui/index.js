@@ -70,27 +70,15 @@ var ProjectPopup = React.createClass({
         }).bind(this);
         reader.readAsBinaryString(file);
     },
+    onDataChange: function(){
+        //when ui2dm and dm2ui, data is refreshed, if not redraw table, datachange will not be listened to the correct component.
+        API.ui2dm();
+        API.dm2ui();
+        this.refs.table.setState({uidata: API.uidata}); 
+    },
     componentDidMount: function(){
-        Property.signal_sorp_change.listen(function(e, param){
-            param.cell.v = param.value;
-        });
-
-        Property.signal_sorp_blur.listen((function(e, param){
-            API.ui2dm();
-            API.dm2ui();
-            this.refs.table.setState({uidata: API.uidata}); 
-        }).bind(this));
-
-
-        Tag.signal_adjusttime_change.listen(function(e, param){
-            param.cell.v = param.value;
-        })
-        Tag.signal_adjusttime_blur.listen((function(e, param){
-            //when API.ui2dm and API.dm2ui called, cells will be new. but if table is not updated, the user-changed cell is not consistent with cells in dm.
-            API.ui2dm();
-            API.dm2ui();
-            this.refs.table.setState({uidata: API.uidata}); 
-        }).bind(this));
+        Property.signal_sorp_blur.listen(this.onDataChange);
+        Tag.signal_adjusttime_blur.listen(this.onDataChange);
 
         if(this.props.project)
             return;
@@ -111,10 +99,12 @@ var ProjectPopup = React.createClass({
         }).bind(this));
     },
 
-
+    componentWillUnmount: function(){
+        Property.signal_sorp_blur.unlisten(this.onDataChange);
+        Tag.signal_adjusttime_blur.unlisten(this.onDataChange);
+    },
 
     onOK:function() {
-        console.log('onOK');
         var project = API.getProject();
         this.state.onOK(project);
         return Promise.resolve();

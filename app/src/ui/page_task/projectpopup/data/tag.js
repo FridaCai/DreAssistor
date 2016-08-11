@@ -1,18 +1,23 @@
 import {Base} from 'Table';
 import DataTag from '../../data/tag.js';
 import {Cell} from 'Table'; 
+import {Line} from 'Table'; 
 import {ExcelUtil} from 'XlsIExport';
 import Signal from '../../../../signal.js';
+import Label from 'Label';
+import Input from 'Input';
 
 class Tag extends Base {
 	constructor(){
 		super()
-		this.header = [
-			Cell.create({v: 'Week'}), 
-			Cell.create({v: 'Date (Sorp-Week)'}), 
-			Cell.create({v: 'Date (Adjusted)'}), 
-			Cell.create({v: 'Update Program Milestone'})
-		];
+		this.header = Line.create({
+			cells: [
+				Cell.create({component: Label, v: 'Week'}), 
+				Cell.create({component: Label, v: 'Date (Sorp-Week)'}), 
+				Cell.create({component: Label, v: 'Date (Adjusted)'}), 
+				Cell.create({component: Label, v: 'Update Program Milestone'}), 
+			]
+		})
 		this.sheetName = `Master timing`;
 	}
 
@@ -20,26 +25,24 @@ class Tag extends Base {
 		project.clearTags();
 
 		for(var i=0; i<this.ui.length; i++){
-			var line = this.ui[i];
+			var cells = this.ui[i].cells;
 	        
-	        var label = line[3].v;
-            var week = parseInt(line[0].v);
-            var time = line[2].v ? ExcelUtil.convertYYYYMMDD2UnixTime(line[2].v) : undefined;
-
+	        var label = cells[3].v;
+            var week = parseInt(cells[0].v);
+            var time = cells[2].v ? ExcelUtil.convertYYYYMMDD2UnixTime(cells[2].v) : undefined;
 
             if(label){
             	var tag = new DataTag();
-            	tag.init({ 
+            	tag.init({
 	                "label": label,
 	                "week": week,
 	                "time": time, 
 	            });
-
             	project.addTag(tag); 
             } 
 		}
-		
 	}
+	
 	dump(){
 		var obj = [];
 
@@ -72,35 +75,34 @@ class Tag extends Base {
 		for(var i=loop; i>=0; i--){
             var tag = findByWeek(tags, i);
             var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp, i));
-            var line = [
-            	Cell.create({v: i}), 
-            	Cell.create({v:autoTime}), 
-				Cell.create({v: ''}),
-        		Cell.create({v:''})
-    		];
+            var line = Line.create({cells: [
+        		Cell.create({component: Label, v: i}), 
+            	Cell.create({component: Label, v:autoTime}), 
+				Cell.create({component: Label, v: ''}),
+        		Cell.create({component: Label, v:''})
+        	]});
+            	
             
             if(tag){
             	var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
-                line[2] = Cell.create({
-	            	id:'', 
-	            	v: adjustTime,
-	            	components:[{
-		        		type: Cell.ComponentEnum.Input,
-		        		onChange: function(e){
-		        			var value = e.target.value;
-		        			Tag.signal_adjusttime_change.dispatch({
-		        				cell: this,
-		        				value: value
-		        			});
-		        		},
-		        		onBlur: function(){
-		        			Tag.signal_adjusttime_blur.dispatch({
-		        				cell: this,
-		        			});
-		        		},
-		        	}]
-                });
-                line[3] = Cell.create({v:tag.label});
+
+
+				var c = Cell.create({component: Input, param: {
+					onChange: function(v){
+	        			this.v = v;
+					}, 
+					onBlur: function(){
+	        			Tag.signal_adjusttime_blur.dispatch();
+	        		},
+		        	value: adjustTime,
+		        	scope: undefined,
+				}, v: adjustTime});
+				c.param.scope = c;
+				line.cells[2] = c;
+
+
+
+                line.cells[3] = Cell.create({component: Label, v: tag.label});
             }
             this.ui.push(line);
         }

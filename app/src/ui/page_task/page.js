@@ -7,12 +7,11 @@ import PeopleAssistorPopup from './people_assistor_popup/index.js';
 import ContextMenu from './contextmenu.jsx';
 import MessageBox from 'MessageBox';
 
-
 import Util from 'Util';
 import Task from './data/task.js';
 import Project from './data/project.js';
 
-import Request from '../../request.js';
+import Request from 'Request';
 import API from './api.js';
 import SuperAPI from '../../api.js';
 
@@ -46,7 +45,7 @@ var PageTask = React.createClass({
         }).bind(this));
     },
 
-    componentDidUnMount: function(){
+    componentWillUnmount: function(){
         API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
         API.signal_page_refresh.unlisten(this.onPageRefresh);
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
@@ -83,7 +82,7 @@ var PageTask = React.createClass({
     },
 
     onTaskPopupShow: function(e, param){
-        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<TaskPopup title={param.title} task={param.task} onOK={param.onOK}/>, this.refs.popup);  
     },
 
@@ -119,26 +118,29 @@ var PageTask = React.createClass({
     },
 
     render: function() {
-        //todo: create popup when needed. otherwise, avoid loading data for the not necessary rendering.
-        return (
-            <div className='pageTask'>
-                <TemplateTaskList/>
+        try{
+            return (
+                <div className='pageTask'>
+                    <TemplateTaskList/>
 
-                <div className="btn-group" role="group" aria-label="Basic example"> 
-                    <button type="button" className="btn btn-default" onClick={this.onAddProjectPopupShow}>添加项目</button> 
-                    <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
-                    <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
-                </div> 
-                {
-                    API.getProjectArr().map(function(project){
-                        return (
-                            <CTimeLine project={project} key={project.id}/>
-                        )
-                    })
-                }
-                <div ref='popup'></div>
-            </div>
-        );    
+                    <div className="btn-group" role="group" aria-label="Basic example"> 
+                        <button type="button" className="btn btn-default" onClick={this.onAddProjectPopupShow}>添加项目</button> 
+                        <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
+                        <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
+                    </div> 
+                    {
+                        API.getProjectArr().map(function(project){
+                            return (
+                                <CTimeLine project={project} key={project.id}/>
+                            )
+                        })
+                    }
+                    <div ref='popup' className='popup'></div>
+                </div>
+            );  
+        }catch(e){
+            console.log(e.stack);
+        }
     }
 });
 

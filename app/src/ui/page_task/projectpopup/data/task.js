@@ -1,37 +1,37 @@
 import {Base} from 'Table';
 import TaskData from '../../data/task.js';
 import {Cell} from 'Table';
+import {Line} from 'Table';
+import Label from 'Label';
 
 module.exports = class Task extends Base {
 	constructor(){
 		super()
 
-		this.header = [
+		this.header = Line.create({cells: [
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
 
-			Cell.create({v: 'Label'}), 
-
+			Cell.create({component: Label, v: 'Label'}), 
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
-			
-			Cell.create({v: 'Start Week'}), 
-			Cell.create({v: 'End Week'})
-		];
+			Cell.create({component: Label, v: 'Start Week'}), 
+			Cell.create({component: Label, v: 'End Week'})
+		]})
 		this.sheetName = `豆豆`;
 	}
 
 	ui2dm(project){
 		project.clearTasks();
 		for(var i=0; i<this.ui.length; i++){
-			var line = this.ui[i];
+			var cells = this.ui[i].cells;
 
-			var label = line[2].v;
-			var startWeek = parseInt(line[8].v);
-			var endWeek = parseInt(line[9].v);
+			var label = cells[2].v;
+			var startWeek = Math.abs(parseInt(cells[8].v));
+			var endWeek = Math.abs(parseInt(cells[9].v));
 
 			var task = new TaskData();
 			task.init({
@@ -46,24 +46,26 @@ module.exports = class Task extends Base {
 
 	dm2ui(project){
 		var tasks = project.findTasks();
-		this.ui = tasks.map((function(task){
+		this.ui = [];
+		tasks.map((function(task){
 			task.time2week(project.sorp);
 
-			return [
-				Cell.create({isHide: true}),
-				Cell.create({isHide: true}),
+			this.ui.push(Line.create({
+				cells: [
+					Cell.create({isHide: true}),
+					Cell.create({isHide: true}),
+					Cell.create({component: Label, v: task.label}),
+					Cell.create({isHide: true}),
+					Cell.create({isHide: true}),
+					Cell.create({isHide: true}),
+					Cell.create({isHide: true}),
+					Cell.create({isHide: true}),
+					Cell.create({component: Label, v: task.startWeek}),
+					Cell.create({component: Label, v: task.endWeek})
+				]
+			}));
 
-				Cell.create({v: task.label}),
-
-				Cell.create({isHide: true}),
-				Cell.create({isHide: true}),
-				Cell.create({isHide: true}),
-				Cell.create({isHide: true}),
-				Cell.create({isHide: true}),
-
-				Cell.create({v: task.startWeek}),
-				Cell.create({v: task.endWeek})
-			];
-		}).bind(this)).reverse();
+		}).bind(this));
+		this.ui = this.ui.reverse();
 	}
 }

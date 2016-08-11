@@ -48,12 +48,12 @@ module.exports = class BaseTask extends Entity {
 	}
 
 	week2time(ref){
-		this.startTime = parseInt(moment(ref).add(this.startWeek, 'week').format('x'));
-		this.endTime = parseInt(moment(ref).add(this.endWeek, 'week').format('x'));
+		this.startTime = parseInt(moment(ref).subtract(this.startWeek, 'week').format('x'));
+		this.endTime = parseInt(moment(ref).subtract(this.endWeek, 'week').format('x'));
 	}
 	time2week(ref){
-		this.startWeek = moment(this.startTime).diff(moment(ref), 'w');
-		this.endWeek = moment(this.endTime).diff(moment(ref), 'w');
+		this.startWeek = moment(ref).diff(moment(this.startTime), 'w');
+		this.endWeek = moment(ref).diff(moment(this.endTime), 'w');
 	}
 
 	/**

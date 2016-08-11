@@ -3,15 +3,19 @@ import {Cell} from 'Table';
 import {Line} from 'Table';
 import {Base} from 'Table';
 import Signal from 'Signal';
+import Label from 'Label';
+import Input from 'Input';
 
 class Property extends Base{
 	constructor(){
 		super();
 
-		this.header = new Line({
-			cells: [Cell.create({v: 'property'}), Cell.create({v: 'value'})],
+		this.header = Line.create({
+			cells: [
+				Cell.create({component: Label, v: 'property'}), 
+				Cell.create({component: Label, v: 'value'})
+			]
 		});
-
 		this.sheetName = `项目属性`;
 	}
 
@@ -47,31 +51,71 @@ class Property extends Base{
 		var massMin = project['massMin'];
 		var ec = project['ec'];
 
-		this.ui = [//todo. LIne.
-            [Cell.create({v: 'label'}), Cell.create({v: label})],
-            [Cell.create({v: 'bpMax'}), Cell.create({v: bpMax})],
-            [Cell.create({v: 'bpMin'}), Cell.create({v: bpMin})],
-            [Cell.create({v: 'massMax'}), Cell.create({v: massMax})],
-            [Cell.create({v: 'massMin'}), Cell.create({v: massMin})],
-            [Cell.create({v: 'ec'}), Cell.create({v: ec})],
-            [
-            	Cell.create({v: 'sorp'}), 
-            	Cell.create({
-	            	id:'sorp', 
-	            	v: sorp,
-	            	components:[{
-		        		type: Cell.ComponentEnum.Input,
-		        		onChange: function(e){
-		        			var value = e.target.value;
-		        			Property.signal_sorp_change.dispatch({cell: this, value: value});	
+		var c = Cell.create({component: Input, param: {
+			onChange: function(v){
+				this.v = v;
+			}, 
+			onBlur: function(){
+				Property.signal_sorp_blur.dispatch();
+			},
+        	value: sorp,
+        	scope: undefined,
+		}, v: sorp});
+		c.param.scope = c;
 
-		        		},
-		        		onBlur: function(e){
-		        			Property.signal_sorp_blur.dispatch();
-		        		}
-		        	}]
-        		})
-    		]
+
+		this.ui = [
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'property'}), 
+					Cell.create({component: Label, v: 'value'})
+				]
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'label'}),
+					Cell.create({component: Label, v: label})
+				]
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'bpMax'}),
+					Cell.create({component: Label, v: bpMax})
+				]
+
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'bpMin'}),
+					Cell.create({component: Label, v: bpMin})
+				]
+
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'massMax'}),
+					Cell.create({component: Label, v: massMax})
+				]
+
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'massMin'}),
+					Cell.create({component: Label, v: massMin})
+				]
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'ec'}),
+					Cell.create({component: Label, v: ec})
+				]
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'sorp'}),
+					c
+				]
+			})
         ];
 	}
 }

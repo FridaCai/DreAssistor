@@ -46,7 +46,7 @@ var Chart = React.createClass({
             var options = properties.map((function(property){
                 return {
                     id: property,
-                    label: Util.COLUMN_LABLE_MAP[property],
+                    label: Util.COLUMN_Label_MAP[property],
                 }
             }).bind(this));
 

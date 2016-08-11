@@ -13,7 +13,7 @@ var TableDOM = React.createClass({
         	uidata: this.props.uidata,
             onDrop: this.props.onDrop || function(){},
             isReverse: this.props.isReverse,
-            needUpdate: false,
+            needUpdate: this.props.needUpdate || false,
         };
     },
     onSwitchSheet: function(index){
