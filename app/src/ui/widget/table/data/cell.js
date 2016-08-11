@@ -15,6 +15,7 @@ class Cell {
 		this.id = param.id || GlobalUtil.generateUUID();
 		this.component = param.component || null;
         this.param = param.param || {}; 
+        this.param.scope = this;
         this.isHide = param.isHide || false; //for occupation purpose.
         this.v = (param.v == undefined || param.v === null) ? '' : param.v;
         this.line = undefined;

@@ -86,8 +86,7 @@ class Tag extends Base {
             if(tag){
             	var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
 
-
-				var c = Cell.create({component: Input, param: {
+				line.cells[2] = Cell.create({component: Input, param: {
 					onChange: function(v){
 	        			this.v = v;
 					}, 
@@ -95,12 +94,7 @@ class Tag extends Base {
 	        			Tag.signal_adjusttime_blur.dispatch();
 	        		},
 		        	value: adjustTime,
-		        	scope: undefined,
 				}, v: adjustTime});
-				c.param.scope = c;
-				line.cells[2] = c;
-
-
 
                 line.cells[3] = Cell.create({component: Label, v: tag.label});
             }

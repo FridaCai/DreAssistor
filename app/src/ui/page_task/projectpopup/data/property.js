@@ -51,17 +51,7 @@ class Property extends Base{
 		var massMin = project['massMin'];
 		var ec = project['ec'];
 
-		var c = Cell.create({component: Input, param: {
-			onChange: function(v){
-				this.v = v;
-			}, 
-			onBlur: function(){
-				Property.signal_sorp_blur.dispatch();
-			},
-        	value: sorp,
-        	scope: undefined,
-		}, v: sorp});
-		c.param.scope = c;
+
 
 
 		this.ui = [
@@ -113,7 +103,19 @@ class Property extends Base{
 			Line.create({
 				cells: [
 					Cell.create({component: Label, v: 'sorp'}),
-					c
+					Cell.create({
+						component: Input,
+						param: {
+							onChange: function(v){
+								this.v = v;
+							}, 
+							onBlur: function(){
+								Property.signal_sorp_blur.dispatch();
+							},
+			        		value: sorp,
+						}, 
+						v: sorp
+					})
 				]
 			})
         ];

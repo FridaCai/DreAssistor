@@ -6,19 +6,16 @@ import {Base} from 'Table';
 import Label from 'Label';
 import Curve from '../data/curve.js';
 import ColorCheckbox from '../widget/colorcheckbox.js';
-import Signal from 'Signal';
+
 
 class CurveUI extends Base{ 
 	constructor(){
 		super();
-		this.signal_curve_toggle = new Signal();
+		
 		var me = this;
-
 		var colorIndex = 0;
-
-
 		var createLine = function(label){
-			var c = Cell.create({
+			return Cell.create({
 				component: ColorCheckbox, 
 				param: {
 					color: GlobalUtil.COLORS[colorIndex++ % 24], 
@@ -26,16 +23,12 @@ class CurveUI extends Base{
 					label: label,  
 					onCheckboxChange: function(isCheck){
 						this.param.isCheck = isCheck;
-						me.signal_curve_toggle.dispatch();
+						me.onToggle();
 					},
-					scope: undefined,
 				}, 
 				v: label,
-			})
-			c.param.scope = c;
-			return c;
+			});
 		}
-
 
 		var line = Line.create({cells: [
 			Cell.create({component: Label, v: 'rpm'}), 
@@ -47,6 +40,17 @@ class CurveUI extends Base{
 
 		this.header = line;
 		this.sheetName = `曲线`;
+
+		this.toggleSignal = undefined;
+	}
+
+	setToggleSignal(signal){
+		this.toggleSignal = signal;
+	}
+
+	onToggle(){
+		this.toggleSignal && this.toggleSignal.dispatch();
+		
 	}
 	dump(){
 		var dumpui = [];

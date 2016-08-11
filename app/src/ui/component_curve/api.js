@@ -4,47 +4,53 @@ import Curve from './data/curve.js'; //todo: datamodel should be all together.
 import CurveUI from './uidata/curve.js';
 
 //todo: template mode??? very similar with projectpopup/api
-var API = {
-
-	/*will be called when init website. not good.*/
-	uidata: {
-		curve: new CurveUI(),
-	},
-	curve: new Curve(),
-
-	setCurve: function(curve){
-		this.curve = curve;
-	},
-	getCurve: function(){
-		return this.curve;
-	},
-	loadTemplate:function(){
+class API{
+	static loadTemplate(){
 		var url = Request.getMockupAPI('template_curve.json');
         return Request.getData(url).then((function(result){
  			return result;
         }).bind(this))
-	},
-	ui2dm: function(){
+	}
+
+	constructor(){
+
+	}
+
+	init(){
+		this.curve = new Curve();
+		this.uidata = {
+			curve: new CurveUI()
+		}
+		this.signal_curve_toggle = new Signal();
+		this.uidata.curve.setToggleSignal(this.signal_curve_toggle);
+	}
+	
+	setCurve(curve){
+		this.curve = curve;
+	}
+	ui2dm(){
 		this.uidata.curve.ui2dm(this.curve);
-	}, 
-	dm2ui:function(){
+	}
+	
+	dm2ui(){
 		this.uidata.curve.dm2ui(this.curve);
-	},
+	}
 
-	ui2xls: function(){
-		API.uidata.curve.ui2xls();
-	},
+	ui2xls(){
+		this.uidata.curve.ui2xls();
+	}
 
-	xls2ui:function(param){
+	xls2ui(param){
 		var curveSheet = param.curve;
 		var errorCode = -1;
 		var errorMsg = '';
 
 		try{
-			curveSheet.map(function(sheet){
-				API.uidata.curve = new CurveUI();
-				API.uidata.curve.xls2ui(sheet.sheet)
-			})
+			curveSheet.map((function(sheet){
+				this.uidata.curve = new CurveUI();
+				this.uidata.curve.xls2ui(sheet.sheet)
+				this.uidata.curve.setToggleSignal(this.signal_curve_toggle);
+			}).bind(this))
 		}catch(e){
 			console.error(e);
 		}
@@ -53,12 +59,6 @@ var API = {
 			errorCode: errorCode,
 			errorMsg: errorMsg,
 		}
-	},
-	clear:function(){
-		this.curve = new Curve();
-	},
+	}
 }
-window.dre.curve = {
-	data: API	
-};
 module.exports = API;

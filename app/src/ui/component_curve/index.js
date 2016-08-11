@@ -1,18 +1,22 @@
 import './index.less';
-import API from './api.js';
 import {XlsIExport} from 'XlsIExport';
 import {TableDOM} from 'Table';
 import Curve from './data/curve.js';
 import CurveUI from './uidata/curve.js';
 import Chart from './chart.js';
+import API from './api.js';
 
 var CurveComponent = React.createClass({
   getInitialState: function(){
+    this.api = new API();
+    this.api.init();
+
     (function(curve){
         if(!curve)
-    		return;
-        API.setCurve(curve);
-        API.dm2ui();      
+    	   	return;
+
+        api.setCurve(curve);
+        api.dm2ui();      
     })(this.props.curve);
 
     return {
@@ -35,14 +39,15 @@ var CurveComponent = React.createClass({
                     disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}
-                    xls2ui = {API.xls2ui}
-                    ui2xls = {API.ui2xls}
+                    xls2ui = {this.xls2ui}
+                    ui2xls = {this.ui2xls}
+                    scope = {this}
                 />
                 <TableDOM ref='table' 
-                    uidata={API.uidata} 
+                    uidata={this.api.uidata} 
                     onDrop={this.onTableDrop}
                     isReverse={true}/>
-               <Chart uidata={API.uidata} ref='chart' id={id}/>
+               <Chart uidata={this.api.uidata} ref='chart' id={id}/>
             </div>
       );  
     }catch(e){
@@ -50,12 +55,18 @@ var CurveComponent = React.createClass({
     }
        
   },
+  xls2ui: function(param){
+    return this.api.xls2ui(param);
+  },
+  ui2xls: function(){
+    this.api.ui2xls();
+  },
 
   onXlsImport: function(){
-      API.ui2dm();
-      API.dm2ui();
+      this.api.ui2dm();
+      this.api.dm2ui();
 
-      this.refs.table.update({uidata: API.uidata});
+      this.refs.table.update({uidata: this.api.uidata});
       this.refs.chart.update();
   },
   onTableDrop: function(files){
@@ -72,7 +83,7 @@ var CurveComponent = React.createClass({
   },
 
   componentDidMount: function(){
-      API.uidata.curve.signal_curve_toggle.listen(this.onCurveToggle);
+      this.api.signal_curve_toggle.listen(this.onCurveToggle);
 
 
       if(this.props.curve)
@@ -82,8 +93,8 @@ var CurveComponent = React.createClass({
           var curve = new Curve();
           curve.init(result);
 
-          API.setCurve(curve); 
-          API.dm2ui();
+          this.api.setCurve(curve); 
+          this.api.dm2ui();
 
 
           this.refs.table.forceUpdate();
@@ -93,8 +104,8 @@ var CurveComponent = React.createClass({
       }).bind(this));
   },
 
-  componentDidUnMount: function(){
-    API.uidata.curve.signal_curve_toggle.unlisten(this.onCurveToggle);
+  componentWillUnmount: function(){
+    this.api.signal_curve_toggle.unlisten(this.onCurveToggle);
   },
   onCurveToggle: function(e, param){
     this.refs.chart.onToggle();

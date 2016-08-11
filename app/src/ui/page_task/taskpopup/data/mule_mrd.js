@@ -115,9 +115,7 @@ class MuleMRDUI extends Base{
 	            onChange: function(selectedId){
 	            	this.v = (selectedId === 0 ? true : false);
 	            },
-	            scope: undefined
 	        }, v: v});
-			c0.param.scope = c0;
 
 
 
@@ -131,13 +129,7 @@ class MuleMRDUI extends Base{
 					this.v = v;
 				}, 
 	        	value: v,
-	        	scope: undefined,
 			}, v: v});
-			c2.param.scope = c2;
-
-
-
-
 
 
 

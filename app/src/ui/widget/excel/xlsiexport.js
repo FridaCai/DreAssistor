@@ -90,7 +90,6 @@ var Popup = React.createClass({
     getInitialState: function() {
         return {
             title: this.props.title,
-            onOK: this.props.onOK,
             workbook: this.props.workbook,
 
             sheetOptions: this.props.sheetOptions,
@@ -141,9 +140,9 @@ var Popup = React.createClass({
 
 
 
-        var checkResult = this.props.xls2ui(result);
+        var checkResult = this.props.xls2ui.call(this.props.scope, result);
         if(checkResult.errorCode === -1){
-            this.state.onOK();
+            this.props.onOK.call(this.props.scope);
             return Promise.resolve();   
         }
     },
@@ -181,7 +180,8 @@ var XlsIExport = React.createClass({
                 title={'导入excel'} 
                 workbook={workbook} 
                 sheetOptions={sheetOptions} 
-                onOK={this.props.onXlsImport}/>, 
+                onOK={this.props.onXlsImport}
+                scope = {this.props.scope}/>, 
             $('.t_popup')[0]);  
     },
 
@@ -190,7 +190,7 @@ var XlsIExport = React.createClass({
     },
 
 	export: function(){
-        this.props.ui2xls();
+        this.props.ui2xls.call(this.props.scope);
 	},
 
 	_acceptedformat: ['.csv', 
