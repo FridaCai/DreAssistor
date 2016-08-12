@@ -7,4 +7,9 @@ module.exports = class EWO{
 	dump(){
 		
 	}
+	clone(){
+		var ewo = new EWO();
+		ewo.init({})
+		return ewo;
+	}
 }

@@ -28,7 +28,7 @@ var TaskPopup = React.createClass({
 	getContent: function() {
         try{
             const {
-              label, desc, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
+              label, desc, exp, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
             } = this.state.task;
 
             var color = Util.convertIntColorToHex(markColor);
@@ -54,9 +54,9 @@ var TaskPopup = React.createClass({
                         <textarea defaultValue={desc} ref='descTA'></textarea>
                     </div>
 
-                   <div className='line desc'>
+                   <div className='line exp'>
                         <label>经验分享</label>
-                        <textarea defaultValue={exp} ref='descTA'></textarea>
+                        <textarea defaultValue={exp} ref='expTA'></textarea>
                     </div>
 
                     <div className='line startTime'>
@@ -146,6 +146,7 @@ var TaskPopup = React.createClass({
     onOK:function() {
         this.state.task.label = this.refs.labelInput.value;
         this.state.task.desc = this.refs.descTA.value;
+        this.state.task.exp = this.refs.expTA.value;
         this.state.task.startTime = this.refs.startTimeDT.state.selectedDate.valueOf();
         this.state.task.endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
         this.state.task.subtasks = this.refs.breakdownList.getValue();

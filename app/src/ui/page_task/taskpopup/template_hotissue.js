@@ -1,11 +1,15 @@
+import HotIssue from '../data/template/hotissue.js';
+
 var HotIssueTemplate = React.createClass({
     getValue(){
-        return {
+        var hotissue = new HotIssue();
+        hotissue.init({
             rootCause: this.refs.rootCauseTA.value,
             solution: this.refs.solutionTA.value,
             execute: this.refs.executeTA.value,
             feedback: this.refs.feedbackTA.value,
-        }
+        });
+        return hotissue;
     },
 
     getInitialState() {
@@ -14,11 +18,8 @@ var HotIssueTemplate = React.createClass({
     },
     
 	render(){
-        var rootCause = this.props.rootCause;
-        var solution = this.props.solution;
-        var execute = this.props.execute;
-        var feedback = this.props.feedback;
-
+        var {rootCause, solution, execute, feedback} = this.props.param;
+        
 		return (
             <div className='hotissue'>
                 <div className='line name'>

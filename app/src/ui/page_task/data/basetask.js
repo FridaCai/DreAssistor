@@ -78,6 +78,7 @@ module.exports = class BaseTask extends Entity {
 		this.startTime=param.startTime;
 		this.endTime = param.endTime;
 		this.desc = param.desc || '';
+		this.exp = param.exp || '';
 		this.markColor = param.markColor || 6076508;
 		this.priority = param.priority || 0;
 		this.privacy = param.privacy || 0;
@@ -159,6 +160,7 @@ module.exports = class BaseTask extends Entity {
 			startTime: this.startTime,
 			endTime: this.endTime,
 			desc: this.desc,
+			exp: this.exp,
 			markColor: this.markColor,
 			attachments: attachments,
 			creatorId: this.creatorId,

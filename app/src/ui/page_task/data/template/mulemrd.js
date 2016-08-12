@@ -30,4 +30,7 @@ module.exports = class MuleMRD{
 	dump(){
 		
 	}
+	clone(){
+		
+	}
 }

@@ -26,10 +26,10 @@
             "template": {
                 "type": 2,
                 "param": {
-                    "rootCause": "rootCause",
-                    "solution": "solution",
-                    "execute": "execute",
-                    "feedback": "feedback"
+                    "rootCause": "",
+                    "solution": "",
+                    "execute": "",
+                    "feedback": ""
                 }
             },
             "statical":["duration"]

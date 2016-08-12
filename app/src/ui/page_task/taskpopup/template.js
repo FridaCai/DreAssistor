@@ -23,7 +23,7 @@ var TaskTemplatePanel = React.createClass({
     getInitialState: function() {
         return {
             type: this.props.template.type,
-            param: $.extend(true, {}, this.props.template.param),
+            param: this.props.template.param.clone(),
             project: this.props.project,
         }
     },

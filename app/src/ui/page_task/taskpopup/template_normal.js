@@ -1,6 +1,9 @@
+import Normal from '../data/template/normal.js';
 var NormalTemplate = React.createClass({
 	getValue(){
-		return {};
+        var normal = new Normal();
+        normal.init();
+        return normal;
 	},
 	render(){
 		return null;

@@ -10,4 +10,14 @@ module.exports = class HotIssue{
 	dump(){
 		
 	}
+	clone(){
+		var hotissue = new HotIssue();
+		hotissue.init({
+			rootCause: this.rootCause,
+			solution: this.solution,
+			execute: this.execute,
+			feedback: this.feedback
+		});
+		return hotissue;
+	}
 }
