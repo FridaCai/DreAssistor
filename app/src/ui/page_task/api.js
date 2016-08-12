@@ -28,18 +28,6 @@ var API = {
 
 
 
-	/*_tasks: new Tasks(),
-	setTasks: function(value){
-		this._tasks = new Tasks();
-		this._tasks.init(value);
-	},
-	getTasks: function(){
-		return this._tasks;
-	},
-	getTaskArr: function(){
-		return this._tasks.getArr();
-	}*/
-
 
 
 	_projects: new Projects(),

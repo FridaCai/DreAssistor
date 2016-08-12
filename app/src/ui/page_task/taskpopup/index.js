@@ -10,7 +10,7 @@ import CDropDown from 'CDropDown';
 import moment from 'moment';
 
 import BreakDownList from './breakdown_list.js';
-import AttachmentList from './attachment_list.js';
+import AttachmentList from 'AttachmentList';
 import TaskTemplatePanel from './template.js';
 import PrivacyRadioGroup from './privacy_radiogroup.js';
 

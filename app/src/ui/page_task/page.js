@@ -63,15 +63,19 @@ var PageTask = React.createClass({
             return;
         }
 
-        var templateTask = API.getTemplateTasks().find(param.templateTaskId);
         var creator = SuperAPI.getLoginUser();
-        var taskObj = $.extend({}, templateTask);
-        taskObj = $.extend(taskObj, {   
-            id: Util.generateUUID(),
+
+
+
+        var templateTask = API.getTemplateTasks().find(param.templateTaskId);
+
+        var taskObj = {   
+            template:templateTask.template,
             startTime: param.startTime,
             endTime: param.endTime,
             creatorId: creator.id,
-        });
+            label: templateTask.label,
+        };
         var task = new Task();
         task.init(taskObj);
 

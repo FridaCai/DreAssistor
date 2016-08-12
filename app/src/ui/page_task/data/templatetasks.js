@@ -9,7 +9,6 @@ module.exports = class TemplateTasks {
 		param.map((function(task){
 			var t = new TemplateTask();
 			t.init(task);
-			t.setParent(this);
 			this.arr.push(t);
 		}).bind(this))
 	}

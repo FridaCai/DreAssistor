@@ -56,7 +56,8 @@ module.exports = {
             Input: path.join(__dirname, widgetPath, "/input/index.js"),
             Label: path.join(__dirname, widgetPath, "/label/index.js"),
             MessageBox: path.join(__dirname, widgetPath, "/message/index.js"),
-            Table: path.join(__dirname, widgetPath, "/table/index.js")
+            Table: path.join(__dirname, widgetPath, "/table/index.js"),
+            AttachmentList: path.join(__dirname, widgetPath, "/attachmentlist/index.js")
 
         }
     }

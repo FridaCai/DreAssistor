@@ -1,18 +1,20 @@
-import Attachment from '../data/attachment.js';
 import Util from 'Util';
 
 var AttachmentList = React.createClass({
   getInitialState: function(){
     return {
-      attachments: this.props.attachments || [],
+      attachments: this.props.attachments,
     }
   },
+
   getValue: function(){
     return this.state.attachments;
   },
-  onAddAttachmentClk: function(){
+
+  onAddClk: function(){
     this.refs.fileElem.click();
   },
+
   fileElemChange: function(e){
     e.preventDefault();
     //call service to upload file.
@@ -27,21 +29,17 @@ var AttachmentList = React.createClass({
         label: label,
         url: '',
       }
-      this.state.attachments.unshift(attachment);
+      this.state.attachments.add(attachment);
     }
     this.forceUpdate();
   },
 
   onDelete: function(id){
-    var ats = this.state.attachments.filter(function(at){
-      return !(id === at.id);
-    });
-    this.setState({
-      attachments: ats,
-    });
+    this.state.attachments.deleteById(id);
+    this.forceUpdate();
   },
   render: function(){
-    var attachments = this.state.attachments;
+    var attachments = this.state.attachments.arr;
       return (
           <div className='attachmentList listContainer'>
               <ul className="list-group">
@@ -59,7 +57,7 @@ var AttachmentList = React.createClass({
                   }).bind(this))
                 }
               </ul>
-              <a href='javascript:void(0);' onClick={this.onAddAttachmentClk}>添加附件</a>
+              <a href='javascript:void(0);' onClick={this.onAddClk}>添加附件</a>
 
             <form className='upload'>
               <input type="file" ref="fileElem" multiple accept="*/*" onChange={this.fileElemChange}/>

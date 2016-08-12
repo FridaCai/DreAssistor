@@ -7,7 +7,7 @@ import {ExpandContainerDOM} from 'Table';
 import {ExpandCellDOM} from 'Table';
 
 import CurveComponent from '../../../component_curve/index.js';
-import AttachmentList from '../attachment_list.js';
+import AttachmentList from 'AttachmentList';
 
 import Label from 'Label';
 import RadioGroup from 'RadioGroup';
@@ -85,7 +85,6 @@ class MuleMRDUI extends Base{
 	        		id: key,
 	        		curve: value.curve,
 	        		onImportCurve: function(curve){
-	        			debugger; //worry about this.
 	        			this.v = curve;
 	        		}
 	        	}
@@ -95,10 +94,20 @@ class MuleMRDUI extends Base{
 
 	        var attachmentCellParam = {
 	        	label: '附件', 
-	        	expandComponent: AttachmentList,
 	        	isOpen: false,
 	        	onExpandToggle: function(){
 	        		MuleMRDUI.signal_expand_toggle.dispatch();
+	        	},
+	        	expandComponent: AttachmentList,
+	        	expandComponentParam: {
+	        		id: key,
+	        		attachments: value.attachments,
+	        		onAttachmentDelete: function(){
+	        			debugger;
+	        		},
+	        		onAttachmentAdd: function(){
+	        			debugger;
+	        		}
 	        	}
 	        };
 

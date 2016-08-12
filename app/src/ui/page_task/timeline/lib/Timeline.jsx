@@ -736,14 +736,14 @@ export default class ReactCalendarTimeline extends React.Component {
   onDrop(e){
     const [row, time] = this.rowAndTimeFromEvent(e)
     if (row >= 0 && row < this.props.groups.length) {
-      var templateTaskId = e.dataTransfer.getData('text');
+      var templateType = e.dataTransfer.getData('text');
       e.dataTransfer.clearData();
 
-      if(!templateTaskId)
+      if(!templateType)
         return;
 
 
-      this.onAppendTask(templateTaskId, row, time);
+      this.onAppendTask(parseInt(templateType), row, time);
     }
   }
   render () {

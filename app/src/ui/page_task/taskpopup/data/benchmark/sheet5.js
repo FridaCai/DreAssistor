@@ -9,7 +9,7 @@ import {ExpandContainerDOM} from 'Table';
 import {ExpandCellDOM} from 'Table';
 import {ExpandLine} from 'Table';
 import Image from 'Image';
-import AttachmentList from '../../attachment_list.js';
+import AttachmentList from 'AttachmentList';
 import CurveComponent from '../../../../component_curve/index.js';
 
 

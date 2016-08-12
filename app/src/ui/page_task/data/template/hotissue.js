@@ -2,6 +2,9 @@ module.exports = class HotIssue{
 	constructor(){
 	}
 	init(param){
+		if(!param)
+			return;
+		
 		this.rootCause = param.rootCause;
 		this.solution = param.solution;
 		this.execute = param.execute;

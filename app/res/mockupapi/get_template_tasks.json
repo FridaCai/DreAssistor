@@ -22,7 +22,7 @@
 		},{
             "id": 2,
             "label": "HotIssue",
-            "markColor": 6013150,
+            "markColor": 6076508,
             "template": {
                 "type": 2,
                 "param": {
@@ -36,7 +36,7 @@
         },{
             "id": 3,
             "label": "Mule MRD交样",
-            "markColor": 15773006,
+            "markColor": 6076508,
             "template": {
                 "comment": "refKey is to find the target value in project. refKey is the key for project; null means property UI does not need.",
                 "type": 3,

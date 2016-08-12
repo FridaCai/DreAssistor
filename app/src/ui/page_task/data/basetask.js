@@ -1,5 +1,5 @@
 import SubTask from './subtask.js';
-import Attachment from './attachment.js';
+import Attachments from './attachments.js';
 import Util from 'Util';
 import Entity from './entity.js';
 import TemplateFactory from './template/factory';
@@ -82,20 +82,14 @@ module.exports = class BaseTask extends Entity {
 		this.markColor = param.markColor || 6076508;
 		this.priority = param.priority || 0;
 		this.privacy = param.privacy || 0;
-		this.attachments = (function(attachments){
-			if(!attachments)
-				return [];
-			
-			return attachments.map(function(attachment){
-				var att = new Attachment();
-				att.init({
-					id: attachment.id,
-					url: attachment.url
-				});
-				return att;
-			})
-		})(param.attachments);
+		this.attachments = Attachments.create(param.attachments);
+
+
+
+	
 		
+
+
 		this.subtasks = (function(subtasks){
 			if(!subtasks)
 				return [];
@@ -107,6 +101,7 @@ module.exports = class BaseTask extends Entity {
 				return st;
 			}).bind(this));
 		})(param.subtasks)
+
 	}
 
 	update(param){
