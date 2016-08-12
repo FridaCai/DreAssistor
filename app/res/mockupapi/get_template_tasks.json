@@ -70,8 +70,8 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": null,
-                        "curve": "curveid_0"
+                        "value": 0,
+                        "curve": null
                     },
                     "mass": {
                         "label": "重量(kg)",
@@ -86,8 +86,8 @@
                         "status": false,
                         "refKey": null,
                         "attachments": [],
-                        "value": null,
-                        "curve": "curveid_1"
+                        "value": 0,
+                        "curve": null
                     },
                     "sil": {
                         "label": "SIL",

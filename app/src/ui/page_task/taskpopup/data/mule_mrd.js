@@ -23,7 +23,8 @@ class MuleMRDUI extends Base{
 			Cell.create({component:Label, v: '属性'}), 
 			Cell.create({component:Label, v: '目标'}), 
 			Cell.create({component:Label, v: '状态'}), 
-			Cell.create({component:Label, v: '实测'}), 
+			Cell.create({component:Label, v: '实测数值'}), 
+			Cell.create({component:Label, v: '实测曲线'}), 
 			Cell.create({component:Label, v: '附件'}), 
 		]});
 		this.header = line;
@@ -61,15 +62,6 @@ class MuleMRDUI extends Base{
 	            return refKey && project ? project[refKey]: '';
 	        }).call(this, value.refKey, project);
 	        
-
-
-			var isCurve = (function(v){
-				var {value, curve} = v;
-				if(value == null && curve != null){
-					return true;
-				}
-				return false
-			})(value);
 
 
 	        var expandLine = ExpandLine.create({
@@ -140,8 +132,8 @@ class MuleMRDUI extends Base{
 					Cell.create({component: Label, v: label}),
 					Cell.create({component: Label, v: ref}),
 					c0,
-					isCurve ? Cell.create({component: ExpandCellDOM, param: curveCellParam, v:''}): 
-						c2,
+					c2,
+					Cell.create({component: ExpandCellDOM, param: curveCellParam, v:''}),
 					Cell.create({component: ExpandCellDOM, param: attachmentCellParam, v:''})
 				],
 				expandLine: expandLine,

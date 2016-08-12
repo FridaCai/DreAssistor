@@ -1,36 +1,21 @@
 import RadioGroup from 'RadioGroup';
 import MuleMRDUI from './data/mule_mrd.js';
 import {TableDOM} from 'Table';
+import MuleMRD from '../data/template/mulemrd.js';
 
-var API = {
-    project: undefined,
-    uidata: {
-        muleMRDUI: new MuleMRDUI(),
-    },
-    muleMRD: undefined,
-
-    dm2ui: function(){
-        if(!this.muleMRD)
-            return;
-
-        var muleMRDUI = new MuleMRDUI();
-        muleMRDUI.dm2ui(this.project, this.muleMRD);
-        this.uidata.muleMRDUI = muleMRDUI;
-    },
-    ui2dm: function(){
-        this.uidata.muleMRDUI.ui2dm(this.muleMRD);
-    }
-    
-}
-window.dre.mulemrd = {
-    data: API
-};
 
 var MuleMRDTemplate = React.createClass({
     getInitialState() {
+        var {param, project} = this.props;
+        
+        var muleMRD = param;
+        var muleMRDUI = new MuleMRDUI();
+        muleMRDUI.dm2ui(project, param);
+
+
         return {
-            param: this.props.param,
-            project: this.props.project,
+            muleMRD: muleMRD,
+            muleMRDUI: muleMRDUI,
         }
     },
 
@@ -44,15 +29,30 @@ var MuleMRDTemplate = React.createClass({
         MuleMRDUI.signal_expand_toggle.unlisten(this.onExpandToggle);
     },
     getValue(){
-        API.ui2dm();
-        return API.muleMRD;
+
+        //expected: 
+        /*
+            var ewo = new EWO();
+            ewo.init();
+            return ewo;
+        */
+
+        //API.ui2dm(); //need?
+
+        debugger;
+        this.state.muleMRDUI.ui2dm(this.state.muleMRD);
+        this.state.muleMRD.dump();
+
+        return this.state.muleMRD;
+
+
+
+        
     },
 	render(){
-        API.muleMRD = this.state.param;
-        API.project = this.state.project;
-        API.dm2ui();
-        var uidata = API.uidata;
-
+        var uidata = {
+            mulemrd:this.state.muleMRDUI
+        };
         return (
             <div className='mule_mrd'>
                <TableDOM ref='table' 
