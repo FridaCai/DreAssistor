@@ -68,7 +68,7 @@ var TemplateTaskList = React.createClass({
       e.preventDefault(); //otherwise, ondrop does not work.
     },
     onDragStart: function(task, e){
-        e.dataTransfer.setData("text", task.id);
+        e.dataTransfer.setData("text", task.template.type);
     },
     onDrop: function(){
         //never called...

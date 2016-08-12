@@ -2,6 +2,7 @@ import SubTask from './subtask.js';
 import Attachment from './attachment.js';
 import Util from 'Util';
 import Entity from './entity.js';
+import TemplateFactory from './template/factory';
 
 module.exports = class BaseTask extends Entity {
 
@@ -14,8 +15,21 @@ module.exports = class BaseTask extends Entity {
 		this.class = 'Task';
 		this.creatorId = param.creatorId;
 		this.parent = undefined;
-		this.template = param.template || {type: 0, param:{}};
 
+
+
+		var type = param.template.type; 
+		var p = (function(template){
+			var returnValue = TemplateFactory.create(template.type);
+			returnValue.init(template.param);	
+			return returnValue;
+		})(param.template)
+
+		this.template = {
+			type: type, param: p
+		};
+
+				
 
 
 		//todo: bad.
@@ -33,7 +47,7 @@ module.exports = class BaseTask extends Entity {
 				case 3: //mule
 					return returnValue.concat(["template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]);
  			}
-		})(this.template.type);
+		})(param.template.type);
 
 
 

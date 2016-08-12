@@ -70,7 +70,9 @@ class CurveUI extends Base{
 			})
 			dumpui.push(tmp);
 		})
-*/
+		*/
+
+		
 		console.table(dumpui);
 	}
 	xls2ui(param){
