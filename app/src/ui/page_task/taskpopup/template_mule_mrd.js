@@ -29,25 +29,8 @@ var MuleMRDTemplate = React.createClass({
         MuleMRDUI.signal_expand_toggle.unlisten(this.onExpandToggle);
     },
     getValue(){
-
-        //expected: 
-        /*
-            var ewo = new EWO();
-            ewo.init();
-            return ewo;
-        */
-
-        //API.ui2dm(); //need?
-
-        debugger;
         this.state.muleMRDUI.ui2dm(this.state.muleMRD);
-        this.state.muleMRD.dump();
-
         return this.state.muleMRD;
-
-
-
-        
     },
 	render(){
         var uidata = {

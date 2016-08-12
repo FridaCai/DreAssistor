@@ -95,7 +95,7 @@ var ProjectPopup = React.createClass({
                 uidata: uidata
             })
         }).bind(this)).catch((function(e){
-            console.log(e.stack);
+            console.error(e.stack);
         }).bind(this));
     },
 

@@ -41,15 +41,17 @@ class MuleMRDUI extends Base{
 
 			//todo: cell.getValue. 
 			var status = line.getCellAt(2).getValue();
-			var value = (muleMRD[id].value === null ? null: line.getCellAt(3).getValue());
+			var value = line.getCellAt(3).getValue();
 
-			var attachments = line.getCellAt(4).getValue();
-			var curve = (muleMRD[id].curve === null ? null : line.getCellAt(3).getValue());
+			
+			var curve = line.getCellAt(4).getValue();
+			var attachments = line.getCellAt(5).getValue();
 
 			//todo: muleMRD dm set param.
 
 			muleMRD[line.id].status = status;
 			muleMRD[line.id].value = value; //todo: think twice. value might be null;
+			muleMRD[line.id].curve = curve; 
 		}
 	}
 	dm2ui(project, muleMRD){
@@ -69,17 +71,27 @@ class MuleMRDUI extends Base{
 			});
 
 	       
-	        var curveCellParam = {
+
+
+
+			var curveCellParam = {
 	        	label: '曲线图',
-	        	isOpen: false,
+	        	isOpen: false, //need? redundant???
 	        	onExpandToggle: function(){
 	        		MuleMRDUI.signal_expand_toggle.dispatch();
 	        	},
 	        	expandComponent: CurveComponent,
 	        	expandComponentParam: {
-	        		id: key
+	        		id: key,
+	        		curve: value.curve,
+	        		onImportCurve: function(curve){
+	        			debugger; //worry about this.
+	        			this.v = curve;
+	        		}
 	        	}
 	        };
+	        var c3 = Cell.create({component: ExpandCellDOM, param: curveCellParam, v:value.curve});
+	        
 
 	        var attachmentCellParam = {
 	        	label: '附件', 
@@ -133,7 +145,7 @@ class MuleMRDUI extends Base{
 					Cell.create({component: Label, v: ref}),
 					c0,
 					c2,
-					Cell.create({component: ExpandCellDOM, param: curveCellParam, v:''}),
+					c3,
 					Cell.create({component: ExpandCellDOM, param: attachmentCellParam, v:''})
 				],
 				expandLine: expandLine,

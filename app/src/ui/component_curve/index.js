@@ -11,17 +11,14 @@ var CurveComponent = React.createClass({
     this.api = new API();
     this.api.init();
 
-    (function(curve){
+    (function(curve, api){
         if(!curve)
     	   	return;
-
         api.setCurve(curve);
         api.dm2ui();      
-    })(this.props.curve);
-
-    return {
-      id: this.props.id,
-    }
+    })(this.props.curve, this.api);
+    
+    return {};
   },
 
   render: function(){
@@ -32,7 +29,8 @@ var CurveComponent = React.createClass({
           label: '曲线',
           writeMode:[0]
       }];
-      var id = this.state.id;
+      var id = this.props.id;
+
       return (
             <div className='curveComponent'>
                 <XlsIExport ref='xlsIExport' 
@@ -51,7 +49,7 @@ var CurveComponent = React.createClass({
             </div>
       );  
     }catch(e){
-      console.log(e.stack);
+      console.error(e.stack);
     }
        
   },
@@ -68,6 +66,9 @@ var CurveComponent = React.createClass({
 
       this.refs.table.update({uidata: this.api.uidata});
       this.refs.chart.update();
+
+
+      this.props.onImportCurve && this.props.onImportCurve.call(this.props.scope, this.api.curve);
   },
   onTableDrop: function(files){
       var reader = new FileReader();

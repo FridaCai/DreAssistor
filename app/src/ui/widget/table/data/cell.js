@@ -16,9 +16,16 @@ class Cell {
 		this.component = param.component || null;
         this.param = param.param || {}; 
         this.param.scope = this;
+        
+        if(this.param.expandComponentParam){
+            this.param.expandComponentParam.scope=this;
+        }
+
+
         this.isHide = param.isHide || false; //for occupation purpose.
-        this.v = (param.v == undefined || param.v === null) ? '' : param.v;
-        this.line = undefined;
+        //this.v = (param.v == undefined || param.v === null) ? '' : param.v;
+        this.v = param.v;
+        this.line = null;
 	}
 
     setLine(line){

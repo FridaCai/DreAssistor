@@ -13,7 +13,7 @@ class MixParam{
 		this.refKey = param.refKey;
 		this.attachments = [];//Attachments.create(param.attachments);
 		this.value = param.value;
-		this.curve = null; //param.curve;
+		this.curve = param.curve; //param.curve;
 	}
 	clone(){
 		var mixparam = new MixParam();
