@@ -13,6 +13,10 @@ var AttachmentList = React.createClass({
 
   onAddClk: function(){
     this.refs.fileElem.click();
+
+    if(this.props.onAttachmentAdd){
+      this.props.onAttachmentAdd.call(this.props.scope, this.state.attachments);
+    }
   },
 
   fileElemChange: function(e){
@@ -37,6 +41,11 @@ var AttachmentList = React.createClass({
   onDelete: function(id){
     this.state.attachments.deleteById(id);
     this.forceUpdate();
+
+
+    if(this.props.onAttachmentDelete){
+      this.props.onAttachmentDelete.call(this.props.scope, this.state.attachments);
+    }
   },
   render: function(){
     var attachments = this.state.attachments;

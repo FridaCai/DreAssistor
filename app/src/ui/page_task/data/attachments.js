@@ -13,7 +13,7 @@ module.exports = class Attachments extends Array{
 		if(!param)
 			return;
 		param.map((function(a){
-			var attachment = Attachmnent.create(a);
+			var attachment = Attachment.create(a);
 			super.push(attachment);
 		}).bind(this))
 	}
