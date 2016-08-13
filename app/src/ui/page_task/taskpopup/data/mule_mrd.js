@@ -33,25 +33,19 @@ class MuleMRDUI extends Base{
 	ui2dm(muleMRD){
 		for(var i=0; i<this.ui.length; i++){
 			var line = this.ui[i];
-
 			if(line instanceof ExpandLine)
 				continue;
 
-			var id = line.id;
-
-			//todo: cell.getValue. 
 			var status = line.getCellAt(2).getValue();
 			var value = line.getCellAt(3).getValue();
-
-			
 			var curve = line.getCellAt(4).getValue();
 			var attachments = line.getCellAt(5).getValue();
 
-			//todo: muleMRD dm set param.
-
-			muleMRD[line.id].status = status;
-			muleMRD[line.id].value = value; //todo: think twice. value might be null;
-			muleMRD[line.id].curve = curve; 
+			var id = line.id;
+			muleMRD[id].status = status;
+			muleMRD[id].value = value; //todo: think twice. value might be null;
+			muleMRD[id].curve = curve; 
+			muleMRD[id].attachments = attachments; 
 		}
 	}
 	dm2ui(project, muleMRD){

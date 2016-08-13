@@ -1,3 +1,5 @@
+import Attachments from '../attachments.js';
+
 class MixParam{
 	static create(param){
 		var mixparam = new MixParam();
@@ -11,7 +13,7 @@ class MixParam{
 		this.label = param.label;
 		this.status = param.status;
 		this.refKey = param.refKey;
-		this.attachments = [];//Attachments.create(param.attachments);
+		this.attachments = Attachments.create(param.attachments);
 		this.value = param.value;
 		this.curve = param.curve; //param.curve;
 	}
@@ -21,7 +23,7 @@ class MixParam{
 			label: this.label,
 			status: this.status,
 			refKey: this.refKey,
-			attachments: this.attachements,
+			attachments: this.attachments,
 			value: this.value,
 			curve: this.curve,
 		})
@@ -32,7 +34,7 @@ class MixParam{
 			label: this.label,
 			status: this.status,
 			refKey: this.refKey,
-			attachments: this.attachements,
+			attachments: this.attachments,
 			value: this.value,
 			curve: this.curve,
 		}

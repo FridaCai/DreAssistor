@@ -1,4 +1,4 @@
-module.exports = class Attachments {
+module.exports = class Attachments extends Array{
 	static create(param){
 		var ats = new Attachments();
 		ats.init(param);
@@ -6,13 +6,15 @@ module.exports = class Attachments {
 	}
 
 	constructor(){
-		this.arr = new Array();
+		super();
 	}
 
 	init(param){
-		param && param.map((function(a){
+		if(!param)
+			return;
+		param.map((function(a){
 			var attachment = Attachmnent.create(a);
-			this.arr.push(attachment);
+			super.push(attachment);
 		}).bind(this))
 	}
 
@@ -20,14 +22,19 @@ module.exports = class Attachments {
 
 	}
 	add(at){
-		this.arr.unshift(at);
+		super.unshift(at);
 	}
 	deleteById(id){
-    	this.arr = this.arr.filter(function(at){
-    		return !(id === at.id);
-    	})
+		var index = -1;
+		for(var i=0; i<this.length; i++){
+			var at = this[i];
+			if(at.id === id){
+				index = i;
+				break;
+			}
+		}
+		this.splice(index, 1);
 	}
-
 }
 
 

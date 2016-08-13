@@ -39,7 +39,7 @@ var AttachmentList = React.createClass({
     this.forceUpdate();
   },
   render: function(){
-    var attachments = this.state.attachments.arr;
+    var attachments = this.state.attachments;
       return (
           <div className='attachmentList listContainer'>
               <ul className="list-group">
