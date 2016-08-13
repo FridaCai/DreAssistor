@@ -51,113 +51,96 @@ class MuleMRDUI extends Base{
 	dm2ui(project, muleMRD){
 	    Object.keys(muleMRD).map((function(key){
 	        var value = muleMRD[key];
-	        
-	        var label = value.label;
-
-	        var ref = (function(refKey, project){
-	            return refKey && project ? project[refKey]: '';
-	        }).call(this, value.refKey, project);
-	        
-
-
-	        var expandLine = ExpandLine.create({
-				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-			});
-
-	       
-
-
-
-			var curveCellParam = {
-	        	label: '曲线图',
-	        	isOpen: false, //need? redundant???
-	        	onExpandToggle: function(){
-	        		MuleMRDUI.signal_expand_toggle.dispatch();
-	        	},
-	        	expandComponent: CurveComponent,
-	        	expandComponentParam: {
-	        		id: key,
-	        		curve: value.curve,
-	        		onImportCurve: function(curve){
-	        			this.v = curve;
-	        		}
-	        	}
-	        };
-	        var c3 = Cell.create({component: ExpandCellDOM, param: curveCellParam, v:value.curve});
-	        
-
-	        var attachmentCellParam = {
-	        	label: '附件', 
-	        	isOpen: false,
-	        	onExpandToggle: function(){
-	        		MuleMRDUI.signal_expand_toggle.dispatch();
-	        	},
-	        	expandComponent: AttachmentList,
-	        	expandComponentParam: {
-	        		id: key,
-	        		attachments: value.attachments,
-	        		onAttachmentDelete: function(){
-	        			debugger;
-	        		},
-	        		onAttachmentAdd: function(){
-	        			debugger;
-	        		}
-	        	}
-	        };
-
-
-
-
-	        var v = value.status;
-	        var c0 = Cell.create({component: RadioGroup, param:{
-	            id: `${key}_radiogroup`,
-	            selectedId: v ? 0: 1,
-	            options: [{
-	                id: 0,
-	                label:"完成"
-	            },{
-	                id: 1,
-	                label: "未完成"
-	            }],
-	            onChange: function(selectedId){
-	            	this.v = (selectedId === 0 ? true : false);
-	            },
-	        }, v: v});
-
-
-
-
-
-
-
-			var v = value.value;
-			var c2 = Cell.create({component: Input, param: {
-				onChange: function(v){
-					this.v = v;
-				}, 
-	        	value: v,
-			}, v: v});
-
-
-
 
 			var line = Line.create({
 				id: key,
 				cells: [
-					Cell.create({component: Label, v: label}),
-					Cell.create({component: Label, v: ref}),
-					c0,
-					c2,
-					c3,
-					Cell.create({component: ExpandCellDOM, param: attachmentCellParam, v:''})
+					Cell.create({component: Label, v: value.label}),
+					Cell.create({
+						component: Label, 
+						v: (function(refKey, project){
+					       		return refKey && project ? project[refKey]: '';
+					       }).call(this, value.refKey, project)
+					}),
+					Cell.create({
+						component: RadioGroup, 
+						param:{
+				            id: `${key}_radiogroup`,
+				            selectedId: value.status ? 0: 1,
+				            options: [{
+				                id: 0,
+				                label:"完成"
+				            },{
+				                id: 1,
+				                label: "未完成"
+				            }],
+				            onChange: function(selectedId){
+				            	this.v = (selectedId === 0 ? true : false);
+				            },
+				        }, 
+				        v: value.status
+				    }),
+					Cell.create({
+						component: Input, 
+						param: {
+							onChange: function(v){
+								this.v = v;
+							}, 
+				        	value: value.value,
+						}, 
+						v: value.value
+					}),
+					Cell.create({
+						component: ExpandCellDOM, 
+						param: {
+				        	label: '曲线图',
+				        	isOpen: false, //need? redundant???
+				        	onExpandToggle: function(){
+				        		MuleMRDUI.signal_expand_toggle.dispatch();
+				        	},
+				        	expandComponent: CurveComponent,
+				        	expandComponentParam: {
+				        		id: key,
+				        		curve: value.curve,
+				        		onImportCurve: function(curve){
+				        			this.v = curve;
+				        		}
+				        	}
+			        	}, 
+			        	v:value.curve
+			        }),
+					Cell.create({
+		        		component: ExpandCellDOM, 
+		        		param: {
+				        	label: '附件', 
+				        	isOpen: false,
+				        	onExpandToggle: function(){
+				        		MuleMRDUI.signal_expand_toggle.dispatch();
+				        	},
+				        	expandComponent: AttachmentList,
+				        	expandComponentParam: {
+				        		id: key,
+				        		attachments: value.attachments,
+				        		onAttachmentDelete: function(attachments){
+				        			this.v = attachments;
+				        		},
+				        		onAttachmentAdd: function(attachments){
+				        			this.v = attachments;
+				        		}
+				        	}
+				        }, 
+				        v:value.attachments
+				    })
 				],
 				expandLine: expandLine,
 			});
-			
 
 	      	this.ui.push(line);
-	      	this.ui.push(expandLine);
-	      	
+	      	this.ui.push(
+	      		ExpandLine.create({
+					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+				})
+			);
 		}).bind(this));
 	}
 
