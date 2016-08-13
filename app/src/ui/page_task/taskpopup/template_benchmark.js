@@ -1,11 +1,13 @@
 import RadioGroup from 'RadioGroup';
 import {TableDOM} from 'Table';
-import Sheet0 from './data/benchmark/sheet0.js';
-import Sheet1 from './data/benchmark/sheet1.js';
-import Sheet2 from './data/benchmark/sheet2.js';
-import Sheet3 from './data/benchmark/sheet3.js';
-import Sheet4 from './data/benchmark/sheet4.js';
-import Sheet5 from './data/benchmark/sheet5.js';
+import Sheet0 from './uidata/template_benchmark/sheet0.js';
+
+
+import Sheet1 from './uidata/template_benchmark/sheet1.js';
+import Sheet2 from './uidata/template_benchmark/sheet2.js';
+import Sheet3 from './uidata/template_benchmark/sheet3.js';
+import Sheet4 from './uidata/template_benchmark/sheet4.js';
+import Sheet5 from './uidata/template_benchmark/sheet5.js';
 
 
 

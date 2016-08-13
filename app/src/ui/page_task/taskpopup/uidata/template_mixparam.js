@@ -15,7 +15,7 @@ import Input from 'Input';
 
 import Signal from 'Signal';
 
-class MuleMRDUI extends Base{
+class MixParamTemplateUIData extends Base{
 	constructor(){
 		super();
 
@@ -30,7 +30,7 @@ class MuleMRDUI extends Base{
 		this.header = line;
 		this.sheetName = '';
 	}
-	ui2dm(muleMRD){
+	ui2dm(dm){
 		for(var i=0; i<this.ui.length; i++){
 			var line = this.ui[i];
 			if(line instanceof ExpandLine)
@@ -42,17 +42,17 @@ class MuleMRDUI extends Base{
 			var attachments = line.getCellAt(5).getValue();
 
 			var id = line.id;
-			muleMRD[id].status = status;
-			muleMRD[id].value = value; //todo: think twice. value might be null;
-			muleMRD[id].curve = curve; 
-			muleMRD[id].attachments = attachments; 
+			dm[id].status = status;
+			dm[id].value = value; //todo: think twice. value might be null;
+			dm[id].curve = curve; 
+			dm[id].attachments = attachments; 
 		}
 	}
-	dm2ui(project, muleMRD){
+	dm2ui(project, dm){
 
 
-	    Object.keys(muleMRD).map((function(key){
-	        var value = muleMRD[key];
+	    Object.keys(dm).map((function(key){
+	        var value = dm[key];
 
     		var expandLine = ExpandLine.create({
 				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
@@ -102,7 +102,7 @@ class MuleMRDUI extends Base{
 				        	label: '曲线图',
 				        	isOpen: false, //need? redundant???
 				        	onExpandToggle: function(){
-				        		MuleMRDUI.signal_expand_toggle.dispatch();
+				        		MixParamTemplateUIData.signal_expand_toggle.dispatch();
 				        	},
 				        	expandComponent: CurveComponent,
 				        	expandComponentParam: {
@@ -121,7 +121,7 @@ class MuleMRDUI extends Base{
 				        	label: '附件', 
 				        	isOpen: false,
 				        	onExpandToggle: function(){
-				        		MuleMRDUI.signal_expand_toggle.dispatch();
+				        		MixParamTemplateUIData.signal_expand_toggle.dispatch();
 				        	},
 				        	expandComponent: AttachmentList,
 				        	expandComponentParam: {
@@ -147,12 +147,12 @@ class MuleMRDUI extends Base{
 	}
 
 }
-MuleMRDUI.signal_expand_toggle = new Signal();
+MixParamTemplateUIData.signal_expand_toggle = new Signal();
 
 
 //todo:
-MuleMRDUI.signal_curve_change = new Signal();
-MuleMRDUI.signal_attachment_change = new Signal();
+MixParamTemplateUIData.signal_curve_change = new Signal();
+MixParamTemplateUIData.signal_attachment_change = new Signal();
 
-module.exports = MuleMRDUI;
+module.exports = MixParamTemplateUIData;
 

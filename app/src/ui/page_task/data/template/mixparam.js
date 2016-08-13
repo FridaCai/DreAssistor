@@ -41,24 +41,35 @@ class MixParam{
 	}
 }
 
-
-
-
-module.exports = class MuleMRD{
+class MixParamTemplate{
 	constructor(){
 
 	}
 	init(param){
-		this.muleBomCheck = new MixParam.create(param.muleBomCheck);
+		Object.keys(param).map((function(key){
+			var value = param[key];
+			this[key] = new MixParam.create(value);
+		}).bind(this));
+
+		/*this.muleBomCheck = new MixParam.create(param.muleBomCheck);
 		this.sizeCheck = new MixParam.create(param.sizeCheck);
 		this.bp = new MixParam.create(param.bp);
 		this.transmissionLose = new MixParam.create(param.transmissionLose);
 		this.mass = new MixParam.create(param.mass);
 		this.maf = new MixParam.create(param.maf);
 		this.sil = new MixParam.create(param.sil);
-		this.docCheck = new MixParam.create(param.docCheck);
+		this.docCheck = new MixParam.create(param.docCheck);*/
 	}
 	dump(){
+		var obj = {};
+		Object.keys(this).map((function(key){
+			var value = this[key];
+			if(value instanceof MixParam){
+				obj[key] = value.dump();
+			}
+		}).bind(this));
+		return obj;
+/*
 		return {
 			muleBomCheck: this.muleBomCheck.dump(),
 			sizeCheck: this.sizeCheck.dump(),
@@ -69,20 +80,48 @@ module.exports = class MuleMRD{
 			sil: this.sil.dump(),
 			docCheck: this.docCheck.dump(),
 
-		}
+		}*/
 	}
 	clone(){
-		var mulemrd = new MuleMRD();
-		mulemrd.init({
-			muleBomCheck: this.muleBomCheck.clone(),
-			sizeCheck: this.sizeCheck.clone(),
-			bp: this.bp.clone(),
-			transmissionLose: this.transmissionLose.clone(),
-			mass: this.mass.clone(),
-			maf: this.maf.clone(),
-			sil: this.sil.clone(),
-			docCheck: this.docCheck.clone(),
-		});
-		return mulemrd;
+		var mixParamTemplate = new MixParamTemplate();
+
+		var param = this.dump();
+		mixParamTemplate.init(param);
+
+		return mixParamTemplate;
 	}
 }
+
+
+
+
+class MuleMRD extends MixParamTemplate{
+	constructor(){
+		super();
+	}
+} 
+class IVTuning extends MixParamTemplate{
+	constructor(){
+		super();
+	}
+} 
+class HardTooling extends MixParamTemplate{
+	constructor(){
+		super();
+	}
+} 
+class PPVMrd extends MixParamTemplate{
+	constructor(){
+		super();
+	}
+} 
+
+
+exports.MuleMRD = MuleMRD;
+exports.IVTuning = IVTuning;
+exports.HardTooling = HardTooling;
+exports.PPVMrd = PPVMrd;
+
+
+
+

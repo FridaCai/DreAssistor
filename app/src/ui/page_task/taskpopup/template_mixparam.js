@@ -1,10 +1,9 @@
 import RadioGroup from 'RadioGroup';
-import MuleMRDUI from './data/mule_mrd.js';
+import MuleMRDUI from './uidata/template_mixparam.js';
 import {TableDOM} from 'Table';
-import MuleMRD from '../data/template/mulemrd.js';
 
 
-var MuleMRDTemplate = React.createClass({
+var MixParamTemplate = React.createClass({
     getInitialState() {
         var {param, project} = this.props;
         
@@ -44,4 +43,4 @@ var MuleMRDTemplate = React.createClass({
         )
 	}
 });
-module.exports = MuleMRDTemplate;
+module.exports = MixParamTemplate;

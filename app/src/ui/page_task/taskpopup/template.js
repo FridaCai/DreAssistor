@@ -2,10 +2,12 @@ import CDropDown from 'CDropDown';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_hotissue.js';
 import EWOTemplate from './template_ewo.js';
-import MuleMRDTemplate from './template_mule_mrd.js';
-import IVTuningTemplate from './template_mule_mrd.js';
-import HardToolingTemplate from './template_mule_mrd.js';
-import PPVMRDTemplate from './template_mule_mrd.js';
+
+import MuleMRDTemplate from './template_mixparam.js';
+import IVTuningTemplate from './template_mixparam.js';
+import HardToolingTemplate from './template_mixparam.js';
+import PPVMRDTemplate from './template_mixparam.js';
+
 import BenchmarkTemplate from './template_benchmark.js';
 
 
