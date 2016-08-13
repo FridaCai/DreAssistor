@@ -49,8 +49,14 @@ class MuleMRDUI extends Base{
 		}
 	}
 	dm2ui(project, muleMRD){
+
+
 	    Object.keys(muleMRD).map((function(key){
 	        var value = muleMRD[key];
+
+    		var expandLine = ExpandLine.create({
+				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+			})
 
 			var line = Line.create({
 				id: key,
@@ -136,11 +142,7 @@ class MuleMRDUI extends Base{
 			});
 
 	      	this.ui.push(line);
-	      	this.ui.push(
-	      		ExpandLine.create({
-					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-				})
-			);
+	      	this.ui.push(expandLine);
 		}).bind(this));
 	}
 

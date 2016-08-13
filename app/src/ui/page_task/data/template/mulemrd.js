@@ -51,13 +51,24 @@ module.exports = class MuleMRD{
 	init(param){
 		this.muleBomCheck = new MixParam.create(param.muleBomCheck);
 		this.sizeCheck = new MixParam.create(param.sizeCheck);
-		//todo: other parameters
-		//todo: other tasks ivtuning...
+		this.bp = new MixParam.create(param.bp);
+		this.transmissionLose = new MixParam.create(param.transmissionLose);
+		this.mass = new MixParam.create(param.mass);
+		this.maf = new MixParam.create(param.maf);
+		this.sil = new MixParam.create(param.sil);
+		this.docCheck = new MixParam.create(param.docCheck);
 	}
 	dump(){
 		return {
 			muleBomCheck: this.muleBomCheck.dump(),
-			sizeCheck: this.sizeCheck.dump()		
+			sizeCheck: this.sizeCheck.dump(),
+			bp: this.bp.dump(),
+			transmissionLose: this.transmissionLose.dump(),
+			mass: this.mass.dump(),
+			maf: this.maf.dump(),
+			sil: this.sil.dump(),
+			docCheck: this.docCheck.dump(),
+
 		}
 	}
 	clone(){
@@ -65,6 +76,12 @@ module.exports = class MuleMRD{
 		mulemrd.init({
 			muleBomCheck: this.muleBomCheck.clone(),
 			sizeCheck: this.sizeCheck.clone(),
+			bp: this.bp.clone(),
+			transmissionLose: this.transmissionLose.clone(),
+			mass: this.mass.clone(),
+			maf: this.maf.clone(),
+			sil: this.sil.clone(),
+			docCheck: this.docCheck.clone(),
 		});
 		return mulemrd;
 	}
