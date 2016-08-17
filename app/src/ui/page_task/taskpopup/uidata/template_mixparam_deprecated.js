@@ -15,7 +15,7 @@ import Input from 'Input';
 
 import Signal from 'Signal';
 
-class MixParamTemplateUIData extends Base{
+class MixParamUIData extends Base{
 	constructor(){
 		super();
 
@@ -49,8 +49,6 @@ class MixParamTemplateUIData extends Base{
 		}
 	}
 	dm2ui(project, dm){
-
-
 	    Object.keys(dm).map((function(key){
 	        var value = dm[key];
 
@@ -102,7 +100,7 @@ class MixParamTemplateUIData extends Base{
 				        	label: '曲线图',
 				        	isOpen: false, //need? redundant???
 				        	onExpandToggle: function(){
-				        		MixParamTemplateUIData.signal_expand_toggle.dispatch();
+				        		MixParamUIData.signal_expand_toggle.dispatch();
 				        	},
 				        	expandComponent: CurveComponent,
 				        	expandComponentParam: {
@@ -121,7 +119,7 @@ class MixParamTemplateUIData extends Base{
 				        	label: '附件', 
 				        	isOpen: false,
 				        	onExpandToggle: function(){
-				        		MixParamTemplateUIData.signal_expand_toggle.dispatch();
+				        		MixParamUIData.signal_expand_toggle.dispatch();
 				        	},
 				        	expandComponent: AttachmentList,
 				        	expandComponentParam: {
@@ -147,12 +145,10 @@ class MixParamTemplateUIData extends Base{
 	}
 
 }
-MixParamTemplateUIData.signal_expand_toggle = new Signal();
+MixParamUIData.signal_expand_toggle = new Signal();
+module.exports = MixParamUIData;
 
 
-//todo:
-MixParamTemplateUIData.signal_curve_change = new Signal();
-MixParamTemplateUIData.signal_attachment_change = new Signal();
 
-module.exports = MixParamTemplateUIData;
+
 

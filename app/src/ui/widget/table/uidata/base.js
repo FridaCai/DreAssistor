@@ -5,7 +5,7 @@ import {Line} from 'Table';
 module.exports = class Base {
 	constructor(){
 		this.ui = [];	
-		this.header = [];
+		this.header = new Line();
 		this.sheetName = '';
 	}
 
@@ -23,6 +23,9 @@ module.exports = class Base {
 		
 	}
 
+	setSheetName(sheetName){
+		this.sheetName = sheetName;
+	}
 
 	//column2line and line2column.
 	//todo: header is a problem. no header at all. header is a table dom issue, not datamodel. correct?

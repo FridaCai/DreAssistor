@@ -2,12 +2,12 @@ import Normal from './normal.js';
 import EWO from './ewo.js';
 import HotIssue from './hotissue.js';
 
-import {MuleMRD} from './mixparam.js';
-import {IVTuning} from './mixparam.js';
-import {HardTooling} from './mixparam.js';
-import {PPVMrd} from './mixparam.js';
 
-//import BenchMark from './normal.js';
+import {MuleMRD} from './mix.js';
+import {IVTuning} from './mix.js';
+import {HardTooling} from './mix.js';
+import {PPVMrd} from './mix.js';
+import {BenchMark} from './mix.js';
 
 module.exports = class TemplateFactory{
 	static create(type){
@@ -26,8 +26,8 @@ module.exports = class TemplateFactory{
 				return new HardTooling();
 			case 6:
 				return new PPVMrd();
-			/*case 7:
-				return new BenchMark();*/
+			case 7:
+				return new BenchMark();
 			default:
 				return new Normal();
 		}

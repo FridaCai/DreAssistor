@@ -3,12 +3,12 @@ import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_hotissue.js';
 import EWOTemplate from './template_ewo.js';
 
-import MuleMRDTemplate from './template_mixparam.js';
-import IVTuningTemplate from './template_mixparam.js';
-import HardToolingTemplate from './template_mixparam.js';
-import PPVMRDTemplate from './template_mixparam.js';
+import MuleMRDTemplate from './template_multiplesheet.js';
+import IVTuningTemplate from './template_multiplesheet.js';
+import HardToolingTemplate from './template_multiplesheet.js';
+import PPVMRDTemplate from './template_multiplesheet.js';
+import BenchmarkTemplate from './template_multiplesheet.js';
 
-import BenchmarkTemplate from './template_benchmark.js';
 
 
 var TaskTemplatePanel = React.createClass({
