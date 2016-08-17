@@ -558,7 +558,75 @@
                         {
                             "mas": {
                                 "label": "零件重量",
-                                "value": null
+                                "value": 0
+                            },
+                            "volumn": {
+                                "label": "零件容积",
+                                "value": 0
+                            },
+                            "wallThickness": {
+                                "label": "零件壁厚",
+                                "value": 0
+                            },
+                            "dimensionL": {
+                                "label": "零件尺寸（长）",
+                                "value": 0
+                            },
+                            "dimensionW": {
+                                "label": "零件尺寸（宽）",  
+                                "value": 0
+                            },
+                            "dimensionH": {
+                                "label": "零件尺寸（高）",
+                                "value": 0
+                            },
+                            "material": {
+                                "label": "零件材质",  
+                                "text": "PPT20/EPDM"
+                            },
+                            "intakePortPos": {
+                                "label": "进气口位置",
+                                "text": "tie bar之上"
+                            },
+                            "intakePortArea": {
+                                "label": "进气口面积",
+                                "value": ""
+                            },
+                            "crafts": {
+                                "label": "工艺",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["注塑", "吹塑"]
+                                }
+                            },
+                            "waterProof": {
+                                "label": "防水措施",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["选项1", "选项2"]   
+                                },
+                                "images": [],
+                                "text": "防水零件:"
+                            },
+                            "thermal": {
+                                "label": "thermal措施",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["进气口位置1", "进气口位置2"]   
+                                },
+                                "images": [],
+                                "text": "通过何种方式隔绝前舱热空气："
+                            },
+                            "resonatorMountingPoint": {
+                                "label": "谐振器安装点",
+                                "images": [],
+                                "text": "数量 3, 螺栓, 螺母, 支架"
+                            },
+                            "gapSurrounding": {
+                                "label": "进气管周边零件间隙",
+                                "images": [],
+                                "text": "数量 3, 螺栓, 螺母, 支架",
+                                "value": 0
                             }
                         },
 

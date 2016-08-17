@@ -72,9 +72,6 @@ class MultipleParamUIData extends Base{
 			dm[id].attachments = attachments; 
 		}
 	}
-
-
-
 	getCellByComponent(component, project, dm, key){
 		var property = dm[key];
 
