@@ -3,7 +3,7 @@ import Attachments from '../attachments.js';
 exports.COMPONENT_ENUM = {
 	'LABEL': 'label',
 	'STATUS': 'status',
-	'REFKEY': 'refkey',
+	'REFKEY': 'refKey',
 	'ATTACHMENTS': 'attachments',
 	'VALUE': 'value',
 	'CURVE': 'curve',
@@ -16,7 +16,7 @@ exports.COMPONENT_ENUM = {
 exports.COMPONENT_LABEL_ENUM = {
 	'label': "属性",
 	'status': '状态',
-	'refkey': '目标',
+	'refKey': '目标',
 	'attachments': '附件',
 	'value': '数值',
 	'curve': '曲线',
@@ -130,22 +130,22 @@ class MultipleSheet{
 
 
 
-class MuleMRD extends MultipleParam{
+class MuleMRD extends MultipleSheet{
 	constructor(){
 		super();
 	}
 } 
-class IVTuning extends MultipleParam{
+class IVTuning extends MultipleSheet{
 	constructor(){
 		super();
 	}
 } 
-class HardTooling extends MultipleParam{
+class HardTooling extends MultipleSheet{
 	constructor(){
 		super();
 	}
 } 
-class PPVMrd extends MultipleParam{
+class PPVMrd extends MultipleSheet{
 	constructor(){
 		super();
 	}

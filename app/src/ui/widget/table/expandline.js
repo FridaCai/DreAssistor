@@ -7,11 +7,11 @@ var ExpandLindDOM = React.createClass({
 		}
 	},
 
-	update(){
+	update(ignoreAnimation){
+		var duration = ignoreAnimation ? 0:500;
+
 	    var runExpandAmination = (function(isOpen){
 	        var h = isOpen ? 700 : 0;
-	        var duration = 500;
-
 	        return new Promise((function(resolve, reject){
 	            $(this.refs.line).animate({
 	                height:h
@@ -43,7 +43,7 @@ var ExpandLindDOM = React.createClass({
 	},
 
 	componentDidMount(){
-		this.update();
+		this.update(true);
 	},
 	componentWillUpdate(){
 		this.update();

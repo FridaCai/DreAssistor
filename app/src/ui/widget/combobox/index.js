@@ -25,9 +25,9 @@ var ComboBox = React.createClass({
 	render(){
 		var options = this.props.param.options;
 		var selectedId = this.state.selectedId;
-		var selectedItem = selectedId ? options.find(function(op){
+		var selectedItem = (selectedId == undefined) ? null:  options.find(function(op){
 			return op.id === selectedId;
-		}): null;
+		});
 		var prompt = this.props.param.prompt;
 		var selectedLabel = selectedItem ? selectedItem.label : prompt;
 		

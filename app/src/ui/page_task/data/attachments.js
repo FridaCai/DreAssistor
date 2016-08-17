@@ -10,8 +10,6 @@ module.exports = class Attachments extends Array{
 	}
 
 	init(param){
-		if(!param)
-			return;
 		param.map((function(a){
 			var attachment = Attachment.create(a);
 			super.push(attachment);

@@ -24,7 +24,7 @@ var CellDOM = React.createClass({
 	    });
 
       return (
-          <td key={cell.id} style={widthStyle}>{el}</td>
+          <td key={cell.id} className={dom.displayName} style={widthStyle}>{el}</td>
       );
     }
 })

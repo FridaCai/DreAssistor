@@ -82,7 +82,7 @@ module.exports = class BaseTask extends Entity {
 		this.markColor = param.markColor || 6076508;
 		this.priority = param.priority || 0;
 		this.privacy = param.privacy || 0;
-		this.attachments = Attachments.create(param.attachments);
+		this.attachments = param.attachments ? Attachments.create(param.attachments): param.attachments;
 
 
 

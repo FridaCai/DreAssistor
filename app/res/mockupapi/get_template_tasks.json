@@ -1,6 +1,7 @@
 {
 	"errCode": -1,
 	"errMsg": "",
+    "comments": "task.template.param.property.attachments: null means to be defined; missing(undefined) means not need the value",
 	"tasks": [
         {
             "id": 0,
@@ -46,7 +47,7 @@
                         "label": "Mule BOM check",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -54,7 +55,7 @@
                         "label": "尺寸检查",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -62,7 +63,7 @@
                         "label": "背压／压力将(kpa)",
                         "status": false,
                         "refKey": "bpMax",
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -70,7 +71,7 @@
                         "label": "传递损失",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -78,7 +79,7 @@
                         "label": "重量(kg)",
                         "status": false,
                         "refKey": "massMax",
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -86,7 +87,7 @@
                         "label": "MAF 5*5",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -94,7 +95,7 @@
                         "label": "SIL",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -102,7 +103,7 @@
                         "label": "文档检查",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     }
@@ -121,7 +122,7 @@
                         "label": "调音计划",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -129,7 +130,7 @@
                         "label": "调音方案",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -137,7 +138,7 @@
                         "label": "调音样件准备",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -145,7 +146,7 @@
                         "label": "65%调音车辆准备",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -153,7 +154,7 @@
                         "label": "试验室资源/工作单准备",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -161,7 +162,7 @@
                         "label": "调音试验",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": "curveid_0"
                     },
@@ -169,7 +170,7 @@
                         "label": "背压确认",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -177,7 +178,7 @@
                         "label": "主观评价",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -185,7 +186,7 @@
                         "label": "NVH buy off",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -193,7 +194,7 @@
                         "label": "方案冻结",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -201,7 +202,7 @@
                         "label": "数模图纸更新",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     }
@@ -220,7 +221,7 @@
                         "label": "设计冻结",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -228,7 +229,7 @@
                         "label": "数模和图纸评审和释放",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -236,7 +237,7 @@
                         "label": "EWO和潜在EWO会审",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -244,7 +245,7 @@
                         "label": "模具启动会议",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -252,7 +253,7 @@
                         "label": "模具加工计划",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -260,7 +261,7 @@
                         "label": "定期跟踪模具加工",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -268,7 +269,7 @@
                         "label": "T1 &T2 试模现场评审",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -276,7 +277,7 @@
                         "label": "样件检测",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -284,7 +285,7 @@
                         "label": "模具完成",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     }
@@ -299,11 +300,16 @@
             "template": {
                 "type": 6,
                 "param":{
+                    "sheetNames": [""],
+                    "sheets": [
+                        {
+
+
                     "ppv_bom_check": {
                         "label": "PPV BOM check",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -311,7 +317,7 @@
                         "label": "尺寸检查",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -319,7 +325,7 @@
                         "label": "背压／压力将(kpa)",
                         "status": false,
                         "refKey": "bpMax",
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -327,7 +333,7 @@
                         "label": "传递损失",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": "curveid_0"
                     },
@@ -335,7 +341,7 @@
                         "label": "重量(kg)",
                         "status": false,
                         "refKey": "massMax",
-                        "attachments": [],
+                        "attachments": null,
                         "value": 0,
                         "curve": null
                     },
@@ -343,7 +349,7 @@
                         "label": "MAF 5*5",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": "curveid_1"
                     },
@@ -351,7 +357,7 @@
                         "label": "硬模",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -359,7 +365,7 @@
                         "label": "检具",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     },
@@ -367,10 +373,11 @@
                         "label": "检具",
                         "status": false,
                         "refKey": null,
-                        "attachments": [],
+                        "attachments": null,
                         "value": null,
                         "curve": null
                     }
+                }]
                 }
             },
             "statical":["duration"]
@@ -383,36 +390,6 @@
                 "param":{
                     "sheetNames": ["整车级", "进气管", "谐振器","空滤","出气管","性能"],
                     "sheets": [
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         {
                             "brand": {
                                 "label": "品牌",
@@ -529,32 +506,6 @@
                                 "text": "位于tie bar 上方，较好的涉水性能"
                             }
                         },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         {
                             "mas": {
                                 "label": "零件重量",
@@ -581,8 +532,11 @@
                                 "value": 0
                             },
                             "material": {
-                                "label": "零件材质",  
-                                "text": "PPT20/EPDM"
+                                "label": "零件材质",
+                                "dropdown": {
+                                    "options": ["PPT20", "EPDM"],
+                                    "selectedIndex": -1
+                                } 
                             },
                             "intakePortPos": {
                                 "label": "进气口位置",
@@ -605,7 +559,7 @@
                                     "selectedIndex": -1,
                                     "options": ["选项1", "选项2"]   
                                 },
-                                "images": [],
+                                "images": null,
                                 "text": "防水零件:"
                             },
                             "thermal": {
@@ -614,18 +568,18 @@
                                     "selectedIndex": -1,
                                     "options": ["进气口位置1", "进气口位置2"]   
                                 },
-                                "images": [],
+                                "images": null,
                                 "text": "通过何种方式隔绝前舱热空气："
                             },
-                            "resonatorMountingPoint": {
+                            "mountingPoint": {
                                 "label": "谐振器安装点",
-                                "images": [],
+                                "images": null,
                                 "text": "数量 3, 螺栓, 螺母, 支架"
                             },
                             "gapSurrounding": {
                                 "label": "进气管周边零件间隙",
-                                "images": [],
-                                "text": "数量 3, 螺栓, 螺母, 支架",
+                                "images": null,
+                                "text": "",
                                 "value": 0
                             }
                         },
@@ -633,13 +587,270 @@
 
 
                         {
+                            "mas": {
+                                "label": "零件重量",
+                                "value": 0
+                            },
+                            "volumn":{
+                                "label": "零件容积",
+                                "value": 0
+                            },
+                            "wallThickness":{
+                                "label": "零件壁厚",
+                                "value": 0 
+                            },
+                            "material": {
+                                "label": "零件材质",
+                                "dropdown": {
+                                    "options": ["PPT20", "EPDM"],
+                                    "selectedIndex": -1
+                                } 
+                            },
+                            "crafts": {
+                                "label": "工艺",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["注塑", "吹塑"]
+                                }
+                            },
+                            "waterHole": {
+                                "label": "落水孔",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["有", "无"]
+                                }
+                            },
+                            "mountingPoint": {
+                                "label": "谐振器安装点",
+                                "images": null,
+                                "text": "数量 3, 螺栓, 螺母, 支架"
+                            },
+                            "gapSurrounding": {
+                                "label": "谐振器周边零件间隙",
+                                "images": null,
+                                "text": "",
+                                "value": 0
+                            }
+                        },{
+                            "mas": {
+                                "label": "零件重量",
+                                "value": 0
+                            },
+                            "volumn":{
+                                "label": "零件容积",
+                                "value": 0
+                            },
+                            "wallThickness":{
+                                "label": "零件壁厚",
+                                "value": 0 
+                            },
+                            "material": {
+                                "label": "零件材质",
+                                "dropdown": {
+                                    "options": ["PPT20", "EPDM"],
+                                    "selectedIndex": -1
+                                } 
+                            },
+                            "crafts": {
+                                "label": "工艺",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["注塑", "吹塑"]
+                                }
+                            },
+                            "dimensionL": {
+                                "label": "零件尺寸（长）",
+                                "value": 0
+                            },
+                            "dimensionW": {
+                                "label": "零件尺寸（宽）",  
+                                "value": 0
+                            },
+                            "dimensionH": {
+                                "label": "零件尺寸（高）",
+                                "value": 0
+                            },
+                            "filter": {
+                                "label": "滤芯",
+                                "value": 0
+                            },
+                            "waterHole": {
+                                "label": "落水孔",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["有", "无"]
+                                }
+                            },
 
-                        },{
+                            "highFrequencyResonator": {
+                                "label": "高频谐振器",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["有", "无"]
+                                }
+                            },
+                            "sensorsForm": {
+                                "label": "传感器形式"
+                            },
+                            "mountingPoint": {
+                                "label": "空滤安装点",
+                                "images": null,
+                                "text": "数量 3, 螺栓, 螺母, 支架"
+                            },
+                            "gapSurrounding": {
+                                "label": "空滤周边零件间隙",
+                                "images": null,
+                                "text": "",
+                                "value": 0
+                            }
                             
                         },{
-                            
+                            "mas": {
+                                "label": "零件重量",
+                                "value": 0
+                            },
+                            "material": {
+                                "label": "零件材质",
+                                "dropdown": {
+                                    "options": ["PPT20", "EPDM"],
+                                    "selectedIndex": -1
+                                } 
+                            },
+                            "crafts": {
+                                "label": "工艺",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["注塑", "吹塑"]
+                                }
+                            },
+                            "wallThickness": {
+                                "label": "零件壁厚",
+                                "value": 0
+                            },
+                            "volumn": {
+                                "label": "零件容积",
+                                "value": 0
+                            },
+                            "dimensionL": {
+                                "label": "零件尺寸（长）",
+                                "value": 0
+                            },
+                            "dimensionW": {
+                                "label": "零件尺寸（宽）",  
+                                "value": 0
+                            },
+                            "dimensionH": {
+                                "label": "零件尺寸（高）",
+                                "value": 0
+                            },
+                            "highFrequencyResonator": {
+                                "label": "高频谐振器",
+                                "dropdown": {
+                                    "selectedIndex": -1,
+                                    "options": ["有", "无"]
+                                }
+                            },
+                            "clampsNum": {
+                                "label": "卡箍(数量)",
+                                "value": 0
+                            },
+                            "clampsW": {
+                                "label": "卡箍(宽度mm)",
+                                "value": 0
+                            },
+                            "clampsWallThickness": {
+                                "label": "卡箍(壁厚mm)",
+                                "value": 0
+                            },
+                            "outletPipeSize": {
+                                "label": "出气管尺寸",
+                                "value": 0
+                            },
+                            "throttleSize": {
+                                "label": "节气门尺寸",
+                                "value": 0
+                            },
+                            "pcvBoxVolumn": {
+                                "label": "PCV Box体积",
+                                "value": 0
+                            },
+                            "pcvMafDis": {
+                                "label": "PCV与MAF之间距离",
+                                "value": 0
+                            },
+                            "gapSurrounding": {
+                                "label": "出气管周边零件间隙",
+                                "images": null,
+                                "text": "",
+                                "value": 0
+                            }
                         },{
-                            
+                            "bp": {
+                                "label": "压力降",
+                                "value": 0
+                            },
+                            "systemModal":{
+                                "label": "系统模态",
+                                "value": 0
+                            },
+                            "intakeNoise": {
+                                "label": "进气口噪音",
+                                "curve": null,
+                                "images": null,
+                                "text": "",
+                                "attachments": null
+                            },
+                            "radiationNoise":{
+                                "label": "辐射噪音",
+                                "curve": null,
+                                "images": null,
+                                "text": "",
+                                "attachments": null
+                            },
+                            "filtrationEfficiency":{
+                                "label": "过滤效率",
+                                "value":0
+                            },
+                            "dustHoldingCapacity": {
+                                "label": "容尘量",
+                                "value":0
+                            },
+                            "filterLeakage":{
+                                "label": "滤芯泄漏量",
+                                "value":0
+                            },
+                            "cushionDynamicStiffness":{
+                                "label": "减震垫动刚度",
+                                "curve": null,
+                                "images": null,
+                                "text": "",
+                                "attachments": null
+                            },
+                            "fulcrumDynamicStiffness":{
+                                "label": "支点动刚度",
+                                "curve": null,
+                                "images": null,
+                                "text": "",
+                                "attachments": null
+                            },
+                            "pullingForce":{
+                                "label": "拉拔力",
+                                "value": 0
+                            },
+                            "transmissionLoss":{
+                                "label": "传递损失",
+                                "curve": null,
+                                "images": null,
+                                "text": "",
+                                "attachments": null
+                            },
+                            "insertionLoss":{
+                                "label": "插入损失",
+                                "curve": null,
+                                "images": null,
+                                "text": "",
+                                "attachments": null
+                            }
                         }
                     ]
                 }

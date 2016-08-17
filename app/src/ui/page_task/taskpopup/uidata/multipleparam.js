@@ -28,7 +28,7 @@ class MultipleParamUIData extends Base{
 	}
 	setComponents(dm){
 		var meetcondition = function(componentKey, componentValue, components){
-			if(componentValue == undefined)
+			if(componentValue === undefined)
 				return false;
 			if(components.indexOf(componentKey)!=-1)
 				return false;
@@ -51,6 +51,7 @@ class MultipleParamUIData extends Base{
 			var label = COMPONENT_LABEL_ENUM[key];
 			return Cell.create({component: Label, v: label});
 		}).bind(this))
+		cells.sort();
 
 		this.header = Line.create({cells: cells});
 	}
