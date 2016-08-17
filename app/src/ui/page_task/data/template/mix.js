@@ -43,7 +43,7 @@ class SingleParam{
 		this.attachments =  param.attachments;
 		this.value = param.value;
 		this.curve = param.curve;
-		this.image = param.image;
+		this.images = param.images;
 		this.text = param.text;
 		this.dropdown = param.dropdown;
 	}
@@ -62,7 +62,7 @@ class SingleParam{
 			attachments: this.attachments,
 			value: this.value,
 			curve: this.curve,
-			image: this.image,
+			images: this.images,
 			text: this.text,
 			dropdown: this.dropdown
 		}

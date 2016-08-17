@@ -36,7 +36,7 @@ module.exports = class Attachments extends Array{
 }
 
 
-class Attachment{
+module.exports = class Attachment{
 	static create(param){
 		var at = new Attachment();
 		at.init(param);
@@ -50,6 +50,7 @@ class Attachment{
 	init(param){
 		this.id = param.id;
 		this.label = param.label;
+		this.detail = param.detail;
 		this.url = param.url;
 		this.parent = undefined;
 	}
@@ -63,6 +64,7 @@ class Attachment{
 		return {
 			id: this.id,
 			label: this.label,
+			detail: this.detail,
 			url: this.url,
 		}
 	}

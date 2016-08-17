@@ -11,7 +11,7 @@ import AttachmentList from 'AttachmentList';
 import Label from 'Label';
 import RadioGroup from 'RadioGroup';
 import Input from 'Input';
-import ComboBox from 'ComboBox'; //todo. auto width with container.
+import ComboBox from 'ComboBox'; 
 import Images from 'Images'; //todo.
 
 import Signal from 'Signal';
@@ -171,7 +171,7 @@ class MultipleParamUIData extends Base{
 	        			onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
-			        	expandComponent: ImageComponent,
+			        	expandComponent: Images,
 			        	expandComponentParam: {
 			        		id: key,
 			        		images: property.images,
@@ -249,7 +249,6 @@ class MultipleParamUIData extends Base{
 		}).bind(this));
 	}
 }
-
 MultipleParamUIData.signal_expand_toggle = new Signal();
 module.exports = MultipleParamUIData;
 

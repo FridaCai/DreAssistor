@@ -32,7 +32,7 @@ class MultipleSheetUIData{
 	}
 }
 
-//MultipleSheetUIData.signal_expand_toggle = new Signal();
+
 
 module.exports = MultipleSheetUIData;
 

@@ -1,12 +1,7 @@
 import RadioGroup from 'RadioGroup';
 import {TableDOM} from 'Table';
-
-import MultipleParamUIData from './uidata/multipleparam.js';
 import MultipleSheetUIData from './uidata/multiplesheet.js';
-
-
-
-
+import MultipleParamUIData from './uidata/multipleparam.js';
 
 var MultipleSheetTemplate = React.createClass({
     getInitialState() {
@@ -14,13 +9,12 @@ var MultipleSheetTemplate = React.createClass({
 
         var multipleSheetUIData = new MultipleSheetUIData();
         multipleSheetUIData.dm2ui(project, param);
-
         return {
             multipleSheetUIData: multipleSheetUIData
         }
     },
 
-    /*componentDidMount: function(){
+    componentDidMount: function(){
         MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
     },
     onExpandToggle: function(){
@@ -29,7 +23,7 @@ var MultipleSheetTemplate = React.createClass({
     componentWillUnmount: function(){
         MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
     },
-    getValue(){
+    /*getValue(){
         this.state.mixParamUIData.ui2dm(this.state.dm);
         return this.state.dm;
     },*/

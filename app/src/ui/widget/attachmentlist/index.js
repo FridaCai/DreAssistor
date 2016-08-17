@@ -1,9 +1,10 @@
 import Util from 'Util';
+import Attachments from '../../page_task/data/attachments.js';
 
 var AttachmentList = React.createClass({
   getInitialState: function(){
     return {
-      attachments: this.props.attachments || [],
+      attachments: this.props.attachments || new Attachments(),
     }
   },
 
