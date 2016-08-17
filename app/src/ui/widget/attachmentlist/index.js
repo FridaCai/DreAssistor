@@ -1,5 +1,5 @@
 import Util from 'Util';
-import Attachments from '../../page_task/data/attachments.js';
+import {Attachments} from '../../page_task/data/attachments.js';
 
 var AttachmentList = React.createClass({
   getInitialState: function(){

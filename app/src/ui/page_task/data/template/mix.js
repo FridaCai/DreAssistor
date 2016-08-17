@@ -1,4 +1,4 @@
-import Attachments from '../attachments.js';
+import {Attachments} from '../attachments.js';
 
 exports.COMPONENT_ENUM = {
 	'LABEL': 'label',

@@ -1,7 +1,7 @@
 import {Attachments} from './attachments.js';
 import {Attachment} from './attachments.js';
 
-module.exports = class Images extends Attachments{
+exports.Images = class Images extends Attachments{
 	static create(param){
 		var images = new Images();
 		images.init(param);
@@ -12,7 +12,7 @@ module.exports = class Images extends Attachments{
 	}
 }
 
-class Image extends Attachment{
+exports.Image = class Image extends Attachment{
 	constructor(){
 		super();
 	}

@@ -12,7 +12,7 @@ import Label from 'Label';
 import RadioGroup from 'RadioGroup';
 import Input from 'Input';
 import ComboBox from 'ComboBox'; 
-import Images from 'Images'; //todo.
+import ImageList from 'ImageList'; 
 
 import Signal from 'Signal';
 
@@ -171,7 +171,7 @@ class MultipleParamUIData extends Base{
 	        			onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
-			        	expandComponent: Images,
+			        	expandComponent: ImageList,
 			        	expandComponentParam: {
 			        		id: key,
 			        		images: property.images,

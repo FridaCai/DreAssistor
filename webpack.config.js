@@ -50,7 +50,7 @@ module.exports = {
             Request: path.join(__dirname, toolPath, "/request.js"),
             CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
             ComboBox: path.join(__dirname, widgetPath, "/combobox/index.js"),
-            Images: path.join(__dirname, widgetPath, "/images/index.js"),
+            ImageList: path.join(__dirname, widgetPath, "/imagelist/index.js"),
             XlsIExport: path.join(__dirname, widgetPath, "/excel/index.js"),
             RadioGroup: path.join(__dirname, widgetPath, "/radiogroup/index.js"),
             Input: path.join(__dirname, widgetPath, "/input/index.js"),

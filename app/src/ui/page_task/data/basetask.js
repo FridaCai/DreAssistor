@@ -1,5 +1,5 @@
 import SubTask from './subtask.js';
-import Attachments from './attachments.js';
+import {Attachments} from './attachments.js';
 import Util from 'Util';
 import Entity from './entity.js';
 import TemplateFactory from './template/factory';

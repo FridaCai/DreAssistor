@@ -1,4 +1,4 @@
-module.exports = class Attachments extends Array{
+exports.Attachments = class Attachments extends Array{
 	static create(param){
 		var ats = new Attachments();
 		ats.init(param);
@@ -35,8 +35,7 @@ module.exports = class Attachments extends Array{
 	}
 }
 
-
-module.exports = class Attachment{
+exports.Attachment = class Attachment{
 	static create(param){
 		var at = new Attachment();
 		at.init(param);
