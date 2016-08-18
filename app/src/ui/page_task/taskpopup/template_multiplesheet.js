@@ -25,11 +25,8 @@ var MultipleSheetTemplate = React.createClass({
     },
     onDataChange: function(){
         this.state.multipleSheetUIData.ui2dm(this.state.dm);
-        this.state.multipleSheetUIData.dm2ui(this.state.dm);
-        this.refs.table.forceUpdate();
-
-
-//        this.refs.table.setState({uidata: API.uidata}); 
+        this.state.multipleSheetUIData.dm2ui(this.props.project, this.state.dm);
+        this.refs.table.setState({uidata: this.state.multipleSheetUIData.uidata});
     },
     componentWillUnmount: function(){
         MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
