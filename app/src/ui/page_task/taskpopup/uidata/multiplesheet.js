@@ -3,9 +3,7 @@ class MultipleSheetUIData{
 	constructor(){
 		this.uidata = {};
 	}
-	ui2dm(dm){
-		
-	}
+	
 	dm2ui(project, dm){ 
 		for(var i=0; i<dm.sheets.length; i++){
 			var sheet = dm.sheets[i];
@@ -21,9 +19,8 @@ class MultipleSheetUIData{
 		}
 	}
 	ui2dm(dm){
-		debugger;
-		Object.keys(this.uidata).map((function(key){
-			this.uidata[key].ui2dm(dm);
+		Object.keys(this.uidata).map((function(key,index){
+			this.uidata[key].ui2dm(dm.sheets[index]);
 		}).bind(this));
 	}
 }

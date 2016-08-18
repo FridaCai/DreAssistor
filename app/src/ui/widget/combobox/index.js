@@ -19,7 +19,7 @@ var ComboBox = React.createClass({
 	onSelect(op){
 		var isOpen = false;
 		this.setState({isOpen: isOpen, selectedId: op.id});
-		this.props.param.onchange && this.props.param.onchange(op.id);
+		this.props.param.onchange && this.props.param.onchange.call(this.props.param.scope, op.id);
 	},
 
 	render(){

@@ -10,23 +10,35 @@ var MultipleSheetTemplate = React.createClass({
         var multipleSheetUIData = new MultipleSheetUIData();
         multipleSheetUIData.dm2ui(project, param);
         return {
+            dm: param,
             multipleSheetUIData: multipleSheetUIData
         }
     },
 
     componentDidMount: function(){
         MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
+        MultipleParamUIData.signal_data_change.listen(this.onDataChange);
+        
     },
     onExpandToggle: function(){
         this.refs.table.forceUpdate();
     },
+    onDataChange: function(){
+        this.state.multipleSheetUIData.ui2dm(this.state.dm);
+        this.state.multipleSheetUIData.dm2ui(this.state.dm);
+        this.refs.table.forceUpdate();
+
+
+//        this.refs.table.setState({uidata: API.uidata}); 
+    },
     componentWillUnmount: function(){
         MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
+        MultipleParamUIData.signal_data_change.unlisten(this.onDataChange);
     },
-    /*getValue(){
-        this.state.mixParamUIData.ui2dm(this.state.dm);
+    getValue(){
+        this.state.multipleSheetUIData.ui2dm(this.state.dm);
         return this.state.dm;
-    },*/
+    },
     render(){
         var uidata = this.state.multipleSheetUIData.uidata;
 

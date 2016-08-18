@@ -57,19 +57,13 @@ class MultipleParamUIData extends Base{
 	ui2dm(dm){
 		for(var i=0; i<this.ui.length; i++){
 			var line = this.ui[i];
+			var id = line.id;
 			if(line instanceof ExpandLine)
 				continue;
 
-			var status = line.getCellAt(2).getValue();
-			var value = line.getCellAt(3).getValue();
-			var curve = line.getCellAt(4).getValue();
-			var attachments = line.getCellAt(5).getValue();
-
-			var id = line.id;
-			dm[id].status = status;
-			dm[id].value = value; //todo: think twice. value might be null;
-			dm[id].curve = curve; 
-			dm[id].attachments = attachments; 
+			this.components.map(function(component, index){
+				dm[id][component] = line.getCellAt(index).getValue();
+			})
 		}
 	}
 	getCellByComponent(component, project, dm, key){
@@ -96,6 +90,8 @@ class MultipleParamUIData extends Base{
 			            }],
 			            onChange: function(selectedId){
 			            	this.v = (selectedId === 0 ? true : false);
+
+			            	MultipleParamUIData.signal_data_change.dispatch();
 			            },
 			        }, 
 			        v: property.status
@@ -111,7 +107,7 @@ class MultipleParamUIData extends Base{
 				return Cell.create({
 	        		component: ExpandCellDOM, 
 	        		param: {
-			        	label: '附件', 
+			        	label: '附件',
 			        	isOpen: false,
 			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
@@ -120,11 +116,13 @@ class MultipleParamUIData extends Base{
 			        	expandComponentParam: {
 			        		id: key,
 			        		attachments: property.attachments,
-			        		onAttachmentDelete: function(attachments){
+			        		onDelete: function(attachments){
 			        			this.v = attachments;
+			        			MultipleParamUIData.signal_data_change.dispatch();
 			        		},
-			        		onAttachmentAdd: function(attachments){
+			        		onAdd: function(attachments){
 			        			this.v = attachments;
+			        			MultipleParamUIData.signal_data_change.dispatch();
 			        		}
 			        	}
 			        }, 
@@ -137,6 +135,9 @@ class MultipleParamUIData extends Base{
 						onChange: function(v){
 							this.v = v;
 						}, 
+						onBlur: function(){
+							MultipleParamUIData.signal_data_change.dispatch();
+						},
 			        	value: property.value,
 					}, 
 					v: property.value
@@ -156,6 +157,7 @@ class MultipleParamUIData extends Base{
 			        		curve: property.curve,
 			        		onImportCurve: function(curve){
 			        			this.v = curve;
+			        			MultipleParamUIData.signal_data_change.dispatch();
 			        		}
 			        	}
 		        	}, 
@@ -163,20 +165,29 @@ class MultipleParamUIData extends Base{
 		        });
 			case COMPONENT_ENUM.IMAGES:
 				return Cell.create({
-	        		component: ExpandCellDOM,
+	        		component: ExpandCellDOM, 
 	        		param: {
-	        			label: '图片',
-	        			isOpen: false,
-	        			onExpandToggle: function(){
+			        	label: '图片', 
+			        	isOpen: false,
+			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
 			        	expandComponent: AttachmentList,
 			        	expandComponentParam: {
 			        		id: key,
-			        		images: property.images,
+			        		attachments: property.images,
+			        		onDelete: function(images){
+			        			this.v = images;
+			        			MultipleParamUIData.signal_data_change.dispatch();
+			        		},
+			        		onAdd: function(images){
+			        			this.v = images;
+			        			MultipleParamUIData.signal_data_change.dispatch();
+			        		}
 			        	}
-	        		}
-	        	});
+			        }, 
+			        v:property.images
+			    })
 			case COMPONENT_ENUM.TEXT:
 				return Cell.create({
 					component: Input, 
@@ -184,26 +195,35 @@ class MultipleParamUIData extends Base{
 						onChange: function(v){
 							this.v = v;
 						}, 
+						onBlur: function(){
+							MultipleParamUIData.signal_data_change.dispatch();
+						},
 			        	value: property.text,
 					}, 
 					v: property.text
 				});
 			case COMPONENT_ENUM.DROPDOWN:
+				var options = property.dropdown.options.map(function(label, index){
+			    	return {
+			    		id: index,
+			    		label: label
+			    	}
+			    });
 				return Cell.create({
 	        		component: ComboBox,
 	        		param: {
 	        			selectedId: property.dropdown.selectedIndex, //string. existed id in options.
-					    options: property.dropdown.options.map(function(label, index){
-					    	return {
-					    		id: index,
-					    		label: label
-					    	}
-					    }),
-					    prompt: "请选择", //if fail to find item in options by defautlKey, use prompt string.
-					    onchange: function(){
-
-					    } //event triggered when selected item change.
-	        		}
+					    options: options,
+					    prompt: "请选择", 
+					    onchange: function(selectedKey){
+					    	this.v = {
+					    		selectedIndex: selectedKey,
+					    		options: property.dropdown.options
+					    	};
+					    	MultipleParamUIData.signal_data_change.dispatch();
+					    }
+	        		},
+	        		v: property.dropdown
 	        	})
 		}
 	}
@@ -226,7 +246,7 @@ class MultipleParamUIData extends Base{
 				if(property[component] === undefined){
 					return Cell.create({
 						component:Label,
-						v:''
+						v:undefined
 					})
 				}
 					
@@ -239,7 +259,8 @@ class MultipleParamUIData extends Base{
 
 			this.ui.push(Line.create({
 				cells: cells,
-				expandLine: expandLine
+				expandLine: expandLine,
+				id: key
 			}))
 
 			if(needExpandLine){
@@ -249,6 +270,7 @@ class MultipleParamUIData extends Base{
 	}
 }
 MultipleParamUIData.signal_expand_toggle = new Signal();
+MultipleParamUIData.signal_data_change = new Signal();
 module.exports = MultipleParamUIData;
 
 
