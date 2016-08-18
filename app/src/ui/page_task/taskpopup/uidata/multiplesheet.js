@@ -1,8 +1,4 @@
 import MultipleParamUIData from './multipleparam.js';
-import {Cell} from 'Table';
-import {Line} from 'Table';
-import Label from 'Label';
-
 class MultipleSheetUIData{
 	constructor(){
 		this.uidata = {};
@@ -31,9 +27,6 @@ class MultipleSheetUIData{
 		}).bind(this));
 	}
 }
-
-
-
 module.exports = MultipleSheetUIData;
 
 
