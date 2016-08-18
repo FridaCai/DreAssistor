@@ -1,12 +1,12 @@
 import Util from 'Util';
-import {Attachments} from '../../page_task/data/attachments.js';
+
 import {Attachment} from '../../page_task/data/attachments.js';
 import "./style.less";
 
 var AttachmentList = React.createClass({
 	getInitialState: function(){
 		return {
-		  attachments: this.props.attachments || new Attachments(),
+		  attachments: this.props.attachments,
 		}
 	},
 	getValue: function(){
@@ -15,9 +15,7 @@ var AttachmentList = React.createClass({
 	onAddClk: function(){
 		this.refs.fileElem.click();
 
-		if(this.props.onAdd){
-			this.props.onAdd.call(this.props.scope, this.state.attachments);
-		}
+		
 	},
 	fileElemChange: function(e){
 	    e.preventDefault();
@@ -36,6 +34,10 @@ var AttachmentList = React.createClass({
 	      })
 	      this.state.attachments.add(attachment);
 	    }
+
+	    if(this.props.onAdd){
+			this.props.onAdd.call(this.props.scope, this.state.attachments);
+		}
 	    this.forceUpdate();
 	},
 
@@ -46,6 +48,9 @@ var AttachmentList = React.createClass({
 	    if(this.props.onDelete){
 	      this.props.onDelete.call(this.props.scope, this.state.attachments);
 	    }
+	},
+	onDownload: function(){
+
 	},
 	render(){
 		var attachments = this.state.attachments;
@@ -83,8 +88,8 @@ var AttachmentList = React.createClass({
 						      <div className="caption">
 						        <h4>{label}</h4>
 						        <h5>
-						        	<a href="#" className="btn btn-primary" role="button">删除</a> 
-						        	<a href="#" className="btn btn-default" role="button">下载</a>
+						        	<a href="#" className="btn btn-primary" role="button" onClick={this.onDelete.bind(this, id)}>删除</a> 
+						        	<a href="#" className="btn btn-default" role="button" onClick={this.onDownload.bind(this, attachment)}>下载</a>
 					        	</h5>
 						      </div>
 						    </div>

@@ -17,6 +17,9 @@ var TableDOM = React.createClass({
         };
     },
     onSwitchSheet: function(index){
+        if(this.props.onSwitchSheet){
+            this.props.onSwitchSheet();
+        }
         this.update({
             sheetIndex: index,
         });

@@ -10,6 +10,9 @@ var ExpandLindDOM = React.createClass({
 	update(ignoreAnimation){
 		var duration = ignoreAnimation ? 0:500;
 
+		//no animation when initial.
+		duration = 500;
+
 	    var runExpandAmination = (function(isOpen){
 	        var h = isOpen ? 700 : 0;
 	        return new Promise((function(resolve, reject){

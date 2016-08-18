@@ -18,6 +18,10 @@ import Signal from 'Signal';
 import {COMPONENT_ENUM} from '../../data/template/mix.js';
 import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
 
+
+import {Attachments} from '../../data/attachments.js';
+import {Images} from '../../data/images.js';
+
 class MultipleParamUIData extends Base{
 	constructor(){
 		super();
@@ -103,11 +107,15 @@ class MultipleParamUIData extends Base{
 				       		return refKey && project ? project[refKey]: '';
 				       }).call(this, property.refKey, project)
 				});
-			case COMPONENT_ENUM.ATTACHMENTS:
+
+			case COMPONENT_ENUM.IMAGES:
+				var itms = property[component] || new Images(); 
+				var label = COMPONENT_LABEL_ENUM[component];
+
 				return Cell.create({
 	        		component: ExpandCellDOM, 
 	        		param: {
-			        	label: '附件',
+			        	label: label,
 			        	isOpen: false,
 			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
@@ -115,19 +123,45 @@ class MultipleParamUIData extends Base{
 			        	expandComponent: AttachmentList,
 			        	expandComponentParam: {
 			        		id: key,
-			        		attachments: property.attachments,
-			        		onDelete: function(attachments){
-			        			this.v = attachments;
-			        			MultipleParamUIData.signal_data_change.dispatch();
+			        		attachments: itms,
+			        		onDelete: function(itms){
+			        			this.v = itms;			        			
 			        		},
-			        		onAdd: function(attachments){
-			        			this.v = attachments;
-			        			MultipleParamUIData.signal_data_change.dispatch();
+			        		onAdd: function(itms){
+			        			this.v = itms;
 			        		}
 			        	}
 			        }, 
-			        v:property.attachments
+			        v:itms
 			    })
+			case COMPONENT_ENUM.ATTACHMENTS:
+				var itms = property[component] || new Attachments(); 
+				var label = COMPONENT_LABEL_ENUM[component];
+
+				return Cell.create({
+	        		component: ExpandCellDOM, 
+	        		param: {
+			        	label: label,
+			        	isOpen: false,
+			        	onExpandToggle: function(){
+			        		MultipleParamUIData.signal_expand_toggle.dispatch();
+			        	},
+			        	expandComponent: AttachmentList,
+			        	expandComponentParam: {
+			        		id: key,
+			        		attachments: itms,
+			        		onDelete: function(itms){
+			        			this.v = itms;
+			        			
+			        		},
+			        		onAdd: function(itms){
+			        			this.v = itms;
+			        		}
+			        	}
+			        }, 
+			        v:itms
+			    })
+
 			case COMPONENT_ENUM.VALUE:
 	        	return Cell.create({
 					component: Input, 
@@ -163,31 +197,7 @@ class MultipleParamUIData extends Base{
 		        	}, 
 		        	v:property.curve
 		        });
-			case COMPONENT_ENUM.IMAGES:
-				return Cell.create({
-	        		component: ExpandCellDOM, 
-	        		param: {
-			        	label: '图片', 
-			        	isOpen: false,
-			        	onExpandToggle: function(){
-			        		MultipleParamUIData.signal_expand_toggle.dispatch();
-			        	},
-			        	expandComponent: AttachmentList,
-			        	expandComponentParam: {
-			        		id: key,
-			        		attachments: property.images,
-			        		onDelete: function(images){
-			        			this.v = images;
-			        			MultipleParamUIData.signal_data_change.dispatch();
-			        		},
-			        		onAdd: function(images){
-			        			this.v = images;
-			        			MultipleParamUIData.signal_data_change.dispatch();
-			        		}
-			        	}
-			        }, 
-			        v:property.images
-			    })
+			
 			case COMPONENT_ENUM.TEXT:
 				return Cell.create({
 					component: Input, 

@@ -14,6 +14,8 @@ import AttachmentList from 'AttachmentList';
 import TaskTemplatePanel from './template.js';
 import PrivacyRadioGroup from './privacy_radiogroup.js';
 
+import {Attachments} from '../data/attachments.js';
+
 var TaskPopup = React.createClass({
     priorityDropdown: undefined,
 
@@ -38,6 +40,9 @@ var TaskPopup = React.createClass({
                     return item.id == this.state.task.template.type;
                 }).bind(this))
                 .label;
+
+
+            
 
 
 
@@ -91,7 +96,7 @@ var TaskPopup = React.createClass({
 
                     <div className="line attachedFiles">
                         <label>附件</label>
-                        <AttachmentList attachments={attachments} ref='attachmentlist'/>
+                        <AttachmentList attachments={attachments || new Attachments()} ref='attachmentlist'/>
                     </div>
                     <div className="line privacy">
                         <label>谁可以看</label>

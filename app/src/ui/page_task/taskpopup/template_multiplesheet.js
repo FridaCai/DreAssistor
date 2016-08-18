@@ -36,13 +36,18 @@ var MultipleSheetTemplate = React.createClass({
         this.state.multipleSheetUIData.ui2dm(this.state.dm);
         return this.state.dm;
     },
+    onSwitchSheet(){
+        this.state.multipleSheetUIData.ui2dm(this.state.dm);
+        this.state.multipleSheetUIData.dm2ui(this.props.project, this.state.dm);
+    },
     render(){
         var uidata = this.state.multipleSheetUIData.uidata;
 
         return (
             <div className='mixParamTemplate'>
                <TableDOM ref='table' 
-                    uidata={uidata}/>
+                    uidata={uidata}
+                    onSwitchSheet={this.onSwitchSheet}/>
             </div>
         )
     }

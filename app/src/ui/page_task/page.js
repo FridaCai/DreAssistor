@@ -2,8 +2,8 @@ import CTimeLine from './timeline/index.js';
 import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
 import ProjectPopup from './projectpopup/ui/index.js';
-import StaticalAssistorPopup from './statical_assistor_popup/index.js';
-import PeopleAssistorPopup from './people_assistor_popup/index.js';
+//import StaticalAssistorPopup from './statical_assistor_popup/index.js';
+//import PeopleAssistorPopup from './people_assistor_popup/index.js';
 import ContextMenu from './contextmenu.jsx';
 import MessageBox from 'MessageBox';
 
@@ -101,12 +101,12 @@ var PageTask = React.createClass({
         ReactDOM.render(<ProjectPopup title={param.title} project={param.project} onOK={param.onOK}/>, this.refs.popup);  
     },
     
-    onPropertyAssistorShow:function(){
+    onPropertyAssistorShow:function(){return;
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<StaticalAssistorPopup title={'统计助手'}/>, this.refs.popup);   
     },
     
-    onPeopleAssistorShow:function(){
+    onPeopleAssistorShow:function(){return;
         ReactDOM.unmountComponentAtNode(this.refs.popup);
         ReactDOM.render(<PeopleAssistorPopup title={'前辈助手'}/>, this.refs.popup);
     },
