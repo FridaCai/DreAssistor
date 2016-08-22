@@ -46,6 +46,9 @@ var ProjectPopup = React.createClass({
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
                 />
+
+                
+
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
                     onDrop={this.onTableDrop}

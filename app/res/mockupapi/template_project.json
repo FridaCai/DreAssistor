@@ -1,11 +1,52 @@
 {
-  "label": "项目模版",
-  "bpMax": 100,
-  "bpMin": 10,
-  "massMin": 30,
-  "massMax":40,
-  "ec": "1.0T",
-  "sorp": 1451577600000,
+  "label": {
+    "label": "项目模版",
+    "input":""
+  },
+  "sorp": {
+    "label": "sorp",
+    "input": 1451577600000
+  },
+  "platform": {
+    "label": "platform",
+    "input": ""
+  },
+  "bodyStyle": {
+    "label": "body style",
+    "input": ""
+  },
+
+
+
+  "engines": [
+    {
+      "engine": {
+        "label": "engine",
+        "input": "1.0T"
+      },
+      "transmission": {
+        "label": "Transmission",
+        "input": "transmission1"
+      }
+    },
+    {
+      "engine": {
+        "label": "engine",
+        "input": "2.0T"
+      },
+      "transmission": {
+        "label": "Transmission",
+        "input": "transmission2"
+      }
+    }
+  ],
+
+
+
+
+
+
+
   "children": [
     {
       "id": 0,
@@ -33,118 +74,6 @@
       "id":1,
       "label": "AIS Development",
         "children": [
-        {
-          "id": "5D7C08F4-BB63-4ADD-9A82-BC8874B51C79",
-          "label": "Mule",
-          "startTime": 1347811200000,
-          "endTime": 1348675200000,
-          "comment": "Mon Sep 17 2012 00:00:00 GMT+0800 (CST), Thu Sep 27 2012 00:00:00 GMT+0800 (CST)",
-          "desc": "",
-          "markColor": 15773006,
-          "attachments": [],
-          "priority": "0",
-          "subtasks": [],
-          "privacy": "0",
-          "template": {
-            "type": 3,
-            "param": {
-              "bom": {
-                "isDone": false,
-                "attachments": []
-              },
-              "size": {
-                "isDone": false,
-                "attachments": []
-              },
-              "bp": {
-                "isDone": false,
-                "value": 50,
-                "attachments": []
-              },
-              "tl": {
-                "isDone": false,
-                "graphicSrc": "",
-                "attachments": []
-              },
-              "heavy": {
-                "isDone": false,
-                "value": "",
-                "attachments": []
-              },
-              "maf": {
-                "isDone": false,
-                "graphicSrc": "",
-                "attachments": []
-              },
-              "sil": {
-                "isDone": false,
-                "attachments": []
-              },
-              "doc": {
-                "isDone": false,
-                "attachments": []
-              },
-              "snorkelNoiseXls": []
-            }
-          },
-          "class": "Task"
-        },
-        {
-          "id": "5D7C08F4-BB63-4ADD-9A82-BC8874B51C79-123",
-          "label": "Mule",
-          "startTime": 1347811200000,
-          "endTime": 1348675200000,
-          "comment": "Mon Sep 17 2012 00:00:00 GMT+0800 (CST), Thu Sep 27 2012 00:00:00 GMT+0800 (CST)",
-          "desc": "",
-          "markColor": 15773006,
-          "attachments": [],
-          "priority": "0",
-          "subtasks": [],
-          "privacy": "0",
-          "template": {
-            "type": 3,
-            "param": {
-              "bom": {
-                "isDone": false,
-                "attachments": []
-              },
-              "size": {
-                "isDone": false,
-                "attachments": []
-              },
-              "bp": {
-                "isDone": false,
-                "value": 50,
-                "attachments": []
-              },
-              "tl": {
-                "isDone": false,
-                "graphicSrc": "",
-                "attachments": []
-              },
-              "heavy": {
-                "isDone": false,
-                "value": "",
-                "attachments": []
-              },
-              "maf": {
-                "isDone": false,
-                "graphicSrc": "",
-                "attachments": []
-              },
-              "sil": {
-                "isDone": false,
-                "attachments": []
-              },
-              "doc": {
-                "isDone": false,
-                "attachments": []
-              },
-              "snorkelNoiseXls": []
-            }
-          },
-          "class": "Task"
-        },
         {
           "id": "0F29E24B-0315-4DD1-A2BB-4EDC5252538E",
           "label": "HotIssue",

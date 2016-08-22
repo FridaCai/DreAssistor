@@ -1,5 +1,4 @@
 import Util from 'Util';
-
 import {Attachment} from '../../page_task/data/attachments.js';
 import "./style.less";
 
@@ -14,7 +13,7 @@ var AttachmentList = React.createClass({
 	},
 	onAddClk: function(){
 		this.refs.fileElem.click();
-
+//console.log;
 		
 	},
 	fileElemChange: function(e){

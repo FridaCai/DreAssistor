@@ -43,17 +43,74 @@ class Property extends Base{
 	}
 
 	dm2ui(project){
-		var sorp = ExcelUtil.convertUnixTime2YYYYMMDD(project['sorp']);
+		//todo: refactor.
+		var cells = [];
+		Object.keys(project).map(function(key){
+			var property = project[key];
+
+			switch(key){
+				case 'engines':
+					cells.push(Cell.create({
+						component: Label,
+						v: 'This is a button to add engine'
+					}))
+					//a new engine.
+					break;
+				case 'children':
+					//do nothing
+					break;
+				case 'sorp': //timestamp
+					var sorp = ExcelUtil.convertUnixTime2YYYYMMDD(project['sorp']);
+					cells.push({
+						component: Input,
+						param:{
+							value:sorp
+						}
+					})					
+					break;
+				//case '': //curve case
+				default:
+					cells.push( 
+						Cell.create({
+							component: Label,
+							v: property.label,
+						}),
+						Cell.create({
+							component: Input,
+							param: {
+								value: property.input,
+								onBlur: function(){},
+								onChange: function(){}
+							}
+						})
+					);
+					break;
+			}
+		})
+
+		var line = Line.create({
+			cells: cells,
+		})
+		this.ui.push(line);
+
+
+		
+
+
+
+
+
+
+
+
+
+/*
 		var label = project['label'];
 		var bpMax = project['bpMax'];
 		var bpMin = project['bpMin'];
 		var massMax = project['massMax'];
 		var massMin = project['massMin'];
 		var ec = project['ec'];
-
-
-
-
 		this.ui = [
 			Line.create({
 				cells: [
@@ -118,7 +175,7 @@ class Property extends Base{
 					})
 				]
 			})
-        ];
+        ];*/
 	}
 }
 

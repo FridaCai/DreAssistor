@@ -46,8 +46,8 @@ var TableDOM = React.createClass({
 
         (function updateTableBodyHeight(){
             var h = $('.projectPopupContainer .MsgBoxContent').height()
-                        - $('.addOn').outerHeight() 
-                        - parseInt($('.addOn').css('marginTop')) 
+                        - $('.xlsIExport').outerHeight() 
+                        - parseInt($('.xlsIExport').css('marginTop')) 
                         - parseInt($('.dataTable').css('marginTop'))
                         - $('.nav-tabs').outerHeight()
                         - $('.thead-inverse').outerHeight();

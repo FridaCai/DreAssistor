@@ -205,7 +205,7 @@ var XlsIExport = React.createClass({
 	render: function(){
         var isDisabled = this.props.disabled;
 		return (
-            <div className='addOn'>
+            <div className='xlsIExport'>
                 <button disabled={isDisabled} className="btn btn-primary importBtn" onClick={this.import}>导入excel</button> 
                 <button className="btn btn-primary exportBtn" onClick={this.export}>导出excel</button>
                 <input type="file" ref='xlsFileUploadInput'  accept={this._acceptedformat} style={{display: 'none'}} 
