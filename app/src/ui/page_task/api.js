@@ -25,11 +25,6 @@ var API = {
 
 
 
-
-
-
-
-
 	_projects: new Projects(),
 	setProjects: function(value){
 		this._projects = new Projects();
