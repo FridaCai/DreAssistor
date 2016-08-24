@@ -9,21 +9,21 @@
 
 
 
-	    table{
+	    table.customTable{
 	    	width: 100%;
 	    	display:block;
 	    	font-size: 12px;
 	    	text-align: center;
 
-	    	thead{
+	    	>thead{
 	    		display:block;
-    			tr{
+    			>tr{
     				background: #888;
 				    color: white;
 			   	    display: block;
 				   	width: 100%;
 
-				    td{
+				    >td{
 						display:inline-block;
 	    	    	    padding: 2px;
 						/*text-align: center;*/
@@ -31,7 +31,7 @@
     			}
     		}
     		
-	    	tbody{
+	    	>tbody{
 			    overflow: scroll;
 			    display: block;
 
@@ -46,7 +46,7 @@
 				   		}
 				   	}
 
-	    			td{
+	    			>td{
 					    padding: 2px;
 					    height: 25px;
 					    text-overflow: ellipsis;

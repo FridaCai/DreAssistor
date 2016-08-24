@@ -6,6 +6,7 @@ import Signal from 'Signal';
 import Label from 'Label';
 import Button from 'Button';
 import Input from 'Input';
+import Time from 'Time';
 
 import {COMPONENT_ENUM} from '../../data/template/mix.js';
 import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
@@ -20,12 +21,13 @@ import MultipleParamUIData from "../../taskpopup/uidata/multipleparam.js";
 class Property extends Base{
 	constructor(){
 		super();
-		this.components = ["label", "text", "value"];
+		this.components = ["label", "text", "value", "time"];
 		this.header = Line.create({
 			cells: [
 				Cell.create({component: Label, v: '属性'}), 
 				Cell.create({component: Label, v: '文本'}),
-				Cell.create({component: Label, v: '数值'})
+				Cell.create({component: Label, v: '数值'}),
+				Cell.create({component: Label, v: '时间'})
 			]
 		});
 		this.sheetName = `项目属性`;
@@ -245,6 +247,14 @@ class Property extends Base{
 	        		},
 	        		v: property.dropdown
 	        	})
+        	case COMPONENT_ENUM.TIME: //NEED TO UPDATE CODES IN DIFFERENT PLACE. BAD...
+        		return Cell.create({
+        			component: Time,
+        			param: {
+        				value: property.time
+        			},
+        			v: property.time
+        		})
 		}
 	}
 
@@ -271,7 +281,6 @@ class Property extends Base{
 					return Cell.create({
 						component:Label,
 						v:undefined,
-						id: key
 					})
 				}
 				return this.getCellByComponent(component, null, project, key);
@@ -365,8 +374,6 @@ class Property extends Base{
 	}
 }
 
-Property.signal_sorp_change = new Signal();
-Property.signal_sorp_blur = new Signal();
 Property.signal_add_engine = new Signal();
 Property.signal_copy_engine = new Signal();
 Property.signal_delete_engine = new Signal();

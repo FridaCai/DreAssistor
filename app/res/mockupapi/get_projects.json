@@ -11,7 +11,7 @@
       },
       "sorp": {
         "label": "sorp",
-        "value": 1466049352000
+        "time": 1466049352000
       },
       "platform": {
         "label": "platform",
@@ -30,7 +30,7 @@
           "transmission": {
             "label": "Transmission",
             "text": "transmission1"
-          },
+          }
         },
         {
           "name": {
@@ -168,7 +168,7 @@
       },
       "sorp": {
         "label": "sorp",
-        "value": 1466049352000
+        "time": 1466049352000
       },
       "platform": {
         "label": "platform",

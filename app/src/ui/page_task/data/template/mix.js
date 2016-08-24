@@ -9,7 +9,8 @@ exports.COMPONENT_ENUM = {
 	'CURVE': 'curve',
 	'IMAGES': 'images',
 	'TEXT': 'text',
-	'DROPDOWN': 'dropdown'
+	'DROPDOWN': 'dropdown',
+	'TIME': 'time',
 }
 
 
@@ -22,7 +23,8 @@ exports.COMPONENT_LABEL_ENUM = {
 	'curve': '曲线',
 	'images':'图片',
 	'text': '文本',
-	'dropdown':"选项"
+	'dropdown':"选项",
+	'time': "时间",
 }
 
 class SingleParam{
@@ -45,6 +47,7 @@ class SingleParam{
 		this.images = param.images;
 		this.text = param.text;
 		this.dropdown = param.dropdown;
+		this.time = param.time;
 	}
 
 	clone(){
@@ -63,7 +66,8 @@ class SingleParam{
 			curve: this.curve,
 			images: this.images,
 			text: this.text,
-			dropdown: this.dropdown
+			dropdown: this.dropdown,
+			time: this.time,
 		}
 	}
 }

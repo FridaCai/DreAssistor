@@ -95,7 +95,7 @@ var TableDOM = React.createClass({
             }).bind(this);
 
         return (
-            <table>
+            <table className='customTable'>
                 <thead className="thead-inverse" ref='tableHeader'>
                     {getHeaderDom(ui.headers[this.state.sheetIndex])}
                 </thead>
@@ -132,7 +132,7 @@ var TableDOM = React.createClass({
         }
 
         return (
-            <table>
+            <table className='customTable'>
                 <tbody>
                     {
                         table.map(function(line, i){
