@@ -28,7 +28,6 @@ var AttachmentList = React.createClass({
 	      var attachment = Attachment.create({
 	        id: Util.generateUUID(),
 	        label: label,
-	        detail: '',
 	        url: url,
 	      })
 	      this.state.attachments.add(attachment);
@@ -74,7 +73,7 @@ var AttachmentList = React.createClass({
 
 				  {
 				  	 attachments.map((function(attachment){
-	                    var {id, url, label, detail} = attachment;
+	                    var {id, url, label} = attachment;
 
 	                    var attachmentDom = allowPreview(url) 
 	                    	? (<img alt={label} src={url}/>)

@@ -49,7 +49,6 @@ exports.Attachment = class Attachment{
 	init(param){
 		this.id = param.id;
 		this.label = param.label;
-		this.detail = param.detail;
 		this.url = param.url;
 		this.parent = undefined;
 	}
@@ -63,7 +62,6 @@ exports.Attachment = class Attachment{
 		return {
 			id: this.id,
 			label: this.label,
-			detail: this.detail,
 			url: this.url,
 		}
 	}
