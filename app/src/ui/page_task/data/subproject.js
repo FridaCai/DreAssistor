@@ -6,20 +6,20 @@ module.exports = class SubProject {
 	constructor(){
 	}
 
-	init(param){
+	initTag(param){
+		this.init(param, Tag);
+	}
+	initTask(param){
+		this.init(param, Task);
+	}
+	init(param, className){
 		this.id = param.id || Util.generateUUID();
 		this.label = param.label;
 		this.parent = undefined;
 
-
 		this.children = [];
 		param.children && param.children.map((function(c){
-			var child;
-			if(c.class === 'Tag'){
-				child = new Tag();
-			}else if(c.class === 'Task'){
-				child = new Task();
-			}
+			var child = new className();
 			child.init(c);
 			child.setParent(this);
 			this.children.push(child);

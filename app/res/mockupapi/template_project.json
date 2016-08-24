@@ -57,7 +57,6 @@
           "label": "Action1",
           "time": 1368374400000,
           "week": 176,
-          "class": "Tag",
           "comment": "Mon May 13 2013 00:00:00 GMT+0800 (CST)"
         },
         {
@@ -65,7 +64,6 @@
           "label": "Action2",
           "time": 1376841600000,
           "week": 162,
-          "class": "Tag",
           "comment": "Mon Aug 19 2013 00:00:00 GMT+0800 (CST)"
         }
       ]
@@ -94,8 +92,7 @@
               "execute": "execute",
               "feedback": "feedback"
             }
-          },
-          "class": "Task"
+          }
         },
         {
           "id": "A5D87D98-04AB-4200-A63E-9C070C9D29EA",
@@ -117,8 +114,7 @@
           "privacy": "0",
           "template": {
             "type": 1
-          },
-          "class": "Task"
+          }
         },
         {
           "id": "183AE1CB-990E-4642-9674-314AB86B9031",
@@ -140,8 +136,7 @@
           "privacy": "0",
           "template": {
             "type": 0
-          },
-          "class": "Task"
+          }
         }
       ]
     }

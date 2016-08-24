@@ -57,22 +57,19 @@
               "id": "tag_1",
               "label": "DSI",
               "time": 1452430100237,
-              "week": 30,
-              "class": "Tag"
+              "week": 30
             },
             {
               "id": "tag_2",
               "label": "VPI",
               "time": 1463921464187,
-              "week": 20,
-              "class": "Tag"
+              "week": 20
             },
             {
               "id": "tag_3",
               "label": "DSO",
               "time": 1478436664187,
-              "week": 10,
-              "class": "Tag"
+              "week": 10
             }
           ]
         },
@@ -102,7 +99,6 @@
                 "type": 1,
                 "param": {}
               },
-              "class": "Task",
               "statical":["duration"]
             },
             {
@@ -127,7 +123,6 @@
                 "type": 1,
                 "param": {}
               },
-              "class": "Task",
               "statical":["duration"]
             },
             {
@@ -152,7 +147,6 @@
                 "type": 1,
                 "param": {}
               },
-              "class": "Task",
               "statical":["duration"]
             }
           ]
@@ -215,22 +209,19 @@
               "id": "tag_4",
               "label": "DSI",
               "time": 1452430100237,
-              "class": "Tag",
               "week": 10
             },
             {
               "id": "tag_5",
               "label": "VPI",
               "time": 1463921464187,
-              "week": 10,
-              "class": "Tag"
+              "week": 10
             },
             {
               "id": "tag_6",
               "label": "DSO",
               "time": 1478436664187,
-              "week": 10,
-              "class": "Tag"
+              "week": 10
             }
           ]
         },
@@ -259,7 +250,6 @@
               "template": {
                 "type": 1
               },
-              "class": "Task",
               "statical":["duration"]
             }
           ]

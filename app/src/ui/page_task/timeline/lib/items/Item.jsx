@@ -290,10 +290,10 @@ export default class Item extends React.Component {
     e.stopPropagation();
   };
 
-  onContextMenu(task, e) {
+  onContextMenu(item, e) {
     e.preventDefault();
     
-    if(task.class != 'Task')
+    if(!(item instanceof Task))
       return;
 
     this.props.onContextMenu({

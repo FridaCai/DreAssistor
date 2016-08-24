@@ -40,18 +40,16 @@ module.exports = class Project{
 		this.children = [];
 		param.children && param.children.map((function(sp, index){
 			var subproject = new SubProject();
-			subproject.init(sp);
+
+			if(index === 0){
+				subproject.initTag(sp);	
+			}else if(index === 1){
+				subproject.initTask(sp);
+			}
+			
 			subproject.setParent(this);
 			this.children.push(subproject);
 		}).bind(this));
-
-		/*var tagObjs = param.children[0].children;
-		for(var i=0; i<tagObjs.length; i++){
-			var tagObj = tagObjs[i];
-
-			var tag = this.children[0].children[i];
-			tag.update(tagObj);
-		}*/
 	}
 	addEngine(param){
 		this.engines.addEngine(param);

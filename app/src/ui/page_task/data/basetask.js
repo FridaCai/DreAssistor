@@ -10,11 +10,8 @@ module.exports = class BaseTask {
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		this.class = 'Task';
 		this.creatorId = param.creatorId;
 		this.parent = undefined;
-
-
 
 		var type = param.template.type; 
 		var p = (function(template){
@@ -161,7 +158,6 @@ module.exports = class BaseTask {
 			subtasks: subtasks,
 			privacy: this.privacy,
 			template: this.template,
-			class: 'Task',
 			statical: this.statical,
 
 			startWeek: this.startWeek,

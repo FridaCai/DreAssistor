@@ -12,7 +12,6 @@ module.exports = class Tag {
 		this.week = param.week;
 		this.width = Util.TAG_WIDTH;
 		this.markColor = Util.TAG_COLOR;
-		this.class = 'Tag';
 	}
 	setParent(parent){
 		this.parent = parent;
@@ -33,8 +32,6 @@ module.exports = class Tag {
 			week: this.week,
 			width: this.width,
 			markColor: this.markColor,
-			class: 'Tag',
-
 			comment: `time: ${new Date(this.time)}`
 		}
 	}
