@@ -68,6 +68,7 @@ class SingleParam{
 			text: this.text,
 			dropdown: this.dropdown,
 			time: this.time,
+			comment: `time: ${new Date(this.time)}`
 		}
 	}
 }

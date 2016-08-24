@@ -251,7 +251,12 @@ class Property extends Base{
         		return Cell.create({
         			component: Time,
         			param: {
-        				value: property.time
+        				value: property.time,
+        				onChange: function(time){
+        					this.v = time;
+        					MultipleParamUIData.signal_data_change.dispatch();
+        				}
+        				
         			},
         			v: property.time
         		})

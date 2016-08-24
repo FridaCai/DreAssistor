@@ -54,10 +54,16 @@ var ProjectPopup = React.createClass({
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
                     onDrop={this.onTableDrop}
-                    needUpdate = {needUpdate}/>
+                    needUpdate = {needUpdate}
+                    onSwitchSheet = {this.onSwitchSheet}/>
             </div>
 	    );   
     },
+    onSwitchSheet(){
+        API.ui2dm();
+        API.dm2ui();
+    },
+
     onXlsImport: function(){
         API.ui2dm();
         API.dm2ui();
