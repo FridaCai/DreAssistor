@@ -1,13 +1,11 @@
 import SubTask from './subtask.js';
 import {Attachments} from './attachments.js';
 import Util from 'Util';
-import Entity from './entity.js';
 import TemplateFactory from './template/factory';
 
-module.exports = class BaseTask extends Entity {
+module.exports = class BaseTask {
 
 	constructor(){
-		super();
 	}
 
 	init(param){
@@ -140,12 +138,12 @@ module.exports = class BaseTask extends Entity {
 
 	dump(){
 		var attachments = [];
-		this.attachments.map(function(at){
+		this.attachments && this.attachments.map(function(at){
 			attachments.push(at.dump());
 		})
 
 		var subtasks = [];
-		this.subtasks.map(function(sp){
+		this.subtasks && this.subtasks.map(function(sp){
 			subtasks.push(sp.dump());
 		})
 		

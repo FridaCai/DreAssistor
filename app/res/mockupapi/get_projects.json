@@ -4,14 +4,50 @@
   "projects": [  
     {
       "id": "0",
-      "label": "凯迪拉克",
       "creatorId": 2,
-      "sorp": 1466049352000,
-      "ec": "1.0T",
-      "bpMin": 10,
-      "bpMax": 20,
-      "massMin": 30,
-      "massMax":40,
+      "label": {
+        "label": "凯迪拉克",
+        "text":""
+      },
+      "sorp": {
+        "label": "sorp",
+        "value": 1466049352000
+      },
+      "platform": {
+        "label": "platform",
+        "text": ""
+      },
+      "bodyStyle": {
+        "label": "body style",
+        "text": ""
+      },
+      "engines": [
+        {
+          "name": {
+            "label": "engine",
+            "text": "1.0T"
+          },
+          "transmission": {
+            "label": "Transmission",
+            "text": "transmission1"
+          },
+        },
+        {
+          "name": {
+            "label": "engine",
+            "text": "2.0T"
+          },
+          "transmission": {
+            "label": "Transmission",
+            "text": "transmission2"
+          }
+        }
+      ],
+
+
+
+
+      
       "children": [
         {
           "id": "0",
@@ -125,14 +161,51 @@
     },
     {
       "id": "1",
-      "label": "项目模版",
       "creatorId": 2,
-      "sorp": 1466049352000,
-      "ec": "1.0T",
-      "bpMin": 20,
-      "bpMax": 30,
-      "massMin": 30,
-      "massMax":40,
+      "label": {
+        "label": "项目模版",
+        "text":""
+      },
+      "sorp": {
+        "label": "sorp",
+        "value": 1466049352000
+      },
+      "platform": {
+        "label": "platform",
+        "text": ""
+      },
+      "bodyStyle": {
+        "label": "body style",
+        "text": ""
+      },
+      "engines": [
+        {
+          "name": {
+            "label": "engine",
+            "text": "1.0T"
+          },
+          "transmission": {
+            "label": "Transmission",
+            "text": "transmission1"
+          }
+        },
+        {
+          "name": {
+            "label": "engine",
+            "text": "2.0T"
+          },
+          "transmission": {
+            "label": "Transmission",
+            "text": "transmission2"
+          }
+        }
+      ],
+
+
+
+
+      
+    
       "children": [
         {
           "id": "0",

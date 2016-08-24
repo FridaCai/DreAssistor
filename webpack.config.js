@@ -49,6 +49,7 @@ module.exports = {
             Signal: path.join(__dirname, toolPath, "/signal.js"),
             Request: path.join(__dirname, toolPath, "/request.js"),
             CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
+            Button: path.join(__dirname, widgetPath, "/button/index.js"),
             ComboBox: path.join(__dirname, widgetPath, "/combobox/index.js"),
             XlsIExport: path.join(__dirname, widgetPath, "/excel/index.js"),
             RadioGroup: path.join(__dirname, widgetPath, "/radiogroup/index.js"),

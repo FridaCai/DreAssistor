@@ -80,8 +80,7 @@ var TableDOM = React.createClass({
 
                 for(var i=0; i<lines.length; i++){
                     var line = lines[i];
-                    var timestame = Date.parse(new Date());
-                    var key = `${line.id}_${timestame}`;
+                    var key = line.id;
                     if(line instanceof ExpandLine){
                         dom.push(<ExpandLineDOM line={line} key={key}/>);
                     }else{

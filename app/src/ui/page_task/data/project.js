@@ -1,45 +1,28 @@
 import SubProject from './subproject.js';
 import Util from 'Util';
-import Entity from './entity.js';
+import {SingleParam} from './template/mix.js';
+import {MultipleParam} from './template/mix.js';
+import {Engines} from './engines';
 
-module.exports = class Project extends Entity {
+module.exports = class Project{
 	constructor(){
 
-		super();
-
 		//by default, exist mastertiming and ais development.
-		var mastertiming = new SubProject();
+		/*var mastertiming = new SubProject();
 		mastertiming.init({label: 'Master Timing'});
 
 		var aisdevelopment = new SubProject();
 		aisdevelopment.init({label: 'AIS Development'});
 
-		this.children = [mastertiming, aisdevelopment];
-
-		this.defineField('sorp');
+		this.children = [mastertiming, aisdevelopment];*/
 	}
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
 		this.creatorId=param.creatorId;
-		
-		this.label = param.label;
-		this.ec = param.ec;
-		this.bpMin = param.bpMin;
-		this.bpMax = param.bpMax;
-		this.massMin = param.massMin;
-		this.massMax = param.massMax;
-
-		this.sorp = param.sorp || 0;
-		this.children = [];
-		param.children && param.children.map((function(sp, index){
-			var subproject = new SubProject();
-			subproject.init(sp);
-
-			subproject.setParent(this);
-			this.children.push(subproject);
-		}).bind(this));
+		this._updateMeta(param);
 	}
+
 	setParent(parent){
 		this.parent = parent;
 	}
@@ -48,22 +31,36 @@ module.exports = class Project extends Entity {
 	** suppose only project property and tags are allowed to update. if user want to update task, use another UI.
 	**/
 	_updateMeta(param){
-		this.label = param.label;
-		this.ec = param.ec;
-		this.bpMin = param.bpMin;
-		this.bpMax = param.bpMax;
-		this.massMin = param.massMin;
-		this.massMax = param.massMax;
+		this.label = SingleParam.create(param.label);
+		this.sorp = SingleParam.create(param.sorp);
+		this.platform = SingleParam.create(param.platform)
+		this.bodyStyle = SingleParam.create(param.bodyStyle);
+		this.engines = Engines.create(param.engines);
 
-		this.sorp = param.sorp;
+		this.children = [];
+		param.children && param.children.map((function(sp, index){
+			var subproject = new SubProject();
+			subproject.init(sp);
+			subproject.setParent(this);
+			this.children.push(subproject);
+		}).bind(this));
 
-		var tagObjs = param.children[0].children;
+		/*var tagObjs = param.children[0].children;
 		for(var i=0; i<tagObjs.length; i++){
 			var tagObj = tagObjs[i];
 
 			var tag = this.children[0].children[i];
 			tag.update(tagObj);
-		}
+		}*/
+	}
+	addEngine(param){
+		this.engines.addEngine(param);
+	}
+	deleteEngine(engine){
+		this.engines.deleteEngine(engine);
+	}
+	copyEngine(engine){
+		this.engines.copyEngine(engine);
 	}
 
 	update(param){
@@ -109,19 +106,20 @@ module.exports = class Project extends Entity {
 		this.children.map(function(child){
 			children.push(child.dump());
 		});
-
+	
 		return {
 			id: this.id,
-			label: this.label,
 			creatorId: this.creatorId,
-			sorp: this.sorp,
-			ec: this.ec,
-			bpMin: this.bpMin,
-			bpMax: this.bpMax,
-			massMin: this.massMin,
-			massMax: this.massMax,
+
+			label: this.label.dump(),
+			sorp: this.sorp.dump(),
+			platform: this.platform.dump(),
+			bodyStyle: this.bodyStyle.dump(),
+			engines: this.engines.dump(),
+
+
 			children: children,
-			comment: `sorp: ${new Date(this.sorp)}`
+			//comment: `sorp: ${new Date(this.sorp)}`
 		};
 	}
 }

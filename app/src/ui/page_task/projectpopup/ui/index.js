@@ -6,6 +6,8 @@ import Project from '../../data/project.js'; //todo: datamodel and controller pu
 import Property from '../data/property.js';
 import Tag from '../data/tag.js';
 
+import MultipleParamUIData from '../../taskpopup/uidata/multipleparam.js';
+
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
         (function(p){
@@ -73,15 +75,46 @@ var ProjectPopup = React.createClass({
         }).bind(this);
         reader.readAsBinaryString(file);
     },
-    onDataChange: function(){
+    
+    onInputChange: function(){
         //when ui2dm and dm2ui, data is refreshed, if not redraw table, datachange will not be listened to the correct component.
         API.ui2dm();
         API.dm2ui();
         this.refs.table.setState({uidata: API.uidata}); 
     },
+    onEngineAdd: function(){
+        var project = API.getProject();
+        project.addEngine();
+        
+        API.dm2ui();
+        this.refs.table.setState({uidata: API.uidata}); 
+    },
+    onEngineDelete: function(e, param){
+        var engine = param.engine;
+        var project = API.getProject();
+        project.deleteEngine(engine);
+
+        API.dm2ui();
+        this.refs.table.setState({uidata: API.uidata});   
+    },
+    onEngineCopy: function(e, param){
+        var engine = param.engine;
+        var project = API.getProject();
+
+
+        project.copyEngine(engine);
+
+        API.dm2ui();
+        this.refs.table.setState({uidata: API.uidata});     
+    },
     componentDidMount: function(){
-        Property.signal_sorp_blur.listen(this.onDataChange);
-        Tag.signal_adjusttime_blur.listen(this.onDataChange);
+        MultipleParamUIData.signal_data_change.listen(this.onInputChange);
+        Property.signal_add_engine.listen(this.onEngineAdd);
+        Property.signal_delete_engine.listen(this.onEngineDelete);
+        Property.signal_copy_engine.listen(this.onEngineCopy);
+
+
+        Tag.signal_adjusttime_blur.listen(this.onInputChange);
 
         if(this.props.project)
             return;
@@ -103,8 +136,16 @@ var ProjectPopup = React.createClass({
     },
 
     componentWillUnmount: function(){
-        Property.signal_sorp_blur.unlisten(this.onDataChange);
-        Tag.signal_adjusttime_blur.unlisten(this.onDataChange);
+       
+
+
+
+        MultipleParamUIData.signal_data_change.unlisten(this.onInputChange);
+        Property.signal_add_engine.unlisten(this.onEngineAdd);
+        Property.signal_delete_engine.unlisten(this.onEngineDelete);
+        Property.signal_copy_engine.unlisten(this.onEngineCopy);
+        Tag.signal_adjusttime_blur.unlisten(this.onInputChange);
+
     },
 
     onOK:function() {

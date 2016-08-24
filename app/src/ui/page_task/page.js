@@ -42,7 +42,9 @@ var PageTask = React.createClass({
                 API.setUsers(usersResponse.users);
             }
             this.forceUpdate();
-        }).bind(this));
+        }).bind(this)).catch(function(e){
+            console.error(e.stack);
+        });
     },
 
     componentWillUnmount: function(){

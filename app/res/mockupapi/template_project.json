@@ -1,42 +1,42 @@
 {
   "label": {
-    "label": "项目模版",
-    "input":""
+    "label": "项目名称",
+    "text":""
   },
   "sorp": {
     "label": "sorp",
-    "input": 1451577600000
+    "value": 1451577600000
   },
   "platform": {
     "label": "platform",
-    "input": ""
+    "text": ""
   },
   "bodyStyle": {
     "label": "body style",
-    "input": ""
+    "text": ""
   },
 
 
 
   "engines": [
     {
-      "engine": {
+      "name": {
         "label": "engine",
-        "input": "1.0T"
+        "text": "1.0T"
       },
       "transmission": {
         "label": "Transmission",
-        "input": "transmission1"
+        "text": "transmission1"
       }
     },
     {
-      "engine": {
+      "name": {
         "label": "engine",
-        "input": "2.0T"
+        "text": "2.0T"
       },
       "transmission": {
         "label": "Transmission",
-        "input": "transmission2"
+        "text": "transmission2"
       }
     }
   ],

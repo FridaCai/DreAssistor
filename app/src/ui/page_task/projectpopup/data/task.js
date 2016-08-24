@@ -11,7 +11,6 @@ module.exports = class Task extends Base {
 		this.header = Line.create({cells: [
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
-
 			Cell.create({component: Label, v: 'Label'}), 
 			Cell.create({isHide: true}),
 			Cell.create({isHide: true}),
@@ -35,9 +34,12 @@ module.exports = class Task extends Base {
 
 			var task = new TaskData();
 			task.init({
-				"label": label,
-				"startWeek": startWeek,
-				"endWeek": endWeek,
+				label: label,
+				startWeek: startWeek,
+				endWeek: endWeek,
+				template: {
+					type:0
+				}
 			})
 			task.week2time(project.sorp);
 			project.addTask(task);

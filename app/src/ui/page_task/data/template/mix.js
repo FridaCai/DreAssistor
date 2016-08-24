@@ -32,7 +32,6 @@ class SingleParam{
 		return singleParam;
 	}
 	constructor(){
-
 	}
 	init(param){ 
 		//undefined -- not need this property; 
@@ -70,6 +69,11 @@ class SingleParam{
 }
 
 class MultipleParam{
+	static create(param){
+		var multipleParam = new MultipleParam();
+		multipleParam.init(param);
+		return multipleParam;
+	}
 	constructor(){
 
 	}
@@ -163,6 +167,12 @@ exports.IVTuning = IVTuning;
 exports.HardTooling = HardTooling;
 exports.PPVMrd = PPVMrd;
 exports.BenchMark = BenchMark;
+
+
+
+//todo: refactor. new MuleMRD, IVGuning... SingleParam and MultipleParam will be used widely.
+exports.SingleParam = SingleParam;
+exports.MultipleParam = MultipleParam;
 
 
 

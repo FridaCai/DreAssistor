@@ -39,7 +39,7 @@ var AddOn = React.createClass({
         return (
             <div>
                 <div onClick={this.onProjectClk}>
-                    <h3>{project.label}</h3>
+                    <h3>{project.label.label}</h3>
                 </div>
             </div>
             
