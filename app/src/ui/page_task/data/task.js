@@ -3,7 +3,7 @@ import {Attachments} from './attachments.js';
 import Util from 'Util';
 import TemplateFactory from './template/factory';
 
-module.exports = class BaseTask {
+module.exports = class Task {
 
 	constructor(){
 	}
