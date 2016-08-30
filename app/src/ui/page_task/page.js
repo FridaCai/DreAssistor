@@ -28,19 +28,19 @@ var PageTask = React.createClass({
         API.signal_projectpoup_show.listen(this.onProjectPopupShow);
 
         Promise.all([
-            Request.getData(Request.getMockupAPI('get_projects.json')),
-            Request.getData(Request.getMockupAPI('get_users.json'))
+            Request.getData(Request.getBackendAPI('project')),
+            //Request.getData(Request.getMockupAPI('get_users.json'))
         ]).then((function(param){
             var projectsResponse = param[0];
-            var usersResponse = param[1];
+            //var usersResponse = param[1];
 
             if(projectsResponse.errCode == -1){
                 API.setProjects(projectsResponse.projects);    
             }
             
-            if(usersResponse.errCode == -1){
+            /*if(usersResponse.errCode == -1){
                 API.setUsers(usersResponse.users);
-            }
+            }*/
             this.forceUpdate();
         }).bind(this)).catch(function(e){
             console.error(e.stack);

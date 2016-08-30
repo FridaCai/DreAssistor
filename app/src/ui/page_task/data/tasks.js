@@ -1,20 +1,25 @@
 import Task from './task.js';
 
-module.exports = class Tasks {
+module.exports = class Tasks extends Array{
+	static create(param){
+		var tasks = new Tasks();
+		tasks.init(param);
+		return tasks;
+	}
+
 	constructor(){
-		this.arr = new Array();
+		super();
 	}
 
 	init(param){
 		param.map((function(task){
-			var t = new Task();
-			t.init(task);
+			var t = Task.create(task);
 			t.setParent(this);
-			this.arr.push(t);
+			this.push(t);
 		}).bind(this))
 	}
 
-	getArr(){
+	/*getArr(){
 		return this.arr;
 	}
 
@@ -23,7 +28,17 @@ module.exports = class Tasks {
 			return task.id === taskId;
 		})
 	}
+	*/
+	setParent(parent){
+		this.parent = parent;
+	}
 	addTask(task){
-		this.arr.unshift(task);
+		this.unshift(task);
+	}
+
+	dump(){
+		return this.map(function(task){
+			return task.dump();
+		})
 	}
 }

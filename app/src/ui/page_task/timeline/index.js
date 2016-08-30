@@ -39,7 +39,7 @@ var AddOn = React.createClass({
         return (
             <div>
                 <div onClick={this.onProjectClk}>
-                    <h3>{project.label.label}</h3>
+                    <h3>{project.label}</h3>
                 </div>
             </div>
             
@@ -99,49 +99,50 @@ var CTimeLine = React.createClass({
         var fp = passFilter(filter, [projectId]);
         if(!fp) return null;
         
-        var groups = [];
-        this.props.project.children.map(function(sp){
-            groups.push({
-                id: projectId + '_' + sp.id,
-                title: sp.label,
-                instance: sp,
-            })    
-            
-        })
+        var groups = [
+            {
+                id: projectId + '_tag',
+                title: 'Master Timing',
+                instance: project.tags,
+            },
+            {
+                id: projectId + '_task',
+                title: 'AIS Development',
+                instance: project.tasks,
+            }
+        ];
+
 
         var items = [];
-        this.props.project.children.map(function(sp){
-            var spId = sp.id;
-            sp.children.map(function(child){
-                if(child instanceof Tag) {
-                    var tagTime = API.getTagTime(child);
-                    items.push({
-                        id: projectId + '_' + spId + '_' + child.id,
-                        group: projectId + '_' + spId,
-                        title: child.label,
-                        start_time: tagTime,
-                        end_time: tagTime + 1,
-                        color: Util.convertIntColorToHex(child.markColor),
-                        instance: child,
-                    })
-                }else if (child instanceof Task){
-                    var ft = passFilter(filter, [projectId, spId, child.id]);
-                    if(ft){
-                        items.push({
-                            id: projectId + '_' + spId + '_' + child.id,
-                            group: projectId + '_' + spId,
-                            title: child.label,
-                            start_time: child.startTime,
-                            end_time: child.endTime,
-                            color: Util.convertIntColorToHex(child.markColor),
-                            instance: child,
-                        })    
-                    }
-                    
-                }
+        project.tags.map(function(tag){
+            var tagTime = API.getTagTime(tag);
+            items.push({
+                id: projectId + '_tag_' + tag.id,
+                group: projectId + '_tag',
+                title: tag.label,
+                start_time: tagTime,
+                end_time: tagTime + 1,
+                color: Util.convertIntColorToHex(tag.markColor),
+                instance: tag,
             })
-        });
-        
+        })
+        project.tasks.map(function(task){
+            //var ft = passFilter(filter, [projectId, spId, task.id]);
+            //if(ft){
+            items.push({
+                id: projectId + '_task_' + task.id,
+                group: projectId + '_task',
+                title: task.label,
+                start_time: task.startTime,
+                end_time: task.endTime,
+                color: Util.convertIntColorToHex(task.markColor),
+                instance: task,
+            })    
+            //}
+        })
+
+
+
 
         var addOn = React.createElement(AddOn, {
             project: this.props.project   

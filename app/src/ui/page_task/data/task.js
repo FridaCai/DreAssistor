@@ -4,7 +4,11 @@ import Util from 'Util';
 import TemplateFactory from './template/factory';
 
 module.exports = class Task {
-
+	static create(param){
+		var task = new Task();
+		task.init(param);
+		return task;
+	}
 	constructor(){
 	}
 	meetCondition(condition){
@@ -18,22 +22,22 @@ module.exports = class Task {
 		this.creatorId = param.creatorId;
 		this.parent = undefined;
 
-		var type = param.template.type; 
-		var p = (function(template){
-			var returnValue = TemplateFactory.create(template.type);
-			returnValue.init(template.param);	
-			return returnValue;
-		})(param.template)
+		if(param.templateType != undefined){
+			var type = param.templateType;
+			var p = (function(param){
+				var returnValue = TemplateFactory.create(type);
+				returnValue.init(param);	
+				return returnValue;
+			})(param.templateParam)
 
-		this.template = {
-			type: type, param: p
-		};
-
-				
-
+			this.template = {
+				type: type, param: p
+			};
+		}
+		
 
 		//todo: bad.
-		this.statical = (function(templateType){
+		/*this.statical = (function(templateType){
 			var returnValue = ['duration'];
  			switch(templateType){
  				case 0: //normal
@@ -47,7 +51,8 @@ module.exports = class Task {
 				case 3: //mule
 					return returnValue.concat(["template.param.bp.value", "template.param.heavy.value", "template.param.snorkelNoiseXls"]);
  			}
-		})(param.template.type);
+		})(param.template.type);*/
+		this.statical = ["duration"];
 
 
 

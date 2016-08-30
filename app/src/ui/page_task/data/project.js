@@ -4,22 +4,18 @@ import {SingleParam} from './template/mix.js';
 import {MultipleParam} from './template/mix.js';
 import {Engines} from './engines';
 
+import Tags from './tags.js';
+import Tasks from './tasks.js';
+
 module.exports = class Project{
 	constructor(){
-
-		//by default, exist mastertiming and ais development.
-		/*var mastertiming = new SubProject();
-		mastertiming.init({label: 'Master Timing'});
-
-		var aisdevelopment = new SubProject();
-		aisdevelopment.init({label: 'AIS Development'});
-
-		this.children = [mastertiming, aisdevelopment];*/
 	}
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
 		this.creatorId=param.creatorId;
+
+
 		this._updateMeta(param);
 	}
 
@@ -31,25 +27,30 @@ module.exports = class Project{
 	** suppose only project property and tags are allowed to update. if user want to update task, use another UI.
 	**/
 	_updateMeta(param){
-		this.label = SingleParam.create(param.label);
-		this.sorp = SingleParam.create(param.sorp);
+		this.label = param.label;
+		this.sorp = param.sorp;
+
+		//todo:
+		/*
 		this.platform = SingleParam.create(param.platform)
 		this.bodyStyle = SingleParam.create(param.bodyStyle);
-		this.engines = Engines.create(param.engines);
+		this.engines = Engines.create(param.engines);*/
+		this.properties = param.properties.map(function(){
 
-		this.children = [];
-		param.children && param.children.map((function(sp, index){
-			var subproject = new SubProject();
+		})
 
-			if(index === 0){
-				subproject.initTag(sp);	
-			}else if(index === 1){
-				subproject.initTask(sp);
-			}
-			
-			subproject.setParent(this);
-			this.children.push(subproject);
-		}).bind(this));
+
+		//todo: engine.
+
+
+
+
+		this.tags = Tags.create(param.tags);
+		this.tags.setParent(this);
+		this.tasks = Tasks.create(param.tasks);
+		this.tasks.setParent(this);
+
+		
 	}
 	addEngine(param){
 		this.engines.addEngine(param);
@@ -65,7 +66,7 @@ module.exports = class Project{
 		this._updateMeta(param);
 	}
 
-	findChildByIndex(index){
+	/*findChildByIndex(index){
 		return this.children[index];
 	}
 
@@ -97,14 +98,9 @@ module.exports = class Project{
 	}
 	getTags(handler){
 		return this.children[0].getChildren(handler);
-	}
+	}*/
 
 	dump(){
-		var children = [];
-		this.children.map(function(child){
-			children.push(child.dump());
-		});
-	
 		return {
 			id: this.id,
 			creatorId: this.creatorId,
@@ -116,7 +112,8 @@ module.exports = class Project{
 			engines: this.engines.dump(),
 
 
-			children: children,
+			tags: this.tags.dump(),
+			tasks: this.tasks.dump()
 			//comment: `sorp: ${new Date(this.sorp)}`
 		};
 	}

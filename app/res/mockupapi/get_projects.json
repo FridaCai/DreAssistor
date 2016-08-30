@@ -5,22 +5,20 @@
     {
       "id": "0",
       "creatorId": 2,
-      "label": {
-        "label": "凯迪拉克",
-        "text":""
-      },
-      "sorp": {
-        "label": "sorp",
-        "time": 1466049352000
-      },
-      "platform": {
-        "label": "platform",
-        "text": ""
-      },
-      "bodyStyle": {
-        "label": "body style",
-        "text": ""
-      },
+      "sorp": 1466049352000,
+      "label": "凯迪拉克",
+      "properties": [
+        {
+          "label": "platform",
+          "text": ""
+        },
+        {
+          "label": "body style",
+          "text": ""
+        } 
+      ],
+
+
       "engines": [
         {
           "name": {
@@ -156,22 +154,19 @@
     {
       "id": "1",
       "creatorId": 2,
-      "label": {
-        "label": "项目模版",
-        "text":""
-      },
-      "sorp": {
-        "label": "sorp",
-        "time": 1466049352000
-      },
-      "platform": {
-        "label": "platform",
-        "text": ""
-      },
-      "bodyStyle": {
-        "label": "body style",
-        "text": ""
-      },
+      "sorp": 1466049352000,
+      "label": "项目模版",
+      "properties": [
+        {
+          "label": "platform",
+          "text": ""
+        },
+        {
+          "label": "body style",
+          "text": ""
+        },
+      ],
+
       "engines": [
         {
           "name": {

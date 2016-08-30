@@ -1,6 +1,11 @@
 import Util from 'Util';
 
 module.exports = class Tag {
+	static create(param){
+		var tag = new Tag();
+		tag.init(param);
+		return tag;
+	}
 	constructor(){
 		
 	}
