@@ -21,10 +21,9 @@ var Engines = class Engines extends Array{
 	}
 
 	dump(){
-		var result = this.map(function(engine){
+		return this.map(function(engine){
 			return engine.dump()
 		})
-		return result;
 	}
 
 	//engine; engine param; empty param.

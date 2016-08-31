@@ -113,15 +113,34 @@ var PageTask = React.createClass({
         ReactDOM.render(<PeopleAssistorPopup title={'前辈助手'}/>, this.refs.popup);
     },
 
+
+
+
+
+
     onAddProjectPopupShow: function(e){
         this.onProjectPopupShow(e, {
             title: '添加项目', 
             onOK: function(project){
-                //API.getProjects().add(project);
+                var creator = SuperAPI.getLoginUser();
+                project.setCreator(creator);
 
 
-                //query get projects again before redraw ui.
-                API.signal_page_refresh.dispatch();                
+
+                var url = Request.getBackendAPI('project');
+                var data = project.dump();
+                var options = {
+                   contentType: 'application/json; charset=UTF-8'
+                };
+
+                Request.postData(url, data, options).then(function(){
+                    Request.getData(Request.getBackendAPI('project')).then(function(result){
+                        if(result.errCode == -1){
+                            API.setProjects(result.projects);    
+                            API.signal_page_refresh.dispatch();
+                        }
+                    })
+                })
             }
         })
     },
@@ -137,6 +156,15 @@ var PageTask = React.createClass({
                         <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
                         <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
                     </div> 
+
+
+
+                    <div className='filterProjectsByCreator'>
+                    </div>
+
+
+
+
                     {
                         API.getProjectArr().map(function(project){
                             return (

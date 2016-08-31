@@ -11,7 +11,15 @@ module.exports = class HotIssue{
 		this.feedback = param.feedback;
 	}
 	dump(){
-		
+		return {
+			sheetNames: [""],
+			sheets: [{
+				rootCause: this.rootCause,
+				solution: this.solution,
+				execute: this.execute,
+				feedback: this.feedback
+			}]
+		}
 	}
 	clone(){
 		var hotissue = new HotIssue();

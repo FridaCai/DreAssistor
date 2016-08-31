@@ -22,18 +22,25 @@ module.exports = class Task {
 		this.creatorId = param.creatorId;
 		this.parent = undefined;
 
-		if(param.templateType != undefined){
-			var type = param.templateType;
-			var p = (function(param){
-				var returnValue = TemplateFactory.create(type);
-				returnValue.init(param);	
-				return returnValue;
-			})(param.templateParam)
 
-			this.template = {
-				type: type, param: p
-			};
+		var type = 0;
+		var template = {
+			sheetNames: [], sheets: []
 		}
+		if(param.template){
+			type = param.template.type;
+			template = (TemplateFactory.create(type)).init(param.template);
+		}
+		
+
+		this.template = {
+			type: type, 
+			sheetNames: param.sheetNames, 
+			sheets: param.sheets
+		};
+
+
+
 		
 
 		//todo: bad.
@@ -167,11 +174,17 @@ module.exports = class Task {
 			priority: this.priority,
 			subtasks: subtasks,
 			privacy: this.privacy,
-			template: this.template,
+			template: { //todo: change temperarily for testing post/project fail.
+				type: this.template.type,
+				sheetNames: this.template.sheetNames,
+				sheets: this.template.sheets
+			},
 			statical: this.statical,
 
 			startWeek: this.startWeek,
 			endWeek: this.endWeek,
+
+
 
 			comment: `startTime: ${new Date(this.startTime)}, endTime: ${new Date(this.endTime)}`,
 		}

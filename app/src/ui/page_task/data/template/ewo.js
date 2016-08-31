@@ -5,7 +5,10 @@ module.exports = class EWO{
 		
 	}
 	dump(){
-		
+		return {
+			sheetNames: [],
+			sheets: []
+		}
 	}
 	clone(){
 		var ewo = new EWO();

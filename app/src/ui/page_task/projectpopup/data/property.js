@@ -360,9 +360,7 @@ class Property extends Base{
 		}))
 
 
-		Object.keys(project.properties).map((function(k){
-			var property = project.properties[k];
-
+		project.properties.map((function(property){
 			if(property instanceof SingleParam){
 				var key = property.key;
 				var cells = this.components.map((function(component){
@@ -416,10 +414,7 @@ class Property extends Base{
 			var engineId = engine.id;
 			var properties = engine.properties;
 
-			Object.keys(properties).map((function(k){
-				var property = properties[k];
-
-
+			properties.map((function(property){
 				if(property instanceof SingleParam){
 					var key = property.key;
 

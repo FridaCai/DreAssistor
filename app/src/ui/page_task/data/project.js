@@ -1,7 +1,6 @@
 import SubProject from './subproject.js';
 import Util from 'Util';
 import {SingleParam} from './template/mix.js';
-import {MultipleParam} from './template/mix.js';
 
 import Tags from './tags.js';
 import Tasks from './tasks.js';
@@ -15,13 +14,14 @@ module.exports = class Project{
 	init(param){
 		this.id = param.id || Util.generateUUID();
 		this.creatorId=param.creatorId;
-
-
 		this._updateMeta(param);
 	}
 
 	setParent(parent){
 		this.parent = parent;
+	}
+	setCreator(creator){
+		this.creatorId = creator.id;
 	}
 
 	/**
@@ -98,14 +98,10 @@ module.exports = class Project{
 		return {
 			id: this.id,
 			creatorId: this.creatorId,
-
-			label: this.label.dump(),
-			sorp: this.sorp.dump(),
-			platform: this.platform.dump(),
-			bodyStyle: this.bodyStyle.dump(),
+			label: this.label,
+			sorp: this.sorp,
+			properties: this.properties.dump(),
 			engines: this.engines.dump(),
-
-
 			tags: this.tags.dump(),
 			tasks: this.tasks.dump()
 			//comment: `sorp: ${new Date(this.sorp)}`

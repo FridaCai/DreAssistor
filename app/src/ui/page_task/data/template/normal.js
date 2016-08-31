@@ -6,7 +6,10 @@ module.exports = class Normal{
 
 	}
 	dump(){
-		
+		return {
+			sheetNames: [],
+			sheets: []
+		}
 	}
 	clone(){
 		var normal = new Normal();

@@ -75,31 +75,26 @@ class SingleParam{
 	}
 }
 
-class MultipleParam{
+class MultipleParam extends Array{
 	static create(param){
 		var multipleParam = new MultipleParam();
 		multipleParam.init(param);
 		return multipleParam;
 	}
 	constructor(){
-
+		super();
 	}
 	init(param){
-		Object.keys(param).map((function(key){
-			var value = param[key];
-			this[key] = new SingleParam.create(value);
-		}).bind(this));
+		param.map((function(p){
+			var singleParam = SingleParam.create(p);
+			super.push(singleParam);
+		}).bind(this))
 	}
 
 	dump(){
-		var obj = {};
-		Object.keys(this).map((function(key){
-			var value = this[key];
-			if(value instanceof SingleParam){
-				obj[key] = value.dump();
-			}
-		}).bind(this));
-		return obj;
+		return this.map(function(singleParam){
+			return singleParam.dump()
+		})
 	}
 
 	clone(){
