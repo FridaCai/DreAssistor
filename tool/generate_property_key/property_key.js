@@ -1,0 +1,193 @@
+//KEY COLUMN ENUM FOR PROPERTY TABLE. 
+//EACH LINE OF RECORD SHOULD HAVE KEY FOR THE PURPOSE OF 
+//# STATICAL
+//# TARGET REFERENCE
+
+var PROPERTY_KEY = {
+	PROJECT:{
+		PLATFORM: 'frida test:)',
+		BODY_STYLE: '',
+
+		ENGINE: {
+			LABEL: '',
+			TRANSMISSON: '',
+			DRIVELINE: '',
+			EMISSIONS_REGULARTION_LEVEL: '',
+			COLD_ENGINE_IDLE_SPEED: '',
+			WARM_ENGINE_IDLE_SPEED: '',
+			PASS_BY_REQUIREMENT: '',
+			WARRANTY: '',
+			TARGET_DESIGN_LIFE: '',
+			INSULATOR_DPDS_REQUIREMENT: '',
+			PANEL_MODE_REQUIREMENT: '',
+			HANGER_NATRURAL_FREQUENCY_REQUIREMENT: '',
+			MASS_TARGET: '',
+			RATED_POWER_AT_SPEED: '',
+			MAXIMUM_ENGINE_RPM: '',
+			MINIMUM_ENGINE_RPM: '',
+			MAXIMUM_AIR_FLOW: '',
+			MINIMUM_AIR_FLOW: '',
+			INLET_PRESSURE_LOSS_AND_FLOW: '',
+			TOTAL_SYSTEM_EXHAUST_BACKPRESSURE_AND_FLOW: '',
+			SYSTEM_BACKPRESSURE_POST_1ST_AFTER_TREATMENT: '',
+			PT_AFTER_TREATMENT_BACKPRESSURE_ALLOCATION: ''
+		},
+
+		TASK: {
+			NORMAL:{},
+			EWO:{},
+			HOTISSUE:{
+				ROOT_CAUSE: '',
+				SOLUTION: '',
+				EXECUTE: '',
+				FEEDBACK: ''
+			},
+			MULE_MRD:{
+				BOM_CHECK: '',
+				SIZE_CHECK: '',
+				BP: '',
+				TRANSMISSIONLOSE: '',
+				MASS: '',
+				MAF: '',
+				SIL: '',
+				DOCCHECK: ''
+			},
+			IVTUNING:{
+				PLAN: '',
+				SOLUTION: '',
+				SAMPLE_PREPARE: '',
+				VEHICLE_PREPARE_65: '',
+				LABOURATORY_WORKSHEET_PREPARE: '',
+				TUNINT_TEST: '',
+				BP_VERIFY: '',
+				SUBJECT_ESTIMATION: '',
+				NVH_BUYOFF: '',
+				SCHEME_FREEZE: '',
+				MODEL_CHANGE: ''
+			},
+			HARDTOOLING: {
+				DESIGN_FREEZE: '',
+				MODEL_PAPER_ESTIMATE_RELEASE: '',
+				EWO_EWO_POTENTIAL_MEETING: '',
+				MODEL_START_MEETING: '',
+				MODEL_PROCESS_PLAN: '',
+				TRACK_MODEL_PROCESS: '',
+				T1_T2_MODEL_LIVE_ESTIMATE: '',
+				SAMPLE_TEST: '',
+				MODEL_DONE: ''
+			},
+			PPV_MRD: {
+				BOM_CHECK: '',
+				SIZE_CHECK: '',
+				BP: '',
+				TRANSMISSIONLOSE: '',
+				MASS: '',
+				MAF: '',
+				HARD_MODEL: '',
+				TEST_TOOL1: '',
+				TEST_TOOL2: ''
+			},
+			BENCHMARK:{
+				VIHICLE: {
+					BRAND: '',
+					STYLE: '',
+					YEAR: '',
+					PRICE: '',
+					BODYFORM: '',
+					STYLELEVEL: '',
+					ENGINE_EMISSION: '',
+					INTAKE_FORM: '',
+					CYLINDER_ARRANGEMENT_FORM: '',
+					CYLINDER_NUM: '',
+					MAX_HOUSE_POWER: '',
+					MAX_POWER: '',
+					MAX_POWER_SPEED: '',
+					MAX_TORQUE: '',
+					MAX_TORQUE_SPEED: '',
+					DISASSEMBLE_TIME: '',
+					SGM_TYPE: '',
+					VEHICLE_MODULUS_NUM: '',
+					INTAKE_SYSTEM_MODULUS_NUM: '',
+					SUPPLIER: '',
+					ADVANTAGE: ''
+				},
+				INTAKE_PIPE: {
+					MASS: '',
+					VOLUMN: '',
+					WALLTHICKNESS: '',
+					DIMENSIONL: '',
+					DIMENSIONW: '',
+					DIMENSIONH: '',
+					MATERIAL: '',
+					INTAKE_PORT_POS: '',
+					INTAKE_PORT_AREA: '',
+					CRAFTS: '',
+					WATER_PROOF: '',
+					THERMAL: '',
+					MOUNTING_POINT: '',
+					GAP_SURROUNDING: ''
+				},
+				RESONATOR: {
+					MASS: '',
+					VOLUMN: '',
+					WALLTHICKNESS: '',
+					MATERIAL: '',
+					CRAFTS: '',
+					WATER_HOLE: '',
+					MOUNTING_POINT: '',
+					GAP_SURROUNDING: ''
+				},
+				AIR_FILTER: {
+					MASS: '',
+					VOLUMN: '',
+					WALLTHICKNESS: '',
+					MATERIAL: '',
+					CRAFTS: '',
+					DIMENSIONL: '',
+					DIMENSIONW: '',
+					DIMENSIONH: '',
+					FILTER: '',
+					WATER_HOLE: '',
+					HIGH_FREQUENCY_RESONATOR: '',
+					SENSORSFORM: '',
+					MOUNTING_POINT: '',
+					GAP_SURROUNDING: ''
+				},
+				OUTTAKE_PIPE: {
+					MASS: '',
+					MATERIAL: '',
+					CRAFTS: '',
+					WALLTHICKNESS: '',
+					VOLUMN: '',
+					DIMENSIONL: '',
+					DIMENSIONW: '',
+					DIMENSIONH: '',
+					HIGH_FREQUENCY_RESONATOR: '',
+					CLAMPS_NUM: '',
+					CLAMPSW: '',
+					CLAMPS_WALLTHICKNESS: '',
+					OUTLET_PIPE_SIZE: '',
+					THROTTLE_SIZE: '',
+					PCV_BOX_VOLUMN: '',
+					PCV_MAF_DIS: '',
+					GAP_SURROUNDING: ''
+				},
+				PERFORMANCE: {
+					BP: '',
+					SYSTEM_MODAL: '',
+					INTAKE_NOISE: '',
+					RADIATION_NOISE: '',
+					FILTRATION_EFFICIENCY: '',
+					DUST_HOLDING_CAPACITY: '',
+					FILTER_LEAKAGE: '',
+					CUSHION_DYNAMIC_STIFFNESS: '',
+					FULCRUM_DYNAMIC_STIFFNESS: '',
+					PULLING_FORCE: '',
+					TRANSMISSION_LOSS: '',
+					INSERTION_LOSS: ''
+				}
+			}
+		}
+	}
+}
+module.exports = PROPERTY_KEY;

@@ -30,28 +30,15 @@ module.exports = class Project{
 		this.label = param.label;
 		this.sorp = param.sorp;
 
-		//todo:
-		/*
-		this.platform = SingleParam.create(param.platform)
-		this.bodyStyle = SingleParam.create(param.bodyStyle);
-		this.engines = Engines.create(param.engines);*/
-		this.properties = param.properties.map(function(){
-
-		})
-
-
-		//todo: engine.
-
-
-
-
 		this.tags = Tags.create(param.tags);
 		this.tags.setParent(this);
 		this.tasks = Tasks.create(param.tasks);
 		this.tasks.setParent(this);
 
-		
+		this.properties = Properties.create(param.properties);
+		this.engines = Engines.create(param.engines);
 	}
+	
 	addEngine(param){
 		this.engines.addEngine(param);
 	}
