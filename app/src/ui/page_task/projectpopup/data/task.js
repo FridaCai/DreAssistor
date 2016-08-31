@@ -47,9 +47,8 @@ module.exports = class Task extends Base {
 	}
 
 	dm2ui(project){
-		var tasks = project.findTasks();
 		this.ui = [];
-		tasks.map((function(task){
+		project.tasks.map((function(task){
 			task.time2week(project.sorp.time);
 
 			this.ui.push(Line.create({

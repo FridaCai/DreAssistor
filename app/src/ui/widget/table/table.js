@@ -3,6 +3,7 @@ import {ExpandLine} from 'Table';
 import {LineDOM} from 'Table';
 import {CellDOM} from 'Table';
 import {ExpandLineDOM} from 'Table';
+import Util from 'Util';
 
 import './style.less';
 
@@ -80,7 +81,7 @@ var TableDOM = React.createClass({
 
                 for(var i=0; i<lines.length; i++){
                     var line = lines[i];
-                    var key = line.id;
+                    var key = line.id + '_' + Util.generateUUID(); 
                     if(line instanceof ExpandLine){
                         dom.push(<ExpandLineDOM line={line} key={key}/>);
                     }else{

@@ -1,5 +1,6 @@
 import Util from 'Util';
 import {SingleParam} from './template/mix.js';
+import {MultipleParam} from './template/mix.js';
 
 var Engines = class Engines extends Array{
 	static create(param){
@@ -26,21 +27,23 @@ var Engines = class Engines extends Array{
 		return result;
 	}
 
-
 	//engine; engine param; empty param.
 	addEngine(param){
 		var engine;
 		if(!param){
-			engine = Engine.create({
-			  name: {
+			engine = Engine.create({ //todo: problem.
+			  properties: [{
 		        label: "engine",
-		        text: "new engine"
+		        text: "new engine",
+		        key: "PROJECT.ENGINE.LABEL"
 		      },
-		      transmission: {
+		      {
 		        label: "Transmission",
-		        text: ""
-		      }
-			})
+		        text: "",
+		        key: "PROJECT.ENGINE.TRANSMISSON"
+		      }]
+		    });
+			
 		}else if(param instanceof Engine){
 			engine = param;
 		}else{
@@ -62,7 +65,19 @@ var Engines = class Engines extends Array{
 	}
 	copyEngine(engine){
 		var cloneEngine = engine.clone();
-		cloneEngine.name.text = `copy of ${engine.name.text}`;
+		
+		var keys = Object.keys(cloneEngine.properties);
+
+		for(var i=0; i<keys.length; i++){
+			var key = keys[i];
+			var property = cloneEngine.properties[key];
+			if(property.key === "PROJECT.ENGINE.LABEL"){
+				property.text = `copy of ${property.text}`;
+				break;		
+			}
+		}
+		
+
 		this.unshift(cloneEngine);
 	}
 	clear(){
@@ -83,8 +98,7 @@ var Engine = class Engine{
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		this.name = SingleParam.create(param.name);
-		this.transmission = SingleParam.create(param.transmission);
+		this.properties = MultipleParam.create(param.properties);
 	}
 	clone(){
 		var param = this.dump();
@@ -99,8 +113,7 @@ var Engine = class Engine{
 	dump(){
 		return {
 			id: this.id,
-			name: this.name.dump(),
-			transmission: this.transmission.dump(),
+			properties: this.properties.dump()
 		}
 	}
 }

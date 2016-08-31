@@ -2,10 +2,11 @@ import SubProject from './subproject.js';
 import Util from 'Util';
 import {SingleParam} from './template/mix.js';
 import {MultipleParam} from './template/mix.js';
-import {Engines} from './engines';
 
 import Tags from './tags.js';
 import Tasks from './tasks.js';
+import Properties from './properties.js';
+import {Engines} from './engines.js';
 
 module.exports = class Project{
 	constructor(){
@@ -57,9 +58,7 @@ module.exports = class Project{
 		return this.children[index];
 	}
 
-	getTasks(handler){
-		return this.children[1].getChildren(handler);
-	}
+	
 	findTasks(condition){
 		var tasks = [];
 		this.children.map(function(sp){
@@ -71,21 +70,29 @@ module.exports = class Project{
 		return this.findTasks(condition).length === 0 ? false: true;
 	}
 
+	
+	*/
 	addTask(task){
-		this.children[1].addChild(task);
+		this.tasks.addChild(task);
+	}
+
+	addTag(tag){
+		this.tags.addChild(tag);
 	}
 	clearTags(){
-		this.children[0].clearChildren();
+		this.tags.clearChildren();
 	}
 	clearTasks(){
-		this.children[1].clearChildren();
+		this.tasks.clearChildren();
 	}
-	addTag(tag){
-		this.children[0].addChild(tag);
+
+	getTasks(handler){
+		return this.tasks.getChildren(handler);
 	}
+
 	getTags(handler){
-		return this.children[0].getChildren(handler);
-	}*/
+		return this.tags.getChildren(handler);
+	}
 
 	dump(){
 		return {

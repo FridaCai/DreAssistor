@@ -48,6 +48,7 @@ class SingleParam{
 		this.text = param.text;
 		this.dropdown = param.dropdown;
 		this.time = param.time;
+		this.key = param.key;
 	}
 
 	clone(){
@@ -68,6 +69,7 @@ class SingleParam{
 			text: this.text,
 			dropdown: this.dropdown,
 			time: this.time,
+			key: this.key,
 			comment: `time: ${new Date(this.time)}`
 		}
 	}

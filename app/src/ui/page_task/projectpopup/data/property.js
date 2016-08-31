@@ -10,8 +10,12 @@ import Time from 'Time';
 
 import {COMPONENT_ENUM} from '../../data/template/mix.js';
 import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
+import {MultipleParam} from '../../data/template/mix.js';
+import {SingleParam} from '../../data/template/mix.js';
 import {ExpandLine} from "Table";
 import {ExpandContainerDOM} from "Table";
+
+
 
 
 //todo: bad
@@ -34,56 +38,70 @@ class Property extends Base{
 	}
 
 	ui2dm(dm){
-		var projectproperties = ["label", "sorp", "platform", "bodyStyle"];
-		for(var i=0; i<projectproperties.length; i++){
+		dm.label = this.ui[0].getCellAt(1).getValue();
+		dm.sorp = this.ui[1].getCellAt(3).getValue();
+
+
+
+		var projectproperties = ["platform", "bodyStyle"];
+		var multipleParam = [];
+		for(var i=2; i<2+projectproperties.length; i++){
 			var line = this.ui[i];
 			var id = line.id;
 			if(line instanceof ExpandLine)
 				continue;
 
+
+			var singleParam = {key: id};
 			this.components.map(function(component, index){
-				dm[id][component] = line.getCellAt(index).getValue();
+				singleParam[component] = line.getCellAt(index).getValue();
 			})
+			multipleParam.push(singleParam);
 		}
+
+		dm.properties = MultipleParam.create(multipleParam);
 
 		var addBtnLine = 1;
 		var editBtnLine = 1;
 		var engineproperties = ['name', 'transmission'];
-		var engineNum = (this.ui.length - projectproperties.length - addBtnLine) / (engineproperties.length + editBtnLine);
+		var projectProperyNum = 2 + engineproperties.length;
+		var engineNum = (this.ui.length - projectProperyNum - addBtnLine) / (engineproperties.length + editBtnLine);
 		
 
-		
-		var engineParam = [];
+		debugger;
+		var engineParams= [];
 		for(var j=0; j<engineNum; j++){
-			var base = i + 1 + j * (engineproperties.length + 1)
+			var base = projectProperyNum + 1 + j * (engineproperties.length + 1);
 
-			var nameLine = this.ui[base + 0];
-			var name = {};
-			this.components.map(function(component, index){
-				name[component] = nameLine.getCellAt(index).getValue();
-			})
-
-			var transmissionLine = this.ui[base + 1];
-			var transmission = {};
-			this.components.map(function(component, index){
-				transmission[component] = transmissionLine.getCellAt(index).getValue();
-			})
+			var properties = [];
+			for(var k=0; k<engineproperties.length; k++){
+				var line = this.ui[base+k]; //take care of expand line.
 
 
-			engineParam.push({
-				name: name,
-				transmission: transmission
-			});
+				var property = {key: line.key};
+				this.components.map(function(component, index){
+					property[component] = line.getCellAt(index).getValue();
+				})
+				properties.push(property);
+			}
+
+
+			var engineParam = {
+				properties: properties
+			}
+			engineParams.push(engineParam);
+
 		}
+
+
 		dm.engines.clear();
-		dm.engines.init(engineParam);
+		dm.engines.init(engineParams);
 
         //sorp: ExcelUtil.convertYYYYMMDD2UnixTime(value);
 	}
 
 
-	getCellByComponent(component, project, dm, key){
-		var property = dm[key];
+	getCellByComponent(component, project, property){
 
 		switch(component){
 			case COMPONENT_ENUM.LABEL:
@@ -276,34 +294,102 @@ class Property extends Base{
 		})(this.components)
 
 
-		//var sorp = ExcelUtil.convertUnixTime2YYYYMMDD(project['sorp']);
-		var singleParamKeys = ["label", "sorp", "platform", "bodyStyle"];
-		singleParamKeys.map((function(key){
-			var property = project[key];
 
-			var cells = this.components.map((function(component){
-				if(property[component] === undefined){
-					return Cell.create({
-						component:Label,
-						v:undefined,
-					})
-				}
-				return this.getCellByComponent(component, null, project, key);
-			}).bind(this));
-
-			var expandLine = needExpandLine ? ExpandLine.create({
-				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-			}): null;
-
-			this.ui.push(Line.create({
-				cells: cells,
-				expandLine: expandLine,
-				id: key
-			}))
-
-			if(needExpandLine){
-				this.ui.push(expandLine);
+		var labelCells = this.components.map(function(component){
+			if(component === COMPONENT_ENUM.LABEL){
+				return Cell.create({
+					component: Label,
+					v: '项目名称',
+				})
+			}else if(component === COMPONENT_ENUM.TEXT){
+				return Cell.create({
+					component: Input, 
+					param: {
+						onChange: function(v){
+							this.v = v;
+						}, 
+						onBlur: function(){
+							MultipleParamUIData.signal_data_change.dispatch();
+						},
+			        	value: project.label,
+					}, 
+					v: project.label
+				});
+			}else{
+				return Cell.create({
+					component:Label,
+					v:undefined,
+				})
 			}
+		})
+
+		this.ui.push(Line.create({
+			cells: labelCells,
+			id: 'label'
+		}))
+
+		var sorpCells = this.components.map(function(component){
+			if(component === COMPONENT_ENUM.LABEL){
+				return Cell.create({
+					component: Label,
+					v: 'SORP',
+				})
+			}else if(component === COMPONENT_ENUM.TIME){
+				return Cell.create({
+        			component: Time,
+        			param: {
+        				value: project.sorp,
+        				onChange: function(time){
+        					this.v = time;
+        					MultipleParamUIData.signal_data_change.dispatch();
+        				}
+        				
+        			},
+        			v: project.sorp
+        		})
+			}else{
+				return Cell.create({
+					component:Label,
+					v:undefined,
+				})
+			}
+		})
+		this.ui.push(Line.create({
+			cells: sorpCells,
+			id: 'sorp'
+		}))
+
+
+		Object.keys(project.properties).map((function(k){
+			var property = project.properties[k];
+
+			if(property instanceof SingleParam){
+				var key = property.key;
+				var cells = this.components.map((function(component){
+					if(property[component] == undefined){
+						return Cell.create({
+							component:Label,
+							v:undefined,
+						})
+					}
+					return this.getCellByComponent(component, null, property);
+				}).bind(this));	
+
+				var expandLine = needExpandLine ? ExpandLine.create({
+					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+				}): null;
+
+				this.ui.push(Line.create({
+					cells: cells,
+					expandLine: expandLine,
+					id: key
+				}))
+
+				if(needExpandLine){
+					this.ui.push(expandLine);
+				}	
+			}
+			
 		}).bind(this));
 
 
@@ -328,30 +414,40 @@ class Property extends Base{
 		
 		engines.map((function(engine){
 			var engineId = engine.id;
-			['name', 'transmission'].map((function(key){
-				var property = engine[key];
-				var cells = this.components.map((function(component){
-					if(property[component] === undefined){
-						return Cell.create({
-							component:Label,
-							v:undefined
-						})
+			var properties = engine.properties;
+
+			Object.keys(properties).map((function(k){
+				var property = properties[k];
+
+
+				if(property instanceof SingleParam){
+					var key = property.key;
+
+					var cells = this.components.map((function(component){
+						if(property[component] === undefined){
+							return Cell.create({
+								component:Label,
+								v:undefined
+							})
+						}
+						return this.getCellByComponent(component, null, property);
+					}).bind(this));
+
+					var expandLine = needExpandLine ? ExpandLine.create({
+						cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+					}): null;
+
+					this.ui.push(Line.create({
+						cells: cells,
+						expandLine: expandLine,
+						id: key
+					}))
+
+					if(needExpandLine){
+						this.ui.push(expandLine);
 					}
-					return this.getCellByComponent(component, null, engine, key);
-				}).bind(this));
-
-				var expandLine = needExpandLine ? ExpandLine.create({
-					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-				}): null;
-
-				this.ui.push(Line.create({
-					cells: cells,
-					expandLine: expandLine,
-				}))
-
-				if(needExpandLine){
-					this.ui.push(expandLine);
 				}
+				
 			}).bind(this));
 
 

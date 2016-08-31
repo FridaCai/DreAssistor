@@ -29,16 +29,23 @@ module.exports = class Tasks extends Array{
 		})
 	}
 	*/
+	getChildren(handler){
+		this.sort(handler);
+		return this;
+	}
 	setParent(parent){
 		this.parent = parent;
 	}
-	addTask(task){
+	addChild(task){
 		this.unshift(task);
 	}
-
+	clearChildren(){
+		this.length = 0;
+	}
 	dump(){
 		return this.map(function(task){
 			return task.dump();
 		})
 	}
+
 }

@@ -1,5 +1,5 @@
 'use strict';
-import {SingleParam} from '../template/mix.js';
+import {SingleParam} from './template/mix.js';
 
 var Property = SingleParam;
 module.exports = class Properties extends Array{

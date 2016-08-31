@@ -20,11 +20,20 @@ module.exports = class Tags extends Array{
 			this.push(tag);
 		}).bind(this))
 	}
-
+	getChildren(handler){
+		this.sort(handler);
+		return this;
+	}
 	dump(){
 		return this.map(function(tag){
 			return tag.dump();
 		})
+	}
+	addChild(tag){
+		this.unshift(tag);
+	}
+	clearChildren(){
+		this.length = 0;
 	}
 }
 
