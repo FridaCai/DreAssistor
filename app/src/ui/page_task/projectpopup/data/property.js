@@ -78,7 +78,7 @@ class Property extends Base{
 				var line = this.ui[base+k]; //take care of expand line.
 
 
-				var property = {key: line.key};
+				var property = {key: line.id};
 				this.components.map(function(component, index){
 					property[component] = line.getCellAt(index).getValue();
 				})

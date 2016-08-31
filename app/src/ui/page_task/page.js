@@ -117,7 +117,10 @@ var PageTask = React.createClass({
         this.onProjectPopupShow(e, {
             title: '添加项目', 
             onOK: function(project){
-                API.getProjects().add(project);
+                //API.getProjects().add(project);
+
+
+                //query get projects again before redraw ui.
                 API.signal_page_refresh.dispatch();                
             }
         })
