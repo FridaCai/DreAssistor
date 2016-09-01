@@ -30,10 +30,17 @@ var MessageBox = React.createClass({
         }); 
     },
 
-    show: function() {
+    componentDidMount: function(){
+        $('body').css({
+            overflow: 'hidden'
+        })
+    },
+    show_deprecated: function() {
         this.setState({
             isShow: true,
         })
+
+        
     },
     onOK: function() {
         //please do not show/hide popup but create/destroy...
@@ -53,6 +60,10 @@ var MessageBox = React.createClass({
     hide: function() {
         this.setState({
           isShow: false,
+        })
+
+        $('body').css({
+            overflow: 'auto'
         })
     },
     getContent: function(){

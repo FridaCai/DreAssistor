@@ -177,12 +177,6 @@ var PageTask = React.createClass({
 
                 Request.postData(url, data, options).then(function(){
                     self.refresh(self.state.isAll);
-                    /*Request.getData(Request.getBackendAPI('project')).then(function(result){
-                        if(result.errCode == -1){
-                            API.setProjects(result.projects);    
-                            API.signal_page_refresh.dispatch();
-                        }
-                    })*/
                 })
             }
         })

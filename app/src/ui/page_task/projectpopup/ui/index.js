@@ -120,7 +120,12 @@ var ProjectPopup = React.createClass({
         Property.signal_copy_engine.listen(this.onEngineCopy);
 
 
+
+
         Tag.signal_adjusttime_blur.listen(this.onInputChange);
+
+
+        MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
 
         if(this.props.project)
             return;
@@ -151,9 +156,12 @@ var ProjectPopup = React.createClass({
         Property.signal_delete_engine.unlisten(this.onEngineDelete);
         Property.signal_copy_engine.unlisten(this.onEngineCopy);
         Tag.signal_adjusttime_blur.unlisten(this.onInputChange);
+        MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
 
     },
-
+    onExpandToggle: function(){
+        this.refs.table.forceUpdate();
+    },
     onOK:function() {
         var project = API.getProject();
         this.state.onOK(project);

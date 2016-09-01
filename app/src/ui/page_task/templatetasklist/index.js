@@ -75,9 +75,10 @@ var TemplateTaskList = React.createClass({
         console.log('task: onDrop')
     },
     render: function() {
+        //<MessageBox ref='msgbox' msg='想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.'/>
         return (
             <div className='taskList'>
-                <MessageBox ref='msgbox' msg='想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.'/>
+                
 				<span className="label label-primary addTaskBtn" onClick={this.onAddTaskBtnClk}>+</span>
 				{
 					API.getTemplateTaskArr().map((function(task){

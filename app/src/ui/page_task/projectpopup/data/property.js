@@ -14,7 +14,9 @@ import {MultipleParam} from '../../data/template/mix.js';
 import {SingleParam} from '../../data/template/mix.js';
 import {ExpandLine} from "Table";
 import {ExpandContainerDOM} from "Table";
-
+import {ExpandCellDOM} from "Table";
+ 
+import CurveComponent from '../../../component_curve/index.js';
 
 
 
@@ -25,13 +27,14 @@ import MultipleParamUIData from "../../taskpopup/uidata/multipleparam.js";
 class Property extends Base{
 	constructor(){
 		super();
-		this.components = ["label", "text", "value", "time"];
+		this.components = ["label", "text", "value", "time", "curve"];
 		this.header = Line.create({
 			cells: [
 				Cell.create({component: Label, v: '属性'}), 
 				Cell.create({component: Label, v: '文本'}),
 				Cell.create({component: Label, v: '数值'}),
-				Cell.create({component: Label, v: '时间'})
+				Cell.create({component: Label, v: '时间'}),
+				Cell.create({component: Label, v: '曲线'})
 			]
 		});
 		this.sheetName = `项目属性`;
@@ -41,11 +44,9 @@ class Property extends Base{
 		dm.label = this.ui[0].getCellAt(1).getValue();
 		dm.sorp = this.ui[1].getCellAt(3).getValue();
 
-
-
 		var projectproperties = ["platform", "bodyStyle"];
 		var multipleParam = [];
-		for(var i=2; i<2+projectproperties.length; i++){
+		for(var i=2; i<2+projectproperties.length*2; i++){
 			var line = this.ui[i];
 			var id = line.id;
 			if(line instanceof ExpandLine)
@@ -63,19 +64,22 @@ class Property extends Base{
 
 		var addBtnLine = 1;
 		var editBtnLine = 1;
-		var engineproperties = ['name', 'transmission'];
-		var projectProperyNum = 2 + engineproperties.length;
-		var engineNum = (this.ui.length - projectProperyNum - addBtnLine) / (engineproperties.length + editBtnLine);
+		var enginepropertyNum = 22;
+		var projectProperyNum = 2 + projectproperties.length * 2; //2--label + sorp
+		var engineNum = (this.ui.length - projectProperyNum - addBtnLine) / (enginepropertyNum*2 + editBtnLine); //*2 --expand line for curve. TT . so bad...
 		
 
 		debugger;
 		var engineParams= [];
 		for(var j=0; j<engineNum; j++){
-			var base = projectProperyNum + 1 + j * (engineproperties.length + 1);
+			var base = projectProperyNum + 1 + j * (enginepropertyNum + 1);
 
 			var properties = [];
-			for(var k=0; k<engineproperties.length; k++){
+			for(var k=0; k<enginepropertyNum*2; k++){
 				var line = this.ui[base+k]; //take care of expand line.
+				
+				if(line instanceof ExpandLine)
+					continue;
 
 
 				var property = {key: line.id};
@@ -102,7 +106,7 @@ class Property extends Base{
 
 
 	getCellByComponent(component, project, property){
-
+		var key = property.key;
 		switch(component){
 			case COMPONENT_ENUM.LABEL:
 				return Cell.create({

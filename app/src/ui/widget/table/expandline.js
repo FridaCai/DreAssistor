@@ -12,6 +12,7 @@ var ExpandLindDOM = React.createClass({
 
 		//no animation when initial.
 		duration = 500;
+		duration = 0;
 
 	    var runExpandAmination = (function(isOpen){
 	        var h = isOpen ? 700 : 0;

@@ -7,7 +7,7 @@ var Chart = React.createClass({
 
     return {
       uidata: this.props.uidata,
-      id: this.props.id,
+      id: this.props.id.replace(/\./g, '-')
     }
   },
 
