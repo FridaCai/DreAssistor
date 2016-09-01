@@ -22,7 +22,7 @@ import CurveComponent from '../../../component_curve/index.js';
 
 //todo: bad
 import MultipleParamUIData from "../../taskpopup/uidata/multipleparam.js";
-
+import DROPDOWN_OPTIONS from '../../../../config/dropdown.json';
 
 class Property extends Base{
 	constructor(){
@@ -69,7 +69,6 @@ class Property extends Base{
 		var engineNum = (this.ui.length - projectProperyNum - addBtnLine) / (enginepropertyNum*2 + editBtnLine); //*2 --expand line for curve. TT . so bad...
 		
 
-		debugger;
 		var engineParams= [];
 		for(var j=0; j<engineNum; j++){
 			var base = projectProperyNum + 1 + j * (enginepropertyNum + 1);
@@ -247,23 +246,25 @@ class Property extends Base{
 					v: property.text
 				});
 			case COMPONENT_ENUM.DROPDOWN:
-				var options = property.dropdown.options.map(function(label, index){
+				var key = property.key;
+				var optionStrings = DROPDOWN_OPTIONS[key];
+
+				var options = optionStrings.map(function(label, index){
 			    	return {
 			    		id: index,
 			    		label: label
 			    	}
 			    });
+			    var selectedIndex = optionStrings.indexOf(property.dropdown);
+
 				return Cell.create({
 	        		component: ComboBox,
 	        		param: {
-	        			selectedId: property.dropdown.selectedIndex, //string. existed id in options.
+	        			selectedId: selectedIndex, //string. existed id in options.
 					    options: options,
 					    prompt: "请选择", 
 					    onchange: function(selectedKey){
-					    	this.v = {
-					    		selectedIndex: selectedKey,
-					    		options: property.dropdown.options
-					    	};
+					    	this.v = optionStrings[selectedKey];
 					    	MultipleParamUIData.signal_data_change.dispatch();
 					    }
 	        		},

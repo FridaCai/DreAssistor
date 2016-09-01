@@ -57,7 +57,6 @@ var Util = {
                         if(range.e.r < R) range.e.r = R;
                         if(range.e.c < C) range.e.c = C;
 
-                        debugger;
                         var cell = {v: data[R].cells[C].v };
 
 

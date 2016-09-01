@@ -27,16 +27,19 @@ module.exports = class Task {
 		var template = {
 			sheetNames: [], sheets: []
 		}
+
+		//bad.
 		if(param.template){
 			type = param.template.type;
-			template = (TemplateFactory.create(type)).init(param.template);
+			template = TemplateFactory.create(type);
+			template.init(param.template);
 		}
 		
 
 		this.template = {
 			type: type, 
-			sheetNames: param.sheetNames, 
-			sheets: param.sheets
+			sheetNames: template.sheetNames, 
+			sheets: template.sheets
 		};
 
 

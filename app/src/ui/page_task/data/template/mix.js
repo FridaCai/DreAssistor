@@ -1,4 +1,7 @@
 import {Attachments} from '../attachments.js';
+import {Images} from '../images.js';
+import Curve from '../../../component_curve/data/curve.js';
+
 
 exports.COMPONENT_ENUM = {
 	'LABEL': 'label',
@@ -41,10 +44,17 @@ class SingleParam{
 		this.label = param.label
 		this.status = param.status;
 		this.refKey = param.refKey;
-		this.attachments =  param.attachments;
+
+		var attachments = param.attachments ? param.attachments : [];
+		this.attachments =  Attachments.create(attachments);
+
 		this.value = param.value;
-		this.curve = param.curve;
-		this.images = param.images;
+		this.curve = param.curve ? Curve.create(param.curve):null;
+
+		var images = param.images ? param.images : [];
+		this.images = Images.create(images);
+		
+
 		this.text = param.text;
 		this.dropdown = param.dropdown;
 		this.time = param.time;

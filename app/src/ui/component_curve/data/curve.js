@@ -1,6 +1,12 @@
 import Util from 'Util';
 
 module.exports = class Curve {
+	static create(param){
+		var curve = new Curve();
+		curve.init(param);
+		return curve;
+	}
+
 	constructor(){
 
 	}

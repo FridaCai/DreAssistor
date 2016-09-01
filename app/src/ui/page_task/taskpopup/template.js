@@ -25,7 +25,12 @@ var TaskTemplatePanel = React.createClass({
     getInitialState: function() {
         return {
             type: this.props.template.type,
-            param: this.props.template.param.clone(),
+            param: {
+                sheetNames: this.props.template.sheetNames,
+                sheets: this.props.template.sheets.map(function(multipleParam){
+                    return multipleParam.clone();
+                })
+            },
             project: this.props.project,
         }
     },
@@ -48,7 +53,8 @@ var TaskTemplatePanel = React.createClass({
 
         return {
             type: type,
-            param: param,
+            sheets: param.sheets,
+            sheetNames: param.sheetNames
         }
     },
     render: function(){

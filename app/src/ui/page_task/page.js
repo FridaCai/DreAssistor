@@ -69,7 +69,7 @@ var PageTask = React.createClass({
         API.signal_projectpoup_show.listen(this.onProjectPopupShow);
 
         Promise.all([
-            Request.getData(Request.getBackendAPI('project')),
+            Request.getData(Request.getBackendAPI('project'))
             //Request.getData(Request.getMockupAPI('get_users.json'))
         ]).then((function(param){
             var projectsResponse = param[0];
@@ -121,10 +121,7 @@ var PageTask = React.createClass({
         };
         var task = new Task();
         task.init(taskObj);
-
-        var row = param.row;
-        var subproject = param.project.findChildByIndex(row);
-        subproject.addChild(task);
+        param.project.tasks.addChild(task);
         this.forceUpdate();
     },
 

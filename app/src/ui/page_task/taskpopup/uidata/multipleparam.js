@@ -22,6 +22,9 @@ import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
 import {Attachments} from '../../data/attachments.js';
 import {Images} from '../../data/images.js';
 
+import {SingleParam} from '../../data/template/mix.js';
+import DROPDOWN_OPTIONS from '../../../../config/dropdown.json';
+
 class MultipleParamUIData extends Base{
 	constructor(){
 		super();
@@ -35,6 +38,10 @@ class MultipleParamUIData extends Base{
 				return false;
 			if(components.indexOf(componentKey)!=-1)
 				return false;
+
+			if(componentKey === 'key'){
+				return false;
+			}
 			return true;
 		}
 
@@ -48,6 +55,18 @@ class MultipleParamUIData extends Base{
 				}
 			})
 		})
+
+
+		//todo: bad.
+
+		/*this.components = [
+			COMPONENT_ENUM.LABEL,
+			COMPONENT_ENUM.STATUS,
+			COMPONENT_ENUM.REFKEY,
+			COMPONENT_ENUM.ATTACHMENTS,
+			COMPONENT_ENUM.VALUE,
+			COMPONENT_ENUM.CURVE,
+		]*/
 	}
 	setHeader(){
 		var cells = this.components.map((function(key){
@@ -66,7 +85,10 @@ class MultipleParamUIData extends Base{
 				continue;
 
 			this.components.map(function(component, index){
-				dm[id][component] = line.getCellAt(index).getValue();
+				if(dm[id] instanceof SingleParam){
+					dm[id][component] = line.getCellAt(index).getValue();	
+				}
+				
 			})
 		}
 	}
@@ -213,23 +235,25 @@ class MultipleParamUIData extends Base{
 					v: property.text
 				});
 			case COMPONENT_ENUM.DROPDOWN:
-				var options = property.dropdown.options.map(function(label, index){
+				var key = property.key;
+				var optionStrings = DROPDOWN_OPTIONS[key];
+
+				var options = optionStrings.map(function(label, index){
 			    	return {
 			    		id: index,
 			    		label: label
 			    	}
 			    });
+			    var selectedIndex = optionStrings.indexOf(property.dropdown);
+
 				return Cell.create({
 	        		component: ComboBox,
 	        		param: {
-	        			selectedId: property.dropdown.selectedIndex, //string. existed id in options.
+	        			selectedId: selectedIndex, //string. existed id in options.
 					    options: options,
 					    prompt: "请选择", 
 					    onchange: function(selectedKey){
-					    	this.v = {
-					    		selectedIndex: selectedKey,
-					    		options: property.dropdown.options
-					    	};
+					    	this.v = optionStrings[selectedKey];
 					    	MultipleParamUIData.signal_data_change.dispatch();
 					    }
 	        		},
@@ -249,32 +273,33 @@ class MultipleParamUIData extends Base{
 		})(this.components)
 
 		Object.keys(dm).map((function(key){
+
 			var property = dm[key];
+			if(property instanceof SingleParam){
+				var cells = this.components.map((function(component){
+					if(property[component] === undefined){
+						return Cell.create({
+							component:Label,
+							v:undefined
+						})
+					}
+						
+					return this.getCellByComponent(component, project, dm, key);
+				}).bind(this));
 
+				var expandLine = needExpandLine ? ExpandLine.create({
+					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+				}): null;
 
-			var cells = this.components.map((function(component){
-				if(property[component] === undefined){
-					return Cell.create({
-						component:Label,
-						v:undefined
-					})
+				this.ui.push(Line.create({
+					cells: cells,
+					expandLine: expandLine,
+					id: key
+				}))
+
+				if(needExpandLine){
+					this.ui.push(expandLine);
 				}
-					
-				return this.getCellByComponent(component, project, dm, key);
-			}).bind(this));
-
-			var expandLine = needExpandLine ? ExpandLine.create({
-				cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-			}): null;
-
-			this.ui.push(Line.create({
-				cells: cells,
-				expandLine: expandLine,
-				id: key
-			}))
-
-			if(needExpandLine){
-				this.ui.push(expandLine);
 			}
 		}).bind(this));
 	}

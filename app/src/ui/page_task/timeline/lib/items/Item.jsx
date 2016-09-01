@@ -1,6 +1,7 @@
 import interact from 'interact.js'
 import { _get } from '../utils'
 import API from '../../../api.js'
+import Task from '../../../data/task.js'
 
 export default class Item extends React.Component {
   constructor (props) {
@@ -304,7 +305,7 @@ export default class Item extends React.Component {
         handler: function() {
           API.signal_taskpopup_show.dispatch({
               title: '修改豆豆',
-              task: task,
+              task: item,
               onOK: (function(){
                   API.signal_page_refresh.dispatch();
               }).bind(this),
