@@ -149,7 +149,7 @@ var CTimeLine = React.createClass({
         });
         var sidebarWidth = $(window).width() * 0.2;
         return (
-            <div className='timeline' style={{position:'relative'}} ref='timeline'>
+            <div className='timeline' style={{position:'relative', clear:'both'}} ref='timeline'>
                 <Timeline groups={groups}
                     items={items}
                     defaultTimeStart={moment().add(-12, 'hour')}

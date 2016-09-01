@@ -15,9 +15,50 @@ import Request from 'Request';
 import API from './api.js';
 import SuperAPI from '../../api.js';
 
+import RadioGroup from 'RadioGroup';
+
+var ProjectFilter = React.createClass({
+    getInitialState(){
+        return {
+            selectedId: 0,
+        }
+    },
+    componentDidMount(){
+
+    },
+    componentWillUnmount(){
+
+    },
+
+    render(){
+        var self = this;
+        var radioGroup = {
+            id: `projectFilter`,
+            selectedId: this.state.selectedId,
+            options: [{
+                id: 0,
+                label:"全部项目"
+            },{
+                id: 1,
+                label: "只看自己的项目"
+            }],
+            onChange: (function(selectedId){
+                var isAll = (selectedId == 0 ? true: false);
+                self.props.onChange(isAll);
+            }).bind(this)
+        }
+
+
+        return (<div style={{clear:'both'}}><RadioGroup param={radioGroup}/></div>)
+        
+    }
+})
+
+
 var PageTask = React.createClass({
 	getInitialState: function() {
         return {
+            isAll: true
         }
     },
 
@@ -119,6 +160,7 @@ var PageTask = React.createClass({
 
 
     onAddProjectPopupShow: function(e){
+        var self = this;
         this.onProjectPopupShow(e, {
             title: '添加项目', 
             onOK: function(project){
@@ -134,17 +176,40 @@ var PageTask = React.createClass({
                 };
 
                 Request.postData(url, data, options).then(function(){
-                    Request.getData(Request.getBackendAPI('project')).then(function(result){
+                    self.refresh(self.state.isAll);
+                    /*Request.getData(Request.getBackendAPI('project')).then(function(result){
                         if(result.errCode == -1){
                             API.setProjects(result.projects);    
                             API.signal_page_refresh.dispatch();
                         }
-                    })
+                    })*/
                 })
             }
         })
     },
 
+    onProjectFilterChange: function(isAll){
+            this.refresh(isAll);
+    },
+    refresh: function(isAll){
+        if(isAll){
+            Request.getData(Request.getBackendAPI('project')).then((function(result){
+                if(result.errCode == -1){
+                    API.setProjects(result.projects);    
+                    this.setState({isAll: isAll});
+                }
+            }).bind(this));    
+        }else{
+            Request.getData(Request.getBackendAPI('project'), {userId: SuperAPI.getLoginUser().id}).then((function(result){
+                if(result.errCode == -1){
+                    API.setProjects(result.projects);    
+                    this.setState({isAll: isAll});
+                }
+            }).bind(this));    
+        }
+        
+        
+    },
     render: function() {
         try{
             return (
@@ -159,8 +224,8 @@ var PageTask = React.createClass({
 
 
 
-                    <div className='filterProjectsByCreator'>
-                    </div>
+
+                    <ProjectFilter onChange={this.onProjectFilterChange}/>
 
 
 
