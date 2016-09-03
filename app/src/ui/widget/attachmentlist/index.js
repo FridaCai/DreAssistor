@@ -9,7 +9,7 @@ var AttachmentList = React.createClass({
 		}
 	},
 	getValue: function(){
-		return this.state.attachments;
+		return this.state.attachments.dump();
 	},
 	onAddClk: function(){
 		this.refs.fileElem.click();

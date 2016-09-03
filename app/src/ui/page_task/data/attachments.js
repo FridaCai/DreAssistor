@@ -10,14 +10,16 @@ exports.Attachments = class Attachments extends Array{
 	}
 
 	init(param){
-		param.map((function(a){
+		param && param.map((function(a){
 			var attachment = Attachment.create(a);
 			super.push(attachment);
 		}).bind(this))
 	}
 
 	dump(){
-
+		return super.map(function(at){
+			return at.dump();
+		})
 	}
 	add(at){
 		super.unshift(at);

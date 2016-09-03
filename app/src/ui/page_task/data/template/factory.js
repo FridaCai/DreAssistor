@@ -10,26 +10,39 @@ import {PPVMrd} from './mix.js';
 import {BenchMark} from './mix.js';
 
 module.exports = class TemplateFactory{
-	static create(type){
-		switch(type){
+	static create(templateParam){
+		var template;
+		switch(templateParam.type){
 			case 0:
-				return new Normal();
+				template = new Normal();
+				break;
 			case 1:
-				return new EWO();
+				template = new EWO();
+				break;
 			case 2:
-				return new HotIssue();
+				template = new HotIssue();
+				break;
 			case 3:
-				return new MuleMRD();
+				template = new MuleMRD();
+				break;
 			case 4:
-				return new IVTuning();
+				template = new IVTuning();
+				break;
 			case 5:
-				return new HardTooling();
+				template = new HardTooling();
+				break;
 			case 6:
-				return new PPVMrd();
+				template = new PPVMrd();
+				break;
 			case 7:
-				return new BenchMark();
+				template = new BenchMark();
+				break;
 			default:
-				return new Normal();
+				template = new Normal();
+				break;
 		}
+		
+		template.init(templateParam);
+		return template;
 	}
 }

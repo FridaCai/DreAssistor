@@ -23,27 +23,49 @@ module.exports = class Task {
 		this.parent = undefined;
 
 
-		var type = 0;
-		var template = {
-			sheetNames: [], sheets: []
-		}
-
-		//bad.
-		if(param.template){
-			type = param.template.type;
-			template = TemplateFactory.create(type);
-			template.init(param.template);
-		}
-		
-
-		this.template = {
-			type: type, 
-			sheetNames: template.sheetNames, 
-			sheets: template.sheets
-		};
 
 
 
+		this._updateMeta(param);
+	}
+
+	week2time(ref){
+		this.startTime = parseInt(moment(ref).subtract(this.startWeek, 'week').format('x'));
+		this.endTime = parseInt(moment(ref).subtract(this.endWeek, 'week').format('x'));
+	}
+	time2week(ref){
+		this.startWeek = moment(ref).diff(moment(this.startTime), 'w');
+		this.endWeek = moment(ref).diff(moment(this.endTime), 'w');
+	}
+
+	/**
+	 * for parameters that can be update through popup panel;
+	**/
+	_updateMeta(param){
+		this.label = param.label;
+		this.startTime=param.startTime;
+		this.endTime = param.endTime;
+		this.desc = param.desc || '';
+		this.exp = param.exp || '';
+		this.markColor = param.markColor || 6076508;
+		this.priority = param.priority || 0;
+		this.privacy = param.privacy || 0;
+		this.attachments = Attachments.create(param.attachments);
+
+		this.subtasks = (function(subtasks){
+			if(!subtasks)
+				return [];
+
+			return subtasks.map((function(subtask){
+				var st = new SubTask();
+				st.init(subtask);
+				st.setParent(this);
+				return st;
+			}).bind(this));
+		})(param.subtasks)
+
+
+		this.template = param.template ? TemplateFactory.create(param.template): undefined;	
 		
 
 		//todo: bad.
@@ -71,51 +93,6 @@ module.exports = class Task {
 		**/
 		this.startWeek = param.startWeek || 0;
 		this.endWeek = param.endWeek || 0;
-
-
-		this._updateMeta(param);
-	}
-
-	week2time(ref){
-		this.startTime = parseInt(moment(ref).subtract(this.startWeek, 'week').format('x'));
-		this.endTime = parseInt(moment(ref).subtract(this.endWeek, 'week').format('x'));
-	}
-	time2week(ref){
-		this.startWeek = moment(ref).diff(moment(this.startTime), 'w');
-		this.endWeek = moment(ref).diff(moment(this.endTime), 'w');
-	}
-
-	/**
-	 * for parameters that can be update through popup panel;
-	**/
-	_updateMeta(param){
-		this.label = param.label;
-		this.startTime=param.startTime;
-		this.endTime = param.endTime;
-		this.desc = param.desc || '';
-		this.exp = param.exp || '';
-		this.markColor = param.markColor || 6076508;
-		this.priority = param.priority || 0;
-		this.privacy = param.privacy || 0;
-		this.attachments = param.attachments ? Attachments.create(param.attachments): param.attachments;
-
-
-
-	
-		
-
-
-		this.subtasks = (function(subtasks){
-			if(!subtasks)
-				return [];
-
-			return subtasks.map((function(subtask){
-				var st = new SubTask();
-				st.init(subtask);
-				st.setParent(this);
-				return st;
-			}).bind(this));
-		})(param.subtasks)
 
 	}
 
@@ -154,10 +131,7 @@ module.exports = class Task {
 	}
 
 	dump(){
-		var attachments = [];
-		this.attachments && this.attachments.map(function(at){
-			attachments.push(at.dump());
-		})
+		
 
 		var subtasks = [];
 		this.subtasks && this.subtasks.map(function(sp){
@@ -172,16 +146,12 @@ module.exports = class Task {
 			desc: this.desc,
 			exp: this.exp,
 			markColor: this.markColor,
-			attachments: attachments,
+			attachments: this.attachments.dump(),
 			creatorId: this.creatorId,
 			priority: this.priority,
 			subtasks: subtasks,
 			privacy: this.privacy,
-			template: { //todo: change temperarily for testing post/project fail.
-				type: this.template.type,
-				sheetNames: this.template.sheetNames,
-				sheets: this.template.sheets
-			},
+			template: this.template.dump(),
 			statical: this.statical,
 
 			startWeek: this.startWeek,

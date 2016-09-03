@@ -38,6 +38,7 @@ module.exports = class Tasks extends Array{
 	}
 	addChild(task){
 		this.unshift(task);
+		task.setParent(this);
 	}
 	clearChildren(){
 		this.length = 0;

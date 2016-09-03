@@ -38,7 +38,8 @@ class Cell {
         }
     }
     getValue(){
-        return this.v;
+        var v =  (this.v && typeof this.v.dump === 'function' ? this.v.dump(): this.v);
+        return v;
     }
 
 }

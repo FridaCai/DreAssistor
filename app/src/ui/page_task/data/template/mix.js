@@ -44,17 +44,10 @@ class SingleParam{
 		this.label = param.label
 		this.status = param.status;
 		this.refKey = param.refKey;
-
-		var attachments = param.attachments ? param.attachments : [];
-		this.attachments =  Attachments.create(attachments);
-
+		this.attachments =  Attachments.create(param.attachments);
 		this.value = param.value;
-		this.curve = param.curve ? Curve.create(param.curve):null;
-
-		var images = param.images ? param.images : [];
-		this.images = Images.create(images);
-		
-
+		this.curve = Curve.create(param.curve);
+		this.images = Images.create(param.images);
 		this.text = param.text;
 		this.dropdown = param.dropdown;
 		this.time = param.time;
@@ -72,10 +65,10 @@ class SingleParam{
 			label: this.label,
 			status: this.status,
 			refKey: this.refKey,
-			attachments: this.attachments,
+			attachments: this.attachments.dump(),
 			value: this.value,
-			curve: this.curve,
-			images: this.images,
+			curve: this.curve.dump(),
+			images: this.images.dump(),
 			text: this.text,
 			dropdown: this.dropdown,
 			time: this.time,
@@ -115,59 +108,85 @@ class MultipleParam extends Array{
 	}
 }
 
-class MultipleSheet{
-	constructor(){
-
-	}
-	init(param){
-		this.sheetNames = param.sheetNames;
-		this.sheets = param.sheets.map(function(sheet){
-			var multipleParam = new MultipleParam();
-			multipleParam.init(sheet)
-			return multipleParam;
-		})
-	}
-
-	clone(){
+class MultipleSheet extends Array{
+	static create(param){
 		var multipleSheet = new MultipleSheet();
-		var param = this.dump();
 		multipleSheet.init(param);
 		return multipleSheet;
 	}
+
+	constructor(){
+		super();
+	}
+
+	init(param){
+		param.map((function(p){
+			var multipleParam = MultipleParam.create(p);
+			this.push(multipleParam);
+		}).bind(this))
+	}
+
+	clone(){
+		var param = this.dump();
+		return MultipleParam.create(param);
+	}
+
 	dump(){
-		var obj = {};
-		obj.sheetNames = this.sheetNames.map(function(sheetName){return sheetName;})
-		obj.sheets = this.sheets.map(function(sheet){
+		return this.map(function(sheet){
 			return sheet.dump();
 		})
-		return obj;
 	}
 }
 
+class MultiSheetTemplate{
+	static create(param){
+		var multisheetTemplate = new MultiSheetTemplate();
+		multisheetTemplate.init(param);
+		return multisheetTemplate;
+	}
+	init(param){
+		this.type = param.type;
+		this.sheetNames = param.sheetNames;
+		this.sheets = MultipleSheet.create(param.sheets);
+	}
+	constructor(){
 
+	}
+	
+	dump(){
+		return {
+			type: this.type,
+			sheetNames: this.sheetNames,
+			sheets: this.sheets.dump()
+		}
+	}
+	clone(){
+		return MultiSheetTemplate.create(this.dump());
+	}
+}
 
-class MuleMRD extends MultipleSheet{
+class MuleMRD extends MultiSheetTemplate{
 	constructor(){
 		super();
 	}
 } 
-class IVTuning extends MultipleSheet{
+class IVTuning extends MultiSheetTemplate{
 	constructor(){
 		super();
 	}
 } 
-class HardTooling extends MultipleSheet{
+class HardTooling extends MultiSheetTemplate{
 	constructor(){
 		super();
 	}
 } 
-class PPVMrd extends MultipleSheet{
+class PPVMrd extends MultiSheetTemplate{
 	constructor(){
 		super();
 	}
 } 
 
-class BenchMark extends MultipleSheet{
+class BenchMark extends MultiSheetTemplate{
 	constructor(){
 		super();
 	}	
@@ -185,6 +204,7 @@ exports.BenchMark = BenchMark;
 //todo: refactor. new MuleMRD, IVGuning... SingleParam and MultipleParam will be used widely.
 exports.SingleParam = SingleParam;
 exports.MultipleParam = MultipleParam;
+exports.MultipleSheet = MultipleSheet;
 
 
 

@@ -43,8 +43,8 @@ var ProjectFilter = React.createClass({
                 label: "只看自己的项目"
             }],
             onChange: (function(selectedId){
-                var isAll = (selectedId == 0 ? true: false);
-                self.props.onChange(isAll);
+                var onlyMe = (selectedId == 0 ? false: true);
+                self.props.onChange(onlyMe);
             }).bind(this)
         }
 
@@ -58,7 +58,7 @@ var ProjectFilter = React.createClass({
 var PageTask = React.createClass({
 	getInitialState: function() {
         return {
-            isAll: true
+            onlyMe: false
         }
     },
 
@@ -70,18 +70,11 @@ var PageTask = React.createClass({
 
         Promise.all([
             Request.getData(Request.getBackendAPI('project'))
-            //Request.getData(Request.getMockupAPI('get_users.json'))
         ]).then((function(param){
             var projectsResponse = param[0];
-            //var usersResponse = param[1];
-
             if(projectsResponse.errCode == -1){
                 API.setProjects(projectsResponse.projects);    
             }
-            
-            /*if(usersResponse.errCode == -1){
-                API.setUsers(usersResponse.users);
-            }*/
             this.forceUpdate();
         }).bind(this)).catch(function(e){
             console.error(e.stack);
@@ -96,7 +89,7 @@ var PageTask = React.createClass({
     },
 
     onPageRefresh: function(e){
-        this.forceUpdate();
+        this.refresh();
     },
 
     onTaskCreate: function(e, param){
@@ -107,22 +100,30 @@ var PageTask = React.createClass({
         }
 
         var creator = SuperAPI.getLoginUser();
-
-
-
         var templateTask = API.getTemplateTasks().find(param.templateTaskId);
 
-        var taskObj = {   
+        var task = Task.create({   
             template:templateTask.template,
             startTime: param.startTime,
             endTime: param.endTime,
             creatorId: creator.id,
             label: templateTask.label,
-        };
-        var task = new Task();
-        task.init(taskObj);
-        param.project.tasks.addChild(task);
-        this.forceUpdate();
+        });
+
+        var projectId = param.project.id;
+
+        var data = {
+            projectId: projectId,
+            task: task.dump()
+        }
+
+
+        var url = Request.getBackendAPI('task');
+        return Request.postData(url, data).then((function(){ //fail case.
+            this.refresh();
+        }).bind(this), function(err){
+            console.error(err);
+        });
     },
 
     onTaskPopupShow: function(e, param){
@@ -151,11 +152,6 @@ var PageTask = React.createClass({
         ReactDOM.render(<PeopleAssistorPopup title={'前辈助手'}/>, this.refs.popup);
     },
 
-
-
-
-
-
     onAddProjectPopupShow: function(e){
         var self = this;
         this.onProjectPopupShow(e, {
@@ -164,8 +160,6 @@ var PageTask = React.createClass({
                 var creator = SuperAPI.getLoginUser();
                 project.setCreator(creator);
 
-
-
                 var url = Request.getBackendAPI('project');
                 var data = project.dump();
                 var options = {
@@ -173,33 +167,32 @@ var PageTask = React.createClass({
                 };
 
                 Request.postData(url, data, options).then(function(){
-                    self.refresh(self.state.isAll);
+                    self.refresh();
                 })
             }
         })
     },
 
-    onProjectFilterChange: function(isAll){
-            this.refresh(isAll);
+    onProjectFilterChange: function(onlyMe){
+            this.refresh(onlyMe);
     },
-    refresh: function(isAll){
-        if(isAll){
-            Request.getData(Request.getBackendAPI('project')).then((function(result){
+    refresh: function(onlyMe){
+        if(onlyMe){
+             Request.getData(Request.getBackendAPI('project'), {userId: SuperAPI.getLoginUser().id}).then((function(result){
                 if(result.errCode == -1){
                     API.setProjects(result.projects);    
-                    this.setState({isAll: isAll});
+                    this.setState({onlyMe: true});
                 }
             }).bind(this));    
         }else{
-            Request.getData(Request.getBackendAPI('project'), {userId: SuperAPI.getLoginUser().id}).then((function(result){
+            Request.getData(Request.getBackendAPI('project')).then((function(result){
                 if(result.errCode == -1){
                     API.setProjects(result.projects);    
-                    this.setState({isAll: isAll});
+                    this.setState({onlyMe: false});
                 }
-            }).bind(this));    
+            }).bind(this));   
+            
         }
-        
-        
     },
     render: function() {
         try{

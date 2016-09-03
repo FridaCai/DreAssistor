@@ -12,6 +12,9 @@ module.exports = class Curve {
 	}
 
 	init(param){
+		if(!param)
+			return;
+
 		this.id = param.id || Util.generateUUID();
 		this.parent = undefined; //todo
 		

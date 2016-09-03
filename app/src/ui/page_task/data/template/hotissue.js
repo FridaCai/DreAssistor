@@ -1,34 +1,30 @@
+import {MultipleSheet} from './mix.js';
 module.exports = class HotIssue{
+	static create(param){
+		var hotissue = new HotIssue();
+		hotissue.init(param);
+		return hotissue;
+	}
 	constructor(){
 	}
 	init(param){
-		if(!param)
-			return;
-		
-		this.rootCause = param.rootCause;
+		this.type = param.type;
+		this.sheetNames = [""];
+		this.sheets = MultipleSheet.create(param.sheets);
+
+/*		this.rootCause = param.rootCause;
 		this.solution = param.solution;
 		this.execute = param.execute;
-		this.feedback = param.feedback;
+		this.feedback = param.feedback;*/
 	}
 	dump(){
 		return {
-			sheetNames: [""],
-			sheets: [{
-				rootCause: this.rootCause,
-				solution: this.solution,
-				execute: this.execute,
-				feedback: this.feedback
-			}]
+			type: this.type,
+			sheetNames: this.sheetNames,
+			sheets: this.sheets.dump()
 		}
 	}
 	clone(){
-		var hotissue = new HotIssue();
-		hotissue.init({
-			rootCause: this.rootCause,
-			solution: this.solution,
-			execute: this.execute,
-			feedback: this.feedback
-		});
-		return hotissue;
+		return HotIssue.create(this.dump());
 	}
 }

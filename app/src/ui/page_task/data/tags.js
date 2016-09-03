@@ -31,6 +31,7 @@ module.exports = class Tags extends Array{
 	}
 	addChild(tag){
 		this.unshift(tag);
+		tag.setParent(this);
 	}
 	clearChildren(){
 		this.length = 0;
