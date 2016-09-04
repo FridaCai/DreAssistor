@@ -127,8 +127,21 @@ var PageTask = React.createClass({
     },
 
     onTaskPopupShow: function(e, param){
-        var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<TaskPopup title={param.title} task={param.task} onOK={param.onOK}/>, this.refs.popup);  
+        var task = param.task;
+        var taskId = param.task.id;
+
+        var url = Request.getBackendAPI(`task/${taskId}`);
+        return Request.getData(url).then((function(res){ //fail case.
+            task.update(res.task);
+
+
+            if(res.errCode === -1){
+                var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
+                ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
+            }
+        }).bind(this), function(err){
+            console.error(err);
+        });
     },
 
     onProjectPopupShow: function(e, param){
