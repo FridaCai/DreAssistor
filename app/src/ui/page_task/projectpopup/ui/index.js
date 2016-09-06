@@ -127,8 +127,10 @@ var ProjectPopup = React.createClass({
 
         MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
 
-        if(this.props.project)
+        if(this.props.project){
+            this.refs.table.update();
             return;
+        }
 
         API.loadTemplate().then((function(result){
             var project = new Project(); 
