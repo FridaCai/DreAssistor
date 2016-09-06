@@ -44,10 +44,10 @@ class SingleParam{
 		this.label = param.label
 		this.status = param.status;
 		this.refKey = param.refKey;
-		this.attachments =  Attachments.create(param.attachments);
+		this.attachments =  param.attachment ? Attachments.create(param.attachment): undefined;
 		this.value = param.value;
-		this.curve = Curve.create(param.curve);
-		this.images = Images.create(param.images);
+		this.curve = param.curve ? Curve.create(param.curve) : undefined;
+		this.images = param.image ? Images.create(param.image) : undefined;
 		this.text = param.text;
 		this.dropdown = param.dropdown;
 		this.time = param.time;
@@ -65,10 +65,10 @@ class SingleParam{
 			label: this.label,
 			status: this.status,
 			refKey: this.refKey,
-			attachments: this.attachments.dump(),
+			attachment: this.attachments ? this.attachments.dump() : undefined,
 			value: this.value,
-			curve: this.curve.dump(),
-			images: this.images.dump(),
+			curve: this.curve ? this.curve.dump(): undefined,
+			image: this.images ? this.images.dump(): undefined,
 			text: this.text,
 			dropdown: this.dropdown,
 			time: this.time,

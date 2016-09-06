@@ -45,7 +45,7 @@
               "label": "Target design life",
               "key": "PROJECT.ENGINE.TARGET_DESIGN_LIFE"
             },{
-              "curve": null,
+              "curve": {},
               "label": "Insulator DPDS Requirement",
               "key": "PROJECT.ENGINE.INSULATOR_DPDS_REQUIREMENT"
             },{
@@ -110,7 +110,7 @@
           "startWeek": 0,
           "endWeek": 0,
           "markColor": 6076508,
-          "attachments": [],
+          "attachment": [],
           "creatorId": 2,
           "priority": 0,
           "subtasks": [

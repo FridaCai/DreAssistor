@@ -1,7 +1,7 @@
 {
   "errCode": -1,
   "errMsg": "",
-  "comments": "task.template.param.property.attachments: null means to be defined; missing(undefined) means not need the value",
+  "comments": "task.template.param.property.attachment: null means to be defined; missing(undefined) means not need the value",
   "tasks": [
     {
       "id": 0,
@@ -83,7 +83,7 @@
               "label": "Mule BOM check",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.BOM_CHECK"
@@ -92,7 +92,7 @@
               "label": "尺寸检查",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.SIZE_CHECK"
@@ -101,7 +101,7 @@
               "label": "背压／压力将(kpa)",
               "status": false,
               "refKey": "bpMax",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.BP"
@@ -110,7 +110,7 @@
               "label": "传递损失",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.TRANSMISSIONLOSE"
@@ -119,7 +119,7 @@
               "label": "重量(kg)",
               "status": false,
               "refKey": "massMax",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.MASS"
@@ -128,7 +128,7 @@
               "label": "MAF 5*5",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.MAF"
@@ -137,7 +137,7 @@
               "label": "SIL",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.SIL"
@@ -146,7 +146,7 @@
               "label": "文档检查",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.MULE_MRD.DOCCHECK"
@@ -177,7 +177,7 @@
               "label": "调音计划",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.PLAN"
@@ -186,7 +186,7 @@
               "label": "调音方案",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.SOLUTION"
@@ -195,7 +195,7 @@
               "label": "调音样件准备",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.SAMPLE_PREPARE"
@@ -204,7 +204,7 @@
               "label": "65%调音车辆准备",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.VEHICLE_PREPARE_65"
@@ -213,7 +213,7 @@
               "label": "试验室资源/工作单准备",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.LABOURATORY_WORKSHEET_PREPARE"
@@ -222,7 +222,7 @@
               "label": "调音试验",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.TUNINT_TEST"
@@ -231,7 +231,7 @@
               "label": "背压确认",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.BP_VERIFY"
@@ -240,7 +240,7 @@
               "label": "主观评价",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.SUBJECT_ESTIMATION"
@@ -249,7 +249,7 @@
               "label": "NVH buy off",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.NVH_BUYOFF"
@@ -258,7 +258,7 @@
               "label": "方案冻结",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.SCHEME_FREEZE"
@@ -267,7 +267,7 @@
               "label": "数模图纸更新",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.IVTUNING.MODEL_CHANGE"
@@ -294,7 +294,7 @@
               "label": "设计冻结",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.DESIGN_FREEZE"
@@ -303,7 +303,7 @@
               "label": "数模和图纸评审和释放",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.MODEL_PAPER_ESTIMATE_RELEASE"
@@ -312,7 +312,7 @@
               "label": "EWO和潜在EWO会审",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.EWO_EWO_POTENTIAL_MEETING"
@@ -321,7 +321,7 @@
               "label": "模具启动会议",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.MODEL_START_MEETING"
@@ -330,7 +330,7 @@
               "label": "模具加工计划",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.MODEL_PROCESS_PLAN"
@@ -339,7 +339,7 @@
               "label": "定期跟踪模具加工",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.TRACK_MODEL_PROCESS"
@@ -348,7 +348,7 @@
               "label": "T1 &T2 试模现场评审",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.T1_T2_MODEL_LIVE_ESTIMATE"
@@ -357,7 +357,7 @@
               "label": "样件检测",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.SAMPLE_TEST"
@@ -366,7 +366,7 @@
               "label": "模具完成",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.HARDTOOLING.MODEL_DONE"
@@ -393,7 +393,7 @@
               "label": "PPV BOM check",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.BOM_CHECK"
@@ -402,7 +402,7 @@
               "label": "尺寸检查",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.SIZE_CHECK"
@@ -411,7 +411,7 @@
               "label": "背压／压力将(kpa)",
               "status": false,
               "refKey": "bpMax",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.BP"
@@ -420,7 +420,7 @@
               "label": "传递损失",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.TRANSMISSIONLOSE"
@@ -429,7 +429,7 @@
               "label": "重量(kg)",
               "status": false,
               "refKey": "massMax",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.MASS"
@@ -438,7 +438,7 @@
               "label": "MAF 5*5",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.MAF"
@@ -447,7 +447,7 @@
               "label": "硬模",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.HARD_MODEL"
@@ -456,7 +456,7 @@
               "label": "检具",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.TEST_TOOL1"
@@ -465,7 +465,7 @@
               "label": "检具",
               "status": false,
               "refKey": "",
-              "attachments": [],
+              "attachment": [],
               "value": 0,
               "curve": {},
               "key": "PROJECT.TASK.PPV_MRD.TEST_TOOL2"
@@ -902,7 +902,7 @@
               "curve": {},
               "images": [],
               "text": "",
-              "attachments": [],
+              "attachment": [],
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.INTAKE_NOISE"
             },
             {
@@ -910,7 +910,7 @@
               "curve": {},
               "images": [],
               "text": "",
-              "attachments": [],
+              "attachment": [],
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.RADIATION_NOISE"
             },
             {
@@ -933,7 +933,7 @@
               "curve": {},
               "images": [],
               "text": "",
-              "attachments": [],
+              "attachment": [],
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.CUSHION_DYNAMIC_STIFFNESS"
             },
             {
@@ -941,7 +941,7 @@
               "curve": {},
               "images": [],
               "text": "",
-              "attachments": [],
+              "attachment": [],
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.FULCRUM_DYNAMIC_STIFFNESS"
             },
             {
@@ -954,7 +954,7 @@
               "curve": {},
               "images": [],
               "text": "",
-              "attachments": [],
+              "attachment": [],
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.TRANSMISSION_LOSS"
             },
             {
@@ -962,7 +962,7 @@
               "curve": {},
               "images": [],
               "text": "",
-              "attachments": [],
+              "attachment": [],
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.INSERTION_LOSS"
             }
           ]

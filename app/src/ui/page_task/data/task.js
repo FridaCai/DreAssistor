@@ -146,7 +146,7 @@ module.exports = class Task {
 			desc: this.desc,
 			exp: this.exp,
 			markColor: this.markColor,
-			attachments: this.attachments.dump(),
+			attachment: this.attachments.dump(),
 			creatorId: this.creatorId,
 			priority: this.priority,
 			subtasks: subtasks,
