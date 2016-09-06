@@ -100,7 +100,7 @@
             {
               "label": "背压／压力将(kpa)",
               "status": false,
-              "refKey": "bpMax",
+              "refKey": "PROJECT.ENGINE.PT_AFTER_TREATMENT_BACKPRESSURE_ALLOCATION",
               "attachment": [],
               "value": 0,
               "curve": {},
@@ -118,7 +118,7 @@
             {
               "label": "重量(kg)",
               "status": false,
-              "refKey": "massMax",
+              "refKey": "PROJECT.ENGINE.MASS_TARGET",
               "attachment": [],
               "value": 0,
               "curve": {},

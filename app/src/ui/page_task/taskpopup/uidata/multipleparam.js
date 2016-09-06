@@ -25,6 +25,8 @@ import {Images} from '../../data/images.js';
 import {SingleParam} from '../../data/template/mix.js';
 import DROPDOWN_OPTIONS from '../../../../config/dropdown.json';
 
+import Util from 'Util';
+
 class MultipleParamUIData extends Base{
 	constructor(){
 		super();
@@ -125,9 +127,12 @@ class MultipleParamUIData extends Base{
 			case COMPONENT_ENUM.REFKEY:
 				return Cell.create({
 					component: Label, 
-					v: (function(refKey, project){
-				       		return refKey && project ? project[refKey]: '';
+					param: {
+						value: (function(refKey, project){
+				       		return Util.getValueByProjectRefKey(refKey, project);
 				       }).call(this, property.refKey, project)
+					},
+					v: property.refKey
 				});
 
 			case COMPONENT_ENUM.IMAGES:

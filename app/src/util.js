@@ -111,13 +111,37 @@ var Util = {
 	},
 	convertHexColorToInt: function(value){
 		return parseInt(value.replace('#', '0x'));
+	},
+
+
+
+	//todo:
+	getValueByProjectRefKey: function(refKey, project){
+		if(refKey === ""){
+			return "";
+		}
+
+		var data;
+		var arr = refKey.split('.');
+		for(var i=0; i<arr.length; i++){
+			var key = arr[i];
+			if(key === 'PROJECT'){
+				data = project;
+			}else if(key === 'ENGINE'){
+				if(data.engines.length === 0){
+					data = "";
+					break;
+				}else{
+					data = data.engines[0].properties;
+				} 
+			}else{
+				var multipleParam = data;
+				var singleParam = multipleParam.findSingleParamByKey(refKey);
+				data = singleParam.value;
+			}
+		}
+		return data;
 	}
-
-
-
-
-
-
 }
 
 module.exports = Util;

@@ -84,6 +84,11 @@ class MultipleParam extends Array{
 		multipleParam.init(param);
 		return multipleParam;
 	}
+	findSingleParamByKey(key){
+		return this.find(function(singleParam){
+			return (key === singleParam.key);
+		})
+	}
 	constructor(){
 		super();
 	}

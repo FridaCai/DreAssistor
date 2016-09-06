@@ -55,7 +55,7 @@ class Property extends Base{
 
 			var singleParam = {key: id};
 			this.components.map(function(component, index){
-				singleParam[component] = line.getCellAt(index).getValue();
+				singleParam[component] = line.getCellAt(index).getValue();	
 			})
 			multipleParam.push(singleParam);
 		}
@@ -71,7 +71,7 @@ class Property extends Base{
 
 		var engineParams= [];
 		for(var j=0; j<engineNum; j++){
-			var base = projectProperyNum + 1 + j * (enginepropertyNum + 1);
+			var base = projectProperyNum + 1 + j * (enginepropertyNum*2 + 1);
 
 			var properties = [];
 			for(var k=0; k<enginepropertyNum*2; k++){
