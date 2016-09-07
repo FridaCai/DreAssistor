@@ -24,7 +24,9 @@ class API{
 		this.signal_curve_toggle = new Signal();
 		this.uidata.curve.setToggleSignal(this.signal_curve_toggle);
 	}
-	
+	setCurveNeedTemplate(needTemplate){
+		this.curve.setNeedTemplate(needTemplate);
+	}
 	setCurve(curve){
 		this.curve = curve;
 	}

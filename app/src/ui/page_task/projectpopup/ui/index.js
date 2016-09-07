@@ -62,6 +62,7 @@ var ProjectPopup = React.createClass({
     onSwitchSheet(){
         API.ui2dm();
         API.dm2ui();
+        this.refs.table.update({uidata: API.uidata});
     },
 
     onXlsImport: function(){
@@ -83,10 +84,18 @@ var ProjectPopup = React.createClass({
     },
     
     onInputChange: function(){
-        //when ui2dm and dm2ui, data is refreshed, if not redraw table, datachange will not be listened to the correct component.
+        return; //update data and table when switch sheet.
+
+
+        //remember to refresh table set dm2ui.
+        //when ui2dm and dm2ui, data is refreshed, 
+        //if not redraw table, datachange will not be listened to the correct component.
         API.ui2dm();
         API.dm2ui();
         this.refs.table.setState({uidata: API.uidata}); 
+
+
+
     },
     onEngineAdd: function(){
         var project = API.getProject();

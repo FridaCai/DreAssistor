@@ -12,8 +12,9 @@ var CurveComponent = React.createClass({
     this.api.init();
 
     (function(curve, api){
-        if(!curve)
+        if(curve.needTemplate)
     	   	return;
+
         api.setCurve(curve);
         api.dm2ui();      
     })(this.props.curve, this.api);
@@ -63,6 +64,7 @@ var CurveComponent = React.createClass({
   onXlsImport: function(){
       this.api.ui2dm();
       this.api.dm2ui();
+      this.api.setCurveNeedTemplate(false);
 
       this.refs.table.update({uidata: this.api.uidata});
       this.refs.chart.update();
@@ -87,7 +89,7 @@ var CurveComponent = React.createClass({
       this.api.signal_curve_toggle.listen(this.onCurveToggle);
 
 
-      if(this.props.curve)
+      if(!this.props.curve.needTemplate)
             return;
 
       API.loadTemplate().then((function(result){

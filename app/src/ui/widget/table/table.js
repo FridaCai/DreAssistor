@@ -66,7 +66,11 @@ var TableDOM = React.createClass({
     onDragOver(e){e.preventDefault();},
 
     update:function(param){
-        this.setState(param, this.updateAfterRender);
+        if(param){
+            this.setState(param, this.updateAfterRender);    
+        }else{
+            this.forceUpdate(this.updateAfterRender);
+        }
     },
 
     getNonReverseTableDom:function(ui){

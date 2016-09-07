@@ -74,7 +74,7 @@ class Tag extends Base {
 		var loop = tags[0].week;
 		for(var i=loop; i>=0; i--){
             var tag = findByWeek(tags, i);
-            var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp.time, i));
+            var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp, i));
             var line = Line.create({cells: [
         		Cell.create({component: Label, v: i}), 
             	Cell.create({component: Label, v:autoTime}), 
