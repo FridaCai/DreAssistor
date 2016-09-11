@@ -9,7 +9,7 @@ import HardToolingTemplate from './template_multiplesheet.js';
 import PPVMRDTemplate from './template_multiplesheet.js';
 import BenchmarkTemplate from './template_multiplesheet.js';
 
-
+import TemplateFactory from '../data/template/factory.js';
 
 var TaskTemplatePanel = React.createClass({
     templatePanel: [NormalTemplate, 
@@ -51,11 +51,11 @@ var TaskTemplatePanel = React.createClass({
         var type = this.state.type;
         var param = this.dom.getValue();
 
-        return {
-            type: type,
+        return TemplateFactory.create({
+            type: type, 
             sheets: param.sheets,
             sheetNames: param.sheetNames
-        }
+        })
     },
     render: function(){
         return (

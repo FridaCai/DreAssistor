@@ -1,6 +1,7 @@
-import {Attachments} from '../attachments.js';
-import {Images} from '../images.js';
+import Attachments from '../attachments.js';
+import Images from '../images.js';
 import Curve from '../../../component_curve/data/curve.js';
+import Util from 'Util';
 
 
 exports.COMPONENT_ENUM = {
@@ -52,6 +53,7 @@ class SingleParam{
 		this.dropdown = param.dropdown;
 		this.time = param.time;
 		this.key = param.key;
+		this.id = param.id || Util.generateUUID();
 	}
 
 	clone(){
@@ -73,7 +75,8 @@ class SingleParam{
 			dropdown: this.dropdown,
 			time: this.time,
 			key: this.key,
-			comment: `time: ${new Date(this.time)}`
+			comment: `time: ${new Date(this.time)}`,
+			id: Util.isUUID(this.id) ? undefined: this.id,
 		}
 	}
 }

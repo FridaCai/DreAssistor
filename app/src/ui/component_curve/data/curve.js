@@ -32,7 +32,7 @@ module.exports = class Curve {
 		var obj = {};
 		if(!this.needTemplate){
 			obj = {
-				id: this.id,
+				id: Util.isUUID(this.id) ? undefined: this.id,
 				caption: this.caption,
 				data: this.data,
 				series: this.series,

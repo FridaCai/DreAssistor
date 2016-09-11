@@ -63,11 +63,28 @@ var postData = function(url, data, options) {
     return promise;
 }
 
-
+var putData = function(url, data, options) {
+    options = options || {};
+    var dataString = JSON.stringify(data);
+    return new Promise(function(resolve, reject) {
+        var params = {
+            url: url,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: dataString,
+            dataType: 'json',
+            success: resolve,
+            error: reject
+        };
+        $.extend(params, options);
+        $.ajax(params);
+    });
+};
 
 module.exports = {
 	postData: postData,
 	getData: getData,
+    putData: putData,
 	getBackendAPI: getBackendAPI,
 	getMockupAPI: getMockupAPI,
 }

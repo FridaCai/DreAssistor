@@ -67,6 +67,7 @@ var PageTask = React.createClass({
         API.signal_page_refresh.listen(this.onPageRefresh);
         API.signal_timeline_task_create.listen(this.onTaskCreate);
         API.signal_projectpoup_show.listen(this.onProjectPopupShow);
+        API.signal_edit_task.listen(this.onTaskEdit);
 
         Promise.all([
             Request.getData(Request.getBackendAPI('project'))
@@ -86,8 +87,28 @@ var PageTask = React.createClass({
         API.signal_page_refresh.unlisten(this.onPageRefresh);
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
         API.signal_projectpoup_show.unlisten(this.onProjectPopupShow);
+        API.signal_edit_task.unlisten(this.onTaskEdit);
     },
+    onTaskEdit: function(e, param){
+        debugger;
+        var task = param.task;
+        var projectId = task.parent.parent.id;
+        var url = Request.getBackendAPI(`task/${task.id}`);
+        var data = {
+            projectId: projectId,
+            task: task.dump(),
+        }
+        Request.putData(url, data).then((function(res){
+            if(res.errCode === -1){
+                this.refresh();    
+            }
+        }).bind(this));
 
+
+
+
+        
+    },
     onPageRefresh: function(e){
         this.refresh();
     },
@@ -122,6 +143,8 @@ var PageTask = React.createClass({
         return Request.postData(url, data).then((function(){ //fail case.
             this.refresh();
         }).bind(this), function(err){
+            console.error(err);
+        }).catch(function(err){
             console.error(err);
         });
     },
@@ -187,7 +210,7 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
-            this.refresh(onlyMe);
+        this.refresh(onlyMe);
     },
     refresh: function(onlyMe){
         if(onlyMe){

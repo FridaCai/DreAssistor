@@ -306,8 +306,10 @@ export default class Item extends React.Component {
           API.signal_taskpopup_show.dispatch({
               title: '修改豆豆',
               task: item,
-              onOK: (function(){
-                  API.signal_page_refresh.dispatch();
+              onOK: (function(task){
+                API.signal_edit_task.dispatch({
+                  task: task
+                });
               }).bind(this),
           });
         }

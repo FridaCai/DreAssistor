@@ -14,7 +14,7 @@ import AttachmentList from 'AttachmentList';
 import TaskTemplatePanel from './template.js';
 import PrivacyRadioGroup from './privacy_radiogroup.js';
 
-import {Attachments} from '../data/attachments.js';
+import Attachments from '../data/attachments.js';
 
 var TaskPopup = React.createClass({
     priorityDropdown: undefined,
@@ -40,11 +40,6 @@ var TaskPopup = React.createClass({
                     return item.id == this.state.task.template.type;
                 }).bind(this))
                 .label;
-
-
-            
-
-
 
             var exp = '';
             return (
@@ -161,7 +156,7 @@ var TaskPopup = React.createClass({
         this.state.task.privacy = this.refs.privacyRadioGroup.getValue();
         this.state.task.template = this.refs.templatePanel.getValue();
 
-        this.state.onOK();
+        this.state.onOK(this.state.task);
         return Promise.resolve();
     },
     render: function() {

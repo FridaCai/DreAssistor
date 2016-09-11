@@ -1,4 +1,6 @@
-exports.Attachments = class Attachments extends Array{
+import Attachment from './attachment.js';
+
+module.exports = class Attachments extends Array{
 	static create(param){
 		var ats = new Attachments();
 		ats.init(param);
@@ -34,37 +36,5 @@ exports.Attachments = class Attachments extends Array{
 			}
 		}
 		this.splice(index, 1);
-	}
-}
-
-exports.Attachment = class Attachment{
-	static create(param){
-		var at = new Attachment();
-		at.init(param);
-		return at;
-	}
-
-	constructor(){
-
-	}
-
-	init(param){
-		this.id = param.id;
-		this.label = param.label;
-		this.url = param.url;
-		this.parent = undefined;
-	}
-
-	
-	setParent(parent){
-		this.parent = parent;
-	}
-
-	dump(){
-		return {
-			id: this.id,
-			label: this.label,
-			url: this.url,
-		}
 	}
 }

@@ -7,6 +7,7 @@ import Label from 'Label';
 import ButtonGroup from 'ButtonGroup';
 import Input from 'Input';
 import Time from 'Time';
+import AttachmentList from 'AttachmentList';
 
 import {COMPONENT_ENUM} from '../../data/template/mix.js';
 import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
@@ -153,7 +154,7 @@ class Property extends Base{
 			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
-			        	expandComponent: AttachmentList,
+			        	expandComponent: AttachmentList, /*strange. no import for AttachmentList. work?*/
 			        	expandComponentParam: {
 			        		id: key,
 			        		attachments: itms,
@@ -179,7 +180,7 @@ class Property extends Base{
 			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
-			        	expandComponent: AttachmentList,
+			        	expandComponent: AttachmentList,/*strange. no import for AttachmentList. work?*/
 			        	expandComponentParam: {
 			        		id: key,
 			        		attachments: itms,

@@ -1,4 +1,3 @@
-import SubProject from './subproject.js';
 import Util from 'Util';
 import {SingleParam} from './template/mix.js';
 
@@ -96,7 +95,7 @@ module.exports = class Project{
 
 	dump(){
 		return {
-			id: this.id,
+			id: Util.isUUID(this.id) ? undefined: this.id,
 			creatorId: this.creatorId,
 			label: this.label,
 			sorp: this.sorp,

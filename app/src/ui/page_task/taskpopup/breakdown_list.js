@@ -1,6 +1,7 @@
 import Util from 'Util';
 import API from '../api.js';
-import SubTask from '../data/subtask.js';
+import Subtasks from '../data/subtasks.js';
+import Subtask from '../data/subtask.js';
 import RadioGroup from 'RadioGroup';
 
 var BreakDownList = React.createClass({
@@ -14,23 +15,17 @@ var BreakDownList = React.createClass({
     },
   
     onDeleteClk: function(id){
-        var sts = this.state.subtasks.filter(function(st){
-            return !(id === st.id);
-        })
-
-        this.setState({
-            subtasks: sts,
-        })
+        this.state.subtasks.deleteById(id);
+        this.forceUpdate();
     },
     onAddClk: function(){
-        var subtask = {
+        var subtaskObj = {
             id: Util.generateUUID(),
             label: this.refs.labelInput.value, //todo: never trust user input.
-            isDone: false,
+            status: false,
         }
         
-        this.state.subtasks.unshift(subtask);
-
+        this.state.subtasks.add(Subtask.create(subtaskObj));
         this.refs.labelInput.value = '';
         this.forceUpdate();
     },
@@ -46,7 +41,7 @@ var BreakDownList = React.createClass({
 
                         var radioGroup = {
                             id: `status_${id}`,
-                            selectedId: subtask.isDone ? 0: 1,
+                            selectedId: subtask.status ? 0: 1,
                             options: [{
                                 id: 0,
                                 label:"完成"
@@ -55,7 +50,7 @@ var BreakDownList = React.createClass({
                                 label: "未完成"
                             }],
                             onChange: (function(selectedId){
-                                subtask.isDone = (selectedId === 0 ? true: false);
+                                subtask.status = (selectedId === 0 ? true: false);
                             }).bind(this),
                         }
 

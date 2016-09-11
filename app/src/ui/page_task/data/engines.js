@@ -204,7 +204,7 @@ var Engine = class Engine{
 
 	dump(){
 		return {
-			id: this.id,
+			id: Util.isUUID(this.id) ? undefined: this.id,
 			properties: this.properties.dump()
 		}
 	}

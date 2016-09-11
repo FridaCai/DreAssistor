@@ -31,7 +31,7 @@ module.exports = class Tag {
 	}
 	dump(){
 		return {
-			id: this.id,
+			id: Util.isUUID(this.id) ? undefined: this.id,
 			label: this.label,
 			time: this.time,
 			week: this.week,

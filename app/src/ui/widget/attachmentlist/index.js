@@ -1,5 +1,5 @@
 import Util from 'Util';
-import {Attachment} from '../../page_task/data/attachments.js';
+import Attachment from '../../page_task/data/attachment.js';
 import "./style.less";
 
 var AttachmentList = React.createClass({
@@ -9,12 +9,10 @@ var AttachmentList = React.createClass({
 		}
 	},
 	getValue: function(){
-		return this.state.attachments.dump();
+		return this.state.attachments;
 	},
 	onAddClk: function(){
 		this.refs.fileElem.click();
-//console.log;
-		
 	},
 	fileElemChange: function(e){
 	    e.preventDefault();

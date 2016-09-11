@@ -174,6 +174,8 @@ var ProjectPopup = React.createClass({
         this.refs.table.forceUpdate();
     },
     onOK:function() {
+        API.ui2dm();
+        API.dm2ui();
         var project = API.getProject();
         this.state.onOK(project);
         return Promise.resolve();

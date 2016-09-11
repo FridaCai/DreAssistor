@@ -1,5 +1,5 @@
-import SubTask from './subtask.js';
-import {Attachments} from './attachments.js';
+import Subtasks from './subtasks.js';
+import Attachments from './attachments.js';
 import Util from 'Util';
 import TemplateFactory from './template/factory';
 
@@ -21,11 +21,6 @@ module.exports = class Task {
 		this.id = param.id || Util.generateUUID();
 		this.creatorId = param.creatorId;
 		this.parent = undefined;
-
-
-
-
-
 		this._updateMeta(param);
 	}
 
@@ -50,23 +45,9 @@ module.exports = class Task {
 		this.markColor = param.markColor || 6076508;
 		this.priority = param.priority || 0;
 		this.privacy = param.privacy || 0;
-		this.attachments = Attachments.create(param.attachments);
-
-		this.subtasks = (function(subtasks){
-			if(!subtasks)
-				return [];
-
-			return subtasks.map((function(subtask){
-				var st = new SubTask();
-				st.init(subtask);
-				st.setParent(this);
-				return st;
-			}).bind(this));
-		})(param.subtasks)
-
-
+		this.attachments = Attachments.create(param.attachment);
+		this.subtasks = Subtasks.create(param.subtask);
 		this.template = param.template ? TemplateFactory.create(param.template): undefined;	
-		
 
 		//todo: bad.
 		/*this.statical = (function(templateType){
@@ -100,46 +81,17 @@ module.exports = class Task {
 		this._updateMeta(param);
 	}
 
-	findSubTask(id){
-		return this.subtasks.find(function(subtask){
-			return subtask.id === id;
-		})
-	}
 	
-	deleteSubTask(id){
-		this.subtasks = this.subtasks.filter(function(subtask){
-			return !(id === subtask.id);
-		})
-	}
-	addSubTask(subtask){
-		this.subtasks.unshift(subtask);
-		subtask.setParent(this);
-	}
+	
+	
 	setParent(parent){
 		this.parent = parent;
 	}
-	addAttachment(attachment){
-		//upload file to s3
-		this.attachments.unshift(attachment);
-		attachment.setParent(this);
-	}
-	deleteAttachment(id){
-		//remove file from s3
-		this.attachments = this.attachments.filter(function(attachment){
-			return !(id === attachment.id);
-		})
-	}
+
 
 	dump(){
-		
-
-		var subtasks = [];
-		this.subtasks && this.subtasks.map(function(sp){
-			subtasks.push(sp.dump());
-		})
-		
 		return {
-			id: this.id,
+			id: Util.isUUID(this.id) ? undefined: this.id,
 			label: this.label,
 			startTime: this.startTime,
 			endTime: this.endTime,
@@ -149,15 +101,13 @@ module.exports = class Task {
 			attachment: this.attachments.dump(),
 			creatorId: this.creatorId,
 			priority: this.priority,
-			subtasks: subtasks,
+			subtask: this.subtasks.dump(),
 			privacy: this.privacy,
 			template: this.template.dump(),
 			statical: this.statical,
 
 			startWeek: this.startWeek,
 			endWeek: this.endWeek,
-
-
 
 			comment: `startTime: ${new Date(this.startTime)}, endTime: ${new Date(this.endTime)}`,
 		}

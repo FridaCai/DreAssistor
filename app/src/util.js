@@ -57,6 +57,10 @@ var Util = {
 		return target;
 	},
 
+	//get auto-increment-int from backend and uuid from front end;
+	isUUID: function(id){
+		return isNaN(id);
+	},
 	//uuid should be generated at backend.
 	generateUUID: function () {
 		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );

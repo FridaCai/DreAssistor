@@ -5,18 +5,23 @@ class MultipleSheetUIData{
 	}
 	
 	dm2ui(project, dm){ 
-		for(var i=0; i<dm.sheets.length; i++){
-			var sheet = dm.sheets[i];
-			var sheetName = dm.sheetNames[i];
-									
-			var multipleparam = new MultipleParamUIData();
-			multipleparam.setComponents(sheet);
-			multipleparam.setHeader();
-			multipleparam.setSheetName(sheetName);
-			multipleparam.dm2ui(project, sheet);
+		try{
+			for(var i=0; i<dm.sheets.length; i++){
+				var sheet = dm.sheets[i];
+				var sheetName = dm.sheetNames[i];
+										
+				var multipleparam = new MultipleParamUIData();
+				multipleparam.setComponents(sheet);
+				multipleparam.setHeader();
+				multipleparam.setSheetName(sheetName);
+				multipleparam.dm2ui(project, sheet);
 
-			this.uidata[i] = multipleparam;
+				this.uidata[i] = multipleparam;
+			}
+		}catch(e){
+			console.error(e);
 		}
+		
 	}
 	ui2dm(dm){
 		Object.keys(this.uidata).map((function(key,index){

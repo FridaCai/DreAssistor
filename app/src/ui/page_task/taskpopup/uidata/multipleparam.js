@@ -19,8 +19,8 @@ import {COMPONENT_ENUM} from '../../data/template/mix.js';
 import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
 
 
-import {Attachments} from '../../data/attachments.js';
-import {Images} from '../../data/images.js';
+import Attachments from '../../data/attachments.js';
+import Images from '../../data/images.js';
 
 import {SingleParam} from '../../data/template/mix.js';
 import DROPDOWN_OPTIONS from '../../../../config/dropdown.json';
@@ -41,7 +41,7 @@ class MultipleParamUIData extends Base{
 			if(components.indexOf(componentKey)!=-1)
 				return false;
 
-			if(componentKey === 'key'){
+			if(componentKey === 'key' || componentKey === 'id'){
 				return false;
 			}
 			return true;
