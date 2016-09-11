@@ -35,8 +35,8 @@ module.exports = class Project{
 		this.tasks = Tasks.create(param.tasks);
 		this.tasks.setParent(this);
 
-		this.properties = Properties.create(param.properties);
-		this.engines = Engines.create(param.engines);
+		this.properties = param.properties ? Properties.create(param.properties): undefined;
+		this.engines = param.engines ? Engines.create(param.engines): undefined;
 	}
 	
 	addEngine(param){
