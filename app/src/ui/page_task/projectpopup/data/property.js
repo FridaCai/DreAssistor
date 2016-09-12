@@ -47,14 +47,24 @@ class Property extends Base{
 
 		var projectproperties = ["platform", "bodyStyle"];
 		var multipleParam = [];
+
+
+		var index = 0;
 		for(var i=2; i<2+projectproperties.length*2; i++){
 			var line = this.ui[i];
-			var id = line.id;
+
 			if(line instanceof ExpandLine)
 				continue;
 
 
-			var singleParam = {key: id};
+
+			var p = dm.properties[index++];
+			var id = p.id;
+			var key = p.key;
+
+
+
+			var singleParam = {key: key, id: id};
 			this.components.map(function(component, index){
 				singleParam[component] = line.getCellAt(index).getValue();	
 			})
@@ -75,14 +85,23 @@ class Property extends Base{
 			var base = projectProperyNum + 1 + j * (enginepropertyNum*2 + 1);
 
 			var properties = [];
+
+
+
+			var index = 0;
+
 			for(var k=0; k<enginepropertyNum*2; k++){
 				var line = this.ui[base+k]; //take care of expand line.
 				
 				if(line instanceof ExpandLine)
 					continue;
 
+				var p = dm.engines[j].properties[index++];
+				var id = p.id;
+				var key = p.key;
 
-				var property = {key: line.id};
+
+				var property = {id: id, key: key};
 				this.components.map(function(component, index){
 					property[component] = line.getCellAt(index).getValue();
 				})
@@ -90,8 +109,10 @@ class Property extends Base{
 			}
 
 
+			//todo: refactor ticky thing. each engine block should be a single table.
 			var engineParam = {
-				properties: properties
+				properties: properties,
+				id: dm.engines[j].id,
 			}
 			engineParams.push(engineParam);
 
@@ -386,7 +407,7 @@ class Property extends Base{
 				this.ui.push(Line.create({
 					cells: cells,
 					expandLine: expandLine,
-					id: key
+					id: property.id
 				}))
 
 				if(needExpandLine){
@@ -441,7 +462,7 @@ class Property extends Base{
 					this.ui.push(Line.create({
 						cells: cells,
 						expandLine: expandLine,
-						id: key
+						id: property.id
 					}))
 
 					if(needExpandLine){
@@ -466,8 +487,7 @@ class Property extends Base{
 					}
 				}]
 			})];
-			this.ui.push(Line.create({cells: cells}))
-
+			this.ui.push(Line.create({cells: cells, id: engine.id}))
 		}).bind(this))
 	}
 }

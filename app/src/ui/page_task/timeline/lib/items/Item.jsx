@@ -235,10 +235,6 @@ export default class Item extends React.Component {
         this.actualClick(e, e.pointerType === 'mouse' ? 'click' : 'touch')
       })
 
-
-    
-
-    console.log('fridatest1: why interactMounted is set to be true?');
     this.setState({
       interactMounted: true
     })
@@ -316,8 +312,9 @@ export default class Item extends React.Component {
       },{
         label: '删除豆豆',
         handler: function() {
-          //修改状态位
-          alert('开发中 :)');
+          API.signal_delete_task.dispatch({
+            task: item
+          });
         }
       },{
         label: '复制豆豆',

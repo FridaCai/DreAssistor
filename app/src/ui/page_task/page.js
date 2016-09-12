@@ -63,11 +63,16 @@ var PageTask = React.createClass({
     },
 
     componentDidMount: function(){
-        API.signal_taskpopup_show.listen(this.onTaskPopupShow);
         API.signal_page_refresh.listen(this.onPageRefresh);
+        API.signal_projectpopup_show.listen(this.onProjectPopupShow);
+        API.signal_edit_project.listen(this.onProjectEdit);
+        API.signal_delete_project.listen(this.onProjectDelete);
+
+        API.signal_taskpopup_show.listen(this.onTaskPopupShow);
         API.signal_timeline_task_create.listen(this.onTaskCreate);
-        API.signal_projectpoup_show.listen(this.onProjectPopupShow);
         API.signal_edit_task.listen(this.onTaskEdit);
+        API.signal_delete_task.listen(this.onTaskDelete);
+        
 
         Promise.all([
             Request.getData(Request.getBackendAPI('project'))
@@ -83,14 +88,26 @@ var PageTask = React.createClass({
     },
 
     componentWillUnmount: function(){
-        API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
         API.signal_page_refresh.unlisten(this.onPageRefresh);
+        API.signal_projectpopup_show.unlisten(this.onProjectPopupShow);
+        API.signal_edit_project.unlisten(this.onProjectEdit);
+        API.signal_delete_project.unlisten(this.onProjectDelete);
+
+        API.signal_taskpopup_show.unlisten(this.onTaskPopupShow);
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
-        API.signal_projectpoup_show.unlisten(this.onProjectPopupShow);
         API.signal_edit_task.unlisten(this.onTaskEdit);
+        API.signal_delete_task.unlisten(this.onTaskDelete);
+    },
+    onTaskDelete: function(e, param){
+        var  task = param.task;
+        var url = Request.getBackendAPI(`task/${task.id}`);
+        Request.deleteData(url).then((function(res){
+            if(res.errCode === -1){
+                this.refresh();    
+            }
+        }).bind(this));
     },
     onTaskEdit: function(e, param){
-        debugger;
         var task = param.task;
         var projectId = task.parent.parent.id;
         var url = Request.getBackendAPI(`task/${task.id}`);
@@ -103,11 +120,25 @@ var PageTask = React.createClass({
                 this.refresh();    
             }
         }).bind(this));
-
-
-
-
-        
+    },
+    onProjectEdit: function(e, param){
+        var project = param.project;
+        var url = Request.getBackendAPI(`project/${project.id}`);
+        var data = project.dump();
+        Request.putData(url, data).then((function(res){
+            if(res.errCode === -1){
+                this.refresh();    
+            }
+        }).bind(this));
+    },
+    onProjectDelete: function(e, param){
+        var  project = param.project;
+        var url = Request.getBackendAPI(`project/${project.id}`);
+        Request.deleteData(url).then((function(res){
+            if(res.errCode === -1){
+                this.refresh();    
+            }
+        }).bind(this));
     },
     onPageRefresh: function(e){
         this.refresh();

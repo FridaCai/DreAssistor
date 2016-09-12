@@ -7,15 +7,15 @@ import Property from '../data/property.js';
 import Tag from '../data/tag.js';
 
 import MultipleParamUIData from '../../taskpopup/uidata/multipleparam.js';
+import Request from 'Request';
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
-        (function(p){
+        /*(function(p){
             if(!p)
                 return;
-            API.setProject(p);
-            API.dm2ui();      
-        })(this.props.project);
+            API.setProject(p); 
+        })(this.props.project);*/
 
         return {
             title: this.props.title,
@@ -83,20 +83,6 @@ var ProjectPopup = React.createClass({
         reader.readAsBinaryString(file);
     },
     
-    onInputChange: function(){
-        return; //update data and table when switch sheet.
-
-
-        //remember to refresh table set dm2ui.
-        //when ui2dm and dm2ui, data is refreshed, 
-        //if not redraw table, datachange will not be listened to the correct component.
-        API.ui2dm();
-        API.dm2ui();
-        this.refs.table.setState({uidata: API.uidata}); 
-
-
-
-    },
     onEngineAdd: function(){
         var project = API.getProject();
         project.addEngine();
@@ -115,64 +101,64 @@ var ProjectPopup = React.createClass({
     onEngineCopy: function(e, param){
         var engine = param.engine;
         var project = API.getProject();
-
-
         project.copyEngine(engine);
-
         API.dm2ui();
         this.refs.table.setState({uidata: API.uidata});     
     },
     componentDidMount: function(){
-        MultipleParamUIData.signal_data_change.listen(this.onInputChange);
         Property.signal_add_engine.listen(this.onEngineAdd);
         Property.signal_delete_engine.listen(this.onEngineDelete);
         Property.signal_copy_engine.listen(this.onEngineCopy);
-
-
-
-
-        Tag.signal_adjusttime_blur.listen(this.onInputChange);
-
-
         MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
 
         if(this.props.project){
-            this.refs.table.update();
-            return;
+            var id = this.props.project.id;
+            Request.getData(Request.getBackendAPI(`project/${id}`)).then((function(result){
+                if(result.errCode == -1){
+                    var projectObj = result.projects[0];
+                    var project = Project.create(projectObj);
+                    API.setProject(project);    
+                    API.dm2ui();
+                    
+                    var uidata = API.uidata;
+                    this.refs.table.update({
+                        uidata: uidata
+                    })
+                }
+            }).bind(this), function(e){
+                throw e;
+            }).catch(function(e){
+                console.error(e);
+            });
+        }else{
+            API.loadTemplate().then((function(result){
+                var project = Project.create(result); 
+                API.setProject(project); 
+                API.dm2ui();
+
+                var uidata = API.uidata;
+                this.refs.table.update({
+                    uidata: uidata
+                })
+            }).bind(this), function(e){
+                throw e;
+            }).catch((function(e){
+                console.error(e.stack);
+            }).bind(this));
         }
-
-        API.loadTemplate().then((function(result){
-            var project = new Project(); 
-            project.init(result);
-            
-            API.setProject(project); 
-            API.dm2ui();
-
-            var uidata = API.uidata;
-            this.refs.table.update({
-                uidata: uidata
-            })
-        }).bind(this)).catch((function(e){
-            console.error(e.stack);
-        }).bind(this));
     },
 
     componentWillUnmount: function(){
-       
-
-
-
-        MultipleParamUIData.signal_data_change.unlisten(this.onInputChange);
         Property.signal_add_engine.unlisten(this.onEngineAdd);
         Property.signal_delete_engine.unlisten(this.onEngineDelete);
         Property.signal_copy_engine.unlisten(this.onEngineCopy);
-        Tag.signal_adjusttime_blur.unlisten(this.onInputChange);
         MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
-
     },
+
     onExpandToggle: function(){
         this.refs.table.forceUpdate();
     },
+    
     onOK:function() {
         API.ui2dm();
         API.dm2ui();

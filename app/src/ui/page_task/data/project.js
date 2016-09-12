@@ -7,6 +7,11 @@ import Properties from './properties.js';
 import {Engines} from './engines.js';
 
 module.exports = class Project{
+	static create(param){
+		var project = new Project();
+		project.init(param);
+		return project;
+	}
 	constructor(){
 	}
 

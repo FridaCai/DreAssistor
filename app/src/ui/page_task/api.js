@@ -7,10 +7,13 @@ import {ExcelUtil} from 'XlsIExport';
 
 var API = {
 	signal_page_refresh: new Signal(),
-	signal_timeline_task_create: new Signal(),
+	signal_projectpopup_show: new Signal(),
+	signal_edit_project: new Signal(),
+	signal_delete_project: new Signal(),
 	signal_taskpopup_show: new Signal(),
-	signal_projectpoup_show: new Signal(),
+	signal_timeline_task_create: new Signal(),
 	signal_edit_task: new Signal(),
+	signal_delete_task: new Signal(),
 	
 	_templateTasks: new TemplateTasks(),
 	setTemplateTasks: function(value){
@@ -23,8 +26,6 @@ var API = {
 	getTemplateTaskArr: function(){
 		return this._templateTasks.getArr();
 	},
-
-
 
 	_projects: new Projects(),
 	setProjects: function(value){

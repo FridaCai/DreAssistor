@@ -25,7 +25,8 @@ class Tag extends Base {
 		project.clearTags();
 
 		for(var i=0; i<this.ui.length; i++){
-			var cells = this.ui[i].cells;
+			var line = this.ui[i];
+			var cells = line.cells;
 	        
 	        var label = cells[3].v;
             var week = parseInt(cells[0].v);
@@ -34,6 +35,7 @@ class Tag extends Base {
             if(label){
             	var tag = new DataTag();
             	tag.init({
+            		"id": line.id,
 	                "label": label,
 	                "week": week,
 	                "time": time, 
@@ -75,13 +77,16 @@ class Tag extends Base {
 		for(var i=loop; i>=0; i--){
             var tag = findByWeek(tags, i);
             var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp, i));
-            var line = Line.create({cells: [
-        		Cell.create({component: Label, v: i}), 
-            	Cell.create({component: Label, v:autoTime}), 
-				Cell.create({component: Label, v: ''}),
-        		Cell.create({component: Label, v:''})
-        	]});
-            	
+            var line = Line.create(
+            	{
+            		cells: [
+		        		Cell.create({component: Label, v: i}), 
+		            	Cell.create({component: Label, v:autoTime}), 
+						Cell.create({component: Label, v: ''}),
+		        		Cell.create({component: Label, v:''})
+		        	]
+		        }
+        	);
             
             if(tag){
             	var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
@@ -97,6 +102,8 @@ class Tag extends Base {
 				}, v: adjustTime});
 
                 line.cells[3] = Cell.create({component: Label, v: tag.label});
+
+                line.setId(tag.id);
             }
             this.ui.push(line);
         }

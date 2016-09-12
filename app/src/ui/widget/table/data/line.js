@@ -16,6 +16,9 @@ class Line {
 		this.expandLine = param.expandLine;
 	}
 	
+	setId(id){
+		this.id = id;
+	}
 	getCellAt(index){
 		return this.cells[index];
 	}

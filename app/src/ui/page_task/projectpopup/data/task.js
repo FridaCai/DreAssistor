@@ -26,14 +26,17 @@ module.exports = class Task extends Base {
 	ui2dm(project){
 		project.clearTasks();
 		for(var i=0; i<this.ui.length; i++){
-			var cells = this.ui[i].cells;
+			var line = this.ui[i];
+			var cells = line.cells;
 
+			var id = line.id;
 			var label = cells[2].v;
 			var startWeek = Math.abs(parseInt(cells[8].v));
 			var endWeek = Math.abs(parseInt(cells[9].v));
 
 			var task = new TaskData();
 			task.init({
+				id: id,
 				label: label,
 				startWeek: startWeek,
 				endWeek: endWeek,
@@ -63,9 +66,9 @@ module.exports = class Task extends Base {
 					Cell.create({isHide: true}),
 					Cell.create({component: Label, v: task.startWeek}),
 					Cell.create({component: Label, v: task.endWeek})
-				]
+				],
+				id: task.id
 			}));
-
 		}).bind(this));
 		this.ui = this.ui.reverse();
 	}

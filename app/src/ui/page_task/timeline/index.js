@@ -23,26 +23,46 @@ var AddOn = React.createClass({
     onAdd: function() {
         //API.signal_addProjectPopup_show.dispatch();
     },
-    onProjectClk: function(){
-        API.signal_projectpoup_show.dispatch({
-            project: this.props.project,
-            title:'编辑项目',
-            onOK: (function(project){
-                var projectObj = project.dump();
-                this.props.project.update(projectObj);
-                API.signal_page_refresh.dispatch();    
-            }).bind(this),
+    onContextMenu: function(e){
+        e.preventDefault();
+        
+        var project = this.props.project;
+        this.props.onContextMenu({ //todo.
+          left: e.clientX,
+          top: e.clientY,
+          btns: [{
+            label: '修改项目',
+            handler: function() {
+              API.signal_projectpopup_show.dispatch({
+                  title: '修改项目',
+                  project: project,
+                  onOK: (function(project){
+                    API.signal_edit_project.dispatch({
+                      project: project
+                    });
+                  }).bind(this),
+              });
+            }
+          },{
+            label: '删除项目',
+            handler: function() {
+              API.signal_delete_project.dispatch({
+                project: project
+              });
+            }
+          }]
         });
     },
     render: function() {
         var project = this.props.project;
         return (
             <div>
-                <div onClick={this.onProjectClk}>
+                <div style={{cursor: 'pointer'}} 
+                    onClick={this.onContextMenu} 
+                    onContextMenu = {this.onContextMenu}>
                     <h3>{project.label}</h3>
                 </div>
             </div>
-            
         )
     }
 });
@@ -145,8 +165,10 @@ var CTimeLine = React.createClass({
 
 
         var addOn = React.createElement(AddOn, {
-            project: this.props.project   
+            project: this.props.project,
+            onContextMenu: this.onContextMenu,
         });
+
         var sidebarWidth = $(window).width() * 0.2;
         return (
             <div className='timeline' style={{position:'relative', clear:'both'}} ref='timeline'>

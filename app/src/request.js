@@ -80,11 +80,24 @@ var putData = function(url, data, options) {
         $.ajax(params);
     });
 };
-
+var deleteData = function(url, options) {
+    options = options || {};
+    return new Promise(function(resolve, reject) {
+        var params = {
+            url: url,
+            type: 'DELETE',
+            success: resolve,
+            error: reject
+        };
+        $.extend(params, options);
+        $.ajax(params);
+    });
+};
 module.exports = {
 	postData: postData,
 	getData: getData,
     putData: putData,
+    deleteData: deleteData,
 	getBackendAPI: getBackendAPI,
 	getMockupAPI: getMockupAPI,
 }
