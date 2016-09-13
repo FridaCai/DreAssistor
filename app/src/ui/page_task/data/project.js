@@ -4,7 +4,7 @@ import {SingleParam} from './template/mix.js';
 import Tags from './tags.js';
 import Tasks from './tasks.js';
 import Properties from './properties.js';
-import {Engines} from './engines.js';
+import Engines from './engines.js';
 
 module.exports = class Project{
 	static create(param){

@@ -39,12 +39,8 @@ class SingleParam{
 	}
 	constructor(){
 	}
-	init(param){ 
-		//undefined -- not need this property; 
-		//null -- just empty in template, to be set value.
-		this.label = param.label
+	update(param){
 		this.status = param.status;
-		this.refKey = param.refKey;
 		this.attachments =  param.attachment ? Attachments.create(param.attachment): undefined;
 		this.value = param.value;
 		this.curve = param.curve ? Curve.create(param.curve) : undefined;
@@ -52,8 +48,16 @@ class SingleParam{
 		this.text = param.text;
 		this.dropdown = param.dropdown;
 		this.time = param.time;
+	}
+	init(param){ 
+		//undefined -- not need this property; 
+		//null -- just empty in template, to be set value.
+		this.label = param.label;
+		this.refKey = param.refKey;
 		this.key = param.key;
 		this.id = param.id || Util.generateUUID();
+
+		this.update(param);
 	}
 
 	clone(){

@@ -1,8 +1,6 @@
-import Util from 'Util';
-import {SingleParam} from './template/mix.js';
-import {MultipleParam} from './template/mix.js';
+import Engine from './engine.js';
 
-var Engines = class Engines extends Array{
+module.exports = class Engines extends Array{
 	static create(param){
 		var engines = new Engines();
 		engines.init(param);
@@ -73,7 +71,7 @@ var Engines = class Engines extends Array{
 	              "label": "Pass By Requirement",
 	              "key": "PROJECT.ENGINE.PASS_BY_REQUIREMENT"
 	            },{
-	              "value": "",
+	              "value": 0,
 	              "label": "Warranty",
 	              "key": "PROJECT.ENGINE.WARRANTY"
 	            },{
@@ -176,39 +174,3 @@ var Engines = class Engines extends Array{
 		this.length = 0;
 	}
 }
-
-var Engine = class Engine{
-	static create(param){
-		var engine = new Engine();
-		engine.init(param);
-		return engine;
-	}
-
-	constructor(){
-
-	}
-
-	init(param){
-		this.id = param.id || Util.generateUUID();
-		this.properties = MultipleParam.create(param.properties);
-	}
-	clone(){
-		var param = this.dump();
-		return Engine.create(param);
-	}
-
-	
-	setParent(parent){
-		this.parent = parent;
-	}
-
-	dump(){
-		return {
-			id: Util.isUUID(this.id) ? undefined: this.id,
-			properties: this.properties.dump()
-		}
-	}
-}
-
-exports.Engines = Engines;
-exports.Engine = Engine;

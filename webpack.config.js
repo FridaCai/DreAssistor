@@ -59,7 +59,6 @@ module.exports = {
             MessageBox: path.join(__dirname, widgetPath, "/message/index.js"),
             Table: path.join(__dirname, widgetPath, "/table/index.js"),
             AttachmentList: path.join(__dirname, widgetPath, "/attachmentlist/index.js"),
-
         }
     }
 };

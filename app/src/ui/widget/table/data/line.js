@@ -9,6 +9,14 @@ class Line {
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
+		
+		this.meta = {}; //for other non-ui properties. eg: properyt key.
+		if(param.meta && param.meta.key){
+			this.meta.key = param.meta.key;
+		}
+
+
+
 		this.cells = param.cells;
 		this.cells.map((function(cell){
 			cell.setLine(this);

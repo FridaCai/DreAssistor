@@ -194,7 +194,7 @@ class MultipleParamUIData extends Base{
 					component: Input, 
 					param: {
 						onChange: function(v){
-							this.v = v;
+							this.v = parseFloat(v) || 0;
 						}, 
 						onBlur: function(){
 							MultipleParamUIData.signal_data_change.dispatch();

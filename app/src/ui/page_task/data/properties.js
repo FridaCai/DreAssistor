@@ -23,4 +23,9 @@ module.exports = class Properties extends Array{
 			return property.dump();
 		})
 	}
+	findById(id){
+		return this.find(function(property){
+			return property.id === id;	
+		})
+	}
 }

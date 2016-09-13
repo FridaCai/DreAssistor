@@ -16,7 +16,7 @@ import {SingleParam} from '../../data/template/mix.js';
 import {ExpandLine} from "Table";
 import {ExpandContainerDOM} from "Table";
 import {ExpandCellDOM} from "Table";
- 
+import {LineGroup} from "Table";
 import CurveComponent from '../../../component_curve/index.js';
 
 
@@ -24,6 +24,8 @@ import CurveComponent from '../../../component_curve/index.js';
 //todo: bad
 import MultipleParamUIData from "../../taskpopup/uidata/multipleparam.js";
 import DROPDOWN_OPTIONS from '../../../../config/dropdown.json';
+
+import Engine from '../../data/engine.js';
 
 class Property extends Base{
 	constructor(){
@@ -42,91 +44,76 @@ class Property extends Base{
 	}
 
 	ui2dm(dm){
-		dm.label = this.ui[0].getCellAt(1).getValue();
-		dm.sorp = this.ui[1].getCellAt(3).getValue();
+		var components = this.components;
 
-		var projectproperties = ["platform", "bodyStyle"];
-		var multipleParam = [];
-
-
-		var index = 0;
-		for(var i=2; i<2+projectproperties.length*2; i++){
-			var line = this.ui[i];
-
-			if(line instanceof ExpandLine)
-				continue;
-
-
-
-			var p = dm.properties[index++];
-			var id = p.id;
-			var key = p.key;
-
-
-
-			var singleParam = {key: key, id: id};
-			this.components.map(function(component, index){
-				singleParam[component] = line.getCellAt(index).getValue();	
+		var processProperty = function(l){
+			l.lines.map(function(line, index){
+				if(!(line instanceof ExpandLine)){
+					if(index === 0){
+						dm.label = line.getCellAt(1).getValue();
+					}
+					if(index === 2){
+						dm.sorp = line.getCellAt(3).getValue();					
+					}
+					if(index > 2){
+						var param = {};
+						components.map(function(component, index){
+							param[component] = line.getCellAt(index).getValue();
+						})
+						dm.properties.findById(line.id).update(param); //todo.
+					}
+				}
 			})
-			multipleParam.push(singleParam);
 		}
 
-		dm.properties = MultipleParam.create(multipleParam);
-
-		var addBtnLine = 1;
-		var editBtnLine = 1;
-		var enginepropertyNum = 22;
-		var projectProperyNum = 2 + projectproperties.length * 2; //2--label + sorp
-		var engineNum = (this.ui.length - projectProperyNum - addBtnLine) / (enginepropertyNum*2 + editBtnLine); //*2 --expand line for curve. TT . so bad...
-		
-
-		var engineParams= [];
-		for(var j=0; j<engineNum; j++){
-			var base = projectProperyNum + 1 + j * (enginepropertyNum*2 + 1);
+		var processEngine = function(lineGroup){
+			var engineId = lineGroup.id;
 
 			var properties = [];
+			lineGroup.lines.map(function(line){
+				if(!(line instanceof ExpandLine)){
+					var param = {};
+					components.map(function(component, index){
+						param[component] = line.getCellAt(index).getValue();
+					})
+					param.id = line.id;
+					param.key = line.meta.key;
+					properties.push(param);
+				}
+			})
 
 
 
-			var index = 0;
 
-			for(var k=0; k<enginepropertyNum*2; k++){
-				var line = this.ui[base+k]; //take care of expand line.
-				
-				if(line instanceof ExpandLine)
-					continue;
-
-				var p = dm.engines[j].properties[index++];
-				var id = p.id;
-				var key = p.key;
-
-
-				var property = {id: id, key: key};
-				this.components.map(function(component, index){
-					property[component] = line.getCellAt(index).getValue();
-				})
-				properties.push(property);
-			}
-
-
-			//todo: refactor ticky thing. each engine block should be a single table.
 			var engineParam = {
-				properties: properties,
-				id: dm.engines[j].id,
+				id: engineId,
+				properties: properties
 			}
-			engineParams.push(engineParam);
-
+			dm.engines.push(Engine.create(engineParam));
 		}
 
 
-		dm.engines.clear();
-		dm.engines.init(engineParams);
-
-        //sorp: ExcelUtil.convertYYYYMMDD2UnixTime(value);
+		dm.engines.length = 0;
+		this.ui.map(function(l, index){
+			if(l instanceof LineGroup){
+				if(index == 0){
+					processProperty(l);
+				}else{
+					processEngine(l)
+				}
+			}
+		})
 	}
 
 
 	getCellByComponent(component, project, property){
+		if(property[component] === undefined){
+			return Cell.create({
+				component:Label,
+				v:undefined
+			})
+		}
+
 		var key = property.key;
 		switch(component){
 			case COMPONENT_ENUM.LABEL:
@@ -222,7 +209,7 @@ class Property extends Base{
 					component: Input, 
 					param: {
 						onChange: function(v){
-							this.v = v;
+							this.v = parseFloat(v) || 0;
 						}, 
 						onBlur: function(){
 							MultipleParamUIData.signal_data_change.dispatch();
@@ -321,174 +308,128 @@ class Property extends Base{
 		})(this.components)
 
 
-
-		var labelCells = this.components.map(function(component){
-			if(component === COMPONENT_ENUM.LABEL){
-				return Cell.create({
-					component: Label,
-					v: '项目名称',
+		var generatePropertyUI = (function(){
+			var lineGroup = [];
+			[
+				SingleParam.create({
+					label: "项目名称",
+					text: project.label
+				}),
+				SingleParam.create({
+					label: "SORP",
+					time: project.sorp
 				})
-			}else if(component === COMPONENT_ENUM.TEXT){
-				return Cell.create({
-					component: Input, 
-					param: {
-						onChange: function(v){
-							this.v = v;
-						}, 
-						onBlur: function(){
-							MultipleParamUIData.signal_data_change.dispatch();
-						},
-			        	value: project.label,
-					}, 
-					v: project.label
-				});
-			}else{
-				return Cell.create({
-					component:Label,
-					v:undefined,
-				})
-			}
-		})
-
-		this.ui.push(Line.create({
-			cells: labelCells,
-			id: 'label'
-		}))
-
-		var sorpCells = this.components.map(function(component){
-			if(component === COMPONENT_ENUM.LABEL){
-				return Cell.create({
-					component: Label,
-					v: 'SORP',
-				})
-			}else if(component === COMPONENT_ENUM.TIME){
-				return Cell.create({
-        			component: Time,
-        			param: {
-        				value: project.sorp,
-        				onChange: function(time){
-        					this.v = time;
-        					MultipleParamUIData.signal_data_change.dispatch();
-        				}
-        				
-        			},
-        			v: project.sorp
-        		})
-			}else{
-				return Cell.create({
-					component:Label,
-					v:undefined,
-				})
-			}
-		})
-		this.ui.push(Line.create({
-			cells: sorpCells,
-			id: 'sorp'
-		}))
-
-
-		project.properties.map((function(property){
-			if(property instanceof SingleParam){
-				var key = property.key;
-				var cells = this.components.map((function(component){
-					if(property[component] == undefined){
-						return Cell.create({
-							component:Label,
-							v:undefined,
-						})
-					}
-					return this.getCellByComponent(component, null, property);
-				}).bind(this));	
-
-				var expandLine = needExpandLine ? ExpandLine.create({
-					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
-				}): null;
-
-				this.ui.push(Line.create({
-					cells: cells,
-					expandLine: expandLine,
-					id: property.id
-				}))
-
-				if(needExpandLine){
-					this.ui.push(expandLine);
-				}	
-			}
-			
-		}).bind(this));
-
-
-
-		var addEngineBtn = Cell.create({
-			component: ButtonGroup,
-			param: [{
-				value: '添加发动机',
-				onClick: function(){
-					Property.signal_add_engine.dispatch();
-				}
-			}]
-		});
-
-		this.ui.push(Line.create({
-			cells: [addEngineBtn]
-		}))
-		var engines = project.engines;
-
-
-
-		
-		engines.map((function(engine){
-			var engineId = engine.id;
-			var properties = engine.properties;
-
-			properties.map((function(property){
+			]
+			.concat(project.properties.map(function(sp){
+				return sp;
+			}))
+			.map((function(property){
 				if(property instanceof SingleParam){
 					var key = property.key;
-
 					var cells = this.components.map((function(component){
-						if(property[component] === undefined){
-							return Cell.create({
-								component:Label,
-								v:undefined
-							})
-						}
 						return this.getCellByComponent(component, null, property);
-					}).bind(this));
+					}).bind(this));	
 
 					var expandLine = needExpandLine ? ExpandLine.create({
 						cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
 					}): null;
 
-					this.ui.push(Line.create({
+
+					lineGroup.push(Line.create({
 						cells: cells,
 						expandLine: expandLine,
 						id: property.id
 					}))
 
 					if(needExpandLine){
-						this.ui.push(expandLine);
-					}
+						lineGroup.push(expandLine);
+					}	
 				}
-				
 			}).bind(this));
 
 
-			var cells = [Cell.create({
+			this.ui.push(LineGroup.create({
+				lines: lineGroup,
+			}))
+
+		}).call(this);
+
+
+		var generateEngineUI = (function(){
+			var addEngineBtn = Cell.create({
 				component: ButtonGroup,
 				param: [{
-					value: "复制",
+					value: '添加发动机',
 					onClick: function(){
-						Property.signal_copy_engine.dispatch({engine: engine});
-					}
-				},{
-					value: "删除",
-					onClick: function(){
-						Property.signal_delete_engine.dispatch({engine: engine});
+						Property.signal_add_engine.dispatch();
 					}
 				}]
-			})];
-			this.ui.push(Line.create({cells: cells, id: engine.id}))
-		}).bind(this))
+			});
+
+			this.ui.push(Line.create({
+				cells: [addEngineBtn]
+			}))
+
+			var engines = project.engines;
+			engines.map((function(engine){
+				var lineGroup = [];
+				engine.properties.map((function(property){
+					if(property instanceof SingleParam){
+						var cells = this.components.map((function(component){
+							return this.getCellByComponent(component, null, property);
+						}).bind(this));
+
+
+						var expandLine = needExpandLine ? ExpandLine.create({
+							cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+						}): undefined;
+
+						lineGroup.push(
+							Line.create({
+								cells: cells,
+								expandLine: expandLine,
+								id: property.id,
+								meta: {
+									key: property.key
+								}
+							})
+						)
+
+						if(needExpandLine){
+							lineGroup.push(expandLine);
+						}			
+					}
+				}).bind(this));
+				
+
+
+				this.ui.push(
+					LineGroup.create({
+						lines: lineGroup,
+						id: engine.id
+					})
+				);
+
+
+				var cells = [Cell.create({
+					component: ButtonGroup,
+					param: [{
+						value: "复制",
+						onClick: function(){
+							Property.signal_copy_engine.dispatch({engine: engine});
+						}
+					},{
+						value: "删除",
+						onClick: function(){
+							Property.signal_delete_engine.dispatch({engine: engine});
+						}
+					}]
+				})];
+				this.ui.push(
+					Line.create({cells: cells})
+				);
+			}).bind(this));
+		}).call(this);
 	}
 }
 

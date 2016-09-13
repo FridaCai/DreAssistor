@@ -4,6 +4,8 @@ import {LineDOM} from 'Table';
 import {CellDOM} from 'Table';
 import {ExpandLineDOM} from 'Table';
 import Util from 'Util';
+import {LineGroup} from 'Table';
+import {Line} from 'Table';
 
 import './style.less';
 
@@ -80,7 +82,16 @@ var TableDOM = React.createClass({
                 var lines = [];
                 for(var i=0; i<sheet.length; i++){
                     var line = sheet[i];                    
-                    lines.push(line);
+
+
+                    if(line instanceof LineGroup){
+                        var lineGroup = line;
+                        lineGroup.lines.map(function(l){
+                            lines.push(l);
+                        })
+                    }else if(line instanceof Line){
+                        lines.push(line);
+                    }
                 }
 
                 for(var i=0; i<lines.length; i++){
