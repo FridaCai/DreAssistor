@@ -162,7 +162,7 @@ var TaskPopup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox cName='taskPopup' width={700} title={title} onOK={this.onOK} ref='msgbox' children={content} isShow={true}/>);
+        return (<MessageBox cName='taskPopup' title={title} onOK={this.onOK} ref='msgbox' children={content} isShow={true}/>);
     },
 });
 

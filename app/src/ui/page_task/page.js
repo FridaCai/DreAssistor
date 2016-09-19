@@ -2,7 +2,7 @@ import CTimeLine from './timeline/index.js';
 import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
 import ProjectPopup from './projectpopup/ui/index.js';
-//import StaticalAssistorPopup from './statical_assistor_popup/index.js';
+import StaticalAssistorPopup from './statical_assistor_popup/index.js';
 //import PeopleAssistorPopup from './people_assistor_popup/index.js';
 import ContextMenu from './contextmenu.jsx';
 import MessageBox from 'MessageBox';
@@ -209,9 +209,9 @@ var PageTask = React.createClass({
         ReactDOM.render(<ProjectPopup title={param.title} project={param.project} onOK={param.onOK}/>, this.refs.popup);  
     },
     
-    onPropertyAssistorShow:function(){return;
+    onStaticalAssistorPopupShow:function(){
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<StaticalAssistorPopup title={'统计助手'}/>, this.refs.popup);   
+        ReactDOM.render(<StaticalAssistorPopup title={'助手'}/>, this.refs.popup);   
     },
     
     onPeopleAssistorShow:function(){return;
@@ -269,8 +269,7 @@ var PageTask = React.createClass({
 
                     <div className="btn-group" role="group" aria-label="Basic example"> 
                         <button type="button" className="btn btn-default" onClick={this.onAddProjectPopupShow}>添加项目</button> 
-                        <button type="button" className="btn btn-default" onClick={this.onPropertyAssistorShow}>查看属性助手</button> 
-                        <button type="button" className="btn btn-default" onClick={this.onPeopleAssistorShow}>查看前辈助手</button> 
+                        <button type="button" className="btn btn-default" onClick={this.onStaticalAssistorPopupShow}>助手</button> 
                     </div> 
 
 
