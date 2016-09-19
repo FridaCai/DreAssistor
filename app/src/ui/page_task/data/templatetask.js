@@ -1,6 +1,11 @@
 import Util from 'Util';
 
 module.exports = class TemplateTask{
+	static create(param){
+		var templateTask = new TemplateTask();
+		templateTask.init(param);
+		return templateTask;
+	}
 	constructor(){
 		
 	}

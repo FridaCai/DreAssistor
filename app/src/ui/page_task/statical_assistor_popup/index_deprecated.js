@@ -63,7 +63,7 @@ var StaticalAssistorPopup = React.createClass({
             var tasksFilterByType = API.getProjects().findTasks(condition);
             var dynamicColumns = API.getStaticalProperties(tasksFilterByType);
             return dynamicColumns;
-        }).call(this, API.getProjectArr());
+        }).call(this, API.getProjects());
 
         var getStaticalValueHandler = function(line, column){
             if(column === 'duration'){

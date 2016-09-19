@@ -1,28 +1,22 @@
 import TemplateTask from './templatetask.js';
 
-module.exports = class TemplateTasks {
+module.exports = class TemplateTasks extends Array{
 	constructor(){
-		this.arr = new Array();
+		super();
 	}
 
 	init(param){
 		param.map((function(task){
-			var t = new TemplateTask();
-			t.init(task);
-			this.arr.push(t);
+			this.push(TemplateTask.create(task));
 		}).bind(this))
 	}
 
-	getArr(){
-		return this.arr;
-	}
-
 	find(templateId){
-		return this.arr.find(function(task){
+		return this.find(function(task){
 			return task.template.type == templateId; //todo: drag template task(mule mrd) to timeline. templateid : int and string .
 		})
 	}
 	addTask(task){
-		this.arr.unshift(task);
+		this.unshift(task);
 	}
 }

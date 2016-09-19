@@ -12,7 +12,7 @@ var Table = React.createClass({
 		var allpropertyKeys = ['label', 'template.type'].concat(this.props.allpropertyKeys);
 		var getStaticalValueHandler = this.props.getStaticalValueHandler;
 
-        var groups = API.getProjectArr().map(function(project){
+        var groups = API.getProjects().map(function(project){
         	return {
         		label: project.label,
         		lines: project.findTasks(condition)

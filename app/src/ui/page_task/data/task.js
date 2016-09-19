@@ -47,7 +47,10 @@ module.exports = class Task {
 		this.privacy = param.privacy || 0;
 		this.attachments = Attachments.create(param.attachment);
 		this.subtasks = Subtasks.create(param.subtask);
-		this.template = param.template ? TemplateFactory.create(param.template): undefined;	
+		
+		if(param.template){
+			this.template = TemplateFactory.create(param.template);
+		}
 
 		//todo: bad.
 		/*this.statical = (function(templateType){

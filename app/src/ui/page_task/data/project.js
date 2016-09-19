@@ -35,13 +35,23 @@ module.exports = class Project{
 		this.label = param.label;
 		this.sorp = param.sorp;
 
-		this.tags = Tags.create(param.tags);
-		this.tags.setParent(this);
-		this.tasks = Tasks.create(param.tasks);
-		this.tasks.setParent(this);
+		if(param.tags){
+			this.tags = Tags.create(param.tags);
+			this.tags.setParent(this);
+		}
+		
+		if(param.tasks){
+			this.tasks = Tasks.create(param.tasks);
+			this.tasks.setParent(this);	
+		}
 
-		this.properties = param.properties ? Properties.create(param.properties): undefined;
-		this.engines = param.engines ? Engines.create(param.engines): undefined;
+		if(param.properties){
+			this.properties = Properties.create(param.properties);
+		}
+
+		if(param.engines){
+			this.engines = Engines.create(param.engines);
+		}
 	}
 	
 	addEngine(param){
@@ -98,6 +108,16 @@ module.exports = class Project{
 		return this.tags.getChildren(handler);
 	}
 
+	forEachTask(cb){
+		return this.tasks.map(function(task){
+			return cb(task);
+		})
+	}
+	forEachEngine(cb){
+		return this.engines.map(function(engine){
+			return cb(engine);
+		})
+	}
 	dump(){
 		return {
 			id: Util.isUUID(this.id) ? undefined: this.id,

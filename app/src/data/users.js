@@ -1,31 +1,19 @@
 import User from './user.js';
 
-module.exports = class Users {
+module.exports = class Users extends Array{
 	constructor(){
-		this.arr = new Array();
+		super();
 	}
 
 	init(param){
 		param.map((function(p){
-			var user = new User();
-			user.init(p);
-			this.arr.push(user);
+			this.push(User.create(p));
 		}).bind(this))
 	}
-
-	getArr(){
-		return this.arr;
-	}
-
-
 	
 	dump(){
-		var obj = [];
-
-		this.arr.map(function(project){
-			obj.push(project.dump());
-		});
-		
-		return JSON.stringify(obj);
+		return this.map(function(user){
+			return user.dump();
+		})
 	}
 }

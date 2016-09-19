@@ -19,10 +19,7 @@ module.exports = class Tasks extends Array{
 		}).bind(this))
 	}
 
-	/*getArr(){
-		return this.arr;
-	}
-
+/*
 	find(taskId){
 		return this.arr.find(function(task){
 			return task.id === taskId;

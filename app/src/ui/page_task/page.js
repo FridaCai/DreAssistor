@@ -281,7 +281,7 @@ var PageTask = React.createClass({
 
 
                     {
-                        API.getProjectArr().map(function(project){
+                        API.getProjects().map(function(project){
                             return (
                                 <CTimeLine project={project} key={project.id}/>
                             )

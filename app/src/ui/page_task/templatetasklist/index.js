@@ -81,7 +81,7 @@ var TemplateTaskList = React.createClass({
                 
 				<span className="label label-primary addTaskBtn" onClick={this.onAddTaskBtnClk}>+</span>
 				{
-					API.getTemplateTaskArr().map((function(task){
+					API.getTemplateTasks().map((function(task){
 						var id = task.id;
 						var label = task.label;
 						var style = {

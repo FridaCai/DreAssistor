@@ -26,7 +26,7 @@ var PeopleAssistorPopup = React.createClass({
         var selectedUser = users[this.state.selectedUserIndex];
         
         var filter = API.filterProjectsByUser(selectedUser);
-        var projects = API.getProjectArr();
+        var projects = API.getProjects();
 
         var userIndex = 0;
         return (

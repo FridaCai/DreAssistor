@@ -23,9 +23,7 @@ var API = {
 	getTemplateTasks: function(){
 		return this._templateTasks;
 	},
-	getTemplateTaskArr: function(){
-		return this._templateTasks.getArr();
-	},
+
 
 	_projects: new Projects(),
 	setProjects: function(value){
@@ -35,13 +33,7 @@ var API = {
 	getProjects: function(){
 		return this._projects;
 	},
-	getProjectArr: function(){
-		return this._projects.getArr();
-	},
-
-
-
-
+	
 
 	_templateEnum: undefined,
 	setTemplateEnum:function(value){
@@ -73,15 +65,12 @@ var API = {
 	getUsers:function(){
 		return this._users;
 	},
-	getUserArr: function(){
-		return this._users.getArr();
-	},
 	setUsers:function(userobjs){
 		this._users = new Users();
 		this._users.init(userobjs);
 	},
 	findUserById: function(id){
-		var user = this.getUserArr().find(function(user){
+		var user = this.getUsers().find(function(user){
 			return user.id === id;
 		})
 		return user;
@@ -91,7 +80,7 @@ var API = {
 	//go through each project and return unduplicated users in the tasks of project
 	findUsersHaveProject(){
 		var userIds = [];
-		this.getProjectArr().map(function(p){
+		this.getProjects().map(function(p){
 			p.findTasks().map(function(t){
 				var creatorId = t.creatorId;
 				if(userIds.indexOf(creatorId) === -1){
@@ -124,7 +113,7 @@ var API = {
 	**/
 	filterProjectsByUser:function(user){
 		var filtered = {};
-		var projects = API.getProjectArr();
+		var projects = API.getProjects();
 		for(var i=0; i<projects.length; i++){
 			var project = projects[i];
 			var condition = user ? {key: 'creatorId', value: user.id}: user;

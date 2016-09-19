@@ -1,4 +1,10 @@
 module.exports = class User {
+	static create(param){
+		var user = new User();
+		user.init(param);
+		return user;
+	}
+	
 	constructor(){
 		
 	}

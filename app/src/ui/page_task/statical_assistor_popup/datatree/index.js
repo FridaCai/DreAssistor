@@ -4,7 +4,7 @@
 import { StyleRoot } from 'radium';
 import {Treebeard, decorators} from 'Tree';
 
-import data from './data';
+import data from './data'; //for testing.
 import styles from './styles';
 import * as filters from './filter';
 
@@ -57,6 +57,9 @@ class DataTree extends React.Component {
         node.active = true;
         if(node.children){ node.toggled = toggled; }
         this.setState({ cursor: node });
+
+        debugger;//send singal. node.instance.
+        
     }
     onFilterMouseUp(e){
         const filter = e.target.value.trim();
@@ -68,18 +71,6 @@ class DataTree extends React.Component {
     render(){
         return (
             <StyleRoot className='datatree'>
-                <div style={styles.searchBox}>
-                    <div className="input-group">
-                        <span className="input-group-addon">
-                          <i className="fa fa-search"></i>
-                        </span>
-                        <input type="text"
-                            className="form-control"
-                            placeholder="Search the tree..."
-                            onKeyUp={this.onFilterMouseUp.bind(this)}
-                        />
-                    </div>
-                </div>
                 <div style={styles.component}>
                     <Treebeard
                         data={this.state.data}
@@ -87,9 +78,7 @@ class DataTree extends React.Component {
                         decorators={decorators}
                     />
                 </div>
-                <div style={styles.component}>
-                    <NodeViewer node={this.state.cursor}/>
-                </div>
+               
             </StyleRoot>
 
         );

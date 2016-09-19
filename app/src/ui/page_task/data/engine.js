@@ -14,7 +14,17 @@ module.exports = class Engine{
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		this.properties = MultipleParam.create(param.properties);
+		if(param.properties){
+			this.properties = MultipleParam.create(param.properties);	
+		}
+	}
+	getLabel(){
+		if(this.properties){
+			var property = this.properties.findSingleParamByKey('PROJECT.ENGINE.LABEL');
+			return property.text;	
+		}else{
+			return '';
+		}
 	}
 	clone(){
 		var param = this.dump();
@@ -29,7 +39,7 @@ module.exports = class Engine{
 	dump(){
 		return {
 			id: Util.isUUID(this.id) ? undefined: this.id,
-			properties: this.properties.dump()
+			properties: this.properties ? this.properties.dump(): undefined,
 		}
 	}
 }

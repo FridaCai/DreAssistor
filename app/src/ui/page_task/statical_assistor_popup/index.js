@@ -1,7 +1,8 @@
 import DataTree from './datatree/index';
 import MessageBox from 'MessageBox';
 import Table from './table/index';
-
+import API from './api';
+import Request from 'Request';
 import './style.less';
 
 var StaticalAssistorPopup = React.createClass({
@@ -14,7 +15,10 @@ var StaticalAssistorPopup = React.createClass({
 	getContent: function() {
 	    return (
 	    	<div className='staticalassistorpopup'>
-				<DataTree />		    		
+	    		<div className='trees'>
+	    			<DataTree ref='tree'/>	
+					<DataTree ref='subtree'/>		    			
+	    		</div>
 				<div className='tableChart'>
 					<Table/>
 				</div>				
@@ -22,16 +26,25 @@ var StaticalAssistorPopup = React.createClass({
 	    );   
     },
 
-	/*
-	<div className='left'>
-					<SearchPanel/>
-					<DataTree/>					
-				</div>
-				<Table/>
-				<Chart/>
-	*/
+    componentDidMount: function(){
+    	//load data for tree.
+    	//when tree is toggele, load data for subtree.
 
+        Request.getData(Request.getBackendAPI('statical')).then((function(param){
+        	if(param.errCode == -1){
+        		API.setProjects(param.projects);
+        	
+        		var projects = API.getProjects();
+	        	var treeData = API.convertProjects2TreeData(projects); //todo. 
 
+				//todo: render tree according 2 tree data.
+				//todo: bind dm for ui activity.
+	        	this.refs.tree.setState({data: treeData});
+        	}
+        }).bind(this)).catch(function(e){
+            console.error(e.stack);
+        });
+    },
 
 	render() {
         var content = this.getContent();
