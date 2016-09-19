@@ -1,5 +1,7 @@
 import DataTree from './datatree/index';
 import MessageBox from 'MessageBox';
+import Table from './table/index';
+
 import './style.less';
 
 var StaticalAssistorPopup = React.createClass({
@@ -11,7 +13,12 @@ var StaticalAssistorPopup = React.createClass({
 
 	getContent: function() {
 	    return (
-			<DataTree className='datatree'/>					
+	    	<div className='staticalassistorpopup'>
+				<DataTree />		    		
+				<div className='tableChart'>
+					<Table/>
+				</div>				
+	    	</div>
 	    );   
     },
 

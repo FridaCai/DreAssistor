@@ -67,7 +67,7 @@ class DataTree extends React.Component {
     }
     render(){
         return (
-            <StyleRoot>
+            <StyleRoot className='datatree'>
                 <div style={styles.searchBox}>
                     <div className="input-group">
                         <span className="input-group-addon">

@@ -24,7 +24,7 @@ const Toggle = (props) => {
     let points = `0,0 0,${height} ${width},${midHeight}`;
 
     var s = $.extend({
-        transform: 'rotateZ(${rotateZDegree}deg)'
+        transform: `rotateZ(${rotateZDegree}deg)`
     }, style.base);
 
     return (
