@@ -15,12 +15,20 @@ Loading.propTypes = {
 
 const Toggle = (props) => {
     const style = props.style;
+    const rotateZDegree = props.rotateZDegree;
+
+    
     const height = style.height;
     const width = style.width;
     let midHeight = height * 0.5;
     let points = `0,0 0,${height} ${width},${midHeight}`;
+
+    var s = $.extend({
+        transform: 'rotateZ(${rotateZDegree}deg)'
+    }, style.base);
+
     return (
-        <div style={style.base}>
+        <div style={s} >
             <div style={style.wrapper}>
                 <svg height={height} width={width}>
                     <polygon
@@ -77,12 +85,9 @@ class Container extends React.Component {
     }
     renderToggleDecorator(){
         var {style, decorators, animations} = this.props;
-
-        var s = $.extend({}, style.toggle);
         var degree = animations.toggle.animation.rotateZ;
-        s.base.transform = `rotateZ(${degree}deg)`;
 
-        return (<decorators.Toggle style={s}/>);
+        return (<decorators.Toggle style={style.toggle} rotateZDegree={degree}/>);
     }
 }
 

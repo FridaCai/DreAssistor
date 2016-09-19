@@ -1,15 +1,17 @@
 'use strict';
 
-//import { StyleRoot } from 'radium'; //todo.
+
+import { StyleRoot } from 'radium';
 import {Treebeard, decorators} from 'Tree';
+
 import data from './data';
-//import styles from './styles'; //todo.
+import styles from './styles';
 import * as filters from './filter';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
 // Example: Customising The Header Decorator To Include Icons
-/*decorators.Header = (props) => {
+decorators.Header = (props) => {
     const style = props.style;
     const iconType = props.node.children ? 'folder' : 'file-text';
     const iconClass = `fa fa-${iconType}`;
@@ -22,18 +24,18 @@ const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
             </div>
         </div>
     );
-};*/
+};
 
 class NodeViewer extends React.Component {
     constructor(props){
         super(props);
     }
     render(){
-        //const style = styles.viewer; //todo.
+        const style = styles.viewer;
         let json = JSON.stringify(this.props.node, null, 4);
         if(!json){ json = HELP_MSG; }
         return (
-            <div className='style.base'>
+            <div style={style.base}>
                 {json}
             </div>
         );
@@ -65,11 +67,31 @@ class DataTree extends React.Component {
     }
     render(){
         return (
+            <StyleRoot>
+                <div style={styles.searchBox}>
+                    <div className="input-group">
+                        <span className="input-group-addon">
+                          <i className="fa fa-search"></i>
+                        </span>
+                        <input type="text"
+                            className="form-control"
+                            placeholder="Search the tree..."
+                            onKeyUp={this.onFilterMouseUp.bind(this)}
+                        />
+                    </div>
+                </div>
+                <div style={styles.component}>
                     <Treebeard
                         data={this.state.data}
                         onToggle={this.onToggle}
                         decorators={decorators}
                     />
+                </div>
+                <div style={styles.component}>
+                    <NodeViewer node={this.state.cursor}/>
+                </div>
+            </StyleRoot>
+
         );
     }
 }
