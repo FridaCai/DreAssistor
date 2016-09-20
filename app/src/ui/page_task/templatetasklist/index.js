@@ -47,33 +47,13 @@ var TemplateTaskList = React.createClass({
     	}).bind(this));
     },
 
-    onDrag: function(){
-        console.log('task: onDrag');
-    },
-    onDragEnd: function(e){
-        
-        console.log('task: onDragEnd')
-    },
-    onDragEnter: function(){
-        console.log('task: onDragEnter')
-    },
-    onDragExit: function(){
-        //never called...
-        console.log('task: onDragExit')
-    },
-    onDragLeave: function(){
-        console.log('task: onDragLeave')
-    },
     onDragOver: function(e){
       e.preventDefault(); //otherwise, ondrop does not work.
     },
     onDragStart: function(task, e){
         e.dataTransfer.setData("text", task.template.type);
     },
-    onDrop: function(){
-        //never called...
-        console.log('task: onDrop')
-    },
+   
     render: function() {
         //<MessageBox ref='msgbox' msg='想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.'/>
         return (
@@ -90,15 +70,8 @@ var TemplateTaskList = React.createClass({
 						return (
 							<a draggable='true' className='task' style={style} key={id}
 									onClick={this.onEditTaskClk.bind(this, task)}
-                                        onDrag={this.onDrag}
-                                        onDragEnd={this.onDragEnd}
-                                        onDragEnter={this.onDragEnter}
-                                        onDragExit={this.onDragExit}
-                                        onDragLeave={this.onDragLeave}
                                         onDragOver={this.onDragOver}
-                                        onDragStart={this.onDragStart.bind(this, task)}
-                                        onDrop={this.onDrop}
-                                        >
+                                        onDragStart={this.onDragStart.bind(this, task)}>
 								{label}
 							</a>
 						)
