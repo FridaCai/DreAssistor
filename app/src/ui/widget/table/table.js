@@ -77,38 +77,38 @@ var TableDOM = React.createClass({
 
     getNonReverseTableDom:function(ui){
         var getSheetDom = (function(sheet){
-                var dom = [];
+            var dom = [];
 
-                var lines = [];
-                for(var i=0; i<sheet.length; i++){
-                    var line = sheet[i];                    
+            var lines = [];
+            for(var i=0; i<sheet.length; i++){
+                var line = sheet[i];                    
 
 
-                    if(line instanceof LineGroup){
-                        var lineGroup = line;
-                        lineGroup.lines.map(function(l){
-                            lines.push(l);
-                        })
-                    }else if(line instanceof Line){
-                        lines.push(line);
-                    }
+                if(line instanceof LineGroup){
+                    var lineGroup = line;
+                    lineGroup.lines.map(function(l){
+                        lines.push(l);
+                    })
+                }else if(line instanceof Line){
+                    lines.push(line);
                 }
+            }
 
-                for(var i=0; i<lines.length; i++){
-                    var line = lines[i];
-                    var key = line.id + '_' + Util.generateUUID(); 
-                    if(line instanceof ExpandLine){
-                        dom.push(<ExpandLineDOM line={line} key={key}/>);
-                    }else{
-                        dom.push(<LineDOM line={line} key={key}/>);    
-                    }
+            for(var i=0; i<lines.length; i++){
+                var line = lines[i];
+                var key = line.id + '_' + Util.generateUUID(); 
+                if(line instanceof ExpandLine){
+                    dom.push(<ExpandLineDOM line={line} key={key}/>);
+                }else{
+                    dom.push(<LineDOM line={line} key={key}/>);    
                 }
-                return dom;
-            }).bind(this);
+            }
+            return dom;
+        }).bind(this);
 
-            var getHeaderDom = (function(header){
-                return (<LineDOM line={header} key={header.id}/>)
-            }).bind(this);
+        var getHeaderDom = (function(header){
+            return (<LineDOM line={header} key={header.id}/>)
+        }).bind(this);
 
         return (
             <table className='customTable'>
@@ -123,44 +123,42 @@ var TableDOM = React.createClass({
         )
     },
     getReverseTableDom: function(ui){
-        var headers = ui.headers[this.state.sheetIndex];
-        var sheets = ui.sheets[this.state.sheetIndex];
+        var getSheetDom = function(){
+            
+            var headers = ui.headers[this.state.sheetIndex];
+            var sheets = ui.sheets[this.state.sheetIndex];
 
 
-        if(sheets.length === 0)
-            return;
+            if(sheets.length === 0)
+                return;
 
-        var table = [];
-        var rowNum = headers.cells.length;
-        var columnNum = sheets.length;
+            var dom = [];
+            var rowNum = headers.cells.length;
+            var columnNum = sheets.length;
 
-        for(var i=0; i<rowNum; i++){
-            var line = [];
+            for(var i=0; i<rowNum; i++){
+                var cells = [];
 
-            var headerCell = headers.cells[i];
-            !headerCell.isHide && line.push(headerCell);
+                var headerCell = headers.cells[i];
+                !headerCell.isHide && cells.push(headerCell);
 
-            for(var j=0; j<columnNum; j++){
-                var cell = sheets[j].cells[i];
-                !cell.isHide && line.push(cell);
+                for(var j=0; j<columnNum; j++){
+                    var cell = sheets[j].cells[i];
+                    !cell.isHide && cells.push(cell);
+                }
+
+                
+                var line = Line.create({cells: cells});
+                var key = line.id + '_' + Util.generateUUID(); 
+                dom.push(<LineDOM line={line} key={key}/>);    
             }
-            table.push(line);
+            return dom;
         }
 
         return (
             <table className='customTable'>
                 <tbody>
-                    {
-                        table.map(function(line, i){
-                            return (<tr key={i}>
-                            {
-                                line.map(function(cell, j){ //todo: width style.
-                                    return (<CellDOM key={cell.id} cell={cell} widthStyle={{width: '100px'}}/>)
-                                })
-                            }
-                            </tr>)
-                        })
-                    }
+                {getSheetDom.call(this)}
                 </tbody>
             </table>
         )
@@ -172,8 +170,6 @@ var TableDOM = React.createClass({
             return this.getNonReverseTableDom(ui);
         }
     },
-    
-
 
     render:function(){
         try{
@@ -227,7 +223,6 @@ var TableDOM = React.createClass({
         }
     },
 })
-
 
 module.exports = TableDOM;
 

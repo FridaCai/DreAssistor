@@ -65,12 +65,22 @@ class Container extends React.Component {
     constructor(props){
         super(props);
     }
+    onDragOver(e){
+        e.preventDefault();
+    }
+    onDragStart(){
+        console.log('drag start');
+    }
     render(){
         const {style, decorators, terminal, onClick, node} = this.props;
         return (
             <div
                 ref="clickable"
                 onClick={onClick}
+                onDragOver={this.onDragOver}
+                onDragStart={this.onDragStart}
+
+
                 style={style.container}>
                 { !terminal ? this.renderToggle() : null }
                 <decorators.Header

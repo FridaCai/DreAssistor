@@ -5,7 +5,23 @@ var CellDOM = React.createClass({
         widthStyle: this.props.widthStyle,  
       }
   	},
+    onDragOver(e){
+      e.preventDefault();
+    },
+    onDrop(){
 
+      /*
+      const [row, time] = this.rowAndTimeFromEvent(e)
+      if (row >= 0 && row < this.props.groups.length) {
+        var templateType = e.dataTransfer.getData('text');
+        e.dataTransfer.clearData();
+
+        if(!templateType)
+          return;
+
+        this.onAppendTask(parseInt(templateType), row, time);
+      */
+    },
     render(){
     	var {cell, widthStyle} = this.state;
     	var ref= 'component';
@@ -24,7 +40,14 @@ var CellDOM = React.createClass({
 	    });
 
       return (
-          <td key={cell.id} className={dom.displayName} style={widthStyle}>{el}</td>
+          <td key={cell.id} 
+            className={dom.displayName} 
+            style={widthStyle} 
+             onDragOver={this.onDragOver}
+             onDrop={this.onDrop}
+               >
+            {el}
+          </td>
       );
     }
 })
