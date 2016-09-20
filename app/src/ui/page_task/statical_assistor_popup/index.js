@@ -1,12 +1,13 @@
 import DataTree from './datatree/index';
 import MessageBox from 'MessageBox';
-import Table from './table/index';
-import API from './api';
+import {TableDOM} from 'Table';
+
 import Request from 'Request';
 import Project from '../data/project';
 import Task from '../data/task';
 import Engine from '../data/engine';
 import './style.less';
+import {API, TableData} from './api';
 
 var StaticalAssistorPopup = React.createClass({
 	getInitialState: function() {
@@ -16,6 +17,9 @@ var StaticalAssistorPopup = React.createClass({
     },
 
 	getContent: function() {
+        var uidata = {
+            curve: new TableData()
+        }
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
@@ -23,7 +27,7 @@ var StaticalAssistorPopup = React.createClass({
 					<DataTree ref='subtree'/>		    			
 	    		</div>
 				<div className='tableChart'>
-					<Table/>
+					<TableDOM uidata={uidata} isReverse={true}/>
 				</div>				
 	    	</div>
 	    );   

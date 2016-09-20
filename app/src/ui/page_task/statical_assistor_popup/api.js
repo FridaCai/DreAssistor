@@ -2,7 +2,53 @@ import Projects from '../data/projects';
 import Signal from 'Signal';
 import GloabalAPI from '../api.js';
 
-var API = {
+
+import {Base} from 'Table';
+import {Line} from 'Table';
+import {Cell} from 'Table';
+import Label from 'Label';
+import ButtonGroup from 'ButtonGroup';
+
+exports.TableData = class TableData extends Base{
+	constructor(){
+		super();
+
+		this.header = Line.create({cells: [
+			Cell.create({component: Label, v: ''}), 
+			Cell.create({component: Label, v: 'X'}), 
+			Cell.create({component: Label, v: 'Y1'}), 
+			Cell.create({component: Label, v: 'Y2'}), 
+		]});
+		this.sheetName = `曲线`;
+
+
+		this.ui.push(
+			Line.create({cells: [
+				Cell.create({component:ButtonGroup, param: [{
+						value: 'Btn',
+						onClick: function(){
+							console.log('here');
+						}
+				}]}),
+				Cell.create({component:Label, v: '0'}),
+				Cell.create({component:Label, v: '1'}),
+				Cell.create({component:Label, v: '2'})
+			]})
+		)
+	}
+	dump(){
+
+	}
+	ui2dm(dm){
+
+	}
+	dm2ui(dm){
+
+	}
+}
+
+
+exports.API = {
 	signal_treeNode_click: new Signal(),
 
 	_projects: undefined,
@@ -16,49 +62,36 @@ var API = {
 		return this._projects;
 	},
 
-	setSelectEntity_deprecated: function(type, obj){
-		var entity;
-		switch(type){
-			case 'project':
-				entity = this._projects.findProjectById(obj.id); //todo.
-				break;
-			case 'task':
-				entity = this._projects.findTaskById(obj.id); //todo.
-				break;
-			case 'engine':
-				entity = this._projects.findEngineById(obj.id); //todo.
-				break;
-		}
-		entity.update(obj);
-
-		this._selectedEntity = entity;
-	},
-
-	getSelectEntity_deprecated: function(){
-		return this._selectedEntity;
-	},
 
 	//dm 2 ui (tree data).
 	convertProjects2TreeData: function(projects){
 		var projectsUIData = projects.forEachProject(function(project){
 
-			var tasksUIData = project.forEachTask(function(task){ 
-				return {
-					instance: task, 
-					name: task.label
-				}
-			})
-			var enginesUIData = project.forEachEngine(function(engine){
-				return {
-					instance: engine,
-					name: engine.getLabel()//bad...
-				}
-			})
+			var tasksUIData = {
+				name: '豆豆', 
+				children: project.forEachTask(function(task){
+					return {
+						instance: task, 
+						name: task.label
+					}
+				})
+			}
+
+			var enginesUIData = {
+				name: '发动机',
+				children: project.forEachEngine(function(engine){
+					return {
+						instance: engine,
+						name: engine.getLabel()//bad...
+					}
+				})
+			};
+			
 
 			return {
 				instance: project,
 				name: project.label,
-				children: tasksUIData.concat(enginesUIData)
+				children: [tasksUIData, enginesUIData]
 			}
 		})
 		return {
@@ -165,7 +198,40 @@ var API = {
 		}
 	},
 	convertEngine2TreeData: function(engine){
-
+		var engineLabel = engine.properties.findSingleParamByKey('PROJECT.ENGINE.LABEL').text;
+		return {
+			name: engineLabel,
+			toggled: true,
+			children: engine.properties.map(function(property){
+				var children = [];
+				if(property.value != undefined){
+					children.push({
+						name: `数值: ${property.value}`
+					});
+				}
+				if(property.text){
+					children.push({
+						name: `文本: ${property.text}`
+					});
+				}
+				if(property.curve != undefined){
+					children.push({
+						name: `曲线: 略`
+					})
+				}
+				if(property.dropdown){
+					children.push({
+						name: `选项: ${property.dropdown}`
+					})	
+				}
+				
+				return {
+					name: property.label,
+					toggled: true,
+					children: children
+				}
+			})
+			
+		}
 	}
 }
-module.exports = API;

@@ -43,7 +43,7 @@ class SingleParam{
 		this.status = param.status;
 		this.attachments =  param.attachment ? Attachments.create(param.attachment): undefined;
 		this.value = param.value;
-		this.curve = param.curve ? Curve.create(param.curve) : undefined;
+		this.curve = param.curve == undefined ?  undefined: Curve.create(param.curve); 
 		this.images = param.image ? Images.create(param.image) : undefined;
 		this.text = param.text;
 		this.dropdown = param.dropdown;
