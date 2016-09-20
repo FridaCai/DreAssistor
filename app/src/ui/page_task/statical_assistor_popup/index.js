@@ -3,6 +3,9 @@ import MessageBox from 'MessageBox';
 import Table from './table/index';
 import API from './api';
 import Request from 'Request';
+import Project from '../data/project';
+import Task from '../data/task';
+import Engine from '../data/engine';
 import './style.less';
 
 var StaticalAssistorPopup = React.createClass({
@@ -25,10 +28,47 @@ var StaticalAssistorPopup = React.createClass({
 	    	</div>
 	    );   
     },
+    onTreeNodeClk: function(e, param){
+        //data can be cached here. once detail info has been queries, cache it.
+        var entity = param.entity;
+        if(!entity){ //a click from subtree rather than main tree.
+            return;
+        }
 
+        var id = entity.id;
+        var api, dm2uiHandler;
+
+        if(entity instanceof Project){
+            api = `statical/project/${id}`; //todo: backend api.
+            dm2uiHandler = API.convertProject2TreeData;
+        }else if(entity instanceof Task){
+            api = `statical/task/${id}`;
+            dm2uiHandler = API.convertTask2TreeData;
+        }else if(entity instanceof Engine){
+            api = `statical/engine/${id}`;
+            dm2uiHandler = API.convertEngine2TreeData;
+        }
+
+        Request.getData(Request.getBackendAPI(api)).then((function(param){
+            if(param.errCode == -1){
+                var obj = param.entity;
+
+                entity.update(obj); 
+
+                var treeData = dm2uiHandler(entity);
+                this.refs.subtree.setState({data: treeData});
+            }
+        }).bind(this)).catch(function(e){
+            console.error(e.stack);
+        });
+    },
+    componentWillUnmount: function(){
+        API.signal_treeNode_click.unlisten(this.onTreeNodeClk);
+    },
     componentDidMount: function(){
     	//load data for tree.
     	//when tree is toggele, load data for subtree.
+        API.signal_treeNode_click.listen(this.onTreeNodeClk);
 
         Request.getData(Request.getBackendAPI('statical')).then((function(param){
         	if(param.errCode == -1){

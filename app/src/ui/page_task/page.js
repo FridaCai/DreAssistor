@@ -152,7 +152,7 @@ var PageTask = React.createClass({
         }
 
         var creator = SuperAPI.getLoginUser();
-        var templateTask = API.getTemplateTasks().find(param.templateTaskId);
+        var templateTask = API.getTemplateTasks().findById(param.templateTaskId);
 
         var task = Task.create({   
             template:templateTask.template,
@@ -244,7 +244,8 @@ var PageTask = React.createClass({
         this.refresh(onlyMe);
     },
     refresh: function(onlyMe){
-        if(onlyMe){
+        var loginUser = SuperAPI.getLoginUser();
+        if(onlyMe && loginUser){
              Request.getData(Request.getBackendAPI('project'), {userId: SuperAPI.getLoginUser().id}).then((function(result){
                 if(result.errCode == -1){
                     API.setProjects(result.projects);    

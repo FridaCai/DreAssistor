@@ -11,7 +11,7 @@ module.exports = class TemplateTasks extends Array{
 		}).bind(this))
 	}
 
-	find(templateId){
+	findById(templateId){
 		return this.find(function(task){
 			return task.template.type == templateId; //todo: drag template task(mule mrd) to timeline. templateid : int and string .
 		})
@@ -19,4 +19,5 @@ module.exports = class TemplateTasks extends Array{
 	addTask(task){
 		this.unshift(task);
 	}
+	
 }

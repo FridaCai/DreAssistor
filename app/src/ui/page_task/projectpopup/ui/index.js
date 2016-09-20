@@ -115,7 +115,7 @@ var ProjectPopup = React.createClass({
             var id = this.props.project.id;
             Request.getData(Request.getBackendAPI(`project/${id}`)).then((function(result){
                 if(result.errCode == -1){
-                    var projectObj = result.projects[0];
+                    var projectObj = result.project;
                     var project = Project.create(projectObj);
                     API.setProject(project);    
                     API.dm2ui();

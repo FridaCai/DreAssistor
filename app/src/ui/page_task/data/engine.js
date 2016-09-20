@@ -11,12 +11,17 @@ module.exports = class Engine{
 	constructor(){
 
 	}
-
-	init(param){
-		this.id = param.id || Util.generateUUID();
+	update(param){
+		this._updateMeta(param);
+	}
+	_updateMeta(param){
 		if(param.properties){
 			this.properties = MultipleParam.create(param.properties);	
 		}
+	}
+	init(param){
+		this.id = param.id || Util.generateUUID();
+		this._updateMeta(param);
 	}
 	getLabel(){
 		if(this.properties){

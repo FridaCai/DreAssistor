@@ -24,6 +24,9 @@ var API = {
 		return this._templateTasks;
 	},
 
+	findTemplateByType: function(type){
+		return this._templateTasks.findById(type);
+	},
 
 	_projects: new Projects(),
 	setProjects: function(value){

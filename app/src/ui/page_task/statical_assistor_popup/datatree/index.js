@@ -7,6 +7,7 @@ import {Treebeard, decorators} from 'Tree';
 import data from './data'; //for testing.
 import styles from './styles';
 import * as filters from './filter';
+import API from '../api';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
@@ -58,8 +59,7 @@ class DataTree extends React.Component {
         if(node.children){ node.toggled = toggled; }
         this.setState({ cursor: node });
 
-        debugger;//send singal. node.instance.
-        
+        API.signal_treeNode_click.dispatch({entity: node.instance});
     }
     onFilterMouseUp(e){
         const filter = e.target.value.trim();

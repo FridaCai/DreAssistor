@@ -17,7 +17,7 @@ module.exports = class Project{
 
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		this.creatorId=param.creatorId;
+		
 		this._updateMeta(param);
 	}
 
@@ -34,6 +34,7 @@ module.exports = class Project{
 	_updateMeta(param){
 		this.label = param.label;
 		this.sorp = param.sorp;
+		this.creatorId = param.creatorId;
 
 		if(param.tags){
 			this.tags = Tags.create(param.tags);
