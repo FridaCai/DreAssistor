@@ -13,12 +13,13 @@ var StaticalAssistorPopup = React.createClass({
 	getInitialState: function() {
         return {
             title: this.props.title,
+            tableData: new TableData(),
         };
     },
 
 	getContent: function() {
-        var uidata = {
-            curve: new TableData()
+        var tableData = {
+            curve: this.state.tableData
         }
 	    return (
 	    	<div className='staticalassistorpopup'>
@@ -27,7 +28,7 @@ var StaticalAssistorPopup = React.createClass({
 					<DataTree ref='subtree'/>		    			
 	    		</div>
 				<div className='tableChart'>
-					<TableDOM uidata={uidata} isReverse={true}/>
+					<TableDOM uidata={tableData} isReverse={true}/>
 				</div>				
 	    	</div>
 	    );   
@@ -66,23 +67,18 @@ var StaticalAssistorPopup = React.createClass({
             console.error(e.stack);
         });
     },
+
     componentWillUnmount: function(){
         API.signal_treeNode_click.unlisten(this.onTreeNodeClk);
     },
     componentDidMount: function(){
-    	//load data for tree.
-    	//when tree is toggele, load data for subtree.
         API.signal_treeNode_click.listen(this.onTreeNodeClk);
 
         Request.getData(Request.getBackendAPI('statical')).then((function(param){
         	if(param.errCode == -1){
         		API.setProjects(param.projects);
-        	
         		var projects = API.getProjects();
-	        	var treeData = API.convertProjects2TreeData(projects); //todo. 
-
-				//todo: render tree according 2 tree data.
-				//todo: bind dm for ui activity.
+	        	var treeData = API.convertProjects2TreeData(projects); 
 	        	this.refs.tree.setState({data: treeData});
         	}
         }).bind(this)).catch(function(e){
@@ -98,7 +94,8 @@ var StaticalAssistorPopup = React.createClass({
         	onOK={this.onOK} 
         	ref='msgbox' 
         	children={content} 
-        	isShow={true}/>);
+        	isShow={true}
+            hideFooter={true}/>);
     },
 })
 

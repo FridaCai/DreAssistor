@@ -68,8 +68,18 @@ class Container extends React.Component {
     onDragOver(e){
         e.preventDefault();
     }
-    onDragStart(){
-        console.log('drag start');
+    onDragStart(node, e){
+        if(!node.draggable){
+            return;
+        }
+
+
+        //var propertyId = node.instance.id;
+        var param = {
+            label: node.name,
+            path: ''//ideally, path should be 'projectId=**&taskId=**&propertyId'
+        }
+        e.dataTransfer.setData("text", JSON.stringify(param));
     }
     render(){
         const {style, decorators, terminal, onClick, node} = this.props;
@@ -78,7 +88,7 @@ class Container extends React.Component {
                 ref="clickable"
                 onClick={onClick}
                 onDragOver={this.onDragOver}
-                onDragStart={this.onDragStart}
+                onDragStart={this.onDragStart.bind(this, node)}
 
 
                 style={style.container}>
