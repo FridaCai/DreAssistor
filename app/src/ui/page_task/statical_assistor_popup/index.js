@@ -68,7 +68,16 @@ var StaticalAssistorPopup = React.createClass({
             uidata: tableData
         })
     },
-
+    onTableLineMove: function(){
+        API.ui2dm();
+        var tableData = {
+            curve: API.getTabelUIData()
+        }
+        this.refs.table.update({
+            uidata: tableData
+        })
+        
+    },
 	getContent: function() {
         var tableData = {
             curve: API.getTabelUIData()
@@ -140,11 +149,13 @@ var StaticalAssistorPopup = React.createClass({
         API.signal_treeNode_click.unlisten(this.onTreeNodeClk);
         TableUIData.signal_treedata_dragin.unlisten(this.onTreeDataDragIn);
         TableUIData.signal_line_delete.unlisten(this.onTableLineDelete);
+        TableUIData.signal_line_move.unlisten(this.onTableLineMove);
     },
     componentDidMount: function(){
         API.signal_treeNode_click.listen(this.onTreeNodeClk);
         TableUIData.signal_treedata_dragin.listen(this.onTreeDataDragIn);
         TableUIData.signal_line_delete.listen(this.onTableLineDelete);
+        TableUIData.signal_line_move.listen(this.onTableLineMove);
 
         Request.getData(Request.getBackendAPI('statical')).then((function(param){
         	if(param.errCode == -1){

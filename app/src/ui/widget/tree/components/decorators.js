@@ -76,8 +76,11 @@ class Container extends React.Component {
 
         //var propertyId = node.instance.id;
         var param = {
-            label: node.name.split(':')[1].trim(),
-            path: ''//ideally, path should be 'projectId=**&taskId=**&propertyId'
+            target: 'treenode',
+            data: {
+                label: node.name.split(':')[1].trim(),
+                path: ''//ideally, path should be 'projectId=**&taskId=**&propertyId'    
+            }
         }
         e.dataTransfer.setData("text", JSON.stringify(param));
     }

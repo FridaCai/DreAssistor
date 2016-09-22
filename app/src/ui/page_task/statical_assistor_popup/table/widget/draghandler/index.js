@@ -1,36 +1,26 @@
 var DragHandler = React.createClass({
 	getInitialState: function() {
         return {
-            label: this.props.param.label,
         };
     },
-    onDragOver(e){
-      e.preventDefault();
-    },
-    onDrop(e){
-        /*var transferText = e.dataTransfer.getData('text');
-        if(!transferText)
-            return;
-        
-        var data = JSON.parse(transferText);
-        var handler = this.props.param.onDragDataIn;
-        var scope = this.props.param.scope;
-        handler && handler.call(scope, data);
 
-        //to avoid refresh the whole table.
-        this.setState({
-        	label: data.label,
-        	path: data.path
-        })*/
+    onDragOver: function(e){
+        e.preventDefault(); //otherwise, ondrop does not work.
     },
+    onDragStart: function(e){
+        var scope = this.props.param.scope;
+        var handler = this.props.param.onDragStart;
+        handler && handler.call(scope, e);
+    },
+   
     
 	render(){
-		var label = this.state.label;
+		var label = this.props.param.label;
         return ( 
-            <button
+            <button draggable='true' 
                 className="btn btn-primary btn-xs draghandler" 
-                onDragOver={this.onDragOver}
-                onDrop={this.onDrop}>
+                onDragStart={this.onDragStart}
+                onDragOver={this.onDragOver}>
                 {label}
             </button>
     	)

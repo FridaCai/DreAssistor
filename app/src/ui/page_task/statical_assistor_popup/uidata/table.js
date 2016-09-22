@@ -21,15 +21,31 @@ class TableData extends Base{
 		]});
 	}
 	
-	onMove(){
-
+	getLinePos(line){
+		var pos;
+		this.ui.map(function(_line, index){
+			if(line.id === _line.id){
+				pos = index;
+			}
+		})
+		return pos;
 	}
-	
-	onDelete(){
-
+	findLineById(lineId){
+		return this.ui.find(function(_line){
+			return lineId === _line.id;
+		})
 	}
-	
+
+	deleteLine(line){
+		var pos = this.getLinePos(line);
+		this.ui.splice(pos, 1);
+	}
+	insertLineBefore(line, posLine){
+		var pos = this.getLinePos(posLine);
+		this.ui.splice(pos, 0, line); 
+	}
 	_getDataComponent(param){
+		var self = this;
 		return Cell.create({
 			component: LinkButton, 
 			param: {
@@ -37,9 +53,20 @@ class TableData extends Base{
 				onClick: function(){
 					 //todo: navigate back to tree
 				},
-				onDragDataIn:function(data){
+				dragDataFromTree:function(data){
 					this.v = data;
 					TableData.signal_treedata_dragin.dispatch();
+				},
+				dragDataFromDragHandler: function(data){
+					var dragStartLineId = data.lineId;
+
+					var dragStartLine = self.findLineById(dragStartLineId);
+					var dragEndLine = this.line;
+					
+					self.deleteLine(dragStartLine);
+					self.insertLineBefore(dragStartLine, dragEndLine);
+
+					TableData.signal_line_move.dispatch();
 				}
 			},
 			v: param
@@ -54,6 +81,16 @@ class TableData extends Base{
 					component: DragHandler,
 					param: {
 						label: '移动',
+						onDragStart: function(e){
+							var line = this.line;
+							var obj = {
+								target: 'draghandler',
+								data: {
+									lineId: line.id
+								}
+							}
+							e.dataTransfer.setData("text", JSON.stringify(obj));
+						}
 					}
 				}, {
 					component: Button,
@@ -128,6 +165,8 @@ class TableData extends Base{
 
 TableData.signal_treedata_dragin = new Signal();
 TableData.signal_line_delete = new Signal();
+TableData.signal_line_move = new Signal();
+
 module.exports = TableData;
 
 

@@ -14,17 +14,35 @@ var LinkButton = React.createClass({
         if(!transferText)
             return;
         
-        var data = JSON.parse(transferText);
-        var handler = this.props.param.onDragDataIn;
+        var param = JSON.parse(transferText);
+
+        switch(param.target){
+            case 'treenode':
+                this.dragDataFromTree(param.data);
+                break;
+            case 'draghandler':
+                this.dragDataFromDragHandler(param.data);
+                break;
+        }
+    },
+
+    dragDataFromTree(data){
+         //to avoid global refresh.
+        this.setState({
+            label: data.label,
+            path: data.path
+        })
+        var handler = this.props.param.dragDataFromTree;
         var scope = this.props.param.scope;
         handler && handler.call(scope, data);
-
-        //to avoid refresh the whole table.
-        this.setState({
-        	label: data.label,
-        	path: data.path
-        })
     },
+
+    dragDataFromDragHandler(data){
+        var handler = this.props.param.dragDataFromDragHandler;
+        var scope = this.props.param.scope;
+        handler && handler.call(scope, data);  
+    },
+
     onClick(){
     	var handler = this.props.param.onClick;
 		var scope = this.props.param.scope;
