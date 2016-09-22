@@ -2,7 +2,6 @@ import './style.less';
 
 import DataTree from './tree/index';
 import MessageBox from 'MessageBox';
-import ButtonGroup from 'ButtonGroup';
 import {TableDOM} from 'Table';
 
 import Request from 'Request';
@@ -13,6 +12,7 @@ import Engine from '../data/engine';
 import API from './api';
 import TreeUIData from './uidata/tree';
 import TableUIData from './uidata/table';
+import Button from 'Button';
 
 var StaticalAssistorPopup = React.createClass({
 	getInitialState: function() {
@@ -72,14 +72,16 @@ var StaticalAssistorPopup = React.createClass({
 	getContent: function() {
         var tableData = {
             curve: API.getTabelUIData()
-        }
-        var btnGroupParam = [{
-            value: '新建一列',
-            onClick: this.appendNewTableLLine
-        },{
-            value: '清空数据',
-            onClick: this.clearTable
-        }];
+        };
+        var newLineBtnParam = {
+            label: '新建一列',
+            onClick: this.appendNewTableLLine    
+        };
+        var clearTableBtnParam = {
+            label: '清空数据',
+            onClick: this.clearTable    
+        };
+
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
@@ -87,7 +89,8 @@ var StaticalAssistorPopup = React.createClass({
 					<DataTree ref='subtree'/>		    			
 	    		</div>
 				<div className='tableChart'>
-                    <ButtonGroup param={btnGroupParam}/>
+                    <Button param={newLineBtnParam}/>
+                    <Button param={clearTableBtnParam}/>
 					<TableDOM uidata={tableData} isReverse={true} ref='table'/>
 				</div>				
 	    	</div>

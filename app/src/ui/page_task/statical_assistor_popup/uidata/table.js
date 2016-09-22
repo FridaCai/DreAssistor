@@ -2,10 +2,12 @@ import {Base} from 'Table';
 import {Line} from 'Table';
 import {Cell} from 'Table';
 import Label from 'Label';
-import ButtonGroup from 'ButtonGroup';
+import Group from 'Group';
+import Button from 'Button';
 import LinkButton from '../table/widget/linkbutton/index';
 import API from '../api';
 import Signal from 'Signal';
+import DragHandler from '../table/widget/draghandler/index';
 
 class TableData extends Base{
 	constructor(){
@@ -47,19 +49,22 @@ class TableData extends Base{
 		var self = this;
 		return Cell.create(
 			{
-				component: ButtonGroup, 
+				component: Group, 
 				param: [{
-					value: '移动',
-					onClick: function(){ //todo: actually, it should be drag and drop
-						this.onMove.bind(target)
+					component: DragHandler,
+					param: {
+						label: '移动',
 					}
 				}, {
-					value: '删除',
-					onClick: function(){
-						var line = this.line;
-						self.deleteLine(line);
+					component: Button,
+					param: {
+						label: '删除',
+						onClick: function(){
+							var line = this.line;
+							self.deleteLine(line);
 
-						TableData.signal_line_delete.dispatch();
+							TableData.signal_line_delete.dispatch();
+						}	
 					}
 				}]
 			}

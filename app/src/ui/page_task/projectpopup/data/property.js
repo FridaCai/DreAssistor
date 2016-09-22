@@ -4,7 +4,8 @@ import {Line} from 'Table';
 import {Base} from 'Table';
 import Signal from 'Signal';
 import Label from 'Label';
-import ButtonGroup from 'ButtonGroup';
+import Button from 'Button';
+import Group from 'Group';
 import Input from 'Input';
 import Time from 'Time';
 import AttachmentList from 'AttachmentList';
@@ -357,13 +358,13 @@ class Property extends Base{
 
 		var generateEngineUI = (function(){
 			var addEngineBtn = Cell.create({
-				component: ButtonGroup,
-				param: [{
-					value: '添加发动机',
+				component: Button,
+				param: {
+					label: '添加发动机',
 					onClick: function(){
 						Property.signal_add_engine.dispatch();
 					}
-				}]
+				}
 			});
 
 			this.ui.push(Line.create({
@@ -412,16 +413,22 @@ class Property extends Base{
 
 
 				var cells = [Cell.create({
-					component: ButtonGroup,
+					component: Group,
 					param: [{
-						value: "复制",
-						onClick: function(){
-							Property.signal_copy_engine.dispatch({engine: engine});
+						component: Button,
+						param: {
+							label: "复制",
+							onClick: function(){
+								Property.signal_copy_engine.dispatch({engine: engine});
+							}
 						}
 					},{
-						value: "删除",
-						onClick: function(){
-							Property.signal_delete_engine.dispatch({engine: engine});
+						component: Button,
+						param: {
+							label: "删除",
+							onClick: function(){
+								Property.signal_delete_engine.dispatch({engine: engine});
+							}
 						}
 					}]
 				})];
