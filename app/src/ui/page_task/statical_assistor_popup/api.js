@@ -5,7 +5,6 @@ import GloabalAPI from '../api.js';
 import TCDM from './data/table';
 import TableUIData from './uidata/table';
 
-
 var API = {
 	signal_treeNode_click: new Signal(),
 	signal_table_refresh: new Signal(),
@@ -38,9 +37,6 @@ var API = {
 		return this._tabelUIData;
 	},
 
-
-
-
 	dm2ui: function(){
 		this._tabelUIData.dm2ui(this._tcDM);
 	},
@@ -48,13 +44,20 @@ var API = {
 		this._tabelUIData.ui2dm(this._tcDM);	
 	},
 	appendNewTableLine: function(){
-		this._tcDM.sheets[0].x.push({label: '请拖入数据', path: ''});
-		this._tcDM.sheets[0].y1.push({label: '请拖入数据', path: ''});
-		this._tcDM.sheets[0].y2.push({label: '请拖入数据', path: ''});
+		this._tcDM.sheets[0].appendLine();
+
+
+		
 	},
 	clearTable: function(){
 		this._tcDM.reset();	
 	}
+
 	
+}
+
+window.statical={
+	tcdm: API._tcDM,
+	tableui: API._tabelUIData
 }
 module.exports = API;

@@ -124,7 +124,6 @@ var TableDOM = React.createClass({
     },
     getReverseTableDom: function(ui){
         var getSheetDom = function(){
-            
             var headers = ui.headers[this.state.sheetIndex];
             var sheets = ui.sheets[this.state.sheetIndex];
 
@@ -146,10 +145,13 @@ var TableDOM = React.createClass({
                     var cell = sheets[j].cells[i];
                     !cell.isHide && cells.push(cell);
                 }
+                //cannot new Column and ColumnDOM.
+                //cannot use ColumnDOM since cannot draw table using column by html nature.
+                var line = {
+                    cells: cells
+                }
 
-                
-                var line = Line.create({cells: cells});
-                var key = line.id + '_' + Util.generateUUID(); 
+                var key = Util.generateUUID(); 
                 dom.push(<LineDOM line={line} key={key}/>);    
             }
             return dom;

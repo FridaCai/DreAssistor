@@ -15,13 +15,12 @@ class Line {
 			this.meta.key = param.meta.key;
 		}
 
-
-
 		this.cells = param.cells;
 		this.cells.map((function(cell){
 			cell.setLine(this);
 		}).bind(this));
 		this.expandLine = param.expandLine;
+
 	}
 	
 	setId(id){
@@ -49,6 +48,7 @@ class Line {
 			cell.param.isOpen = true;
 		}
 	}
+	
 }
 
 module.exports = Line;

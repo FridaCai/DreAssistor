@@ -50,31 +50,49 @@ class TableData extends Base{
 				component: ButtonGroup, 
 				param: [{
 					value: '移动',
-					onClick: (function(){ //todo: actually, it should be drag and drop
+					onClick: function(){ //todo: actually, it should be drag and drop
 						this.onMove.bind(target)
-					}).bind(this)
+					}
 				}, {
 					value: '删除',
-					onClick: (function(){
-						this.onDelete.bind(target);
-					}).bind(this)
+					onClick: function(){
+						var line = this.line;
+						self.deleteLine(line);
+
+						TableData.signal_line_delete.dispatch();
+					}
 				}]
 			}
 		)
 	}
 
+	deleteLine(line){
+		this.ui = this.ui.filter(function(l){
+			if(l.id === line.id){
+				return false;
+			}else return true;
+		})
+	}
 	dump(){
-
+		super.dump();
 	}
 	ui2dm(dm){
+		if(this.ui.length === 0){
+			dm.reset();
+			return;			
+		}
+
+		dm.clear();
 		this.ui.map((function(line, index){
 			var xCell = line.cells[1].getValue();
 			var y1Cell = line.cells[2].getValue();
 			var y2Cell = line.cells[3].getValue();
 
-			dm.sheets[0].x[index] = xCell;
-			dm.sheets[0].y1[index] = y1Cell;
-			dm.sheets[0].y2[index] = y2Cell;
+			dm.insert({
+				xCell: xCell,
+				y1Cell: y1Cell,
+				y2Cell: y2Cell
+			});
 		}).bind(this));
 	}
 	dm2ui(dm){
@@ -94,6 +112,7 @@ class TableData extends Base{
 						this._getDataComponent({label: y2.label, path: y2.path})
 					]});
 
+
 					this.ui.push(line);
 				}	
 			}
@@ -103,7 +122,7 @@ class TableData extends Base{
 }
 
 TableData.signal_treedata_dragin = new Signal();
-
+TableData.signal_line_delete = new Signal();
 module.exports = TableData;
 
 

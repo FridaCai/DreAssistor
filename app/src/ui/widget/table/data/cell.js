@@ -25,7 +25,7 @@ class Cell {
         this.isHide = param.isHide || false; //for occupation purpose.
         //this.v = (param.v == undefined || param.v === null) ? '' : param.v;
         this.v = param.v;
-        this.line = null;
+        this.line = param.line || null;
 	}
 
     setLine(line){
@@ -37,6 +37,7 @@ class Cell {
             value: this.v,
         }
     }
+
     getValue(){
         //var v =  (this.v && typeof this.v.dump === 'function' ? this.v.dump(): this.v);
 

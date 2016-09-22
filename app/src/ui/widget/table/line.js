@@ -9,7 +9,6 @@ var LineDOM = React.createClass({
 
 	render(){
 		var line = this.state.line;
-		var key = line.id;
 
 		var widthStyle = (function(line){
 			var cells = line.cells;

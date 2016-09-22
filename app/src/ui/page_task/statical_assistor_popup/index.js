@@ -1,6 +1,6 @@
 import './style.less';
 
-import DataTree from './datatree/index';
+import DataTree from './tree/index';
 import MessageBox from 'MessageBox';
 import ButtonGroup from 'ButtonGroup';
 import {TableDOM} from 'Table';
@@ -25,6 +25,14 @@ var StaticalAssistorPopup = React.createClass({
 
     onTreeDataDragIn: function(){
         API.ui2dm();
+        API.dm2ui();
+        
+        var tableData = {
+            curve: API.getTabelUIData()
+        }
+        this.refs.table.update({
+            uidata: tableData
+        })
     },
 
     appendNewTableLLine: function(){
@@ -50,7 +58,16 @@ var StaticalAssistorPopup = React.createClass({
             uidata: tableData
         })
     },
+    onTableLineDelete: function(){
+        API.ui2dm();
 
+        var tableData = {
+            curve: API.getTabelUIData()
+        }
+        this.refs.table.update({
+            uidata: tableData
+        })
+    },
 
 	getContent: function() {
         var tableData = {
@@ -119,10 +136,12 @@ var StaticalAssistorPopup = React.createClass({
     componentWillUnmount: function(){
         API.signal_treeNode_click.unlisten(this.onTreeNodeClk);
         TableUIData.signal_treedata_dragin.unlisten(this.onTreeDataDragIn);
+        TableUIData.signal_line_delete.unlisten(this.onTableLineDelete);
     },
     componentDidMount: function(){
         API.signal_treeNode_click.listen(this.onTreeNodeClk);
         TableUIData.signal_treedata_dragin.listen(this.onTreeDataDragIn);
+        TableUIData.signal_line_delete.listen(this.onTableLineDelete);
 
         Request.getData(Request.getBackendAPI('statical')).then((function(param){
         	if(param.errCode == -1){
