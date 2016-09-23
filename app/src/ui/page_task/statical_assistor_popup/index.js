@@ -12,7 +12,12 @@ import Engine from '../data/engine';
 import API from './api';
 import TreeUIData from './uidata/tree';
 import TableUIData from './uidata/table';
+import CurveUIData from './uidata/curve';
+
 import Button from 'Button';
+import Checkbox from 'Checkbox';
+
+import Chart from './chart/index';
 
 var StaticalAssistorPopup = React.createClass({
 	getInitialState: function() {
@@ -78,6 +83,11 @@ var StaticalAssistorPopup = React.createClass({
         })
         
     },
+    drawCurve: function(){
+        var dm = API.getTCDM();
+        var curveData = CurveUIData.convertDM2CurveData(dm);
+        this.refs.chart.update(curveData);
+    },
 	getContent: function() {
         var tableData = {
             curve: API.getTabelUIData()
@@ -90,6 +100,15 @@ var StaticalAssistorPopup = React.createClass({
             label: '清空数据',
             onClick: this.clearTable    
         };
+        var batchOperationCheckboxParam = {
+            isCheck: false,
+            label: '批处理',
+            onChange: function(){}
+        }
+        var drawCurveBtnParam = {
+            label: '画曲线',
+            onClick: this.drawCurve
+        }
 
 	    return (
 	    	<div className='staticalassistorpopup'>
@@ -100,7 +119,10 @@ var StaticalAssistorPopup = React.createClass({
 				<div className='tableChart'>
                     <Button param={newLineBtnParam}/>
                     <Button param={clearTableBtnParam}/>
+                    <Checkbox param={batchOperationCheckboxParam}/>
 					<TableDOM uidata={tableData} isReverse={true} ref='table'/>
+                    <Button param={drawCurveBtnParam}/>
+                    <Chart ref='chart' id='statical_assistor_popup_curve'/>
 				</div>				
 	    	</div>
 	    );   

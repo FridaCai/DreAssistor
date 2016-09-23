@@ -67,6 +67,7 @@ class SingleParam{
 		return singleParam;
 	}
 	dump(){
+		
 		return {
 			label: this.label,
 			status: this.status,

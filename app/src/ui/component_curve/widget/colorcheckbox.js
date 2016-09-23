@@ -1,6 +1,7 @@
 import './style.less';
 import Util from 'Util';
 import Curve from '../uidata/curve.js';
+import Checkbox from 'Checkbox';
 
 var ColorCheckbox = React.createClass({
 	getInitialState(){
@@ -25,9 +26,13 @@ var ColorCheckbox = React.createClass({
 		}
 		var label = this.state.label;
 
+		var checkboxParam = {
+			isCheck: isCheck,
+			onChange: this.onCheckboxChange
+		}
 		return (
 			<div className='colorcheckbox'>
-				<input type="checkbox" defaultChecked={isCheck} onChange={this.onCheckboxChange}></input>  
+				<Checkbox param={checkboxParam}/>
 				<span className='colorBlock' style={style}></span>	
 				<span>{label}</span>
 			</div>
@@ -36,3 +41,4 @@ var ColorCheckbox = React.createClass({
 })
 
 module.exports = ColorCheckbox;
+

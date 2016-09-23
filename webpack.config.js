@@ -50,6 +50,7 @@ module.exports = {
             Request: path.join(__dirname, toolPath, "/request.js"),
             CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
             Button: path.join(__dirname, widgetPath, "/button/index.js"),
+            Checkbox: path.join(__dirname, widgetPath, "/checkbox/index.js"),
             Group: path.join(__dirname, widgetPath, "/group/index.js"),
             ComboBox: path.join(__dirname, widgetPath, "/combobox/index.js"),
             Time: path.join(__dirname, widgetPath, "/time/index.js"),

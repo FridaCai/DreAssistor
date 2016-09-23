@@ -47,7 +47,6 @@ var Chart = React.createClass({
       var labels = ui.map(function(line){
         return line.cells[0].v;
       })
-      console.table(labels);
 
 
 
