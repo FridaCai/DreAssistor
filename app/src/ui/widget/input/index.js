@@ -10,8 +10,13 @@ var Input = React.createClass({
 			scope: this.props.param.scope,
 		}
 	},
+	getValue(){
+		return this.state.value;
+	},
 	onChange(e){
 		var value = e.target.value;
+		this.setState({value: value});
+		
 		var scope = this.state.scope;
 		this.state.onChange && this.state.onChange.call(scope, value);
 	},

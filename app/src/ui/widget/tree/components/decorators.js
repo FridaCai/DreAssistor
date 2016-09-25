@@ -68,18 +68,21 @@ class Container extends React.Component {
     onDragOver(e){
         e.preventDefault();
     }
+
+    /*
+    only node under property Class are draggable.
+    */
     onDragStart(node, e){
         if(!node.draggable){
             return;
         }
 
-
-        //var propertyId = node.instance.id;
+        var nodeId = node.instance.id;
         var param = {
             target: 'treenode',
             data: {
                 label: node.name.split(':')[1].trim(),
-                path: ''//ideally, path should be 'projectId=**&taskId=**&propertyId'    
+                path: `propertyId=${nodeId}`
             }
         }
         e.dataTransfer.setData("text", JSON.stringify(param));

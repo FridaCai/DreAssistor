@@ -27,6 +27,14 @@ var API = {
 	findTemplateByType: function(type){
 		return this._templateTasks.findById(type);
 	},
+	getAllTemplateTaskTypes: function(){
+		return this._templateTasks.map(function(templatetask){
+			return {
+				id: templatetask.template.type,
+				label: templatetask.label,
+			}
+		})
+	},
 
 	_projects: new Projects(),
 	setProjects: function(value){

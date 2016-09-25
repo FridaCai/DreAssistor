@@ -18,6 +18,7 @@ import Button from 'Button';
 import Checkbox from 'Checkbox';
 
 import Chart from './chart/index';
+import ConditionPanel from './conditionpanel/index';
 
 var StaticalAssistorPopup = React.createClass({
 	getInitialState: function() {
@@ -85,8 +86,8 @@ var StaticalAssistorPopup = React.createClass({
     },
     drawCurve: function(){
         var dm = API.getTCDM();
-        var curveData = CurveUIData.convertDM2CurveData(dm);
-        this.refs.chart.update(curveData);
+        var uidata = CurveUIData.convertDM2CurveData(dm);
+        this.refs.chart.update({uidata: uidata});
     },
 	getContent: function() {
         var tableData = {
@@ -110,9 +111,12 @@ var StaticalAssistorPopup = React.createClass({
             onClick: this.drawCurve
         }
 
+
+
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
+                    <ConditionPanel ref='conditionpanel' onOK={this.onSearch}/>
 	    			<DataTree ref='tree'/>	
 					<DataTree ref='subtree'/>		    			
 	    		</div>
@@ -128,7 +132,11 @@ var StaticalAssistorPopup = React.createClass({
 	    );   
     },
 
- 
+    onSearch: function(param){
+        console.log(JSON.stringify(param));
+        this.callAPI(param);
+    },
+    
     onTreeNodeClk: function(e, param){
         //data can be cached here. once detail info has been queries, cache it.
         var entity = param.entity;
@@ -164,9 +172,6 @@ var StaticalAssistorPopup = React.createClass({
         });
     },
 
-
-
-
     componentWillUnmount: function(){
         API.signal_treeNode_click.unlisten(this.onTreeNodeClk);
         TableUIData.signal_treedata_dragin.unlisten(this.onTreeDataDragIn);
@@ -179,18 +184,21 @@ var StaticalAssistorPopup = React.createClass({
         TableUIData.signal_line_delete.listen(this.onTableLineDelete);
         TableUIData.signal_line_move.listen(this.onTableLineMove);
 
-        Request.getData(Request.getBackendAPI('statical')).then((function(param){
-        	if(param.errCode == -1){
-        		API.setProjects(param.projects);
-        		var projects = API.getProjects();
-	        	var treeData = TreeUIData.convertProjects2TreeData(projects); 
-	        	this.refs.tree.setState({data: treeData});
-        	}
+        this.callAPI();
+    },
+    callAPI: function(param){
+        param = param || {};
+        Request.getData(Request.getBackendAPI('statical'), param).then((function(param){
+            if(param.errCode == -1){
+                API.setProjects(param.projects);
+                var projects = API.getProjects();
+                var treeData = TreeUIData.convertProjects2TreeData(projects); 
+                this.refs.tree.setState({data: treeData});
+            }
         }).bind(this)).catch(function(e){
             console.error(e.stack);
         });
     },
-
 	render() {
         var content = this.getContent();
         var title = this.state.title;

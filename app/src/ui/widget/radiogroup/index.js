@@ -14,7 +14,8 @@ var RadioGroup = React.createClass({
         return this.state.selectedId;
     },
     onChange: function(optionId){
-        this.props.param.onChange.call(this.props.param.scope, optionId);
+        this.setState({selectedId: optionId});
+        this.props.param.onChange && this.props.param.onChange.call(this.props.param.scope, optionId);
     },
     render: function(){
         var id = this.props.param.id;

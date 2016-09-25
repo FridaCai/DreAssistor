@@ -11,7 +11,9 @@ var ComboBox = React.createClass({
 		}
 		
 	},
-
+	getValue(){
+		return this.state.selectedId;
+	},
 	onToggle(){
 		var isOpen = !this.state.isOpen;
 		this.setState({isOpen: isOpen});
