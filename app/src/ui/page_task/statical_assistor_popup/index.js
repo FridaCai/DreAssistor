@@ -10,8 +10,9 @@ import Task from '../data/task';
 import Engine from '../data/engine';
 
 import API from './api';
-import TreeUIData from './uidata/tree';
+import TreeUIData from './uidata_tree/tree';
 import ValueTableUIData from './uidata/table_value';
+import CurveTableUIData from './uidata_curve/curve';
 import CurveUIData from './uidata/curve';
 
 import Button from 'Button';
@@ -33,11 +34,11 @@ var StaticalAssistorPopup = React.createClass({
         API.ui2dm();
         API.dm2ui();
         
-        var tableData = {
-            curve: API.getTabelUIData()
-        }
         this.refs.table.update({
-            uidata: tableData
+            uidata: {
+                value: API.getValueTableUIData(),
+                curve: API.getCurveTableUIData()
+            }
         })
     },
 
@@ -45,42 +46,47 @@ var StaticalAssistorPopup = React.createClass({
         API.appendNewTableLine();
 
         API.dm2ui();
-        var tableData = {
-            curve: API.getTabelUIData()
-        }
         this.refs.table.update({
-            uidata: tableData
+            uidata: {
+                value: API.getValueTableUIData(),
+                curve: API.getCurveTableUIData()
+            }
         })
+       
     },
     clearTable: function(){
         API.clearTable();
 
 
         API.dm2ui();
-        var tableData = {
-            curve: API.getTabelUIData()
-        }
         this.refs.table.update({
-            uidata: tableData
+            uidata: {
+                value: API.getValueTableUIData(),
+                curve: API.getCurveTableUIData()
+            }
         })
     },
-    onTableLineDelete: function(){
-        API.ui2dm();
+    onTableLineDelete: function(param){
+        var index = param.index;
+        API.deleteAt(index);
+        API.dm2ui();
 
-        var tableData = {
-            curve: API.getTabelUIData()
-        }
         this.refs.table.update({
-            uidata: tableData
+            uidata: {
+                value: API.getValueTableUIData(),
+                curve: API.getCurveTableUIData()
+            }
         })
     },
-    onTableLineMove: function(){
-        API.ui2dm();
-        var tableData = {
-            curve: API.getTabelUIData()
-        }
+    onTableLineMove: function(e, param){
+        var {startIndex, endIndex} = param;
+        API.move(startIndex, endIndex);
+        API.dm2ui();
         this.refs.table.update({
-            uidata: tableData
+            uidata: {
+                value: API.getValueTableUIData(),
+                curve: API.getCurveTableUIData()
+            }
         })
         
     },
@@ -90,8 +96,9 @@ var StaticalAssistorPopup = React.createClass({
         this.refs.chart.update({uidata: uidata});
     },
 	getContent: function() {
-        var tableData = {
-            curve: API.getTabelUIData()
+        var uidata = {
+            value: API.getValueTableUIData(),
+            curve: API.getCurveTableUIData()
         };
         var newLineBtnParam = {
             label: '新建一列',
@@ -121,16 +128,16 @@ var StaticalAssistorPopup = React.createClass({
 				<div className='tableChart'>
                     <Button param={newLineBtnParam}/>
                     <Button param={clearTableBtnParam}/>
-					<TableDOM uidata={tableData} isReverse={true} ref='table' onDrop={this.onTreeDataDragInTable}/>
+					<TableDOM uidata={uidata} ref='table'/>
                     <Button param={drawCurveBtnParam}/>
                     <Chart ref='chart' id='statical_assistor_popup_curve'/>
 				</div>				
 	    	</div>
 	    );   
     },
+/*<TableDOM uidata={uidata} ref='table' onDrop={this.onTreeDataDragInTable}/>*/
 
-
-
+/*
     onTreeDataDragInTable: function(dataTransfer){
         var transferText = dataTransfer.getData('text');
         if(!transferText)
@@ -157,12 +164,11 @@ var StaticalAssistorPopup = React.createClass({
         //append new table sheet.
         //obtain curve data.
     },
-
+*/
 
 
 
     onSearch: function(param){
-        console.log(JSON.stringify(param));
         this.callAPI(param);
     },
     
@@ -179,15 +185,12 @@ var StaticalAssistorPopup = React.createClass({
         if(entity instanceof Project){
             api = `statical/project/${id}`; //todo: backend api.
             dm2uiHandler = TreeUIData.convertProject2TreeData;
-            //API.setSelectedTreeEntity(entity);
         }else if(entity instanceof Task){
             api = `statical/task/${id}`;
             dm2uiHandler = TreeUIData.convertTask2TreeData;
-           // API.setSelectedTreeEntity(entity);
         }else if(entity instanceof Engine){
             api = `statical/engine/${id}`;
             dm2uiHandler = TreeUIData.convertEngine2TreeData;
-            //API.setSelectedTreeEntity(entity);
         }else{
             return;
         }
@@ -211,6 +214,8 @@ var StaticalAssistorPopup = React.createClass({
         ValueTableUIData.signal_treedata_dragin.unlisten(this.onTreeDataDragIn);
         ValueTableUIData.signal_line_delete.unlisten(this.onTableLineDelete);
         ValueTableUIData.signal_line_move.unlisten(this.onTableLineMove);
+
+        CurveTableUIData.signal_treedata_dragin.unlisten(this.onCurveDragIn);
     },
     componentDidMount: function(){
         API.signal_treeNode_click.listen(this.onTreeNodeClk);
@@ -218,8 +223,36 @@ var StaticalAssistorPopup = React.createClass({
         ValueTableUIData.signal_line_delete.listen(this.onTableLineDelete);
         ValueTableUIData.signal_line_move.listen(this.onTableLineMove);
 
+        CurveTableUIData.signal_treedata_dragin.listen(this.onCurveDragIn);
+
         this.callAPI();
     },
+    
+    onCurveDragIn: function(e, param){
+        var curveId = param.curve.id;
+
+        API.loadCurve(curveId).then((function(result){
+            if(result.errCode == -1){
+                //var curve = Curve.create(result.curve);
+                API.dragNewCurve(result.curve);
+
+                API.dm2ui_curve();
+
+                this.refs.table.update({
+                    uidata: {
+                        value: API.getValueTableUIData(),
+                        curve: API.getCurveTableUIData()
+                    }
+                })
+            }
+        }).bind(this), function(e){
+            throw e;
+        }).catch(function(e){
+          console.error(e.stack);
+        });
+    },
+
+
     callAPI: function(param){
         param = param || {};
         Request.getData(Request.getBackendAPI('statical'), param).then((function(param){

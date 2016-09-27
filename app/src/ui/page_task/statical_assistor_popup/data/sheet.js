@@ -42,7 +42,13 @@ module.exports = class Sheet{
 		this.y1.push(Cell.create());
 		this.y2.push(Cell.create());
 	}
+	deleteAt(index){
+		this.x.splice(index, 1);
+		this.y1.splice(index, 1);
+		this.y2.splice(index, 1);
+	}
 	update(param){
+
 		var {index, xCell, y1Cell, y2Cell} = param;
 		this.x[index].update(xCell);
 		this.y1[index].update(y1Cell);
@@ -53,5 +59,27 @@ module.exports = class Sheet{
 		this.x.push(Cell.create(xCell));
 		this.y1.push(Cell.create(y1Cell));
 		this.y2.push(Cell.create(y2Cell));
+	}
+	insertAt(param, index){
+		this.x.splice(index, 0, param.x);
+		this.y1.splice(index, 0, param.y1);
+		this.y2.splice(index, 0, param.y2);
+	}
+	move(startIndex, endIndex){
+		var param = {
+			x: this.x[startIndex],
+			y1: this.y1[startIndex],
+			y2: this.y2[startIndex]
+		}
+
+
+		if(startIndex > endIndex){
+			this.deleteAt(startIndex);
+			this.insertAt(param, endIndex);
+			//insert
+		}else{
+			this.insertAt(param, endIndex);
+			this.deleteAt(startIndex);
+		}
 	}
 }

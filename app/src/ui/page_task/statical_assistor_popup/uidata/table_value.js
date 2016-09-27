@@ -14,38 +14,37 @@ class ValueTableUIData extends Base{
 		super();
 		this.sheetName = "数值统计";
 
-		this.header = Line.create({cells: [
-			Cell.create({component: Label, v: ''}), 
-			Cell.create({component: Label, v: 'X'}), 
-			Cell.create({component: Label, v: 'Y1'}), 
-			Cell.create({component: Label, v: 'Y2'}), 
-		]});
+		this.reset();
 	}
-	
-	getLinePos(line){
-		var pos;
-		this.ui.map(function(_line, index){
-			if(line.id === _line.id){
-				pos = index;
-			}
-		})
-		return pos;
-	}
-	findLineById(lineId){
-		return this.ui.find(function(_line){
-			return lineId === _line.id;
-		})
+	reset(){
+		this.ui = [
+			Line.create({cells: [
+				Cell.create({component: Label, v: ''}), 
+				this._getHandlerComponent(),
+			]}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'X'}),
+					this._getDataComponent({label: '', path:''}, 0)
+				]
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'Y1'}),
+					this._getDataComponent({label: '', path:''}, 0)
+				]
+				
+			}),
+			Line.create({
+				cells: [
+					Cell.create({component: Label, v: 'Y2'}),
+					this._getDataComponent({label: '', path:''}, 0)
+				]
+			})
+		]
 	}
 
-	deleteLine(line){
-		var pos = this.getLinePos(line);
-		this.ui.splice(pos, 1);
-	}
-	insertLineBefore(line, posLine){
-		var pos = this.getLinePos(posLine);
-		this.ui.splice(pos, 0, line); 
-	}
-	_getDataComponent(param){
+	_getDataComponent(param, index){
 		var self = this;
 		return Cell.create({
 			component: LinkButton, 
@@ -56,27 +55,22 @@ class ValueTableUIData extends Base{
 				},
 				dragDataFromTree:function(data){
 					if(data.component === 'curve'){
-						return;
+						return; 
 					}
 					this.v = data;
 					ValueTableUIData.signal_treedata_dragin.dispatch();
 				},
 				dragDataFromDragHandler: function(data){
-					var dragStartLineId = data.lineId;
+					var startIndex = data.index;
+					var endIndex = index;
 
-					var dragStartLine = self.findLineById(dragStartLineId);
-					var dragEndLine = this.line;
-					
-					self.deleteLine(dragStartLine);
-					self.insertLineBefore(dragStartLine, dragEndLine);
-
-					ValueTableUIData.signal_line_move.dispatch();
+					ValueTableUIData.signal_line_move.dispatch({startIndex:startIndex, endIndex:endIndex});
 				}
 			},
 			v: param
 		}) //todo: special btn
 	}
-	_getHandlerComponent(target){
+	_getHandlerComponent(i){
 		var self = this;
 		return Cell.create(
 			{
@@ -90,7 +84,7 @@ class ValueTableUIData extends Base{
 							var obj = {
 								target: 'draghandler',
 								data: {
-									lineId: line.id
+									index:i
 								}
 							}
 							e.dataTransfer.setData("text", JSON.stringify(obj));
@@ -101,10 +95,7 @@ class ValueTableUIData extends Base{
 					param: {
 						label: '删除',
 						onClick: function(){
-							var line = this.line;
-							self.deleteLine(line);
-
-							ValueTableUIData.signal_line_delete.dispatch();
+							ValueTableUIData.signal_line_delete.dispatch({index:i});
 						}	
 					}
 				}]
@@ -112,58 +103,47 @@ class ValueTableUIData extends Base{
 		)
 	}
 
-	deleteLine(line){
-		this.ui = this.ui.filter(function(l){
-			if(l.id === line.id){
-				return false;
-			}else return true;
-		})
-	}
-	dump(){
-		super.dump();
-	}
+	
 	ui2dm(dm){
-		if(this.ui.length === 0){
-			dm.reset();
-			return;			
-		}
-
 		dm.clear();
-		this.ui.map((function(line, index){
-			var xCell = line.cells[1].getValue();
-			var y1Cell = line.cells[2].getValue();
-			var y2Cell = line.cells[3].getValue();
+
+		var loop = this.ui[0].cells.length;
+		for(var i=1; i<loop; i++){
+			var xCell = this.ui[1].cells[i].getValue();
+			var y1Cell = this.ui[2].cells[i].getValue();
+			var y2Cell = this.ui[3].cells[i].getValue();
 
 			dm.insert({
 				xCell: xCell,
 				y1Cell: y1Cell,
 				y2Cell: y2Cell
 			});
-		}).bind(this));
+		}
 	}
 	dm2ui(dm){
-		this.ui.length=0;
-		dm.sheets.map((function(sheet, index){
-			if(index === 0){
-				var loop = sheet.x.length;
-				for(var i=0; i<loop; i++){
-					var x = sheet.x[i];
-					var y1 = sheet.y1[i];
-					var y2 = sheet.y2[i];
+		var sheet = dm.sheets[0];
+		var loop = sheet.x.length;
 
-					var line = Line.create({cells:[
-						this._getHandlerComponent(),
-						this._getDataComponent({label: x.label, path: x.path}),
-						this._getDataComponent({label: y1.label, path: y1.path}),
-						this._getDataComponent({label: y2.label, path: y2.path})
-					]});
+		var handler = [Cell.create({component: Label, v: ''})];
+		var xArr = [Cell.create({component: Label, v: 'X'})];
+		var y1Arr = [Cell.create({component: Label, v: 'Y1'})];
+		var y2Arr = [Cell.create({component: Label, v: 'Y2'})];
 
 
-					this.ui.push(line);
-				}	
-			}
+		for(var i=0; i<loop; i++){
+			handler.push(this._getHandlerComponent(i));
+			xArr.push(this._getDataComponent(sheet.x[i], i));
+			y1Arr.push(this._getDataComponent(sheet.y1[i], i));
+			y2Arr.push(this._getDataComponent(sheet.y2[i], i));
+		}	
+
+		this.ui = [
+			Line.create({cells: handler}),
+			Line.create({cells: xArr}),
+			Line.create({cells: y1Arr}),
+			Line.create({cells: y2Arr})
+		];
 			
-		}).bind(this));
 	}
 }
 

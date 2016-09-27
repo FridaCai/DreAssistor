@@ -106,6 +106,8 @@ var TableDOM = React.createClass({
         }).bind(this);
 
         var getHeaderDom = (function(header){
+            if(!header.cells || header.cells.length==0)
+                return null;
             return (<LineDOM line={header} key={header.id}/>)
         }).bind(this);
 

@@ -3,7 +3,12 @@ import Signal from 'Signal';
 import GloabalAPI from '../api.js';
 
 import TCDM from './data/table';
-import TableUIData from './uidata/table_value';
+import ValueTableUIData from './uidata/table_value';
+import CurveTableUIData from './uidata_curve/curve';
+
+import Request from 'Request';
+
+import Curves from './data_curve/curves';
 
 var API = {
 	signal_treeNode_click: new Signal(),
@@ -19,8 +24,14 @@ var API = {
 		return this._projects;
 	},
 
+
+
+
+
+
+
 	/*
-		dm for table curve.
+		dm for table value.
 	*/
 
 	_tcDM: TCDM.create(),
@@ -30,43 +41,121 @@ var API = {
 
 
 	/*
-		uidata for table
+		uidata for table value
 	*/
-	_tabelUIData: new TableUIData(),
-	getTabelUIData: function(){
-		return this._tabelUIData;
+	_valueTableUIData: new ValueTableUIData(),
+	getValueTableUIData: function(){
+		return this._valueTableUIData;
 	},
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
+		dm for table curve.
+	*/
+	_curveDM: new Curves(),
+
+
+	/*
+		uidata for table curve.
+	*/
+	_curveTableUIData: new CurveTableUIData(),
+	setCurveTableUIData: function(value){
+		this._curveTableUIData = value;
+	},
+	getCurveTableUIData: function(){
+		return this._curveTableUIData;
+	},
+
+
+
+	/*
+		update dm.
+	*/
+	dragNewCurve: function(curve){
+		this._curveDM.add(curve);
+	},
+
+	dm2ui_curve: function(){
+		this._curveTableUIData.dm2ui(this._curveDM);
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	dm2ui: function(){
-		this._tabelUIData.dm2ui(this._tcDM);
+		this._valueTableUIData.dm2ui(this._tcDM);
 	},
 	ui2dm: function(){
-		this._tabelUIData.ui2dm(this._tcDM);	
+		this._valueTableUIData.ui2dm(this._tcDM);	
 	},
 	appendNewTableLine: function(){
 		this._tcDM.sheets[0].appendLine();
-
-
-		
+	},
+	deleteAt: function(index){
+		this._tcDM.sheets[0].deleteAt(index);		
 	},
 	clearTable: function(){
 		this._tcDM.reset();	
 	},
-/* need???
-	_treeEntity: undefined,
-	setSelectedTreeEntity: function(entity){
-		this._treeEntity = entity;
+	move: function(startIndex, endIndex){
+		this._tcDM.sheets[0].move(startIndex, endIndex);
 	},
-	getSelectedTreeEntity: function(){
-		return this._treeEntity;
+
+	loadCurve: function(id){
+		var url = Request.getBackendAPI(`curve/${id}`);
+		return Request.getData(url).then(function(result){
+			return result;
+		})
 	}
-*/
-	
 }
 
 window.statical={
 	tcdm: API._tcDM,
 	treedm: API.getProjects(),
-	tableui: API._tabelUIData,
+	valueTableUIData: API._valueTableUIData,
+	curveTableUIData: API._curveTableUIData
 }
 module.exports = API;

@@ -27,11 +27,7 @@ var LinkButton = React.createClass({
     },
 
     dragDataFromTree(data){
-         //to avoid global refresh.
-        this.setState({
-            label: data.label,
-            path: data.path
-        })
+        
         var handler = this.props.param.dragDataFromTree;
         var scope = this.props.param.scope;
         handler && handler.call(scope, data);
