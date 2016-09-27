@@ -51,13 +51,22 @@ var API = {
 	},
 	clearTable: function(){
 		this._tcDM.reset();	
+	},
+/* need???
+	_treeEntity: undefined,
+	setSelectedTreeEntity: function(entity){
+		this._treeEntity = entity;
+	},
+	getSelectedTreeEntity: function(){
+		return this._treeEntity;
 	}
-
+*/
 	
 }
 
 window.statical={
 	tcdm: API._tcDM,
-	tableui: API._tabelUIData
+	treedm: API.getProjects(),
+	tableui: API._tabelUIData,
 }
 module.exports = API;

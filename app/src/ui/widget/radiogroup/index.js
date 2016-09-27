@@ -7,9 +7,6 @@ var RadioGroup = React.createClass({
         }
     },
 
-    shouldComponentUpdate: function(){
-        return false;
-    },
     getValue: function() {
         return this.state.selectedId;
     },

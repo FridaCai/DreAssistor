@@ -61,8 +61,7 @@ var TableDOM = React.createClass({
     onDrop: function(e){//for edit case, do nothing for drop.
         e.stopPropagation();
         e.preventDefault();
-        var files = e.dataTransfer.files;
-        this.state.onDrop(files);
+        this.state.onDrop(e.dataTransfer);
     },
 
     onDragOver(e){e.preventDefault();},

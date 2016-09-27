@@ -5,28 +5,32 @@ module.exports = class TreeData{
 			children.push({
 				name: `数值: ${property.value}`,
 				draggable: true,
-				instance: property
+				instance: property,
+				component: 'value'
 			});
 		}
 		if(property.text){
 			children.push({
 				name: `文本: ${property.text}`,
 				draggable: true,
-				instance: property
+				instance: property,
+				component: 'text'
 			});
 		}
 		if(property.curve != undefined){
 			children.push({
 				name: `曲线: 略`,
 				draggable: true,
-				instance: property
+				instance: property,
+				component: 'curve'
 			})
 		}
 		if(property.dropdown){
 			children.push({
 				name: `选项: ${property.dropdown}`,
 				draggable: true,
-				instance: property
+				instance: property,
+				component: 'dropdown'
 			})	
 		}
 		return children;

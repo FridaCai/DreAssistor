@@ -133,7 +133,7 @@ class MultipleSheet extends Array{
 	}
 
 	init(param){
-		param.map((function(p){
+		param && param.map((function(p){
 			var multipleParam = MultipleParam.create(p);
 			this.push(multipleParam);
 		}).bind(this))

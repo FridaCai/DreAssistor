@@ -20,7 +20,7 @@ import RadioGroup from 'RadioGroup';
 var ProjectFilter = React.createClass({
     getInitialState(){
         return {
-            selectedId: 0,
+            selectedId: this.props.onlyMe ? 1:0,
         }
     },
     componentDidMount(){
@@ -45,6 +45,9 @@ var ProjectFilter = React.createClass({
             onChange: (function(selectedId){
                 var onlyMe = (selectedId == 0 ? false: true);
                 self.props.onChange(onlyMe);
+
+                self.setState({selectedId: selectedId});
+
             }).bind(this)
         }
 
@@ -74,7 +77,9 @@ var PageTask = React.createClass({
         API.signal_delete_task.listen(this.onTaskDelete);
         
 
-        Promise.all([
+        this.refresh();
+        
+        /*Promise.all([
             Request.getData(Request.getBackendAPI('project'))
         ]).then((function(param){
             var projectsResponse = param[0];
@@ -84,7 +89,7 @@ var PageTask = React.createClass({
             this.forceUpdate();
         }).bind(this)).catch(function(e){
             console.error(e.stack);
-        });
+        });*/
     },
 
     componentWillUnmount: function(){
@@ -241,26 +246,28 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
+        this.setState({onlyMe: onlyMe});
         this.refresh(onlyMe);
     },
+
     refresh: function(onlyMe){
-        var loginUser = SuperAPI.getLoginUser();
-        if(onlyMe && loginUser){
-             Request.getData(Request.getBackendAPI('project'), {userId: SuperAPI.getLoginUser().id}).then((function(result){
-                if(result.errCode == -1){
-                    API.setProjects(result.projects);    
-                    this.setState({onlyMe: true});
-                }
-            }).bind(this));    
-        }else{
-            Request.getData(Request.getBackendAPI('project')).then((function(result){
-                if(result.errCode == -1){
-                    API.setProjects(result.projects);    
-                    this.setState({onlyMe: false});
-                }
-            }).bind(this));   
-            
+        if(onlyMe == undefined){
+            onlyMe = this.state.onlyMe;
         }
+
+        var loginUser = SuperAPI.getLoginUser();
+        var param = (onlyMe && loginUser) ? {userId: SuperAPI.getLoginUser().id}: {};
+        Request.getData(Request.getBackendAPI('project'), param)
+            .then((function(result){
+                if(result.errCode == -1){
+                    API.setProjects(result.projects);    
+                    this.forceUpdate();
+                }
+            }).bind(this),function(e){
+                throw e
+            }).catch(function(e){
+                console.error(e);
+            });    
     },
     render: function() {
         try{
@@ -276,7 +283,7 @@ var PageTask = React.createClass({
 
 
 
-                    <ProjectFilter onChange={this.onProjectFilterChange}/>
+                    <ProjectFilter onChange={this.onProjectFilterChange} onlyMe={this.state.onlyMe}/>
 
 
 

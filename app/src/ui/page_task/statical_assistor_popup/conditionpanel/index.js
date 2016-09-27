@@ -12,26 +12,35 @@ var ConditionPanel = React.createClass({
     },
 
     onOK: function(){
-    	var projectOwner = (function(selectedId){
+    	var param = {};
+
+    	var projectCreator = (function(selectedId){
         	if(selectedId === 1)
         		return GlobalAPI.getLoginUser().id; 
         	return null
-    	})(this.refs.projectOwnerRadioGroup.getValue())
+    	})(this.refs.projectCreatorRadioGroup.getValue())
+    	
+    	if(projectCreator != undefined){
+    		param.projectCreator = projectCreator;
+    	}
 
     	var taskType = this.refs.taskTypeComboBox.getValue();
+    	
+    	if(taskType != undefined && taskType!=-1){
+    		param.taskType = taskType;
+    	}
 
-    	var searchExpress = this.refs.searchExpressInput.getValue();
+    	var searchClause = encodeURIComponent(this.refs.searchClauseInput.getValue());
+    	
+    	if(searchClause){
+    		param.searchClause = searchClause;
+    	}
 
-
-    	this.props.onOK && this.props.onOK({
-    		projectOwner: projectOwner,
-    		taskType: taskType,
-    		searchExpress: searchExpress
-    	});
+    	this.props.onOK && this.props.onOK(param);
     },
     render: function(){
     	var radioGroupParam = {
-            id: `projectFilter`,
+            id: `projectFilter2`,
             selectedId: 0,
             options: [{
                 id: 0,
@@ -44,8 +53,8 @@ var ConditionPanel = React.createClass({
 
         var comboBoxParam = {
         	id: '',
-        	selectedId:0,
-        	options: API.getAllTemplateTaskTypes()
+        	options: [{id: -1, label:'全部'}].concat(API.getAllTemplateTaskTypes()),
+        	prompt: '请选择'
         }
 
         var inputParam = {
@@ -62,7 +71,7 @@ var ConditionPanel = React.createClass({
     		<div className='conditionPanel'>
     			<div className='line'>
 	    			<label>项目</label>
-	    			<RadioGroup param={radioGroupParam} ref='projectOwnerRadioGroup'/>
+	    			<RadioGroup param={radioGroupParam} ref='projectCreatorRadioGroup'/>
     			</div>
     			<div className='line'>
     				<label>豆豆</label>
@@ -70,13 +79,17 @@ var ConditionPanel = React.createClass({
     			</div>
     			<div className='line'>
     				<label>条件</label>
-    				<Input param={inputParam}  ref='searchExpressInput'/>
+    				<Input param={inputParam}  ref='searchClauseInput'/>
     				<div className="expressSearchHint">
-    					发动机<b>=</b>1.0T
-    					<br/>
-    					发动机<b>=</b>1.0T<b>&amp;</b>品牌<b>=</b>大众
-    					<br/>
-    					成本<b>=</b><b>*</b><b>|</b>重量<b>=</b><b>*</b>
+  							eg:
+  							<br/>	
+  							发动机<b>=</b>1.0T
+	    					<br/>
+	    					成本<b>=</b><b>*</b>
+	    					<br/>
+	    					发动机<b>=</b>1.0T<b>&amp;</b>品牌<b>=</b>大众
+							<br/><br/>
+							常用关键字：<br/>发动机，成本，品牌，重量
 					</div>
     			</div>
     			<div className='line'>

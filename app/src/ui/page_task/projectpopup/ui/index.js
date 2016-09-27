@@ -70,7 +70,8 @@ var ProjectPopup = React.createClass({
         API.dm2ui();
         this.refs.table.update({uidata: API.uidata});
     },
-    onTableDrop: function(files){
+    onTableDrop: function(transferData){
+        var files = transferData.files;
         var reader = new FileReader();
 
         var file = files[0];

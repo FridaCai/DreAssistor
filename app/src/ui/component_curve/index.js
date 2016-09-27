@@ -72,7 +72,8 @@ var CurveComponent = React.createClass({
 
       this.props.onImportCurve && this.props.onImportCurve.call(this.props.scope, this.api.curve);
   },
-  onTableDrop: function(files){
+  onTableDrop: function(transferData){
+      var files = transferData.files;
       var reader = new FileReader();
 
       var file = files[0];

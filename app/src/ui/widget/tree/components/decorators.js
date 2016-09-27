@@ -78,13 +78,22 @@ class Container extends React.Component {
         }
 
         var nodeId = node.instance.id;
+        var component = node.component;
+
+
         var param = {
             target: 'treenode',
             data: {
                 label: node.name.split(':')[1].trim(),
-                path: `propertyId=${nodeId}`
+                path: `propertyId=${nodeId}`,
+                component: component,
             }
         }
+
+        if(component === 'curve'){
+            param.data.curve = node.instance.curve;
+        }
+        
         e.dataTransfer.setData("text", JSON.stringify(param));
     }
     render(){

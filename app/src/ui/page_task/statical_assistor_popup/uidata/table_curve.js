@@ -12,6 +12,7 @@ import DragHandler from '../table/widget/draghandler/index';
 class TableData extends Base{
 	constructor(){
 		super();
+		this.sheetName = "数值统计";
 
 		this.header = Line.create({cells: [
 			Cell.create({component: Label, v: ''}), 
@@ -54,6 +55,9 @@ class TableData extends Base{
 					 //todo: navigate back to tree
 				},
 				dragDataFromTree:function(data){
+					if(data.component === 'curve'){
+						return;
+					}
 					this.v = data;
 					TableData.signal_treedata_dragin.dispatch();
 				},

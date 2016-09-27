@@ -111,8 +111,6 @@ var StaticalAssistorPopup = React.createClass({
             onClick: this.drawCurve
         }
 
-
-
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
@@ -123,14 +121,41 @@ var StaticalAssistorPopup = React.createClass({
 				<div className='tableChart'>
                     <Button param={newLineBtnParam}/>
                     <Button param={clearTableBtnParam}/>
-                    <Checkbox param={batchOperationCheckboxParam}/>
-					<TableDOM uidata={tableData} isReverse={true} ref='table'/>
+					<TableDOM uidata={tableData} isReverse={true} ref='table' onDrop={this.onTreeDataDragInTable}/>
                     <Button param={drawCurveBtnParam}/>
                     <Chart ref='chart' id='statical_assistor_popup_curve'/>
 				</div>				
 	    	</div>
 	    );   
     },
+
+
+
+    onTreeDataDragInTable: function(dataTransfer){
+        var transferText = dataTransfer.getData('text');
+        if(!transferText)
+            return;
+
+        var obj = JSON.parse(transferText);
+        if(obj.data.component != 'curve'){
+            return;
+        }
+
+        var curve = obj.data.curve;
+
+        
+
+        //todo: 
+        //save and load curve.
+        //query curve data and updata curve.
+
+        //todo.
+        //append new table sheet.
+        //obtain curve data.
+    },
+
+
+
 
     onSearch: function(param){
         console.log(JSON.stringify(param));
@@ -140,9 +165,9 @@ var StaticalAssistorPopup = React.createClass({
     onTreeNodeClk: function(e, param){
         //data can be cached here. once detail info has been queries, cache it.
         var entity = param.entity;
-        if(!entity){ //a click from subtree rather than main tree.
+        if(!entity)
             return;
-        }
+
 
         var id = entity.id;
         var api, dm2uiHandler;
@@ -150,12 +175,17 @@ var StaticalAssistorPopup = React.createClass({
         if(entity instanceof Project){
             api = `statical/project/${id}`; //todo: backend api.
             dm2uiHandler = TreeUIData.convertProject2TreeData;
+            //API.setSelectedTreeEntity(entity);
         }else if(entity instanceof Task){
             api = `statical/task/${id}`;
             dm2uiHandler = TreeUIData.convertTask2TreeData;
+           // API.setSelectedTreeEntity(entity);
         }else if(entity instanceof Engine){
             api = `statical/engine/${id}`;
             dm2uiHandler = TreeUIData.convertEngine2TreeData;
+            //API.setSelectedTreeEntity(entity);
+        }else{
+            return;
         }
 
         Request.getData(Request.getBackendAPI(api)).then((function(param){
