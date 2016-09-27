@@ -44,14 +44,19 @@ class CurveTableUIData extends Base{
 	}
 	dm2ui(dm){
 		this.ui = [];
-		dm.map((function(curve){
+		dm.map((function(curve, index){
 			this.id = curve.id;
-			
 
 			this.ui.push(Line.create({cells: [Cell.create({
-				component:Label,
-				v: 'new curve'
-			})]}));
+					component: Button,
+					param: {
+						label: "删除",
+						onClick: function(){
+							CurveTableUIData.signal_curve_delete.dispatch({index: index});
+						}
+					}
+				})]
+			}));
 
 			curve.series.map((function(serie){
 				var label = serie.label;
@@ -72,6 +77,7 @@ class CurveTableUIData extends Base{
 }
 
 CurveTableUIData.signal_treedata_dragin = new Signal();
+CurveTableUIData.signal_curve_delete = new Signal();
 
 module.exports = CurveTableUIData;
 

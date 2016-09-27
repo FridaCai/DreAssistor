@@ -19,4 +19,7 @@ module.exports = class Curves extends Array{
 	add(curve){
 		this.push(curve);
 	}
+	deleteAt(index){
+		this.splice(index,1);
+	}
 }

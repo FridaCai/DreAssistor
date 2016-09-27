@@ -103,7 +103,9 @@ var API = {
 		this._curveTableUIData.dm2ui(this._curveDM);
 	},
 
-
+	curveDelete: function(index){
+		this._curveDM.deleteAt(index);
+	},
 
 
 

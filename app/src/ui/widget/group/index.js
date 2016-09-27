@@ -10,10 +10,10 @@ var Group = React.createClass({
         	<div className='buttonGroup'>
 	        	{
 	        		this.props.param.map(function(p, index){
-						var {component, param} = p;
+						var {component, param, v} = p;
 
 						var eleParam = $.extend({scope: scope}, param);
-				    	var el = React.createElement(component, {param: eleParam, key:index});
+				    	var el = React.createElement(component, {param: eleParam, key:index, v:v});
 				    	return el;
 					})
 	        	}

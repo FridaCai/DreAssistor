@@ -216,6 +216,7 @@ var StaticalAssistorPopup = React.createClass({
         ValueTableUIData.signal_line_move.unlisten(this.onTableLineMove);
 
         CurveTableUIData.signal_treedata_dragin.unlisten(this.onCurveDragIn);
+        CurveTableUIData.signal_curve_delete.unlisten(this.onCurveDelete);
     },
     componentDidMount: function(){
         API.signal_treeNode_click.listen(this.onTreeNodeClk);
@@ -224,10 +225,22 @@ var StaticalAssistorPopup = React.createClass({
         ValueTableUIData.signal_line_move.listen(this.onTableLineMove);
 
         CurveTableUIData.signal_treedata_dragin.listen(this.onCurveDragIn);
-
+        CurveTableUIData.signal_curve_delete.listen(this.onCurveDelete);
         this.callAPI();
     },
-    
+    onCurveDelete: function(e, param){
+        var index = param.index;
+        API.curveDelete(index);
+
+        API.dm2ui_curve();
+
+        this.refs.table.update({
+            uidata: {
+                value: API.getValueTableUIData(),
+                curve: API.getCurveTableUIData()
+            }
+        })
+    },
     onCurveDragIn: function(e, param){
         var curveId = param.curve.id;
 
