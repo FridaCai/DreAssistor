@@ -9,7 +9,7 @@ import API from '../api';
 import Signal from 'Signal';
 import DragHandler from '../table/widget/draghandler/index';
 
-class TableData extends Base{
+class ValueTableUIData extends Base{
 	constructor(){
 		super();
 		this.sheetName = "数值统计";
@@ -59,7 +59,7 @@ class TableData extends Base{
 						return;
 					}
 					this.v = data;
-					TableData.signal_treedata_dragin.dispatch();
+					ValueTableUIData.signal_treedata_dragin.dispatch();
 				},
 				dragDataFromDragHandler: function(data){
 					var dragStartLineId = data.lineId;
@@ -70,7 +70,7 @@ class TableData extends Base{
 					self.deleteLine(dragStartLine);
 					self.insertLineBefore(dragStartLine, dragEndLine);
 
-					TableData.signal_line_move.dispatch();
+					ValueTableUIData.signal_line_move.dispatch();
 				}
 			},
 			v: param
@@ -104,7 +104,7 @@ class TableData extends Base{
 							var line = this.line;
 							self.deleteLine(line);
 
-							TableData.signal_line_delete.dispatch();
+							ValueTableUIData.signal_line_delete.dispatch();
 						}	
 					}
 				}]
@@ -167,10 +167,10 @@ class TableData extends Base{
 	}
 }
 
-TableData.signal_treedata_dragin = new Signal();
-TableData.signal_line_delete = new Signal();
-TableData.signal_line_move = new Signal();
+ValueTableUIData.signal_treedata_dragin = new Signal();
+ValueTableUIData.signal_line_delete = new Signal();
+ValueTableUIData.signal_line_move = new Signal();
 
-module.exports = TableData;
+module.exports = ValueTableUIData;
 
 

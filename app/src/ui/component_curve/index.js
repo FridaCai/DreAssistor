@@ -16,7 +16,10 @@ var CurveComponent = React.createClass({
     	   	return;
 
         api.setCurve(curve);
-        api.dm2ui();      
+        if(curve.data){
+          api.dm2ui();
+        }
+             
     })(this.props.curve, this.api);
     
     return {};
@@ -89,23 +92,52 @@ var CurveComponent = React.createClass({
   componentDidMount: function(){
       this.api.signal_curve_toggle.listen(this.onCurveToggle);
 
+      if(this.props.curve.needTemplate){
+        API.loadTemplate().then((function(result){
+            var curve = new Curve();
+            curve.init(result);
 
-      if(!this.props.curve.needTemplate)
-            return;
-
-      API.loadTemplate().then((function(result){
-          var curve = new Curve();
-          curve.init(result);
-
-          this.api.setCurve(curve); 
-          this.api.dm2ui();
+            this.api.setCurve(curve); 
+            this.api.dm2ui();
 
 
-          this.refs.table.forceUpdate();
-          this.refs.chart.update();
-      }).bind(this)).catch((function(e){
-          console.log(e.stack);
-      }).bind(this));
+            this.refs.table.forceUpdate();
+            this.refs.chart.update();
+        }).bind(this), function(e){
+          throw e;
+        }).catch(function(e){
+            console.error(e.stack);
+        });
+
+        return;
+      }
+
+
+
+
+      if(!this.props.curve.data){
+          API.loadCurve(this.props.curve.id).then((function(result){
+            if(result.errCode == -1){
+              this.api.getCurve().update(result.curve);
+              this.api.dm2ui();
+              this.refs.table.forceUpdate();
+              this.refs.chart.update();
+            }
+              
+          }).bind(this), function(e){
+            throw e;
+          }).catch(function(e){
+              console.error(e.stack);
+          });
+          return;
+      }
+
+
+
+
+
+
+      
   },
 
   componentWillUnmount: function(){

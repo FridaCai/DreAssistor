@@ -11,7 +11,7 @@ import Engine from '../data/engine';
 
 import API from './api';
 import TreeUIData from './uidata/tree';
-import TableUIData from './uidata/table';
+import ValueTableUIData from './uidata/table_value';
 import CurveUIData from './uidata/curve';
 
 import Button from 'Button';
@@ -143,6 +143,10 @@ var StaticalAssistorPopup = React.createClass({
 
         var curve = obj.data.curve;
 
+        if(Util.isUUID(curve.id)){
+            return;
+        }
+
         
 
         //todo: 
@@ -204,15 +208,15 @@ var StaticalAssistorPopup = React.createClass({
 
     componentWillUnmount: function(){
         API.signal_treeNode_click.unlisten(this.onTreeNodeClk);
-        TableUIData.signal_treedata_dragin.unlisten(this.onTreeDataDragIn);
-        TableUIData.signal_line_delete.unlisten(this.onTableLineDelete);
-        TableUIData.signal_line_move.unlisten(this.onTableLineMove);
+        ValueTableUIData.signal_treedata_dragin.unlisten(this.onTreeDataDragIn);
+        ValueTableUIData.signal_line_delete.unlisten(this.onTableLineDelete);
+        ValueTableUIData.signal_line_move.unlisten(this.onTableLineMove);
     },
     componentDidMount: function(){
         API.signal_treeNode_click.listen(this.onTreeNodeClk);
-        TableUIData.signal_treedata_dragin.listen(this.onTreeDataDragIn);
-        TableUIData.signal_line_delete.listen(this.onTableLineDelete);
-        TableUIData.signal_line_move.listen(this.onTableLineMove);
+        ValueTableUIData.signal_treedata_dragin.listen(this.onTreeDataDragIn);
+        ValueTableUIData.signal_line_delete.listen(this.onTableLineDelete);
+        ValueTableUIData.signal_line_move.listen(this.onTableLineMove);
 
         this.callAPI();
     },

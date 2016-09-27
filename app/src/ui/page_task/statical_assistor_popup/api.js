@@ -3,7 +3,7 @@ import Signal from 'Signal';
 import GloabalAPI from '../api.js';
 
 import TCDM from './data/table';
-import TableUIData from './uidata/table';
+import TableUIData from './uidata/table_value';
 
 var API = {
 	signal_treeNode_click: new Signal(),

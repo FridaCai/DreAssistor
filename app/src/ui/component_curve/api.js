@@ -11,6 +11,12 @@ class API{
  			return result;
         }).bind(this))
 	}
+	static loadCurve(id){
+		var url = Request.getBackendAPI(`curve/${id}`);
+		return Request.getData(url).then(function(result){
+			return result;
+		})
+	}
 
 	constructor(){
 
@@ -29,6 +35,9 @@ class API{
 	}
 	setCurve(curve){
 		this.curve = curve;
+	}
+	getCurve(){
+		return this.curve;
 	}
 	ui2dm(){
 		this.uidata.curve.ui2dm(this.curve);

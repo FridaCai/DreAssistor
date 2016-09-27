@@ -1,3 +1,5 @@
+import Util from 'Util';
+
 module.exports = class TreeData{
 	static _convertProperty2TreeData(property){
 		var children = [];
@@ -19,7 +21,7 @@ module.exports = class TreeData{
 		}
 		if(property.curve != undefined){
 			children.push({
-				name: `曲线: 略`,
+				name: `曲线: ${Util.isUUID(property.curve.id) ? '无':'略'}`,
 				draggable: true,
 				instance: property,
 				component: 'curve'

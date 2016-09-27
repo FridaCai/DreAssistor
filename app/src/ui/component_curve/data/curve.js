@@ -16,13 +16,22 @@ module.exports = class Curve {
 			return;
 
 		this.id = param.id || Util.generateUUID();
-		this.parent = undefined; //todo
-		
-		this.caption = param.caption || '';
+		this.parent = undefined; //need?
+
+		this._updateMeta(param);
+	}
+	_updateMeta(param){
+		this.caption = param.caption;
 		this.data = param.data;
 		this.series = param.series;//{label, data, isShowCurve}
 
-		this.needTemplate = param.series ? false : true;
+		this.needTemplate = (Object.keys(param).length === 0) ? true : false;
+	}
+
+
+
+	update(param){
+		this._updateMeta(param);
 	}
 	setNeedTemplate(needTemplate){
 		this.needTemplate = needTemplate;
