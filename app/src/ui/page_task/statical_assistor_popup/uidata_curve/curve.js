@@ -43,6 +43,7 @@ class CurveTableUIData extends Base{
 		
 	}
 	dm2ui(dm){
+		this.ui = [];
 		dm.map((function(curve){
 			this.id = curve.id;
 			
