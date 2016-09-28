@@ -7,8 +7,9 @@ var PageHotIssue = React.createClass({
       }
   },
   render: function() {
+  	var taskType = 2;
     return (
-          <StaticalPage/>
+		<StaticalPage taskType={taskType}/>
     );
   }
 });

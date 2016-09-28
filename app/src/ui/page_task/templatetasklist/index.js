@@ -1,9 +1,10 @@
 import moment from 'moment';
 import API from '../api.js';
 import TemplateTask from '../data/templatetask.js';
-import  Request from '../../../request.js';
+import Request from '../../../request.js';
 import Util from 'Util';
 import MessageBox from 'MessageBox';
+import TemplateTasks from '../../../config/get_template_tasks';
 
 var TemplateTaskList = React.createClass({
 	getInitialState: function() {
@@ -27,24 +28,7 @@ var TemplateTaskList = React.createClass({
     },
 
     componentDidMount: function(){
-        var url = Request.getMockupAPI('get_template_tasks.json');
-
-        Request.getData(url).then((function(param){
-    		if(param.errCode !== -1)
-    			return;
-
-            var tasks = param.tasks;
-    		API.setTemplateTasks(tasks);
-            
-
-            var templateenum = tasks.map(function(task){
-                return {id: task.id, label: task.label}
-            });
-            API.setTemplateEnum(templateenum);
-
-
-    		this.forceUpdate();
-    	}).bind(this));
+        
     },
 
     onDragOver: function(e){
@@ -55,6 +39,21 @@ var TemplateTaskList = React.createClass({
     },
    
     render: function() {
+        //todo: template task both used in timeline page and statical page.
+        //load data not only in timeline page.
+        
+        var tasks = TemplateTasks;
+        API.setTemplateTasks(tasks); 
+        
+
+        var templateenum = tasks.map(function(task){
+            return {id: task.id, label: task.label}
+        });
+        API.setTemplateEnum(templateenum);
+
+
+
+
         //<MessageBox ref='msgbox' msg='想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.'/>
         return (
             <div className='taskList'>

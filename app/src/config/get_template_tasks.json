@@ -1,8 +1,4 @@
-{
-  "errCode": -1,
-  "errMsg": "",
-  "comments": "task.template.param.property.attachment: null means to be defined; missing(undefined) means not need the value",
-  "tasks": [
+module.exports = [
     {
       "id": 0,
       "label": "普通",
@@ -977,4 +973,3 @@
       ]
     }
   ]
-}

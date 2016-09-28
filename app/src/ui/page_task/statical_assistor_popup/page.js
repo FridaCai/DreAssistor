@@ -132,7 +132,7 @@ var Content = React.createClass({
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
-                    <ConditionPanel ref='conditionpanel' onOK={this.onSearch}/>
+                    <ConditionPanel ref='conditionpanel' onOK={this.onSearch} taskType={this.props.taskType}/>
 	    			<DataTree ref='tree'/>	
 					<DataTree ref='subtree'/>		    			
 	    		</div>
@@ -205,7 +205,14 @@ var Content = React.createClass({
 
         CurveTableUIData.signal_treedata_dragin.listen(this.onCurveDragIn);
         CurveTableUIData.signal_curve_delete.listen(this.onCurveDelete);
-        this.callAPI();
+
+
+
+        var param;
+        if(this.props.taskType != undefined){
+            param = {taskType: this.props.taskType};
+        }
+        this.callAPI(param);
     },
     onCurveDelete: function(e, param){
         var index = param.index;
