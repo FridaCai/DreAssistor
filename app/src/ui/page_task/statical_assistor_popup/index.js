@@ -18,18 +18,19 @@ import CurveUIData from './uidata/curve';
 import Button from 'Button';
 import Checkbox from 'Checkbox';
 
-import Chart from './chart/index';
+
 import ConditionPanel from './conditionpanel/index';
+
+import ValueChart from './chart/valuechart';
+import CurveChart from './chart/curvechart';
 
 var StaticalAssistorPopup = React.createClass({
 	getInitialState: function() {
         API.dm2ui();
-
         return {
             title: this.props.title,
         };
     },
-
     onTreeDataDragIn: function(){
         API.ui2dm();
         API.dm2ui();
@@ -41,7 +42,6 @@ var StaticalAssistorPopup = React.createClass({
             }
         })
     },
-
     appendNewTableLLine: function(){
         API.appendNewTableLine();
 
@@ -52,12 +52,9 @@ var StaticalAssistorPopup = React.createClass({
                 curve: API.getCurveTableUIData()
             }
         })
-       
     },
     clearTable: function(){
         API.clearTable();
-
-
         API.dm2ui();
         this.refs.table.update({
             uidata: {
@@ -88,12 +85,27 @@ var StaticalAssistorPopup = React.createClass({
                 curve: API.getCurveTableUIData()
             }
         })
-        
     },
     drawCurve: function(){
-        var dm = API.getTCDM();
-        var uidata = CurveUIData.convertDM2CurveData(dm);
-        this.refs.chart.update({uidata: uidata});
+        var sheetIndex = this.refs.table.getSheetIndex();
+        var uidata;
+
+        var target;
+        switch(sheetIndex){
+            case 0:
+                var dm = API.getTCDM();
+                uidata = CurveUIData.convertDM2CurveData(dm);
+                ReactDOM.unmountComponentAtNode(this.refs.chart);    
+                target = ReactDOM.render(<ValueChart id='statica_value' uidata={uidata}/>, this.refs.chart);
+                break;
+            case 1:
+                var dm = API.getCurveDM();
+                uidata = CurveUIData.convertCurveDM2CurveData(dm);//bad name. convert table curve data to chart data. 
+                ReactDOM.unmountComponentAtNode(this.refs.chart);    
+                target = ReactDOM.render(<CurveChart id='statica_curve' uidata={uidata}/>, this.refs.chart);
+                break;
+        }
+        target.update({uidata: uidata});
     },
 	getContent: function() {
         var uidata = {
@@ -117,7 +129,7 @@ var StaticalAssistorPopup = React.createClass({
             label: '画曲线',
             onClick: this.drawCurve
         }
-
+//<Chart ref='chart' id='statical_assistor_popup_curve'/>
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
@@ -130,43 +142,11 @@ var StaticalAssistorPopup = React.createClass({
                     <Button param={clearTableBtnParam}/>
 					<TableDOM uidata={uidata} ref='table'/>
                     <Button param={drawCurveBtnParam}/>
-                    <Chart ref='chart' id='statical_assistor_popup_curve'/>
+                    <div ref='chart'></div>
 				</div>				
 	    	</div>
 	    );   
     },
-/*<TableDOM uidata={uidata} ref='table' onDrop={this.onTreeDataDragInTable}/>*/
-
-/*
-    onTreeDataDragInTable: function(dataTransfer){
-        var transferText = dataTransfer.getData('text');
-        if(!transferText)
-            return;
-
-        var obj = JSON.parse(transferText);
-        if(obj.data.component != 'curve'){
-            return;
-        }
-
-        var curve = obj.data.curve;
-
-        if(Util.isUUID(curve.id)){
-            return;
-        }
-
-        
-
-        //todo: 
-        //save and load curve.
-        //query curve data and updata curve.
-
-        //todo.
-        //append new table sheet.
-        //obtain curve data.
-    },
-*/
-
-
 
     onSearch: function(param){
         this.callAPI(param);

@@ -27,7 +27,9 @@ var TableDOM = React.createClass({
             sheetIndex: index,
         });
     },  
-   
+    getSheetIndex:function(){
+        return this.state.sheetIndex;
+    },
     componentDidMount: function(){
         sigal_window_resizeend.listen(this.updateAfterRender);
     },

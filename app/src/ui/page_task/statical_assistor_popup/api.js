@@ -77,7 +77,9 @@ var API = {
 		dm for table curve.
 	*/
 	_curveDM: new Curves(),
-
+	getCurveDM: function(){
+		return this._curveDM;
+	},
 
 	/*
 		uidata for table curve.
