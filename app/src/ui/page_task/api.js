@@ -1,4 +1,5 @@
-import Signal from '../../signal.js';
+import Signal from 'Signal';
+//import Signal from '../../signal.js';
 import Task from './data/task.js';
 import TemplateTasks from './data/templatetasks.js';
 import Projects from './data/projects.js';

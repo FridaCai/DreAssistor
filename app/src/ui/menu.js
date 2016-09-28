@@ -3,7 +3,6 @@ import {ENUM, CError} from '../exception.js';
 import User from '../data/user.js';
 import Request from '../request.js';
 
-
        
 var UserCenterContainer = React.createClass({
     getInitialState: function() {
@@ -11,7 +10,6 @@ var UserCenterContainer = React.createClass({
           userName: '', //login.
         }
     },
-
 
     logOut: function(){
       API.resetLoginUser();
@@ -100,13 +98,13 @@ var Menu = React.createClass({
             
         }
     },
-
+    onNavigate: function(key){
+      API.signal_page_navigate.dispatch({key: key});
+    },
     render: function() {
       var projectName = '豆豆';
-      var menu1 = '首页'
-      var menu2 = '联系我们';
 
-      
+  
       
       var getLoginDom = function(){
         var isLogin = API.isLogin();
@@ -129,11 +127,23 @@ var Menu = React.createClass({
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav">
-                <li className="active"><a href="#">{menu1}</a></li>
-                <li><a href="#about">{menu2}</a></li>
+
+              {
+                Object.keys(API.pageMap).map((function(key){
+                  var {label} = API.pageMap[key];
+                  
+
+                  //var className = ((key === API.curpage) ? "active": "");
+                  var className = "";
+                  return (
+                    <li className={className} key={key} onClick={this.onNavigate.bind(this, key)}>
+                      <a href="javascript:void(0);">{label}</a>
+                    </li>
+                  )
+                }).bind(this))
+              }
+                
               </ul>
-
-
               {getLoginDom()}
               
             </div>

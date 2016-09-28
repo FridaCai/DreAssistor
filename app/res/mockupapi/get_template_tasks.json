@@ -43,22 +43,26 @@
             {
               "label": "Root Cause",
               "text": "Root Cause1",
-              "status": false
+              "status": false,
+              "key": "PROJECT.TASK.HOTISSUE.ROOT_CAUSE"
             },
             {
               "label": "Solution",
               "text": "Solution1",
-              "status": false
+              "status": false,
+              "key": "PROJECT.TASK.HOTISSUE.SOLUTION"
             },
             {
               "label": "Execute",
               "text": "Execute1",
-              "status": false
+              "status": false,
+              "key": "PROJECT.TASK.HOTISSUE.EXECUTE"
             },
             {
               "label": "Feedback",
               "text": "Feedback1",
-              "status": false
+              "status": false,
+              "key": "PROJECT.TASK.HOTISSUE.FEEDBACK"
             }
           ]
         ]

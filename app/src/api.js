@@ -1,22 +1,36 @@
-import Signal from './signal.js';
+import Signal from 'Signal';
 import User from './data/user.js';
-import Request from './request.js';
+import Request from 'Request';
+
+//import Signal from './signal.js';
+//import Request from './request.js';
 
 var API = {
-	signal_page_refresh: new Signal(),
+	signal_page_navigate: new Signal(),
 	signal_registerpopup_show: new Signal(),
 	sigal_loginHeader_update: new Signal(),
 	sigal_window_resizeend: new Signal(),
 
-	PAGE_NAMES: {
-		PROJECT_TIME: 'PROJECT_TIME',
-		PROJECT_ASSET: 'PROJECT_ASSET',
-		PROJECT_PRO_MGR: 'PROJECT_PRO_MGR',
+
+
+
+	pageMap: {
+		home: {
+			label: '首页',
+		},
+		task: {
+			label: '待办事项',
+		},
+		hotissue: {
+			label: 'HotIssue',
+		}
 	},
-	pageName: 'PROJECT_TIME',
+
+	curpage: 'home',
 
 
-	
+
+
 
 	_loginUser: undefined,
 	setLoginUser: function(userObj){
