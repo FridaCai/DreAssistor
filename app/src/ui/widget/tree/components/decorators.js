@@ -1,6 +1,11 @@
 'use strict';
 import Radium from 'radium';
 
+//todo: bad...
+import Projects from '../../../page_task/data/projects';
+import Project from '../../../page_task/data/project';
+import Task from '../../../page_task/data/task';
+
 const Loading = (props) => {
     return (
         <div style={props.style}>
@@ -80,12 +85,21 @@ class Container extends React.Component {
         var nodeId = node.instance.id;
         var component = node.component;
 
+        //todo: badddd...
+        var typeKey;
+        if(node.instance instanceof Projects){
+            typeKey = 'root';
+        }else if(node.instance instanceof Project){
+            typeKey='projectId';
+        }else if (node.instance instanceof Task){
+            typeKey='taskId';
+        }
 
         var param = {
             target: 'treenode',
             data: {
-                label: node.name.split(':')[1].trim(),
-                path: `propertyId=${nodeId}`,
+                label: node.name.split(':')[1] ? node.name.split(':')[1].trim():'', //todo: bad...struggle of drag data. in taskType=2 case, node name is not required.
+                path: `${typeKey}=${nodeId}`,
                 component: component,
             }
         }

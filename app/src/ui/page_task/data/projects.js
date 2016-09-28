@@ -20,7 +20,7 @@ module.exports = class Projects extends Array{
 		}).bind(this))
 	}
 
-	find(projectId){
+	findProject(projectId){
 		return this.find(function(project){
 			return project.id === projectId;
 		})
@@ -29,7 +29,9 @@ module.exports = class Projects extends Array{
 	findTasks(condition){
 		var tasks = [];
 		this.map(function(p){
-			tasks = tasks.concat(p.findTasks(condition));
+			p.findTasks(condition).map(function(task){
+				tasks.push(task);
+			});
 		})
 		return tasks;
 	}

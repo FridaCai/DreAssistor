@@ -74,19 +74,17 @@ module.exports = class Project{
 	}
 
 	
-	findTasks(condition){
-		var tasks = [];
-		this.children.map(function(sp){
-			tasks = tasks.concat(sp.findTasks(condition));
-		})
-		return tasks;
-	}
+
 	hasTask(condition){
 		return this.findTasks(condition).length === 0 ? false: true;
 	}
 
 	
 	*/
+
+	findTasks(){
+		return this.tasks;
+	}
 	addTask(task){
 		this.tasks.addChild(task);
 	}

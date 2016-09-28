@@ -1,4 +1,5 @@
 import Projects from '../data/projects';
+import Task from '../data/task';
 import Signal from 'Signal';
 import GloabalAPI from '../api.js';
 
@@ -9,6 +10,7 @@ import CurveTableUIData from './uidata_curve/curve';
 import Request from 'Request';
 
 import Curves from './data_curve/curves';
+
 
 var API = {
 	signal_treeNode_click: new Signal(),
@@ -25,8 +27,44 @@ var API = {
 	},
 
 
+	getTaskIdByProjectId: function(projectId){
+		var tasks = this._projects.findProject(projectId).findTasks();
+		return tasks.map(function(task){
+			return task.id;
+		});
+	},
+	getAllTaskId: function(){
+		var tasks = this._projects.findTasks();
 
+		return tasks.map(function(task){
+			return task.id;
+		});
+	},
+	getTaskStatus: function(taskObj){
+		var task = Task.create(taskObj);
+		if(task.template.type != 2)
+			return; //only for hotissue.
 
+		var sheet = task.template.sheets[0];
+		var propertyKeys = [
+			'PROJECT.TASK.HOTISSUE.ROOT_CAUSE',
+			'PROJECT.TASK.HOTISSUE.SOLUTION',
+			'PROJECT.TASK.HOTISSUE.EXECUTE',
+			'PROJECT.TASK.HOTISSUE.FEEDBACK'
+		];
+
+		var scores = propertyKeys.map(function(key){
+			var property = sheet.findSingleParamByKey(key);
+			return property.status ? 1:0;
+		});
+
+		var sum = 0;
+		scores.map(function(score){
+			sum += score;
+		});
+
+		return sum/4;
+	},
 
 
 

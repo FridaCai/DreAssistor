@@ -41,6 +41,81 @@ var Content = React.createClass({
             }
         })
     },
+
+
+    /*
+        datatransfer: {
+            target: 'treenode', //'treenode' or 'draghandler'
+            data:{
+                label: '',
+                path: 'propertyId=****',
+                component: 'text' //'text', 'value', 'dropdown', 'curve',
+                curve: curveID... //bad.
+            }
+        }
+    */
+    onDragTreeDataInTable: function(param){
+        //only for hotissue.
+        if(this.props.taskType != 2)
+            return;
+
+        var transferText = param.getData('text');
+        if(!transferText)
+            return;
+        
+        var datatransfer = JSON.parse(transferText);
+        if(datatransfer.target != "treenode"){
+            return;
+        }
+        var type = datatransfer.data.path.split('=')[0].trim();
+        if(['root', 'taskId', 'projectId'].indexOf(type) === -1) 
+            return;
+
+        var id = parseInt(datatransfer.data.path.split('=')[1].trim());
+        var taskIds = (function(type){
+            switch(type){
+                case 'taskId':
+                    return [id]
+                case 'projectId':
+                    return API.getTaskIdByProjectId(id); 
+                case 'root':
+                    return API.getAllTaskId(); 
+            }
+        })(type);
+
+
+        var api = `statical/tasks/${taskIds.join(',')}`;//todo.
+        Request.getData(Request.getBackendAPI(api)).then((function(param){
+            if(param.errCode == -1){
+                var tasks = param.entity;
+
+                var dm = API.getTCDM();
+                tasks.map(function(task){
+                    dm.insert({
+                        xCell: {label: task.label},
+                        y1Cell: {label: API.getTaskStatus(task)},
+                        y2Cell: {label: ""},
+                    })
+                })
+
+                API.dm2ui();
+                this.refs.table.update({
+                    uidata: {
+                        value: API.getValueTableUIData(),
+                        curve: API.getCurveTableUIData()
+                    }
+                })
+            }
+        }).bind(this)).catch(function(e){
+            console.error(e.stack);
+        });
+
+
+
+
+
+
+    },
     appendNewTableLLine: function(){
         API.appendNewTableLine();
 
@@ -62,7 +137,7 @@ var Content = React.createClass({
             }
         })
     },
-    onTableLineDelete: function(param){
+    onTableLineDelete: function(e, param){
         var index = param.index;
         API.deleteAt(index);
         API.dm2ui();
@@ -139,7 +214,7 @@ var Content = React.createClass({
 				<div className='tableChart'>
                     <Button param={newLineBtnParam}/>
                     <Button param={clearTableBtnParam}/>
-					<TableDOM uidata={uidata} ref='table'/>
+					<TableDOM uidata={uidata} ref='table' onDrop={this.onDragTreeDataInTable}/>
                     <Button param={drawCurveBtnParam}/>
                     <div ref='chart'></div>
 				</div>				

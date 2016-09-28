@@ -35,6 +35,15 @@ module.exports = class TreeData{
 				component: 'dropdown'
 			})	
 		}
+		if(property.status!=undefined){
+			var status = (property.status?'完成':'未完成');
+			children.push({
+				name: `状态: ${status}`,
+				draggable: true,
+				instance: property,
+				component: 'dropdown'
+			})	
+		}
 		return children;
 	}
 
@@ -45,6 +54,7 @@ module.exports = class TreeData{
 				name: '豆豆', 
 				children: project.forEachTask(function(task){
 					return {
+						draggable: true,
 						instance: task, 
 						name: task.label
 					}
@@ -62,13 +72,16 @@ module.exports = class TreeData{
 			return {
 				instance: project,
 				name: project.label,
-				children: [tasksUIData, enginesUIData]
+				children: [tasksUIData, enginesUIData],
+				draggable: true
 			}
 		})
 		return {
 			name: '项目',
 			toggled: true,
-			children: projectsUIData
+			children: projectsUIData,
+			draggable: true,
+			instance: projects
 		};
 	}
 
