@@ -10,7 +10,7 @@ var PageView = React.createClass({
     },
 
     componentDidMount: function() {
-        this.refreshPage('home');
+        this.refreshPage(PageHome);
         API.signal_page_navigate.listen(this.onPageRefresh);
     },
 
