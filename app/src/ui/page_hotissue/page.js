@@ -1,4 +1,5 @@
 import API from '../../api.js';
+import StaticalPage from '../page_task/statical_assistor_popup/page';
 
 var PageHotIssue = React.createClass({
   getInitialState: function() {
@@ -7,9 +8,7 @@ var PageHotIssue = React.createClass({
   },
   render: function() {
     return (
-          <div >
-           This is Hotissue Page.
-          </div>
+          <StaticalPage/>
     );
   }
 });
