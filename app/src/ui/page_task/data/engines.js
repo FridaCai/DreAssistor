@@ -69,7 +69,6 @@ module.exports = class Engines extends Array{
 	              "label": "Target design life",
 	              "key": "PROJECT.ENGINE.TARGET_DESIGN_LIFE"
 	            },{
-	              "curve": null,
 	              "label": "Insulator DPDS Requirement",
 	              "key": "PROJECT.ENGINE.INSULATOR_DPDS_REQUIREMENT",
 	              "curve": {}
