@@ -8,7 +8,9 @@ import API from '../../api';
 
 var ConditionPanel = React.createClass({
 	getInitialState: function() {
-		return {};
+		return {
+            showHint:false,
+        };
     },
 
     onOK: function(){
@@ -37,6 +39,10 @@ var ConditionPanel = React.createClass({
     	}
 
     	this.props.onOK && this.props.onOK(param);
+    },
+    toggleHint: function(){
+        var showHint = !this.state.showHint;
+        this.setState({showHint: showHint});
     },
     render: function(){
 
@@ -84,6 +90,8 @@ var ConditionPanel = React.createClass({
         	}).bind(this)
         }
 
+        var showHint = this.state.showHint;
+        var hintStyle = showHint ? {display: 'block'} : {display:'none'};
     	return (
     		<div className='conditionPanel'>
     			<div className='line'>
@@ -97,7 +105,8 @@ var ConditionPanel = React.createClass({
     			<div className='line'>
     				<label>条件</label>
     				<Input param={inputParam}  ref='searchClauseInput'/>
-    				<div className="expressSearchHint">
+                    <span className='hint' onClick={this.toggleHint}>?</span>
+    				<div className="expressSearchHint" style={hintStyle}  >
   							eg:
   							<br/>	
   							发动机<b>=</b>1.0T

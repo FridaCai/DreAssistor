@@ -1,4 +1,5 @@
 import API from '../../api.js';
+import './style.less';
 
 var PageHome = React.createClass({
   getInitialState: function() {
@@ -10,19 +11,22 @@ var PageHome = React.createClass({
       API.signal_page_navigate.dispatch({key: key})
     },
     render: function() {
-      var t = API;
+      var styleList = {
+        task: 'glyphicon glyphicon-tasks',
+        hotissue: 'glyphicon glyphicon-fire'
+      };
       return (
             <div className="container marketing pageHome">
               <div className="row">
               {
-                Object.keys(API.pageMap).map((function(key){
+                Object.keys(API.pageMap).map((function(key,index){
                   var {label, controller} = API.pageMap[key];
                   if(key === 'home')
                     return null;
                   else
                     return (
                       <div key={key} className="col-lg-4 item" onClick={this.onNavigate.bind(this, key)}>
-                        <img className="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140"/>
+                        <span className={styleList[key]}></span>
                         <h2>{label}</h2>
                       </div>
                     )

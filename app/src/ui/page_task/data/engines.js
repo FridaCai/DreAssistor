@@ -36,19 +36,9 @@ module.exports = class Engines extends Array{
 		      },
 		      {
 		        label: "Transmission",
-		        text: "",
+		        text: "Transmission",
 		        key: "PROJECT.ENGINE.TRANSMISSON"
 		      },
-				{
-	              "text": "1.0T",
-	              "label": "engine",
-	              "key": "PROJECT.ENGINE.LABEL"
-	            },
-	            {
-	              "text": "transmission1",
-	              "label": "Transmission",
-	              "key": "PROJECT.ENGINE.TRANSMISSON"
-	            },
 	            {
 	              "text": "Driveline1",
 	              "label": "Driveline",
