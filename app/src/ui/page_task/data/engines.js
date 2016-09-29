@@ -71,7 +71,8 @@ module.exports = class Engines extends Array{
 	            },{
 	              "curve": null,
 	              "label": "Insulator DPDS Requirement",
-	              "key": "PROJECT.ENGINE.INSULATOR_DPDS_REQUIREMENT"
+	              "key": "PROJECT.ENGINE.INSULATOR_DPDS_REQUIREMENT",
+	              "curve": {}
 	            },{
 	              "value": 0,
 	              "label": "Panel Mode Requirement",
