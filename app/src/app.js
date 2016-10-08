@@ -72,6 +72,3 @@ window.Promise = require('es6-promise').Promise;
  
     
 })();
-
-
-//# sourceMappingURL=app.js.map

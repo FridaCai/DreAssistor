@@ -53,10 +53,11 @@ module.exports = class TreeData{
 			var tasksUIData = {
 				name: '豆豆', 
 				children: project.forEachTask(function(task){
+					var name = `${task.label} (${Util.convertUnixTimeToDate(task.startTime)} ~ ${Util.convertUnixTimeToDate(task.endTime)})`;
 					return {
 						draggable: true,
 						instance: task, 
-						name: task.label
+						name: name
 					}
 				})
 			}

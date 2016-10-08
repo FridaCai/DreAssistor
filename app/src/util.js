@@ -93,8 +93,6 @@ var Util = {
 		};
 	}(),
 
-
-	
 	convertDateToUnixTime: function(d) {
 		var unixTime = Date.parse(d);
 		unixTime = unixTime || undefined;
@@ -102,6 +100,10 @@ var Util = {
 	},
 
 	convertUnixTimeToDate: function(unix_timestamp) {
+        var d = new Date(unix_timestamp);
+        return d.toLocaleDateString();
+	},
+	convertUnixTimeToTime: function(unix_timestamp) {
         var d = new Date(unix_timestamp);
         return d.toLocaleDateString() + " " + d.toLocaleTimeString();
 	},

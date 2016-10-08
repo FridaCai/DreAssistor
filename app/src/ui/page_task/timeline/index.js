@@ -28,8 +28,8 @@ var AddOn = React.createClass({
         
         var project = this.props.project;
         this.props.onContextMenu({ //todo.
-          left: e.clientX,
-          top: e.clientY,
+          left: e.pageX,
+          top: e.pageY,
           btns: [{
             label: '修改项目',
             handler: function() {

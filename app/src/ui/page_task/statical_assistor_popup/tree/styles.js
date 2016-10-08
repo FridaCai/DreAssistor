@@ -17,7 +17,7 @@ export default {
     },
     viewer: {
         base: {
-            fontSize: '12px',
+            fontSize: '10px',
             whiteSpace: 'pre-wrap',
             backgroundColor: '#282C34',
             border: 'solid 1px black',
