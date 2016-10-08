@@ -2,9 +2,8 @@ import MainView from './ui/mainview.js';
 import API from './api.js';
 
 
-if(Promise != undefined){
-  window.Promise = require('es6-promise').Promise;
-}
+window.Promise = require('es6-promise').Promise;
+
 
 (function($){
     $.isBlank = function(obj){
@@ -75,3 +74,4 @@ if(Promise != undefined){
 })();
 
 
+//# sourceMappingURL=app.js.map
