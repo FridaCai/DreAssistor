@@ -62,6 +62,8 @@ module.exports = {
             Table: path.join(__dirname, widgetPath, "/table/index.js"),
             AttachmentList: path.join(__dirname, widgetPath, "/attachmentlist/index.js"),
             Tree: path.join(__dirname, widgetPath, "/tree/index.js"),
+            Pagination: path.join(__dirname, widgetPath, "/pagination/index.js"),
+            Loading: path.join(__dirname, widgetPath, "/loading/index.js"),
         }
     }
 };

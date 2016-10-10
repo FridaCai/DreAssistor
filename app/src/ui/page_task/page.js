@@ -16,6 +16,8 @@ import API from './api.js';
 import SuperAPI from '../../api.js';
 
 import RadioGroup from 'RadioGroup';
+import Pagination from 'Pagination';
+import Loading from 'Loading';
 
 var ProjectFilter = React.createClass({
     getInitialState(){
@@ -75,21 +77,7 @@ var PageTask = React.createClass({
         API.signal_timeline_task_create.listen(this.onTaskCreate);
         API.signal_edit_task.listen(this.onTaskEdit);
         API.signal_delete_task.listen(this.onTaskDelete);
-        
-
         this.refresh();
-        
-        /*Promise.all([
-            Request.getData(Request.getBackendAPI('project'))
-        ]).then((function(param){
-            var projectsResponse = param[0];
-            if(projectsResponse.errCode == -1){
-                API.setProjects(projectsResponse.projects);    
-            }
-            this.forceUpdate();
-        }).bind(this)).catch(function(e){
-            console.error(e.stack);
-        });*/
     },
 
     componentWillUnmount: function(){
@@ -255,12 +243,25 @@ var PageTask = React.createClass({
             onlyMe = this.state.onlyMe;
         }
 
-        var loginUser = SuperAPI.getLoginUser();
-        var param = (onlyMe && loginUser) ? {userId: SuperAPI.getLoginUser().id}: {};
+
+        var param = {
+            limit: API.pagination.limit,
+            offset: API.pagination.offset,
+        }
+
+
+        if(onlyMe){
+            var loginUser = SuperAPI.getLoginUser();
+            if(loginUser){
+                param.userId = loginUser.id;
+            }
+        }
+
         Request.getData(Request.getBackendAPI('project'), param)
             .then((function(result){
                 if(result.errCode == -1){
-                    API.setProjects(result.projects);    
+                    API.setProjects(result.projects);   
+                    API.pagination.total = result.total;
                     this.forceUpdate();
                 }
             }).bind(this),function(e){
@@ -269,7 +270,31 @@ var PageTask = React.createClass({
                 console.error(e);
             });    
     },
+    onPagination:function(curpage){
+        API.pagination.offset = curpage;
+        this.refresh();
+    },
     render: function() {
+        var pageBody = (function(){
+            var dom = [];
+
+            var projects = API.getProjects();
+            if(projects.length === 0){
+                dom.push((
+                    <div className='loadingContainer'>
+                        <Loading/>
+                    </div>
+                ));
+            }else{
+                API.getProjects().map(function(project){
+                    dom.push((
+                        <CTimeLine project={project} key={project.id}/>
+                    ))
+                })
+            }
+            return dom;
+        }).call(this);
+
         try{
             return (
                 <div className='pageTask'>
@@ -280,21 +305,12 @@ var PageTask = React.createClass({
                         <button type="button" className="btn btn-default" onClick={this.onStaticalAssistorPopupShow}>助手</button> 
                     </div> 
 
-
-
-
                     <ProjectFilter onChange={this.onProjectFilterChange} onlyMe={this.state.onlyMe}/>
-
-
-
-
-                    {
-                        API.getProjects().map(function(project){
-                            return (
-                                <CTimeLine project={project} key={project.id}/>
-                            )
-                        })
-                    }
+                    {pageBody}
+                    <Pagination 
+                        curPage={API.offset}
+                        totalPage={Math.ceil(API.total/API.limit)}
+                        onPagination ={this.onPagination}/> 
                     <div ref='popup' className='popup'></div>
                 </div>
             );  

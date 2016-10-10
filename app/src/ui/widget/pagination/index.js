@@ -1,26 +1,72 @@
 var Pagination = React.createClass({
+
+
+
   getInitialState(){
     return {
       curPage: this.props.curPage,
-      totalPage: this.props.totalPage
+      totalPage: this.props.totalPage,
+      limit: 10,
+      offset: 0, //which group
     }
   },
+  onPrevBtnClk(){
+    var offset = this.state.offset;
+    this.setState({
+      offset: offset -1
+    })
+  },
+  onNextBtnClk(){
+    var offset = this.state.offset;
+    this.setState({
+      offset: offset + 1
+    })
+  },
+  onPagination(curPage){
+    //do something
+    this.props.onPagination(curPage); 
+  },
   render(){
+    var {curPage, totalPage,limit,offset} = this.state;
+
+
+    var showPrevBtn = (this.state.offset!=0);
+
+    var maxOffset = Math.ceil(totalPage/limit) -1;
+    var showNextBtn = (this.state.offset < maxOffset);
+            
+
+    var prevBtnStyle = showPrevBtn ? {visibility:'show'} : {visibility:'hidden'};
+    var nextBtnStyle = showNextBtn ? {visibility:'show'} : {visibility:'hidden'};
+
+    var paginationDOM = (function(){
+      var dom = [];
+      console.log('check unique key');
+      for(var i=0; i<limit; i++){
+        var curPage = offset*limit+i; 
+        console.log(curPage);
+        dom.push((<li key={curPage}>
+          <a href="javascript:void(0);" 
+            onClick={this.onPagination.bind(this, curPage)}>
+            {curPage+1}
+          </a>
+        </li>));
+      }
+      return dom;
+    }).call(this);
+
     return (
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li>
-            <a href="#" aria-label="Previous">
+      <nav aria-label="Page navigation" style={{textAlign: 'center'}}>
+        <ul className="pagination">
+
+          <li style={prevBtnStyle}>
+            <a href="#" aria-label="Previous" onClick={this.onPrevBtnClk}>
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li>
-            <a href="#" aria-label="Next">
+          {paginationDOM}
+          <li style={nextBtnStyle}>
+            <a href="#" aria-label="Next" onClick={this.onNextBtnClk}>
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

@@ -161,7 +161,12 @@ var API = {
         }).call(this, project.sorp, tag.week, tag.time)
 
         return time;
-	}
+	},
+	pagination: {
+		total: 0,
+		limit: 10,
+		offset: 0,
+	},
 }
 
 //need more sophisticate design.

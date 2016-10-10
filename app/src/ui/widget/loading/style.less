@@ -1,0 +1,33 @@
+.loading{
+	display:block;
+	width: 100px;
+	height: 100px;
+	background:url('/app/res/spinner.svg');
+	background-size: 100% 100%;
+	margin: 100px auto;
+	-webkit-animation: rotateit 4.5s linear infinite;
+	-moz-animation: rotateit 4.5s linear infinite;
+	-o-animation: rotateit 4.5s linear infinite;
+	-ms-animation: rotateit 4.5s linear infinite;
+	animation: rotateit 4.5s linear infinite;
+}
+@-webkit-keyframes rotateit {
+  from  {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes rotateit {
+  from  {-moz-transform: rotate(0deg);}
+  to {-moz-transform: rotate(360deg);}
+}
+@-ms-keyframes rotateit {
+  from  {-ms-transform: rotate(0deg);}
+  to {-ms-transform: rotate(360deg);}
+}
+@-o-keyframes rotateit {
+  from  {-o-transform: rotate(0deg);}
+  to {-o-transform: rotate(360deg);}
+}
+@keyframes rotateit {
+  from  {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
