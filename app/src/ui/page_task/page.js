@@ -63,7 +63,7 @@ var ProjectFilter = React.createClass({
 var PageTask = React.createClass({
 	getInitialState: function() {
         return {
-            onlyMe: false
+            onlyMe: false,
         }
     },
 
@@ -234,8 +234,16 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
-        this.setState({onlyMe: onlyMe});
-        this.refresh(onlyMe);
+        API._projects.clear();
+        this.forceUpdate((function(){
+            API.pagination = {
+                count: 0,
+                limit: 10,
+                offset: 0
+            }
+            this.setState({onlyMe: onlyMe}); //todo: set API.onlyMe.
+            this.refresh(onlyMe);
+        }).bind(this));
     },
 
     refresh: function(onlyMe){
@@ -244,9 +252,10 @@ var PageTask = React.createClass({
         }
 
 
+        var {offset, limit} = API.pagination; 
         var param = {
-            limit: API.pagination.limit,
-            offset: API.pagination.offset,
+            limit: limit,
+            offset: offset * limit,
         }
 
 
@@ -261,38 +270,44 @@ var PageTask = React.createClass({
             .then((function(result){
                 if(result.errCode == -1){
                     API.setProjects(result.projects);   
-                    API.pagination.total = result.total;
+                    API.pagination.count = result.count;
                     this.forceUpdate();
                 }
             }).bind(this),function(e){
                 throw e
             }).catch(function(e){
-                console.error(e);
+                console.error(e.stack);
             });    
     },
-    onPagination:function(curpage){
-        API.pagination.offset = curpage;
-        this.refresh();
+    onPagination:function(offset){
+        API.clearProjects();
+        this.forceUpdate((function(){
+            API.pagination.offset = offset;
+            this.refresh();    
+        }).bind(this));
+
+        
     },
     render: function() {
         var pageBody = (function(){
-            var dom = [];
-
             var projects = API.getProjects();
             if(projects.length === 0){
-                dom.push((
+                return (
                     <div className='loadingContainer'>
                         <Loading/>
                     </div>
-                ));
+                );
             }else{
-                API.getProjects().map(function(project){
-                    dom.push((
-                        <CTimeLine project={project} key={project.id}/>
-                    ))
-                })
+                var dom = API.getProjects().map(function(project){
+                    return (<CTimeLine project={project} key={project.id}/>)
+                });
+                var {limit, offset, count} = API.pagination;
+                dom.push((<Pagination key='pagination'
+                        curPage={offset}
+                        totalPage={Math.ceil(count/limit)}
+                        onPagination ={this.onPagination}/>));
+                return dom;
             }
-            return dom;
         }).call(this);
 
         try{
@@ -307,10 +322,7 @@ var PageTask = React.createClass({
 
                     <ProjectFilter onChange={this.onProjectFilterChange} onlyMe={this.state.onlyMe}/>
                     {pageBody}
-                    <Pagination 
-                        curPage={API.offset}
-                        totalPage={Math.ceil(API.total/API.limit)}
-                        onPagination ={this.onPagination}/> 
+
                     <div ref='popup' className='popup'></div>
                 </div>
             );  

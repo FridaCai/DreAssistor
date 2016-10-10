@@ -54,4 +54,7 @@ module.exports = class Projects extends Array{
 			return cb(project);
 		})
 	}
+	clear(){
+		this.length = 0;
+	}
 }

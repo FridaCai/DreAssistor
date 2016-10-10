@@ -45,6 +45,9 @@ var API = {
 	getProjects: function(){
 		return this._projects;
 	},
+	clearProjects: function(){
+		this._projects.clear();
+	},
 	
 
 	_templateEnum: undefined,
@@ -163,7 +166,7 @@ var API = {
         return time;
 	},
 	pagination: {
-		total: 0,
+		count: 0,
 		limit: 10,
 		offset: 0,
 	},
