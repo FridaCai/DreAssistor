@@ -13,7 +13,9 @@ var TemplateTaskList = React.createClass({
         }
     },
     onAddTaskBtnClk: function(){
-        this.refs.msgbox.show({});
+        var info = '想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.';
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<MessageBox msg={info} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
     },
 
     onEditTaskClk: function(task){
@@ -50,14 +52,9 @@ var TemplateTaskList = React.createClass({
             return {id: task.id, label: task.label}
         });
         API.setTemplateEnum(templateenum);
-
-
-
-
-        //<MessageBox ref='msgbox' msg='想添加新的豆豆模版？请将需求描述提交给开发人员：525311175@qq.com.'/>
+        
         return (
             <div className='taskList'>
-                
 				<span className="label label-primary addTaskBtn" onClick={this.onAddTaskBtnClk}>+</span>
 				{
 					API.getTemplateTasks().map((function(task){
@@ -76,6 +73,7 @@ var TemplateTaskList = React.createClass({
 						)
 					}).bind(this))
 				}
+                <div ref='popup' className='popup'></div>
             </div>
         );    
     }
