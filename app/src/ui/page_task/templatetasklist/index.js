@@ -28,34 +28,11 @@ var TemplateTaskList = React.createClass({
         });
     },
 
-    componentDidMount: function(){
-        
-    },
-
-
-
-    // to get IE to work
-    /*onDragEnter: function (e) {
-        console.log('onDragEnter');
-        return false;
-    },*/
-
-
-
-
     onDragOver: function(e){
         e.preventDefault(); // allows us to drop
-        //console.log('onDragOver');
-        //return;
-
-        
-       // this.className = 'over';
-       // e.dataTransfer.dropEffect = 'copy';
-        //return false;
     },
     onDragStart: function(task, e){
         e.dataTransfer.setData("text", task.template.type.toString());
-        //e.dataTransfer.effectAllowed = "move";
     },
    
     render: function() {
