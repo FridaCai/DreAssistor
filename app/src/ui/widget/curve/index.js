@@ -1,7 +1,7 @@
 import './index.less';
 import {XlsIExport} from 'XlsIExport';
 import {TableDOM} from 'Table';
-import Curve from './data/curve.js';
+import Curve from 'data/curve.js';
 import CurveUI from './uidata/curve.js';
 import Chart from './chart.js';
 import API from './api.js';

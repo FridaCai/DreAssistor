@@ -1,8 +1,8 @@
 import Attachments from '../attachments.js';
 import Images from '../images.js';
-import Curve from '../../../component_curve/data/curve.js';
 import Util from 'Util';
 
+var Curve = require('data/curve.js');
 
 exports.COMPONENT_ENUM = {
 	'LABEL': 'label',

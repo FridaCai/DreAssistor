@@ -28,8 +28,6 @@ module.exports = class Curve {
 		this.needTemplate = (Object.keys(param).length === 0) ? true : false;
 	}
 
-
-
 	update(param){
 		this._updateMeta(param);
 	}

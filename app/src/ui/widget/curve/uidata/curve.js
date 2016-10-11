@@ -4,7 +4,7 @@ import {Cell} from 'Table';
 import {Line} from 'Table';
 import {Base} from 'Table';
 import Label from 'Label';
-import Curve from '../data/curve.js';
+import Curve from 'data/curve.js';
 import ColorCheckbox from '../widget/colorcheckbox.js';
 
 

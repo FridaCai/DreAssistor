@@ -1,6 +1,6 @@
 import Signal from 'Signal';
 import Request from 'Request';
-import Curve from './data/curve.js'; //todo: datamodel should be all together.
+import Curve from 'data/curve.js'; 
 import CurveUI from './uidata/curve.js';
 
 //todo: template mode??? very similar with projectpopup/api

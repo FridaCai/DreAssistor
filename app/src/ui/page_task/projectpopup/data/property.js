@@ -18,7 +18,7 @@ import {ExpandLine} from "Table";
 import {ExpandContainerDOM} from "Table";
 import {ExpandCellDOM} from "Table";
 import {LineGroup} from "Table";
-import CurveComponent from '../../../component_curve/index.js';
+import Curve from 'Curve';
 
 
 
@@ -228,7 +228,7 @@ class Property extends Base{
 			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
-			        	expandComponent: CurveComponent,
+			        	expandComponent: Curve,
 			        	expandComponentParam: {
 			        		id: key,
 			        		curve: property.curve,

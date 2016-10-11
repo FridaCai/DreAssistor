@@ -5,7 +5,7 @@ import {Line} from 'Table';
 import {ExpandContainerDOM} from 'Table';
 import {ExpandCellDOM} from 'Table';
 
-import CurveComponent from '../../../component_curve/index.js';
+import Curve from 'Curve';
 import AttachmentList from 'AttachmentList';
 
 import Label from 'Label';
