@@ -18,7 +18,7 @@ decorators.Header = (props) => {
     const iconClass = `fa fa-${iconType}`;
     const iconStyle = { marginRight: '5px' };
     return (
-        <a style={style.base} draggable='true'>
+        <a style={style.base} draggable='true' href='javascript:void(0);'>
             <div style={style.title}>
                 <i className={iconClass} style={iconStyle}/>
                 {props.node.name}
