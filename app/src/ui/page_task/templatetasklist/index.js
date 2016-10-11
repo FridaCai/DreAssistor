@@ -5,6 +5,7 @@ import Request from '../../../request.js';
 import Util from 'Util';
 import MessageBox from 'MessageBox';
 import TemplateTasks from '../../../config/get_template_tasks';
+import './style.less';
 
 var TemplateTaskList = React.createClass({
 	getInitialState: function() {
@@ -29,15 +30,11 @@ var TemplateTaskList = React.createClass({
         });
     },
 
-    componentDidMount: function(){
-        
-    },
-
     onDragOver: function(e){
-      e.preventDefault(); //otherwise, ondrop does not work.
+        e.preventDefault(); // allows us to drop
     },
     onDragStart: function(task, e){
-        e.dataTransfer.setData("text", task.template.type);
+        e.dataTransfer.setData("text", task.template.type.toString());
     },
    
     render: function() {
@@ -52,10 +49,11 @@ var TemplateTaskList = React.createClass({
             return {id: task.id, label: task.label}
         });
         API.setTemplateEnum(templateenum);
-        
+
         return (
             <div className='taskList'>
 				<span className="label label-primary addTaskBtn" onClick={this.onAddTaskBtnClk}>+</span>
+
 				{
 					API.getTemplateTasks().map((function(task){
 						var id = task.id;
@@ -64,16 +62,18 @@ var TemplateTaskList = React.createClass({
 							backgroundColor: Util.convertIntColorToHex(task.markColor),
 						}
 						return (
-							<a draggable='true' className='task' style={style} key={id}
-									onClick={this.onEditTaskClk.bind(this, task)}
-                                        onDragOver={this.onDragOver}
-                                        onDragStart={this.onDragStart.bind(this, task)}>
+							<a href='javascript:void(0);' 
+                                draggable='true' className='task' style={style} key={id}
+								onClick={this.onEditTaskClk.bind(this, task)}
+                                onDragOver={this.onDragOver}
+                                onDragStart={this.onDragStart.bind(this, task)}>
 								{label}
 							</a>
 						)
 					}).bind(this))
 				}
                 <div ref='popup' className='popup'></div>
+
             </div>
         );    
     }
