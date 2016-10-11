@@ -1,4 +1,4 @@
-module.exports = [
+var TaskTemplate = [
     {
       "id": 0,
       "label": "普通",
@@ -7,10 +7,7 @@ module.exports = [
         "type": 0,
         "sheetNames": [],
         "sheets": []
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     },
     {
       "id": 1,
@@ -20,10 +17,7 @@ module.exports = [
         "type": 1,
         "sheetNames": [],
         "sheets": []
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     },
     {
       "id": 2,
@@ -62,10 +56,7 @@ module.exports = [
             }
           ]
         ]
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     },
     {
       "id": 3,
@@ -153,14 +144,7 @@ module.exports = [
             }
           ]
         ]
-      },
-      "statical": [
-        "duration",
-        "template.param.bp.value",
-        "template.param.mass.value",
-        "template.param.transmissionLose.curve",
-        "template.param.maf.curve"
-      ]
+      }
     },
     {
       "id": 4,
@@ -274,10 +258,7 @@ module.exports = [
             }
           ]
         ]
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     },
     {
       "id": 5,
@@ -373,10 +354,7 @@ module.exports = [
             }
           ]
         ]
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     },
     {
       "id": 6,
@@ -472,10 +450,7 @@ module.exports = [
             }
           ]
         ]
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     },
     {
       "id": 7,
@@ -890,6 +865,7 @@ module.exports = [
             {
               "label": "压力降",
               "value": 0,
+              "curve": {},
               "key": "PROJECT.TASK.BENCHMARK.PERFORMANCE.BP"
             },
             {
@@ -967,9 +943,8 @@ module.exports = [
             }
           ]
         ]
-      },
-      "statical": [
-        "duration"
-      ]
+      }
     }
   ]
+
+module.exports = TaskTemplate;

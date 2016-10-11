@@ -9,14 +9,10 @@ import Tag from '../data/tag.js';
 import MultipleParamUIData from '../../taskpopup/uidata/multipleparam.js';
 import Request from 'Request';
 
+import ProjectTemplate from 'ProjectTemplate';
+
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
-        /*(function(p){
-            if(!p)
-                return;
-            API.setProject(p); 
-        })(this.props.project);*/
-
         return {
             title: this.props.title,
             onOK: this.props.onOK,
@@ -48,8 +44,6 @@ var ProjectPopup = React.createClass({
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
                 />
-
-                
 
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
@@ -132,20 +126,15 @@ var ProjectPopup = React.createClass({
                 console.error(e);
             });
         }else{
-            API.loadTemplate().then((function(result){
-                var project = Project.create(result); 
-                API.setProject(project); 
-                API.dm2ui();
+            var project = Project.create(ProjectTemplate); 
+            API.setProject(project); 
+            API.dm2ui();
 
-                var uidata = API.uidata;
-                this.refs.table.update({
-                    uidata: uidata
-                })
-            }).bind(this), function(e){
-                throw e;
-            }).catch((function(e){
-                console.error(e.stack);
-            }).bind(this));
+            var uidata = API.uidata;
+            this.refs.table.update({
+                uidata: uidata
+            })
+            
         }
     },
 

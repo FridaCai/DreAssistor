@@ -3,6 +3,7 @@ var webpack = require("webpack");
 
 var widgetPath = '/app/src/ui/widget';
 var toolPath = '/app/src';
+var configPath = '/app/src/config';
 
 module.exports = {
     entry: {
@@ -64,6 +65,10 @@ module.exports = {
             Tree: path.join(__dirname, widgetPath, "/tree/index.js"),
             Pagination: path.join(__dirname, widgetPath, "/pagination/index.js"),
             Loading: path.join(__dirname, widgetPath, "/loading/index.js"),
+
+            ProjectTemplate: path.join(__dirname, configPath, "/template_project.json"),
+            TaskTemplate: path.join(__dirname, configPath, "/template_task.json"),
+            CurveTemplate: path.join(__dirname, configPath, "/template_curve.json"),
         }
     }
 };

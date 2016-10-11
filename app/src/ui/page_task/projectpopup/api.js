@@ -22,14 +22,6 @@ var API = {
 		this.project = value;
 	},
 
-	loadTemplate: function(){ 
-		var url = Request.getMockupAPI('template_project.json');
-        return Request.getData(url).then((function(result){
- 			return result;
-        }).bind(this))
-	},
-
-
 	ui2dm: function(){
 		this.uidata.property.ui2dm(this.project);
 		this.uidata.tag.ui2dm(this.project);
