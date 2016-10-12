@@ -1,0 +1,135 @@
+pai`s lenovo mysql 3306 disconnect from time2time
+https://github.com/mysqljs/mysql/issues/262
+
+Commands: run (r), cont (c), next (n), step (s), out (o), backtrace (bt), setBreakpoint (sb), clearBreakpoint (cb),
+watch, unwatch, watchers, repl, restart, kill, list, scripts, breakOnException, breakpoints, version
+
+==================================
+Drag/drop not work for ie.
+===========================================================================
+install and run mysql
+download mysql£º
+#normal --work
+#debug
+#source code
+
+mysqld --console
+
+
+2.10.1.1 Initializing the Data Directory Manually Using mysqld
+http://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html
+
+C:\> bin\mysqld --initialize
+mysqld:Could not create or access the registry key needed for the MySQL application. 
+Cannot open Windows Eventlog; check privileges, or start server with --log_syslog=0
+
+
+mysqld --initialize --console --log_syslog=0
+
+2016-10-09T04:58:15.015664Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is
+ deprecated. Please use --explicit_defaults_for_timestamp server option (see doc
+umentation for more details).
+2016-10-09T04:58:15.015664Z 0 [Warning] 'NO_ZERO_DATE', 'NO_ZERO_IN_DATE' and 'E
+RROR_FOR_DIVISION_BY_ZERO' sql modes should be used with strict mode. They will
+be merged with strict mode in a future release.
+2016-10-09T04:58:15.015664Z 0 [Warning] 'NO_AUTO_CREATE_USER' sql mode was not s
+et.
+2016-10-09T04:58:16.076512Z 0 [Warning] InnoDB: New log files created, LSN=45790
+
+2016-10-09T04:58:16.372925Z 0 [Warning] InnoDB: Creating foreign key constraint
+system tables.
+2016-10-09T04:58:16.435328Z 0 [Warning] No existing UUID has been found, so we a
+ssume that this is the first time that this server has been started. Generating
+a new UUID: fd5b4224-8ddc-11e6-bbd0-2c27d7ef2c4f.
+2016-10-09T04:58:16.466529Z 0 [Warning] Gtid table is not ready to be used. Tabl
+e 'mysql.gtid_executed' cannot be opened.
+2016-10-09T04:58:16.497731Z 1 [Note] A temporary password is generated for root@
+localhost: VXCCaydq8T=w
+
+D:\DreAssisstor\site\mysql-5.7.15-winx64\bin>mysqld --initialize --console --log
+_syslog=0
+
+login and change password
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'mapi1111111111!';
+
+CREATE DATABASE `dreassistor`;
+
+
+mysql -u root -p dreassistor < DreAssistor_backend_swagger/db/dreassistor.dump
+no constrain foreign key issue as before.
+
+
+Cool!
+DB is installed, run, and data imported!
+===============================================
+
+turn off
+security
+smart screen filter
+
+===============================================
+
+git proxy
+git config --global http.proxy http://proxy.sgm.shanghaigm.com:8080
+git clone https://github.com/FridaCai/DreAssistor.git
+
+need to visit git site first
+=============================================
+
+todo: delete site3
+===============================================
+visit patac server from pai`S machine --ok
+PCHDW00039.patac.shanghaigm.com
+=============================================
+Ö±½ÓÅÜnpm ok
+============================================
+[npminstall:get] retry GET https://registry.npm.taobao.org/bootstrap/%3E%3D3.3.5%20%3C4.0.0 after 400ms, retry left 1, error: RequestError: connect ETIMEDOUT 114.55.80.225:443 (req "error"), GET https://registry.npm.taobao.org/bootstrap/%3E%3D3.3.5%20%3C4.0.0 -1 (connected: false, keepalive socket: false)
+headers: {}
+
+===========================================
+/binary-mirror-config/latest 
+
+config proxy for cnpm
+ 
+
+
+
+spp8e3@PCHDW00039 MINGW64 /d/DreAssisstor/site3
+$ cnpm install bootstrap
+Get /binary-mirror-config/latest from https://registry.npm.taobao.org error: ConnectionTimeoutError: Connect timeout for 5000ms, GET https://registry.npmjs.org/binary-mirror-config/latest -1 (connected: false, keepalive socket: false)
+headers: {}
+    at null._onTimeout (C:\Users\spp8e3\AppData\Roaming\npm\node_modules\cnpm\node_modules\urllib\lib\urllib.js:698:15)
+    at Timer.listOnTimeout (timers.js:92:15)
+[npminstall:get] retry GET https://registry.npm.taobao.org/bootstrap/%3E%3D3.3.5%20%3C4.0.0 after 100ms, retry left 4, error: RequestError: connect ETIMEDOUT 114.55.80.225:443 (req "error"), GET https://registry.npm.taobao.org/bootstrap/%3E%3D3.3.5%20%3C4.0.0 -1 (connected: false, keepalive socket: false)
+headers: {}
+
+===========================================
+set environment variable for cnpm.
+=============================================
+cnpm instruct\; http://npm.taobao.org/
+
+fail to config cnpm and npm install
+http://blog.michaelfasani.com/2013/11/how-to-use-node-js-and-npm-behind-a-company-firewall/
+
+fail to git pull
+
+net work setting:
+Use automatic configuration script:
+http://210.75.64.51/sgmproxyv4.pac
+proxy:
+proxy.sgm.shanghaigm.com
+8080
+
+
+proxy.sgm.shanghaigm.com:8080
+
+npm config set proxy http://proxy.sgm.shanghaigm.com:8080
+npm config set https-proxy http://proxy.sgm.shanghaigm.com:8080
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+
+
+=======================================
+todo:install git proxy
+=======================================
+copy node folder from pai`s machine to patac server. work!!!
