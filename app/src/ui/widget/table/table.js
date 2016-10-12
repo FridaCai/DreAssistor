@@ -56,7 +56,7 @@ var TableDOM = React.createClass({
                         - parseInt($('.dataTable').css('marginTop'))
                         - $('.nav-tabs').outerHeight()
                         - $('.thead-inverse').outerHeight();
-            $('tbody').height(h);
+            $('.customTable>tbody').height(h);
         }).call(this)
     },
 
