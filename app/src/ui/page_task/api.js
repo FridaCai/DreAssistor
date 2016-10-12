@@ -37,7 +37,7 @@ var API = {
 		})
 	},
 
-	_projects: new Projects(),
+	_projects: undefined,
 	setProjects: function(value){
 		this._projects = new Projects();
 		this._projects.init(value);
@@ -46,7 +46,7 @@ var API = {
 		return this._projects;
 	},
 	clearProjects: function(){
-		this._projects.clear();
+		this._projects=undefined;
 	},
 	
 

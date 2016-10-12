@@ -234,7 +234,7 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
-        API._projects.clear();
+        API.clearProjects();
         this.forceUpdate((function(){
             API.pagination = {
                 count: 0,
@@ -291,7 +291,7 @@ var PageTask = React.createClass({
     render: function() {
         var pageBody = (function(){
             var projects = API.getProjects();
-            if(projects.length === 0){
+            if(!projects){
                 return (
                     <div className='loadingContainer'>
                         <Loading/>
@@ -302,10 +302,13 @@ var PageTask = React.createClass({
                     return (<CTimeLine project={project} key={project.id}/>)
                 });
                 var {limit, offset, count} = API.pagination;
-                dom.push((<Pagination key='pagination'
-                        curPage={offset}
-                        totalPage={Math.ceil(count/limit)}
-                        onPagination ={this.onPagination}/>));
+
+                if(count!=0){
+                    dom.push((<Pagination key='pagination'
+                            curPage={offset}
+                            totalPage={Math.ceil(count/limit)}
+                            onPagination ={this.onPagination}/>));    
+                }
                 return dom;
             }
         }).call(this);
