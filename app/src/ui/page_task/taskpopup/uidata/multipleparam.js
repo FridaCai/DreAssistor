@@ -212,7 +212,7 @@ class MultipleParamUIData extends Base{
 			        	onExpandToggle: function(){
 			        		MultipleParamUIData.signal_expand_toggle.dispatch();
 			        	},
-			        	expandComponent: CurveComponent,
+			        	expandComponent: Curve,
 			        	expandComponentParam: {
 			        		id: key,
 			        		curve: property.curve,
