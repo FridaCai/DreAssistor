@@ -176,16 +176,27 @@ var PageTask = React.createClass({
     onTaskPopupShow: function(e, param){
         var task = param.task;
         var taskId = param.task.id;
+        var project = task.parent.parent; //for ref key.
+        var projectId = project.id;
 
-        var url = Request.getBackendAPI(`task/${taskId}`);
-        return Request.getData(url).then((function(res){ //fail case.
-            task.update(res.task);
+        var queryTaskUrl = Request.getBackendAPI(`task/${taskId}`);
+        var queryProjectUrl = Request.getBackendAPI(`project/${projectId}`);
 
+        return Promise.all([
+            Request.getData(queryTaskUrl), 
+            Request.getData(queryProjectUrl)
+        ]).then((function(){ //fail case.
+            var taskRes = arguments[0][0];
+            var projectRes = arguments[0][1];
 
-            if(res.errCode === -1){
-                var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
-                ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
+            if(taskRes.errCode != -1 || projectRes.errCode != -1){
+                return;
             }
+            task.update(taskRes.task);
+            project.update(projectRes.project);
+
+            var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
+            ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
         }).bind(this), function(err){
             console.error(err);
         });

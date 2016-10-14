@@ -1,7 +1,6 @@
 import RadioGroup from 'RadioGroup';
 import {TableDOM} from 'Table';
 import MultipleSheetUIData from './uidata/multiplesheet.js';
-import MultipleParamUIData from './uidata/multipleparam.js';
 
 var MultipleSheetTemplate = React.createClass({
     getInitialState() {
@@ -11,37 +10,36 @@ var MultipleSheetTemplate = React.createClass({
         multipleSheetUIData.dm2ui(project, param);
         return {
             dm: param,
-            multipleSheetUIData: multipleSheetUIData
+            uidata: multipleSheetUIData
         }
     },
 
     componentDidMount: function(){
-        MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
-        MultipleParamUIData.signal_data_change.listen(this.onDataChange);
-        
+        this.state.uidata.signal_expand_toggle.listen(this.onExpandToggle);
+        this.state.uidata.signal_data_change.listen(this.onDataChange);
     },
     onExpandToggle: function(){
         this.refs.table.forceUpdate();
     },
     onDataChange: function(){
-        this.state.multipleSheetUIData.ui2dm(this.state.dm);
-        this.state.multipleSheetUIData.dm2ui(this.props.project, this.state.dm);
-        this.refs.table.setState({uidata: this.state.multipleSheetUIData.uidata});
+        this.state.uidata.ui2dm(this.state.dm);
+        this.state.uidata.dm2ui(this.props.project, this.state.dm);
+        this.refs.table.setState({uidata: this.state.uidata});
     },
     componentWillUnmount: function(){
-        MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
-        MultipleParamUIData.signal_data_change.unlisten(this.onDataChange);
+        this.state.uidata.signal_expand_toggle.unlisten(this.onExpandToggle);
+        this.state.uidata.signal_data_change.unlisten(this.onDataChange);
     },
     getValue(){
-        this.state.multipleSheetUIData.ui2dm(this.state.dm);
+        this.state.uidata.ui2dm(this.state.dm);
         return this.state.dm;
     },
     onSwitchSheet(){
-        this.state.multipleSheetUIData.ui2dm(this.state.dm);
-        this.state.multipleSheetUIData.dm2ui(this.props.project, this.state.dm);
+        this.state.uidata.ui2dm(this.state.dm);
+        this.state.uidata.dm2ui(this.props.project, this.state.dm);
     },
     render(){
-        var uidata = this.state.multipleSheetUIData.uidata;
+        var uidata = this.state.uidata;
 
         return (
             <div className='mixParamTemplate'>

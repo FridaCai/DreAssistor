@@ -1,4 +1,5 @@
 /*defined the excel and curve template.*/
+var CurveTemplate = 
 {
   "PROJECT.TASK.BENCHMARK.PERFORMANCE.BP": 1,
   "PROJECT.TASK.BENCHMARK.PERFORMANCE.INTAKE_NOISE":0,
@@ -8,8 +9,7 @@
     "0": {
       "id": "A72CEA28-2E86-4212-BECF-538A4975BB1D",
       "caption": "frida test",
-      "data": [
-        [
+      "data":[[
           1000,
           1020,
           1040,
@@ -1308,3 +1308,5 @@
     }
   }
 }
+
+module.exports = CurveTemplate;

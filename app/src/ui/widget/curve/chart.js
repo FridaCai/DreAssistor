@@ -20,9 +20,6 @@ var Chart = React.createClass({
     this.state.uidata.curve.header.cells.map(function(cell, index){
         if(index!=0){
           var char = String.fromCharCode('a'.charCodeAt(0) + index - 1);
-
-
-
           if(!cell.param.isCheck){
             $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).hide();
           } else{
@@ -97,9 +94,6 @@ var Chart = React.createClass({
           $(`.curveid_${id}`).find(`.ct-series.ct-series-${char} .ct-point`).css({'stroke': color});
           $(`.curveid_${id}`).find(`.ct-series.ct-series-${char} .ct-line`).css({'stroke': color});
         }
-
-
-        
       }).bind(this));
     }catch(e){
       console.log(e.stack);

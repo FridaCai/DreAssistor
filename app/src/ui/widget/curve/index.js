@@ -1,10 +1,11 @@
 import './index.less';
 import {XlsIExport} from 'XlsIExport';
 import {TableDOM} from 'Table';
-import Curve from 'data/curve.js';
-import CurveUI from './uidata/curve.js';
 import Chart from './chart.js';
 import API from './api.js';
+import Curve from 'data/curve.js';
+import CurveUI from './uidata/curve.js';
+import CurveTemplate from 'CurveTemplate';
 
 var CurveComponent = React.createClass({
   getInitialState: function(){
@@ -21,7 +22,6 @@ var CurveComponent = React.createClass({
         }
              
     })(this.props.curve, this.api);
-    
     return {};
   },
 
@@ -93,21 +93,16 @@ var CurveComponent = React.createClass({
       this.api.signal_curve_toggle.listen(this.onCurveToggle);
 
       if(this.props.curve.needTemplate){
-        API.loadTemplate().then((function(result){
-            var curve = new Curve();
-            curve.init(result);
+        
+        var curve = new Curve();
+        curve.init(CurveTemplate);
 
-            this.api.setCurve(curve); 
-            this.api.dm2ui();
+        this.api.setCurve(curve); 
+        this.api.dm2ui();
 
 
-            this.refs.table.forceUpdate();
-            this.refs.chart.update();
-        }).bind(this), function(e){
-          throw e;
-        }).catch(function(e){
-            console.error(e.stack);
-        });
+        this.refs.table.forceUpdate();
+        this.refs.chart.update();
 
         return;
       }
@@ -116,6 +111,8 @@ var CurveComponent = React.createClass({
 
 
       if(!this.props.curve.data){
+
+        //todo here.
           API.loadCurve(this.props.curve.id).then((function(result){
             if(result.errCode == -1){
               this.api.getCurve().update(result.curve);
@@ -131,13 +128,6 @@ var CurveComponent = React.createClass({
           });
           return;
       }
-
-
-
-
-
-
-      
   },
 
   componentWillUnmount: function(){

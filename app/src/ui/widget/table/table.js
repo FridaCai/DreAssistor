@@ -7,6 +7,7 @@ import Util from 'Util';
 import {LineGroup} from 'Table';
 import {Line} from 'Table';
 
+
 import './style.less';
 
 var TableDOM = React.createClass({

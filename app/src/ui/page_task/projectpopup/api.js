@@ -7,6 +7,7 @@ import Project from '../data/project.js';
 import SaveAs from 'browser-saveas';
 import {Util} from 'XlsIExport';
 
+
 var API = {
 	project: new Project(),
 
@@ -34,7 +35,10 @@ var API = {
 		}
 
 		var property = new Property();
+		property.setComponents(this.project);
+		property.setHeader();
 		property.dm2ui(this.project);
+
 
 		var tag = new Tag();
 		tag.dm2ui(this.project);

@@ -388,7 +388,7 @@ var TaskTemplate = [
             {
               "label": "背压／压力将(kpa)",
               "status": false,
-              "refKey": "bpMax",
+              "refKey": "",
               "attachment": [],
               "value": 0,
               "curve": {},
@@ -406,7 +406,7 @@ var TaskTemplate = [
             {
               "label": "重量(kg)",
               "status": false,
-              "refKey": "massMax",
+              "refKey": "",
               "attachment": [],
               "value": 0,
               "curve": {},

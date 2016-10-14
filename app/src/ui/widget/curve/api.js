@@ -5,19 +5,6 @@ import CurveUI from './uidata/curve.js';
 
 //todo: template mode??? very similar with projectpopup/api
 class API{
-	static loadTemplate(){
-		var url = Request.getMockupAPI('template_curve.json');
-        return Request.getData(url).then((function(result){
- 			return result;
-        }).bind(this))
-	}
-	static loadCurve(id){
-		var url = Request.getBackendAPI(`curve/${id}`);
-		return Request.getData(url).then(function(result){
-			return result;
-		})
-	}
-
 	constructor(){
 
 	}

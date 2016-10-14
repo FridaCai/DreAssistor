@@ -15,8 +15,6 @@ module.exports = class CurveData{
 	}
 
 	static convertCurveDM2CurveData(dms){
-		debugger;
-		
 		//get the union labels in all dms. and sort.
 		var labelUnion = [];
 		dms.map(function(dm){
@@ -71,7 +69,6 @@ module.exports = class CurveData{
 
 
 
-			debugger;
 			var seriesNum = xCurveMap[labelUnion[0]].length;
 
 			for(var i=0; i<seriesNum; i++){

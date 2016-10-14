@@ -51,6 +51,7 @@ module.exports = {
             Util: path.join(__dirname, toolPath, "/util.js"),
             Signal: path.join(__dirname, toolPath, "/signal.js"),
             Request: path.join(__dirname, toolPath, "/request.js"),
+            TmpUtil: path.join(__dirname, toolPath, "/util.tmp.js"),
 
             CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
             Button: path.join(__dirname, widgetPath, "/button/index.js"),
@@ -68,7 +69,7 @@ module.exports = {
             Tree: path.join(__dirname, widgetPath, "/tree/index.js"),
             Pagination: path.join(__dirname, widgetPath, "/pagination/index.js"),
             Loading: path.join(__dirname, widgetPath, "/loading/index.js"),
-            Curve: path.join(__dirname, widgetPath, "/curve/index.js"),
+            CurveComponent: path.join(__dirname, widgetPath, "/curve/index.js"),
 
             ProjectTemplate: path.join(__dirname, configPath, "/template_project.json"),
             TaskTemplate: path.join(__dirname, configPath, "/template_task.json"),

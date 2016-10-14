@@ -11,7 +11,6 @@ import Line from './data/line.js';
 import LineGroup from './data/linegroup.js';
 import Base from './uidata/base.js';
 
-
 exports.CellDOM = CellDOM;
 exports.ExpandCellDOM = ExpandCellDOM;
 exports.ExpandContainerDOM = ExpandContainerDOM;

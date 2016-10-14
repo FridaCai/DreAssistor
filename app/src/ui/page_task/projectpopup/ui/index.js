@@ -6,7 +6,6 @@ import Project from '../../data/project.js'; //todo: datamodel and controller pu
 import Property from '../data/property.js';
 import Tag from '../data/tag.js';
 
-import MultipleParamUIData from '../../taskpopup/uidata/multipleparam.js';
 import Request from 'Request';
 
 import ProjectTemplate from 'ProjectTemplate';
@@ -101,10 +100,10 @@ var ProjectPopup = React.createClass({
         this.refs.table.setState({uidata: API.uidata});     
     },
     componentDidMount: function(){
-        Property.signal_add_engine.listen(this.onEngineAdd);
-        Property.signal_delete_engine.listen(this.onEngineDelete);
-        Property.signal_copy_engine.listen(this.onEngineCopy);
-        MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
+        API.uidata.property.signal_add_engine.listen(this.onEngineAdd);
+        API.uidata.property.signal_delete_engine.listen(this.onEngineDelete);
+        API.uidata.property.signal_copy_engine.listen(this.onEngineCopy);
+        API.uidata.property.signal_expand_toggle.listen(this.onExpandToggle);
 
         if(this.props.project){
             var id = this.props.project.id;
@@ -139,10 +138,11 @@ var ProjectPopup = React.createClass({
     },
 
     componentWillUnmount: function(){
-        Property.signal_add_engine.unlisten(this.onEngineAdd);
-        Property.signal_delete_engine.unlisten(this.onEngineDelete);
-        Property.signal_copy_engine.unlisten(this.onEngineCopy);
-        MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
+        API.uidata.property.signal_add_engine.unlisten(this.onEngineAdd);
+        API.uidata.property.signal_delete_engine.unlisten(this.onEngineDelete);
+        API.uidata.property.signal_copy_engine.unlisten(this.onEngineCopy);
+        API.uidata.property.signal_expand_toggle.unlisten(this.onExpandToggle);
+        
     },
 
     onExpandToggle: function(){

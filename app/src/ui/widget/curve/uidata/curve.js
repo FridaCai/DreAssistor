@@ -6,8 +6,6 @@ import {Base} from 'Table';
 import Label from 'Label';
 import Curve from 'data/curve.js';
 import ColorCheckbox from '../widget/colorcheckbox.js';
-
-
 class CurveUI extends Base{ 
 	constructor(){
 		super();
@@ -60,20 +58,6 @@ class CurveUI extends Base{
 			tmp.push(`${cell.v}, ${cell.param.isCheck}`);
 		})
 		dumpui.push(tmp);
-
-
-		/*
-		this.ui.map(function(line){
-			var tmp = [];
-			line.cells.map(function(cell){
-				tmp.push(`${cell.v}`);
-			})
-			dumpui.push(tmp);
-		})
-		*/
-
-		
-		console.table(dumpui);
 	}
 	xls2ui(param){
 		var ui = ExcelUtil.excel2ui(param);
@@ -108,18 +92,6 @@ class CurveUI extends Base{
 				})
 			);
 		})
-
-
-
-
-
-
-
-
-
-
-
-
 
 		var emptylines = (function appendEmptyLines(){
 			var emptylines = [];
