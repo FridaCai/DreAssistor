@@ -51,8 +51,8 @@ class CurveUI extends Base{
    
         var series = this.header.cells.map(function(h, i){
         	return {
-        		label: h.v,
-				isShowCurve: true,
+        		label: h.param.label,
+				isShowCurve: h.v,
 				data: i,
         	}
         })
@@ -77,29 +77,31 @@ class CurveUI extends Base{
 	}
 
 	dm2ui(curve){
+		var me = this;
+		
 		this.header = (function(){
-			var createLine = function(label, index){
+			var createLine = function(label, isShowCurve, index){
 				return Cell.create({
 					component: ColorCheckbox, 
 					param: {
 						color: GlobalUtil.COLORS[index % 24], 
-						isCheck: true, 
+						isCheck: isShowCurve, 
 						label: label,  
 						onCheckboxChange: function(isCheck){
-							this.param.isCheck = isCheck;
+							this.v = isCheck;
 							me.onToggle();
 						},
 					}, 
-					v: label,
+					v: isShowCurve,
 				});
 			}
 			var cells = curve.series.map(function(serie, index){
-				var label = serie.label;
+				var {label, isShowCurve} = serie;
 
 				if(index === 0){
 					return Cell.create({component: Label, v: label});
 				}
-				return createLine(label, index);
+				return createLine(label, isShowCurve, index-1);
 			})
 			return Line.create({cells: cells});
 		})();

@@ -18,23 +18,22 @@ var Chart = React.createClass({
     this.setState({curve: newProps.curve}, this.update);
   },
   onToggle: function(){
-    return;
-    /*var id = this.state.id;
-    this.state.uidata.curve.header.cells.map(function(cell, index){
-        if(index!=0){
-          var char = String.fromCharCode('a'.charCodeAt(0) + index - 1);
-          if(!cell.param.isCheck){
-            $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).hide();
-          } else{
-            $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).show();
-          } 
-        }
-      })*/
+    var id = this.state.id;
+    this.state.curve.series.map(function(serie, index){
+      if(index!=0){
+        var char = String.fromCharCode('a'.charCodeAt(0) + index - 1);
+        if(!serie.isShowCurve){
+          $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).hide();
+        } else{
+          $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).show();
+        } 
+      }
+    })
   },
   update: function(){
     try{
       var curve = this.state.curve;
-      if(!curve)
+      if(!curve || !curve.data)
         return;
     
       var labels = curve.data[0];

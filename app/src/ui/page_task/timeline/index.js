@@ -27,7 +27,7 @@ var AddOn = React.createClass({
         e.preventDefault();
         
         var project = this.props.project;
-        this.props.onContextMenu({ //todo.
+        this.props.onContextMenu({ 
           left: e.pageX,
           top: e.pageY,
           btns: [{

@@ -3,10 +3,7 @@ import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
 import ProjectPopup from './projectpopup/ui/index.js';
 import StaticalAssistorPopup from './statical_assistor_popup/index.js';
-//import PeopleAssistorPopup from './people_assistor_popup/index.js';
-import ContextMenu from './contextmenu.jsx';
 import MessageBox from 'MessageBox';
-
 import Util from 'Util';
 import Task from './data/task.js';
 import Project from './data/project.js';

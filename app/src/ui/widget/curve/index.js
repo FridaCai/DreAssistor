@@ -6,6 +6,7 @@ import API from './api.js';
 import Curve from 'data/curve.js';
 import CurveUI from './uidata/curve.js';
 import CurveTemplate from 'CurveTemplate';
+import Request from 'Request';
 
 var CurveComponent = React.createClass({
   getInitialState: function(){
@@ -104,19 +105,20 @@ var CurveComponent = React.createClass({
       }
 
       if(!this.props.curve.data){
+        var id = this.props.curve.id;
+        var url = Request.getBackendAPI(`curve/${id}`);
 
-        //todo here.
-          API.loadCurve(this.props.curve.id).then((function(result){
-            if(result.errCode == -1){
-              this.api.getCurve().update(result.curve);
-              this.api.dm2ui();
-              this.forceUpdate();
-            }
-          }).bind(this), function(e){
-            throw e;
-          }).catch(function(e){
-              console.error(e.stack);
-          });
+        Request.getData(url).then((function(result){
+          if(result.errCode == -1){
+            this.api.getCurve().update(result.curve);
+            this.api.dm2ui();
+            this.forceUpdate();
+          }
+        }).bind(this), function(e){
+          throw e;
+        }).catch(function(e){
+            console.error(e.stack);
+        });
       }
   },
 
@@ -124,6 +126,8 @@ var CurveComponent = React.createClass({
     this.api.signal_curve_toggle.unlisten(this.onCurveToggle);
   },
   onCurveToggle: function(e, param){
+    this.api.ui2dm();
+    this.refs.chart.forceUpdate();
     this.refs.chart.onToggle();
   },
 })

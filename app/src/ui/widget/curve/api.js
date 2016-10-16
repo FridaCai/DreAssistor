@@ -8,9 +8,7 @@ class API{
 	constructor(){
 
 	}
-	static loadCurve(id){
-		var url = Request.getBackendAPI('curve/${id}');//todo
-	}
+
 	init(){
 		//this.curve = new Curve();
 		this.curve = undefined;
