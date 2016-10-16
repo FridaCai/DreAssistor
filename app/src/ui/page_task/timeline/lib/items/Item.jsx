@@ -294,8 +294,8 @@ export default class Item extends React.Component {
       return;
 
     this.props.onContextMenu({
-      left: e.clientX,
-      top: e.clientY,
+      left: e.pageX,
+      top: e.pageY,
       btns: [{
         label: '修改豆豆',
         handler: function() {
