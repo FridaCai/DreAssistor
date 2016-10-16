@@ -6,7 +6,7 @@ var Chart = React.createClass({
     this._chart = null;
 
     return {
-      uidata: this.props.uidata,
+      curve: this.props.curve,
       id: this.props.id.replace(/\./g, '-')
     }
   },
@@ -14,9 +14,12 @@ var Chart = React.createClass({
   componentDidMount:function(){
     this.update();
   },
-  
+  componentWillReceiveProps: function(newProps){
+    this.setState({curve: newProps.curve}, this.update);
+  },
   onToggle: function(){
-    var id = this.state.id;
+    return;
+    /*var id = this.state.id;
     this.state.uidata.curve.header.cells.map(function(cell, index){
         if(index!=0){
           var char = String.fromCharCode('a'.charCodeAt(0) + index - 1);
@@ -26,37 +29,21 @@ var Chart = React.createClass({
             $(`.curveid_${id}`).find(`.ct-series.ct-series-${char}`).show();
           } 
         }
-      })
+      })*/
   },
-  //todo: reverse. head ache.
   update: function(){
     try{
-      var curve = this.state.uidata.curve;
-      curve.dump();
-
-      var header = curve.header;
-      var ui = curve.ui;
-    
-      if(ui.length < 2)
+      var curve = this.state.curve;
+      if(!curve)
         return;
-
-
-      var labels = ui.map(function(line){
-        return line.cells[0].v;
-      })
-
-
-
-      var lineNum = ui[0].cells.length;
+    
+      var labels = curve.data[0];
       var series = [];
-
-      for(var j=1; j<lineNum; j++){
-        var serie = [];
-        for(var k=0; k<ui.length; k++){
-          serie.push(ui[k].cells[j].v);
+      curve.data.map(function(dataarr, index){
+        if(index !=0){
+          series.push(dataarr);
         }
-        series.push(serie);
-      }
+      })
 
       if(this._chart){
         this._chart.svg.remove();
@@ -65,10 +52,18 @@ var Chart = React.createClass({
 
       var id = this.state.id;
       var selector = `.curveid_${id}`;
+
+      var numXLbl = Math.min(20, labels.length);
+      var step = Math.round(labels.length / numXLbl);
+
+
+
+
       this._chart = new Chartist.Line(selector, {
         labels: labels,
         series: series,
       }, {
+        width: '1000px',
         fullWidth: true,
         lineSmooth: false,
         chartPadding: {
@@ -76,9 +71,9 @@ var Chart = React.createClass({
           left: 10
         },
         axisX: {
-          labelInterpolationFnc: function(value) {
-            if(value % 500 === 0){
-              return value;  
+          labelInterpolationFnc: function(value, i) {
+            if(i%step === 0){
+              return Math.round(value);
             }
           }
         }

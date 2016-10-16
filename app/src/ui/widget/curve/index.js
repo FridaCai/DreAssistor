@@ -20,7 +20,6 @@ var CurveComponent = React.createClass({
         if(curve.data){
           api.dm2ui();
         }
-             
     })(this.props.curve, this.api);
     return {};
   },
@@ -49,7 +48,7 @@ var CurveComponent = React.createClass({
                     uidata={this.api.uidata} 
                     onDrop={this.onTableDrop}
                     isReverse={true}/>
-               <Chart uidata={this.api.uidata} ref='chart' id={id}/>
+               <Chart curve={this.api.curve} ref='chart' id={id}/>
             </div>
       );  
     }catch(e){
@@ -72,7 +71,6 @@ var CurveComponent = React.createClass({
       this.refs.table.update({uidata: this.api.uidata});
       this.refs.chart.update();
 
-
       this.props.onImportCurve && this.props.onImportCurve.call(this.props.scope, this.api.curve);
   },
   onTableDrop: function(transferData){
@@ -93,22 +91,17 @@ var CurveComponent = React.createClass({
       this.api.signal_curve_toggle.listen(this.onCurveToggle);
 
       if(this.props.curve.needTemplate){
-        
         var curve = new Curve();
-        curve.init(CurveTemplate);
+        curve.init((function(key, template){
+          var index = template[key] || 0;
+          return template.curves[index]
+        })(this.props.templateKey, CurveTemplate));
 
         this.api.setCurve(curve); 
         this.api.dm2ui();
-
-
-        this.refs.table.forceUpdate();
-        this.refs.chart.update();
-
+        this.forceUpdate();
         return;
       }
-
-
-
 
       if(!this.props.curve.data){
 
@@ -117,16 +110,13 @@ var CurveComponent = React.createClass({
             if(result.errCode == -1){
               this.api.getCurve().update(result.curve);
               this.api.dm2ui();
-              this.refs.table.forceUpdate();
-              this.refs.chart.update();
+              this.forceUpdate();
             }
-              
           }).bind(this), function(e){
             throw e;
           }).catch(function(e){
               console.error(e.stack);
           });
-          return;
       }
   },
 

@@ -81,7 +81,8 @@ var Util = {
             var sheetNames = [];
 
             for(var key in raw){
-                var sheet = (raw[key].appendLines).concat([raw[key].header]).concat(raw[key].ui);
+                //var sheet = (raw[key].appendLines).concat([raw[key].header]).concat(raw[key].ui);
+                var sheet = [raw[key].header].concat(raw[key].ui);
                 sheets[key] = sheet_from_array_of_arrays(sheet);
                 sheetNames.push(key);
             }

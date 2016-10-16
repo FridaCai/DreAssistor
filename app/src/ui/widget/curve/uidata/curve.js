@@ -9,36 +9,7 @@ import ColorCheckbox from '../widget/colorcheckbox.js';
 class CurveUI extends Base{ 
 	constructor(){
 		super();
-		
-		var me = this;
-		var colorIndex = 0;
-		var createLine = function(label){
-			return Cell.create({
-				component: ColorCheckbox, 
-				param: {
-					color: GlobalUtil.COLORS[colorIndex++ % 24], 
-					isCheck: true, 
-					label: label,  
-					onCheckboxChange: function(isCheck){
-						this.param.isCheck = isCheck;
-						me.onToggle();
-					},
-				}, 
-				v: label,
-			});
-		}
-
-		var line = Line.create({cells: [
-			Cell.create({component: Label, v: 'rpm'}), 
-			createLine('QA-Level'),
-			createLine('2 order'),
-			createLine('4 order'),
-			createLine('6 order')
-		]});
-
-		this.header = line;
 		this.sheetName = `曲线`;
-
 		this.toggleSignal = undefined;
 	}
 
@@ -48,11 +19,10 @@ class CurveUI extends Base{
 
 	onToggle(){
 		this.toggleSignal && this.toggleSignal.dispatch();
-		
 	}
+
 	dump(){
 		var dumpui = [];
-
 		var tmp = [];
 		this.header.cells.map(function(cell){
 			tmp.push(`${cell.v}, ${cell.param.isCheck}`);
@@ -61,55 +31,15 @@ class CurveUI extends Base{
 	}
 	xls2ui(param){
 		var ui = ExcelUtil.excel2ui(param);
-		ui.splice(0,8); //todo: bad. assume only one line for header...search for a better solution...
-		this.ui = this.ui.concat(ui);
+
+		this.header = ui[0];
+		this.ui = ui.splice(1);
 	}
 	ui2xls(){
-		//should not change this.ui data.
-
-		var hiddenColumns = this.header.cells.map(function(cell, index){
-			if(cell.component.displayName === 'ColorCheckbox' && !cell.param.isCheck){
-				return index;
-			}
-			return -1;
-		})
-
-		function filter(arr){
-			return arr.filter(function(cell, index){
-				if(hiddenColumns.indexOf(index) != -1){
-					return false;
-				}
-				return true;
-			})
-		}
-
-		var header = Line.create({cells: filter(this.header.cells)});
-		var ui = [];
-		this.ui.map(function(line, i){
-			ui.push(
-				Line.create({
-					cells: filter(line.cells)
-				})
-			);
-		})
-
-		var emptylines = (function appendEmptyLines(){
-			var emptylines = [];
-			for(var i=0; i<8; i++){
-				var cells = [];
-				for(var j=0; j<5; j++){
-					cells.push(Cell.create({component: Label, v: ''}));
-				}
-				emptylines.push(Line.create({cells: cells}));
-			}
-			return emptylines;
-		})()
-		
 		ExcelUtil.ui2excel({
 			curve: {
-				appendLines: emptylines, 
-				header: header,
-				ui: ui,
+				header: this.header,
+				ui: this.ui,
 			}
 		});
 	}
@@ -140,29 +70,58 @@ class CurveUI extends Base{
         }
 
 		curve.init({
-			caption: 'frida test',
+			caption: '',
 			series: series,
 			data: data,
 		})
 	}
 
 	dm2ui(curve){
-		this.id = curve.id;
-		this.ui = [];
-		var rowNum = curve.data[0].length; 
-		var columnNum = curve.data.length; 
-
-		for(var i=0; i<rowNum; i++){
-			var cells = [];
-
-			for(var j=0; j<columnNum; j++){
-				var v = curve.data[j][i];				
-				cells.push(Cell.create({component: Label, v: v}));
+		this.header = (function(){
+			var createLine = function(label, index){
+				return Cell.create({
+					component: ColorCheckbox, 
+					param: {
+						color: GlobalUtil.COLORS[index % 24], 
+						isCheck: true, 
+						label: label,  
+						onCheckboxChange: function(isCheck){
+							this.param.isCheck = isCheck;
+							me.onToggle();
+						},
+					}, 
+					v: label,
+				});
 			}
+			var cells = curve.series.map(function(serie, index){
+				var label = serie.label;
 
-			var line = Line.create({cells: cells});
-			this.ui.push(line);
-		}
+				if(index === 0){
+					return Cell.create({component: Label, v: label});
+				}
+				return createLine(label, index);
+			})
+			return Line.create({cells: cells});
+		})();
+		
+		this.ui = (function(){
+			var returnUI = [];
+			var rowNum = curve.data[0].length; 
+			var columnNum = curve.data.length; 
+
+			for(var i=0; i<rowNum; i++){
+				var cells = [];
+
+				for(var j=0; j<columnNum; j++){
+					var v = curve.data[j][i];				
+					cells.push(Cell.create({component: Label, v: v}));
+				}
+
+				var line = Line.create({cells: cells});
+				returnUI.push(line);
+			}
+			return returnUI;
+		})();
 	}
 
 }

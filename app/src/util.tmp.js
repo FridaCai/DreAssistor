@@ -177,6 +177,7 @@ var TmpUtil = {
 			        	expandComponentParam: {
 			        		id: key,
 			        		curve: property.curve,
+			        		templateKey: property.key,
 			        		onImportCurve: function(curve){
 			        			this.v = curve;
 			        			target.signal_data_change.dispatch();

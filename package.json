@@ -25,6 +25,7 @@
     "chartist": "^0.9.7",
     "crypto-js": "^3.1.4",
     "css-loader": "^0.23.0",
+    "deep-equal": "^1.0.1",
     "es6-promise": "^3.1.2",
     "interact.js": "^1.2.6",
     "jquery": "^1.11.3",
@@ -38,21 +39,20 @@
     "moment": "^2.13.0",
     "node-sass": "^3.6.0",
     "perfect-scrollbar": "^0.6.7",
+    "radium": "^0.18.0",
     "react": "^0.14.2",
     "react-colors-picker": "^2.3.1",
     "react-datetime": "^2.1.0",
     "react-dom": "^0.14.2",
     "react-pure-render": "^1.0.2",
     "sass-loader": "^3.2.0",
+    "shallowequal": "^0.2.2",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.2",
-    "xlsx": "^0.8.0",
-    "deep-equal": "^1.0.1",
-    "radium": "^0.18.0",
-    "shallowequal": "^0.2.2"
-
+    "xlsx": "^0.8.0"
   },
   "devDependencies": {
-    "http-server": "^0.8.5"
+    "http-server": "^0.8.5",
+    "csv-parse": "^1.1.7"
   }
 }
