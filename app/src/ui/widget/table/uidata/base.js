@@ -1,7 +1,7 @@
 import {Util} from 'XlsIExport';
-import {Line} from 'Table';
-import {Cell} from 'Table';
+import {Line, Cell} from 'Table';
 import Signal from 'Signal';
+import ExpandLine from '../data/expandline';
 
 
 module.exports = class Base {
@@ -43,5 +43,31 @@ module.exports = class Base {
 			})
 			dumpui.push(tmp);
 		})
+	}
+	updateByExpand(isOpen, cell){
+		this.ui.map(function(line){
+			line.cells.map(function(cell){
+				cell.param.isOpen = false;
+			})
+		})	
+		if(isOpen){
+			cell.param.isOpen = true;
+		}
+	}
+	getBrotherLine(line){
+		var curIndex;
+		for(var i=0; i<this.ui.length; i++){
+			var l = this.ui[i];
+			if(l.id === line.id){
+				curIndex = i;
+				break;
+			}
+		}
+
+		if(line instanceof ExpandLine){
+			return this.ui[curIndex-1];			
+		}else if(line instanceof Line){
+			return this.ui[curIndex+1];
+		}
 	}
 }

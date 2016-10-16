@@ -19,8 +19,7 @@ class Line {
 		this.cells.map((function(cell){
 			cell.setLine(this);
 		}).bind(this));
-		this.expandLine = param.expandLine;
-
+		this.parent = param.parent;
 	}
 	
 	setId(id){
@@ -33,20 +32,14 @@ class Line {
 	constructor(){
 	}
 
-	updateByExpand(isOpen, cell){
-		this.cells.map(function(cell){
-			if(cell.component.displayName === 'ExpandCellDOM'){
-				cell.param.isOpen = false;
-			}
-		});
-
-		if(!isOpen){
-			return;
-		}
-
-		if(cell){
-			cell.param.isOpen = true;
-		}
+	isOpen(){
+		for(var i=0; i<this.cells.length; i++){
+            var cell = this.cells[i];
+            if(cell.param.isOpen){
+                return true;
+            }
+        }
+        return false;
 	}
 	
 }

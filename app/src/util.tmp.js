@@ -91,9 +91,9 @@ var TmpUtil = {
 				return Cell.create({
 					component: Label, 
 					param: {
-						value: property.refKey
+						value: property.value
 					},
-					v: property.refKey
+					v: property.v
 				});
 			case COMPONENT_ENUM.IMAGES:
 				//var itms = property[component] || new Images();  //???

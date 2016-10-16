@@ -61,9 +61,10 @@ class MultipleParamUIData extends Base{
 			if(property instanceof SingleParam){
 				var cells = this.components.map((function(component){
 					if(component === COMPONENT_ENUM.REFKEY){
-						var refKeyTmpDM = {};
-						var value = Util.getValueByProjectRefKey(property.refKey, project);
-						refKeyTmpDM[component] = value;
+						var refKeyTmpDM = {
+							value: Util.getValueByProjectRefKey(property.refKey, project),
+							v: property.refKey
+						};
 						return TmpUtil.getCellByComponent(component, refKeyTmpDM, this);
 					}
 
@@ -71,12 +72,13 @@ class MultipleParamUIData extends Base{
 				}).bind(this));
 
 				var expandLine = needExpandLine ? ExpandLine.create({
-					cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+					cells: [Cell.create({component: ExpandContainerDOM, param: {}})],
+					parent: this
 				}): null;
 
 				this.ui.push(Line.create({
 					cells: cells,
-					expandLine: expandLine,
+					parent: this,
 					id: key
 				}))
 
