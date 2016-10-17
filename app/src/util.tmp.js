@@ -180,7 +180,7 @@ var TmpUtil = {
 			        		templateKey: property.key,
 			        		onImportCurve: function(curve){
 			        			this.v = curve;
-			        			target.signal_data_change.dispatch();
+			        			//target.signal_data_change.dispatch();
 			        		}
 			        	}
 		        	}, 

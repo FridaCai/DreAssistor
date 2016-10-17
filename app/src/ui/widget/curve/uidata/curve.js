@@ -32,7 +32,15 @@ class CurveUI extends Base{
 	xls2ui(param){
 		var ui = ExcelUtil.excel2ui(param);
 
-		this.header = ui[0];
+		var headerdm = ui[0].cells.map(function(cell, index){
+			return {
+				isShowCurve: true,
+				label: cell.v,
+				data: index
+			}	
+		})
+		this.header = this._headerDm2UI(headerdm);
+
 		this.ui = ui.splice(1);
 	}
 	ui2xls(){
@@ -50,11 +58,20 @@ class CurveUI extends Base{
 		}
    
         var series = this.header.cells.map(function(h, i){
-        	return {
-        		label: h.param.label,
-				isShowCurve: h.v,
-				data: i,
+        	if(i == 0){
+        		return {
+        			label: h.v,
+        			isShowCurve: true,
+        			data: i
+        		}
+        	}else{
+        		return {
+	        		label: h.param.label,
+					isShowCurve: h.v,
+					data: i
+	        	}
         	}
+        	
         })
 
         var data = [];
@@ -76,36 +93,38 @@ class CurveUI extends Base{
 		})
 	}
 
-	dm2ui(curve){
+	_headerDm2UI(dm){
 		var me = this;
-		
-		this.header = (function(){
-			var createLine = function(label, isShowCurve, index){
-				return Cell.create({
-					component: ColorCheckbox, 
-					param: {
-						color: GlobalUtil.COLORS[index % 24], 
-						isCheck: isShowCurve, 
-						label: label,  
-						onCheckboxChange: function(isCheck){
-							this.v = isCheck;
-							me.onToggle();
-						},
-					}, 
-					v: isShowCurve,
-				});
-			}
-			var cells = curve.series.map(function(serie, index){
-				var {label, isShowCurve} = serie;
+		var createLine = function(label, isShowCurve, index){
+			return Cell.create({
+				component: ColorCheckbox, 
+				param: {
+					color: GlobalUtil.COLORS[index % 24], 
+					isCheck: isShowCurve, 
+					label: label,  
+					onCheckboxChange: function(isCheck){
+						this.v = isCheck;
+						me.onToggle();
+					},
+				}, 
+				v: isShowCurve,
+			});
+		}
+		var cells = dm.map(function(serie, index){
+			var {label, isShowCurve} = serie;
 
-				if(index === 0){
-					return Cell.create({component: Label, v: label});
-				}
-				return createLine(label, isShowCurve, index-1);
-			})
-			return Line.create({cells: cells});
-		})();
-		
+			if(index === 0){
+				return Cell.create({component: Label, v: label});
+			}else{
+				return createLine(label, isShowCurve, index-1);	
+			}
+			
+		})
+		return Line.create({cells: cells});
+	}
+
+	dm2ui(curve){
+		this.header = this._headerDm2UI(curve.series);
 		this.ui = (function(){
 			var returnUI = [];
 			var rowNum = curve.data[0].length; 
