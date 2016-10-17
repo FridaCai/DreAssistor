@@ -91,7 +91,6 @@ var Popup = React.createClass({
         return {
             title: this.props.title,
             workbook: this.props.workbook,
-
             sheetOptions: this.props.sheetOptions,
         };
     },
@@ -150,7 +149,7 @@ var Popup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='importExcelPopup' children={content}/>);
+        return (<MessageBox notRecoverBodyScroll={true} width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='importExcelPopup' children={content}/>);
     },
 })
 
