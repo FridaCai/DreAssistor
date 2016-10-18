@@ -45,10 +45,7 @@ class CurveUI extends Base{
 	}
 	ui2xls(){
 		ExcelUtil.ui2excel({
-			curve: {
-				header: this.header,
-				ui: this.ui,
-			}
+			curve: this
 		});
 	}
 

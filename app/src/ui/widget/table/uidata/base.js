@@ -1,5 +1,5 @@
-import {XLSUtil} from 'XlsIExport';
-import {Util, Line, Cell} from 'Table';
+import {ExcelUtil} from 'XlsIExport';
+import {Util, Line, Cell, ExpandLine, LineGroup} from 'Table';
 import Signal from 'Signal';
 
 module.exports = class Base {
@@ -13,7 +13,7 @@ module.exports = class Base {
 	}
 
 	xls2ui(param){
-		var ui = XLSUtil.excel2ui(param);
+		var ui = ExcelUtil.excel2ui(param);
 		ui.splice(0,1); //todo: bad. assume only one line for header...search for a better solution...
 		this.ui = this.ui.concat(ui);
 	}
@@ -41,6 +41,20 @@ module.exports = class Base {
 			})
 			dumpui.push(tmp);
 		})
+	}
+	dumplines4xls(){
+		var lines = [this.header];
+
+		this.ui.map(function(obj){
+			if(obj instanceof Line && !(obj instanceof ExpandLine)){
+				lines.push(obj);
+			}
+			if(obj instanceof LineGroup){
+				lines = lines.concat(obj.dumplines4xls());
+			}
+		})
+
+		return lines;
 	}
 	updateByExpand(isOpen, cell){
 		this.ui.map(function(line){

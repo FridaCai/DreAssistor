@@ -5,7 +5,7 @@ import Tag from './data/tag.js';
 import Property from './data/property.js';
 import Project from '../data/project.js';
 import SaveAs from 'browser-saveas';
-import {Util} from 'XlsIExport';
+import {ExcelUtil} from 'XlsIExport';
 
 
 var API = {
@@ -94,7 +94,7 @@ var API = {
 		}
 	},
 	ui2xls: function(){
-		Util.ui2xls(API.uidata);
+		ExcelUtil.ui2excel(API.uidata);
 	},
 
 	//when to call? drag/import excel; close create project;

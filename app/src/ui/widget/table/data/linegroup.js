@@ -1,5 +1,5 @@
 import GlobalUtil from 'Util';
-import {Util} from 'Table';
+import {Util, Line, ExpandLine} from 'Table';
 
 //multiple lines. eg: project property, project engine...
 class LineGroup {
@@ -28,6 +28,15 @@ class LineGroup {
 		this.lines.map(function(line){
 			line.closeExpand();
 		})
+	}
+	dumplines4xls(){
+		var lines = [];
+		this.lines.map(function(obj){
+			if(obj instanceof Line && !(obj instanceof ExpandLine)){
+				lines.push(obj);
+			}
+		})
+		return lines;
 	}
 }
 module.exports = LineGroup;

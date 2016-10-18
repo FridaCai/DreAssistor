@@ -1,5 +1,6 @@
 import MessageBox from 'MessageBox';
-import {XlsIExport} from 'XlsIExport';
+import {XLSIExportUI} from 'XlsIExport';
+       
 import {TableDOM} from 'Table';
 import API from '../api.js';
 import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
@@ -36,7 +37,7 @@ var ProjectPopup = React.createClass({
         var needUpdate = true;
 	    return (
             <div className='addProjectDiv'>
-                <XlsIExport ref='xlsIExport' 
+                <XLSIExportUI ref='xlsIExport' 
                     disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}

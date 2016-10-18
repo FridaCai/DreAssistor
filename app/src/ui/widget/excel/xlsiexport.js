@@ -154,7 +154,7 @@ var Popup = React.createClass({
     },
 })
 
-var XlsIExport = React.createClass({
+var XLSIExportUI = React.createClass({
     onXlsUpload: function(e){
       var files = e.target.files;
       var i,f;
@@ -215,4 +215,4 @@ var XlsIExport = React.createClass({
         )
 	}
 })
-module.exports = XlsIExport;
+module.exports = XLSIExportUI;

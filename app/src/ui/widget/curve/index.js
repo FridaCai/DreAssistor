@@ -1,5 +1,5 @@
 import './index.less';
-import {XlsIExport} from 'XlsIExport';
+import {XLSIExportUI} from 'XlsIExport';
 import {TableDOM} from 'Table';
 import Chart from './chart.js';
 import API from './api.js';
@@ -38,7 +38,7 @@ var CurveComponent = React.createClass({
 
       return (
             <div className='curveComponent'>
-                <XlsIExport ref='xlsIExport' 
+                <XLSIExportUI ref='xlsIExport' 
                     disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}
