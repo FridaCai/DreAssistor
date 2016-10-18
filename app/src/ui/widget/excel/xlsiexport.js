@@ -102,9 +102,10 @@ var Popup = React.createClass({
                 {
                     this.state.workbook.SheetNames.map((function(sheetName, index){
                         var controllerGroupRef = `controllerGroup_${index}`;
+                        var decodeSheetName = unescape(sheetName.replace(/&#x/g, '%u').replace(/;/g, '')); //fix Chinese unicode
                         return (
                             <div className='line' key={index}>
-                                <label>{sheetName}</label>
+                                <label>{decodeSheetName}</label>
                                 <ControllerGroup ref={controllerGroupRef} sheetOptions={this.state.sheetOptions}/>
                             </div>
                         )
