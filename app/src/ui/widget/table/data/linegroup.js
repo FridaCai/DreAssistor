@@ -1,5 +1,5 @@
-import Util from 'Util';
-
+import GlobalUtil from 'Util';
+import {Util} from 'Table';
 
 //multiple lines. eg: project property, project engine...
 class LineGroup {
@@ -10,8 +10,24 @@ class LineGroup {
     }
 
 	init(param){
-		this.id = param.id || Util.generateUUID();
+		this.id = param.id || GlobalUtil.generateUUID();
 		this.lines = param.lines;
+		this.parent = param.parent;
+
+		this.lines.map((function(line){
+			line.parent = this;
+		}).bind(this))
+	}
+	updateByExpand(isOpen, cell){
+		this.parent.updateByExpand(isOpen, cell);
+	}
+	getBrotherLine(line){
+		return Util.getBrotherLine(line, this.lines);
+	}
+	closeExpand(isOpen, cell){
+		this.lines.map(function(line){
+			line.closeExpand();
+		})
 	}
 }
 module.exports = LineGroup;

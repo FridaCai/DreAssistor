@@ -49,6 +49,9 @@ var TableDOM = React.createClass({
     updateAfterRender: function(){
         if(!this.state.needUpdate)
             return;
+        if(this.state.isReverse){
+            return;
+        }
 
         (function updateTableBodyHeight(){
             var h = $('.projectPopupContainer .MsgBoxContent').height()
@@ -57,7 +60,7 @@ var TableDOM = React.createClass({
                         - parseInt($('.dataTable').css('marginTop'))
                         - $('.nav-tabs').outerHeight()
                         - $('.thead-inverse').outerHeight();
-            $('.customTable>tbody').height(h);
+            this._$('>.sheet >.customTable >tbody').height(h);
         }).call(this)
     },
 

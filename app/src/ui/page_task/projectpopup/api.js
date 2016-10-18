@@ -34,7 +34,7 @@ var API = {
 			return;
 		}
 
-		var property = new Property();
+		var property = new Property(); //todo: bad.
 		property.setComponents(this.project);
 		property.setHeader();
 		property.dm2ui(this.project);

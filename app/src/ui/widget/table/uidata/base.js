@@ -1,8 +1,6 @@
-import {Util} from 'XlsIExport';
-import {Line, Cell} from 'Table';
+import {XLSUtil} from 'XlsIExport';
+import {Util, Line, Cell} from 'Table';
 import Signal from 'Signal';
-import ExpandLine from '../data/expandline';
-
 
 module.exports = class Base {
 	constructor(){
@@ -10,12 +8,12 @@ module.exports = class Base {
 		this.header = new Line();
 		this.sheetName = '';
 
-		this.signal_data_change = new Signal();
+		this.signal_data_change = new Signal(); //todo: bad with Property.signal_data_change.
 		this.signal_expand_toggle = new Signal();
 	}
 
 	xls2ui(param){
-		var ui = Util.excel2ui(param);
+		var ui = XLSUtil.excel2ui(param);
 		ui.splice(0,1); //todo: bad. assume only one line for header...search for a better solution...
 		this.ui = this.ui.concat(ui);
 	}
@@ -46,28 +44,13 @@ module.exports = class Base {
 	}
 	updateByExpand(isOpen, cell){
 		this.ui.map(function(line){
-			line.cells.map(function(cell){
-				cell.param.isOpen = false;
-			})
+			line.closeExpand(isOpen, cell);
 		})	
 		if(isOpen){
 			cell.param.isOpen = true;
 		}
 	}
 	getBrotherLine(line){
-		var curIndex;
-		for(var i=0; i<this.ui.length; i++){
-			var l = this.ui[i];
-			if(l.id === line.id){
-				curIndex = i;
-				break;
-			}
-		}
-
-		if(line instanceof ExpandLine){
-			return this.ui[curIndex-1];			
-		}else if(line instanceof Line){
-			return this.ui[curIndex+1];
-		}
+		return Util.getBrotherLine(line, this.ui);
 	}
 }

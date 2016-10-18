@@ -18,9 +18,7 @@ class Property extends Base{
 	constructor(){
 		super();
 		this.sheetName = `项目属性`;
-		this.signal_add_engine = new Signal();
-		this.signal_copy_engine = new Signal();
-		this.signal_delete_engine = new Signal();
+		
 	}
 	setHeader(){
 		this.header = TmpUtil.getHeader(this.components);
@@ -138,18 +136,18 @@ class Property extends Base{
 				if(property instanceof SingleParam){
 					var key = property.key;
 					var cells = this.components.map((function(component){
-						return TmpUtil.getCellByComponent(component, property, this);
+						return TmpUtil.getCellByComponent(component, property, Property);
 					}).bind(this));	
 
 					var expandLine = needExpandLine ? ExpandLine.create({
-						cells: [Cell.create({component: ExpandContainerDOM, param: {}})]
+						cells: [Cell.create({component: ExpandContainerDOM, param: {}})],
 					}): null;
 
 
 					lineGroup.push(Line.create({
 						cells: cells,
 						expandLine: expandLine,
-						id: property.id
+						id: property.id,
 					}))
 
 					if(needExpandLine){
@@ -161,6 +159,7 @@ class Property extends Base{
 
 			this.ui.push(LineGroup.create({
 				lines: lineGroup,
+				parent: this
 			}))
 
 		}).call(this);
@@ -187,7 +186,7 @@ class Property extends Base{
 				engine.properties.map((function(property){
 					if(property instanceof SingleParam){
 						var cells = this.components.map((function(component){
-							return TmpUtil.getCellByComponent(component, property, this);
+							return TmpUtil.getCellByComponent(component, property, Property);
 						}).bind(this));
 
 
@@ -217,7 +216,8 @@ class Property extends Base{
 				this.ui.push(
 					LineGroup.create({
 						lines: lineGroup,
-						id: engine.id
+						id: engine.id,
+						parent: this
 					})
 				);
 
@@ -250,6 +250,11 @@ class Property extends Base{
 	}
 }
 
+Property.signal_add_engine = new Signal();
+Property.signal_copy_engine = new Signal();
+Property.signal_delete_engine = new Signal();
+Property.signal_expand_toggle = new Signal();
+Property.signal_data_change = new Signal();
 
 
 module.exports = Property;

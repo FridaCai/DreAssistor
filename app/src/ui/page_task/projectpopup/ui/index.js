@@ -100,10 +100,10 @@ var ProjectPopup = React.createClass({
         this.refs.table.setState({uidata: API.uidata});     
     },
     componentDidMount: function(){
-        API.uidata.property.signal_add_engine.listen(this.onEngineAdd);
-        API.uidata.property.signal_delete_engine.listen(this.onEngineDelete);
-        API.uidata.property.signal_copy_engine.listen(this.onEngineCopy);
-        API.uidata.property.signal_expand_toggle.listen(this.onExpandToggle);
+        Property.signal_add_engine.listen(this.onEngineAdd);
+        Property.signal_delete_engine.listen(this.onEngineDelete);
+        Property.signal_copy_engine.listen(this.onEngineCopy);
+        Property.signal_expand_toggle.listen(this.onExpandToggle);
 
         if(this.props.project){
             var id = this.props.project.id;
@@ -138,10 +138,10 @@ var ProjectPopup = React.createClass({
     },
 
     componentWillUnmount: function(){
-        API.uidata.property.signal_add_engine.unlisten(this.onEngineAdd);
-        API.uidata.property.signal_delete_engine.unlisten(this.onEngineDelete);
-        API.uidata.property.signal_copy_engine.unlisten(this.onEngineCopy);
-        API.uidata.property.signal_expand_toggle.unlisten(this.onExpandToggle);
+        Property.signal_add_engine.unlisten(this.onEngineAdd);
+        Property.signal_delete_engine.unlisten(this.onEngineDelete);
+        Property.signal_copy_engine.unlisten(this.onEngineCopy);
+        Property.signal_expand_toggle.unlisten(this.onExpandToggle);
         
     },
 

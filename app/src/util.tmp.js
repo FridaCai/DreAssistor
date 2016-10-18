@@ -82,7 +82,7 @@ var TmpUtil = {
 			            }],
 			            onChange: function(selectedId){
 			            	this.v = (selectedId === 0 ? true : false);
-			            	target.signal_data_change.dispatch(); //need?
+			            	target.signal_data_change.dispatch(); 
 			            },
 			        }, 
 			        v: property.status
@@ -176,11 +176,12 @@ var TmpUtil = {
 			        	expandComponent: CurveComponent,
 			        	expandComponentParam: {
 			        		id: key,
+			        		propertyId: property.id,
 			        		curve: property.curve,
 			        		templateKey: property.key,
 			        		onImportCurve: function(curve){
 			        			this.v = curve;
-			        			//target.signal_data_change.dispatch();
+			        			target.signal_data_change.dispatch();
 			        		}
 			        	}
 		        	}, 

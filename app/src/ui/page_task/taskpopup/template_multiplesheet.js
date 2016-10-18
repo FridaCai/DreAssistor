@@ -22,6 +22,7 @@ var MultipleSheetTemplate = React.createClass({
         this.refs.table.forceUpdate();
     },
     onDataChange: function(){
+        return;
         this.state.uidata.ui2dm(this.state.dm);
         this.state.uidata.dm2ui(this.props.project, this.state.dm);
         this.refs.table.setState({uidata: this.state.uidata});

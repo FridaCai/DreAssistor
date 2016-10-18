@@ -86,7 +86,7 @@ class CurveUI extends Base{
         	data.push(line);
         }
 
-		curve.init({
+		curve.update({
 			caption: '',
 			series: series,
 			data: data,

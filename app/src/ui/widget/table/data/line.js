@@ -41,7 +41,11 @@ class Line {
         }
         return false;
 	}
-	
+	closeExpand(isOpen, cell){
+		this.cells.map(function(cell){
+			cell.param.isOpen = false;
+		})
+	}
 }
 
 module.exports = Line;

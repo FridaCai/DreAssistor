@@ -17,27 +17,25 @@ module.exports = class Curve {
 
 		this.id = param.id || Util.generateUUID();
 		this.parent = undefined; //need?
-
+		this.isDirty = param.isDirty || false;
 		this._updateMeta(param);
 	}
 	_updateMeta(param){
 		this.caption = param.caption;
 		this.data = param.data;
 		this.series = param.series;//{label, data, isShowCurve}
-
-		this.needTemplate = (Object.keys(param).length === 0) ? true : false;
 	}
 
 	update(param){
 		this._updateMeta(param);
 	}
-	setNeedTemplate(needTemplate){
-		this.needTemplate = needTemplate;
+	setIsDirty(value){
+		this.isDirty = value;
 	}
 
 	dump(){
 		var obj = {};
-		if(!this.needTemplate){
+		if(this.isDirty){
 			obj = {
 				id: Util.isUUID(this.id) ? undefined: this.id,
 				caption: this.caption,

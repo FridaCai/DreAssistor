@@ -7,13 +7,14 @@ import Curve from 'data/curve.js';
 import CurveUI from './uidata/curve.js';
 import CurveTemplate from 'CurveTemplate';
 import Request from 'Request';
+import GlobalUtil from 'Util';
 
 var CurveComponent = React.createClass({
   getInitialState: function(){
     this.api = new API();
     this.api.init();
 
-    (function(curve, api){
+    /*(function(curve, api){
         if(curve.needTemplate)
     	   	return;
 
@@ -21,7 +22,7 @@ var CurveComponent = React.createClass({
         if(curve.data){
           api.dm2ui();
         }
-    })(this.props.curve, this.api);
+    })(this.props.curve, this.api);*/ //need propertyId
     return {};
   },
 
@@ -67,7 +68,7 @@ var CurveComponent = React.createClass({
   onXlsImport: function(){
       this.api.ui2dm();
       this.api.dm2ui();
-      this.api.setCurveNeedTemplate(false);
+      this.api.curve.setIsDirty(true);
 
       this.refs.table.update({uidata: this.api.uidata});
       this.refs.chart.update();
@@ -90,36 +91,41 @@ var CurveComponent = React.createClass({
 
   componentDidMount: function(){
       this.api.signal_curve_toggle.listen(this.onCurveToggle);
+      
+      var curveParam = (function(key, template){
+        var index = template[key] || 0;
+        return template.curves[index]
+      })(this.props.templateKey, CurveTemplate);
 
-      if(this.props.curve.needTemplate){
-        var curve = new Curve();
-        curve.init((function(key, template){
-          var index = template[key] || 0;
-          return template.curves[index]
-        })(this.props.templateKey, CurveTemplate));
-
-        this.api.setCurve(curve); 
+      var propertyId = this.props.propertyId;
+      if(GlobalUtil.isUUID(propertyId)){
+        this.props.curve.update(curveParam);
+        this.api.setCurve(this.props.curve); 
         this.api.dm2ui();
-        this.forceUpdate();
+        this.forceUpdate();         
         return;
       }
 
-      if(!this.props.curve.data){
-        var id = this.props.curve.id;
-        var url = Request.getBackendAPI(`curve/${id}`);
 
-        Request.getData(url).then((function(result){
-          if(result.errCode == -1){
-            this.api.getCurve().update(result.curve);
-            this.api.dm2ui();
-            this.forceUpdate();
+
+
+      var url = Request.getBackendAPI(`curve/propertyId/${propertyId}`); //todo.
+      Request.getData(url).then((function(result){
+        if(result.errCode == -1){
+          if(result.curve){
+            curveParam = result.curve;
           }
-        }).bind(this), function(e){
-          throw e;
-        }).catch(function(e){
-            console.error(e.stack);
-        });
-      }
+
+          this.props.curve.update(curveParam);
+          this.api.setCurve(this.props.curve); 
+          this.api.dm2ui();
+          this.forceUpdate();            
+        }
+      }).bind(this), function(e){
+        throw e;
+      }).catch(function(e){
+          console.error(e.stack);
+      });
   },
 
   componentWillUnmount: function(){

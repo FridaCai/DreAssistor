@@ -11,6 +11,8 @@ import Line from './data/line.js';
 import LineGroup from './data/linegroup.js';
 import Base from './uidata/base.js';
 
+import Util from './util.js';
+
 exports.CellDOM = CellDOM;
 exports.ExpandCellDOM = ExpandCellDOM;
 exports.ExpandContainerDOM = ExpandContainerDOM;
@@ -24,3 +26,4 @@ exports.Line = Line;
 exports.LineGroup = LineGroup;
 
 exports.Base = Base;
+exports.Util = Util;

@@ -249,7 +249,8 @@ var ProjectTemplate = {
         {
           "text": "",
           "label": "platform",
-          "key": "PROJECT.PLATFORM"
+          "key": "PROJECT.PLATFORM",
+          "curve": {}
         },
         {
           "text": "",
