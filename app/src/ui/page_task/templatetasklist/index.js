@@ -4,6 +4,7 @@ import Util from 'Util';
 import MessageBox from 'MessageBox';
 import TaskTemplate from 'TaskTemplate';
 
+
 import './style.less';
 
 var TemplateTaskList = React.createClass({
@@ -35,17 +36,17 @@ var TemplateTaskList = React.createClass({
     onDragStart: function(task, e){
         e.dataTransfer.setData("text", task.template.type.toString());
     },
-   
+    
     render: function() {
         //todo: template task both used in timeline page and statical page.
         //load data not only in timeline page.
-        
         API.setTemplateTasks(TaskTemplate); 
         
         var templateenum = TaskTemplate.map(function(task){
             return {id: task.id, label: task.label}
         });
-        API.setTemplateEnum(templateenum);
+        API.setTemplateEnum(templateenum);    
+        
 
         return (
             <div className='taskList'>
