@@ -294,11 +294,14 @@ export default class Item extends React.Component {
       return;
 
     this.props.onContextMenu({
-      left: e.clientX,
-      top: e.clientY,
+      left: e.pageX,
+      top: e.pageY,
       btns: [{
         label: '修改豆豆',
         handler: function() {
+          $('body').css({
+            cursor:'auto'
+          });
           API.signal_taskpopup_show.dispatch({
               title: '修改豆豆',
               task: item,
@@ -312,6 +315,9 @@ export default class Item extends React.Component {
       },{
         label: '删除豆豆',
         handler: function() {
+          $('body').css({
+            cursor:'auto'
+          });
           API.signal_delete_task.dispatch({
             task: item
           });
@@ -319,6 +325,9 @@ export default class Item extends React.Component {
       },{
         label: '复制豆豆',
         handler: function() {
+          $('body').css({
+            cursor:'auto'
+          });
           alert('开发中 :)');
         }
       }

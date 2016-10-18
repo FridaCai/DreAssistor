@@ -1,2 +1,4 @@
 node_modules
 app/tmp
+app/src/config/system.js
+npm-debug.log

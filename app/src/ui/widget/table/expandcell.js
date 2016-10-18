@@ -9,12 +9,13 @@ var ExpandCellDOM = React.createClass({
 
     onToggle(){
         var cell = this.state.cell;
-        var isOpen = !cell.param.isOpen;
-
         var line = cell.line;
-        line.updateByExpand(isOpen, cell);
+        var table = line.parent;
+        
+        var isOpen = !cell.param.isOpen;
+        table.updateByExpand(isOpen, cell);
 
-        var expandLine = line.expandLine;
+        var expandLine = table.getBrotherLine(cell.line);
         expandLine.updateByExpand(isOpen, cell);
 
         cell.param.onExpandToggle();

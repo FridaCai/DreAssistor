@@ -6,6 +6,7 @@ import {ExcelUtil} from 'XlsIExport';
 import Signal from '../../../../signal.js';
 import Label from 'Label';
 import Input from 'Input';
+import Time from 'Time';
 
 class Tag extends Base {
 	constructor(){
@@ -26,11 +27,10 @@ class Tag extends Base {
 
 		for(var i=0; i<this.ui.length; i++){
 			var line = this.ui[i];
-			var cells = line.cells;
 	        
-	        var label = cells[3].v;
-            var week = parseInt(cells[0].v);
-            var time = cells[2].v ? ExcelUtil.convertYYYYMMDD2UnixTime(cells[2].v) : undefined;
+	        var label = line.getCellAt(3).getValue();
+            var week = parseInt(line.getCellAt(0).getValue());
+            var time = line.getCellAt(2).getValue();
 
             if(label){
             	var tag = new DataTag();
@@ -61,7 +61,6 @@ class Tag extends Base {
 	dm2ui(project){
 		this.ui = [];
 		
-
 		var tags = project.getTags(function(tag1, tag2){
 			return tag2.week - tag1.week;
 		});
@@ -77,40 +76,50 @@ class Tag extends Base {
 		for(var i=loop; i>=0; i--){
             var tag = findByWeek(tags, i);
             var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp, i));
-            var line = Line.create(
-            	{
-            		cells: [
-		        		Cell.create({component: Label, v: i}), 
-		            	Cell.create({component: Label, v:autoTime}), 
-						Cell.create({component: Label, v: ''}),
-		        		Cell.create({component: Label, v:''})
-		        	]
-		        }
-        	);
             
+            var line;
             if(tag){
-            	var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
+            	//var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
+            	var adjustTime = tag.time;
 
-				line.cells[2] = Cell.create({component: Input, param: {
-					onChange: function(v){
-	        			this.v = v;
-					}, 
-					onBlur: function(){
-	        			Tag.signal_adjusttime_blur.dispatch();
-	        		},
-		        	value: adjustTime,
-				}, v: adjustTime});
-
-                line.cells[3] = Cell.create({component: Label, v: tag.label});
-
-                line.setId(tag.id);
+				line = Line.create(		
+	            	{
+	            		id: tag.id,
+	            		cells: [
+			        		Cell.create({component: Label, v: i}), 
+			            	Cell.create({component: Label, v:autoTime}), 
+							Cell.create({
+			        			component: Time,
+			        			param: {
+			        				value: adjustTime,
+			        				onChange: function(v){
+			        					this.v = v;
+			        				}
+			        			},
+			        			v: adjustTime
+			        		}),
+			        		Cell.create({component: Label, v: tag.label})
+			        	]
+			        }
+	        	);
+            }else{
+            	var line = Line.create(
+	            	{
+	            		cells: [
+			        		Cell.create({component: Label, v: i}), 
+			            	Cell.create({component: Label, v:autoTime}), 
+							Cell.create({component: Label, v: ''}),
+			        		Cell.create({component: Label, v:''})
+			        	]
+			        }
+	        	);
             }
             this.ui.push(line);
         }
 	}
 }
 
-Tag.signal_adjusttime_change = new Signal();
-Tag.signal_adjusttime_blur = new Signal();
+Tag.signal_adjusttime_change = new Signal(); //DEPRECATED?
+Tag.signal_adjusttime_blur = new Signal(); //DEPRECATED?
 
 module.exports = Tag;

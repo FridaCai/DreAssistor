@@ -81,8 +81,9 @@ var Util = {
             var sheetNames = [];
 
             for(var key in raw){
-                var sheet = (raw[key].appendLines).concat([raw[key].header]).concat(raw[key].ui);
-                sheets[key] = sheet_from_array_of_arrays(sheet);
+                //var sheet = (raw[key].appendLines).concat([raw[key].header]).concat(raw[key].ui);
+                var ui = raw[key];
+                sheets[key] = sheet_from_array_of_arrays(ui.dumplines4xls());
                 sheetNames.push(key);
             }
 

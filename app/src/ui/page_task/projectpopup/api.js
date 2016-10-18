@@ -5,7 +5,8 @@ import Tag from './data/tag.js';
 import Property from './data/property.js';
 import Project from '../data/project.js';
 import SaveAs from 'browser-saveas';
-import {Util} from 'XlsIExport';
+import {ExcelUtil} from 'XlsIExport';
+
 
 var API = {
 	project: new Project(),
@@ -22,14 +23,6 @@ var API = {
 		this.project = value;
 	},
 
-	loadTemplate: function(){ 
-		var url = Request.getMockupAPI('template_project.json');
-        return Request.getData(url).then((function(result){
- 			return result;
-        }).bind(this))
-	},
-
-
 	ui2dm: function(){
 		this.uidata.property.ui2dm(this.project);
 		this.uidata.tag.ui2dm(this.project);
@@ -41,8 +34,11 @@ var API = {
 			return;
 		}
 
-		var property = new Property();
+		var property = new Property(); //todo: bad.
+		property.setComponents(this.project);
+		property.setHeader();
 		property.dm2ui(this.project);
+
 
 		var tag = new Tag();
 		tag.dm2ui(this.project);
@@ -98,7 +94,7 @@ var API = {
 		}
 	},
 	ui2xls: function(){
-		Util.ui2xls(API.uidata);
+		ExcelUtil.ui2excel(API.uidata);
 	},
 
 	//when to call? drag/import excel; close create project;

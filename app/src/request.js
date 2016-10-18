@@ -1,5 +1,5 @@
-const LOCAL_ENV = 'http://localhost:8080/v1/';
-var env = LOCAL_ENV;
+import SystemConfig from './config/system';
+var env = SystemConfig.backendAPI;
 
 var getBackendAPI = function(url){
 	return env + url;

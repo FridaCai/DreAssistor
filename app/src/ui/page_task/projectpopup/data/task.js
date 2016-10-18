@@ -44,7 +44,7 @@ module.exports = class Task extends Base {
 					type:0
 				}
 			})
-			task.week2time(project.sorp.time);
+			task.week2time(project.sorp);
 			project.addTask(task);
 		}
 	}
@@ -52,7 +52,7 @@ module.exports = class Task extends Base {
 	dm2ui(project){
 		this.ui = [];
 		project.tasks.map((function(task){
-			task.time2week(project.sorp.time);
+			task.time2week(project.sorp);
 
 			this.ui.push(Line.create({
 				cells: [

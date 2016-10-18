@@ -3,10 +3,7 @@ import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
 import ProjectPopup from './projectpopup/ui/index.js';
 import StaticalAssistorPopup from './statical_assistor_popup/index.js';
-//import PeopleAssistorPopup from './people_assistor_popup/index.js';
-import ContextMenu from './contextmenu.jsx';
 import MessageBox from 'MessageBox';
-
 import Util from 'Util';
 import Task from './data/task.js';
 import Project from './data/project.js';
@@ -176,16 +173,27 @@ var PageTask = React.createClass({
     onTaskPopupShow: function(e, param){
         var task = param.task;
         var taskId = param.task.id;
+        var project = task.parent.parent; //for ref key.
+        var projectId = project.id;
 
-        var url = Request.getBackendAPI(`task/${taskId}`);
-        return Request.getData(url).then((function(res){ //fail case.
-            task.update(res.task);
+        var queryTaskUrl = Request.getBackendAPI(`task/${taskId}`);
+        var queryProjectUrl = Request.getBackendAPI(`project/${projectId}`);
 
+        return Promise.all([
+            Request.getData(queryTaskUrl), 
+            Request.getData(queryProjectUrl)
+        ]).then((function(){ //fail case.
+            var taskRes = arguments[0][0];
+            var projectRes = arguments[0][1];
 
-            if(res.errCode === -1){
-                var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
-                ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
+            if(taskRes.errCode != -1 || projectRes.errCode != -1){
+                return;
             }
+            task.update(taskRes.task);
+            project.update(projectRes.project);
+
+            var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
+            ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
         }).bind(this), function(err){
             console.error(err);
         });
@@ -234,7 +242,7 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
-        API._projects.clear();
+        API.clearProjects();
         this.forceUpdate((function(){
             API.pagination = {
                 count: 0,
@@ -291,7 +299,7 @@ var PageTask = React.createClass({
     render: function() {
         var pageBody = (function(){
             var projects = API.getProjects();
-            if(projects.length === 0){
+            if(!projects){
                 return (
                     <div className='loadingContainer'>
                         <Loading/>
@@ -302,10 +310,13 @@ var PageTask = React.createClass({
                     return (<CTimeLine project={project} key={project.id}/>)
                 });
                 var {limit, offset, count} = API.pagination;
-                dom.push((<Pagination key='pagination'
-                        curPage={offset}
-                        totalPage={Math.ceil(count/limit)}
-                        onPagination ={this.onPagination}/>));
+
+                if(count!=0){
+                    dom.push((<Pagination key='pagination'
+                            curPage={offset}
+                            totalPage={Math.ceil(count/limit)}
+                            onPagination ={this.onPagination}/>));    
+                }
                 return dom;
             }
         }).call(this);

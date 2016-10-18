@@ -61,10 +61,12 @@ var MessageBox = React.createClass({
         this.setState({
           isShow: false,
         })
-
-        $('body').css({
-            overflow: 'auto'
-        })
+        if(!this.props.notRecoverBodyScroll){
+            $('body').css({
+                overflow: 'auto'
+            })    
+        }
+        
     },
     getContent: function(){
         if(this.props.children){

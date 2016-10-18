@@ -10,9 +10,11 @@ import CurveTableUIData from './uidata_curve/curve';
 import Request from 'Request';
 
 import Curves from './data_curve/curves';
+import TemplateTasks from '../data/templatetasks.js';
 
 
 var API = {
+
 	signal_treeNode_click: new Signal(),
 	signal_table_refresh: new Signal(),
 
@@ -191,7 +193,39 @@ var API = {
 		return Request.getData(url).then(function(result){
 			return result;
 		})
-	}
+	},
+
+
+
+
+
+
+
+
+
+
+	/*start of testing code*/
+    _templateTasks: new TemplateTasks(),
+    setTemplateTasks: function(value){
+        this._templateTasks = new TemplateTasks();
+        this._templateTasks.init(value);
+    },
+    getTemplateTasks: function(){
+        return this._templateTasks;
+    },
+
+    findTemplateByType: function(type){
+        return this._templateTasks.findById(type);
+    },
+    getAllTemplateTaskTypes: function(){
+        return this._templateTasks.map(function(templatetask){
+            return {
+                id: templatetask.template.type,
+                label: templatetask.label,
+            }
+        })
+    },
+	/*end of testing code*/
 }
 
 window.statical={

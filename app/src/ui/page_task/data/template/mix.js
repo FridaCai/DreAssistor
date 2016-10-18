@@ -1,8 +1,7 @@
 import Attachments from '../attachments.js';
 import Images from '../images.js';
-import Curve from '../../../component_curve/data/curve.js';
 import Util from 'Util';
-
+import Curve from 'data/curve';
 
 exports.COMPONENT_ENUM = {
 	'LABEL': 'label',
@@ -67,7 +66,6 @@ class SingleParam{
 		return singleParam;
 	}
 	dump(){
-		
 		return {
 			label: this.label,
 			status: this.status,

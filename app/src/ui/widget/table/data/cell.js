@@ -22,7 +22,7 @@ class Cell {
         }
 
 
-        this.isHide = param.isHide || false; //for occupation purpose.
+        this.isHide = param.isHide || false; //for occupation purpose. deprecated?
         //this.v = (param.v == undefined || param.v === null) ? '' : param.v;
         this.v = param.v;
         this.line = param.line || null;

@@ -91,7 +91,6 @@ var Popup = React.createClass({
         return {
             title: this.props.title,
             workbook: this.props.workbook,
-
             sheetOptions: this.props.sheetOptions,
         };
     },
@@ -103,9 +102,10 @@ var Popup = React.createClass({
                 {
                     this.state.workbook.SheetNames.map((function(sheetName, index){
                         var controllerGroupRef = `controllerGroup_${index}`;
+                        var decodeSheetName = unescape(sheetName.replace(/&#x/g, '%u').replace(/;/g, '')); //fix Chinese unicode
                         return (
                             <div className='line' key={index}>
-                                <label>{sheetName}</label>
+                                <label>{decodeSheetName}</label>
                                 <ControllerGroup ref={controllerGroupRef} sheetOptions={this.state.sheetOptions}/>
                             </div>
                         )
@@ -150,11 +150,11 @@ var Popup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='importExcelPopup' children={content}/>);
+        return (<MessageBox notRecoverBodyScroll={true} width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='importExcelPopup' children={content}/>);
     },
 })
 
-var XlsIExport = React.createClass({
+var XLSIExportUI = React.createClass({
     onXlsUpload: function(e){
       var files = e.target.files;
       var i,f;
@@ -215,4 +215,4 @@ var XlsIExport = React.createClass({
         )
 	}
 })
-module.exports = XlsIExport;
+module.exports = XLSIExportUI;

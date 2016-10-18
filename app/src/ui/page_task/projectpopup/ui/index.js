@@ -1,22 +1,18 @@
 import MessageBox from 'MessageBox';
-import {XlsIExport} from 'XlsIExport';
+import {XLSIExportUI} from 'XlsIExport';
+       
 import {TableDOM} from 'Table';
 import API from '../api.js';
 import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
 import Property from '../data/property.js';
 import Tag from '../data/tag.js';
 
-import MultipleParamUIData from '../../taskpopup/uidata/multipleparam.js';
 import Request from 'Request';
+
+import ProjectTemplate from 'ProjectTemplate';
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {
-        /*(function(p){
-            if(!p)
-                return;
-            API.setProject(p); 
-        })(this.props.project);*/
-
         return {
             title: this.props.title,
             onOK: this.props.onOK,
@@ -41,15 +37,13 @@ var ProjectPopup = React.createClass({
         var needUpdate = true;
 	    return (
             <div className='addProjectDiv'>
-                <XlsIExport ref='xlsIExport' 
+                <XLSIExportUI ref='xlsIExport' 
                     disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
                 />
-
-                
 
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
@@ -110,7 +104,7 @@ var ProjectPopup = React.createClass({
         Property.signal_add_engine.listen(this.onEngineAdd);
         Property.signal_delete_engine.listen(this.onEngineDelete);
         Property.signal_copy_engine.listen(this.onEngineCopy);
-        MultipleParamUIData.signal_expand_toggle.listen(this.onExpandToggle);
+        Property.signal_expand_toggle.listen(this.onExpandToggle);
 
         if(this.props.project){
             var id = this.props.project.id;
@@ -132,20 +126,15 @@ var ProjectPopup = React.createClass({
                 console.error(e);
             });
         }else{
-            API.loadTemplate().then((function(result){
-                var project = Project.create(result); 
-                API.setProject(project); 
-                API.dm2ui();
+            var project = Project.create(ProjectTemplate); 
+            API.setProject(project); 
+            API.dm2ui();
 
-                var uidata = API.uidata;
-                this.refs.table.update({
-                    uidata: uidata
-                })
-            }).bind(this), function(e){
-                throw e;
-            }).catch((function(e){
-                console.error(e.stack);
-            }).bind(this));
+            var uidata = API.uidata;
+            this.refs.table.update({
+                uidata: uidata
+            })
+            
         }
     },
 
@@ -153,7 +142,8 @@ var ProjectPopup = React.createClass({
         Property.signal_add_engine.unlisten(this.onEngineAdd);
         Property.signal_delete_engine.unlisten(this.onEngineDelete);
         Property.signal_copy_engine.unlisten(this.onEngineCopy);
-        MultipleParamUIData.signal_expand_toggle.unlisten(this.onExpandToggle);
+        Property.signal_expand_toggle.unlisten(this.onExpandToggle);
+        
     },
 
     onExpandToggle: function(){

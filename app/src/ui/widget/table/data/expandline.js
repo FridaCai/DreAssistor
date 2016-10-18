@@ -8,13 +8,14 @@ module.exports = class ExpandLine extends Line {
     }
 
     init(param){
-    	super.init(param); //todo: check es6
-
-    	this.isOpen = false;
+    	super.init(param); 
     }
     updateByExpand(isOpen, cell){
-    	this.isOpen = isOpen;
     	this.cells[0].param.expandComponent = cell.param.expandComponent;
         this.cells[0].param.expandComponentParam = cell.param.expandComponentParam;
+    }
+    isOpen(){ 
+        var brotherLine = this.parent.getBrotherLine(this);
+        return brotherLine.isOpen();
     }
 }

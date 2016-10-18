@@ -23,6 +23,10 @@ import ConditionPanel from './conditionpanel/index';
 import ValueChart from './chart/valuechart';
 import CurveChart from './chart/curvechart';
 
+
+import TaskTemplate from 'TaskTemplate';
+import API2 from '../api.js';
+
 var Content = React.createClass({
 
     getInitialState: function() {
@@ -182,6 +186,20 @@ var Content = React.createClass({
         target.update({uidata: uidata});
     },
 	render: function() {
+        /*start of testing code*/
+        API2.setTemplateTasks(TaskTemplate); 
+        
+        var templateenum = TaskTemplate.map(function(task){
+            return {id: task.id, label: task.label}
+        });
+        API2.setTemplateEnum(templateenum);  
+/*end of testing code*/
+
+
+
+
+
+
         var uidata = {
             value: API.getValueTableUIData(),
             curve: API.getCurveTableUIData()
