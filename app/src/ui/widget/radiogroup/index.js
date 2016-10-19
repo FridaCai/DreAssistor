@@ -27,11 +27,11 @@ var RadioGroup = React.createClass({
                     options.map((function(option){
                         var optionId = option.id;
                         var label = option.label;
-                        var defaultChecked = (optionId === selectedId);
+                        var checked = (optionId === selectedId);
 
                         return (
                             <div key={optionId} className='item'>
-                                <input name={id} type="radio" defaultChecked={defaultChecked} 
+                                <input name={id} type="radio" checked={checked} 
                                     onChange={this.onChange.bind(this, optionId)}/>
                                 <label>{label}</label>    
                             </div>

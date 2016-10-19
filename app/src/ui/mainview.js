@@ -10,14 +10,14 @@ var MainView = React.createClass({
     },
     componentDidMount: function(){
         API.signal_registerpopup_show.listen(this.showRegisterPopup);
-        API.sigal_login.listen(this.onLogin);
-        API.sigal_logout.listen(this.onLogout);
+        API.signal_login.listen(this.onLogin);
+        API.signal_logout.listen(this.onLogout);
     },
 
     componentWillUnmount: function(){
         API.signal_registerpopup_show.unlisten(this.showRegisterPopup); 
-        API.sigal_login.unlisten(this.onLogin);
-        API.sigal_logout.unlisten(this.onLogout);
+        API.signal_login.unlisten(this.onLogin);
+        API.signal_logout.unlisten(this.onLogout);
     },
     onLogin: function(){
         this.refs.menu.forceUpdate();

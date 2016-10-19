@@ -113,7 +113,7 @@ var RegisterPopup = React.createClass({
                 email: email,
             });
             API.setToken(res.token, res.expires);
-			API.sigal_login.dispatch();
+			API.signal_login.dispatch();
             Promise.resolve(); 
             
 		}).bind(this)).catch((function(e){
