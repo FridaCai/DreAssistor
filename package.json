@@ -6,6 +6,7 @@
   "scripts": {
     "deploy-dev": "cnpm install && webpack -d --watch & http-server -p 8001 -c-1 ./",
     "deploy-ec2": "npm install && webpack -p && http-server -p 8001 -c-1 ./",
+    "deploy-patacserver": "npm install && webpack -p && http-server -p 8001 -c-1 ./",
     "stop": "killall node",
     "start-webpack": "webpack -d --watch",
     "start-webpack-release": "webpack -p",

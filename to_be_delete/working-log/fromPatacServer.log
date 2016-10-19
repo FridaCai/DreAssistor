@@ -117,11 +117,12 @@ net work setting:
 Use automatic configuration script:
 http://210.75.64.51/sgmproxyv4.pac
 proxy:
-proxy.sgm.shanghaigm.com
-8080
-
-
 proxy.sgm.shanghaigm.com:8080
+[http]
+proxy = http://proxy.sgm.shanghaigm.com:8080
+[https]
+proxy = https://proxy.sgm.shanghaigm.com:8080
+
 
 npm config set proxy http://proxy.sgm.shanghaigm.com:8080
 npm config set https-proxy http://proxy.sgm.shanghaigm.com:8080
