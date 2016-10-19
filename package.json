@@ -11,7 +11,8 @@
     "start-webpack": "webpack -d --watch",
     "start-webpack-release": "webpack -p",
     "generate-property-key-debug": "node-debug tool/generate_property_key/index.js",
-    "generate-property-key": "node tool/generate_property_key/index.js"
+    "generate-property-key": "node tool/generate_property_key/index.js",
+    "deploy-lenovo": "cnpm install && webpack -d --watch & http-server -p 8001 -c-1 ./"
   },
   "repository": {
     "type": "git",
