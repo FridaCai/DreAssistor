@@ -14,7 +14,7 @@ var UserCenterContainer = React.createClass({
     logOut: function(){
       API.resetLoginUser();
       API.removeToken();
-      API.sigal_loginHeader_update.dispatch();
+      API.sigal_logout.dispatch();
 
     },
     render: function(){
@@ -55,7 +55,7 @@ var LoginContainer = React.createClass({
         API.setLoginUser(res.user);
         API.setToken(res.token);
         
-        API.sigal_loginHeader_update.dispatch();
+        API.sigal_login.dispatch();
 
       }).bind(this)).catch((function(e){
         var msg = ENUM[e.key]().res.msg;

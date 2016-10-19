@@ -6,20 +6,26 @@ import API from "../api.js";
 var MainView = React.createClass({
 	getInitialState: function() {
         return {
-            
         }
     },
     componentDidMount: function(){
         API.signal_registerpopup_show.listen(this.showRegisterPopup);
-        API.sigal_loginHeader_update.listen(this.updateLoginHeader);
+        API.sigal_login.listen(this.onLogin);
+        API.sigal_logout.listen(this.onLogout);
     },
+
     componentWillUnmount: function(){
         API.signal_registerpopup_show.unlisten(this.showRegisterPopup); 
-        API.sigal_loginHeader_update.unlisten(this.updateLoginHeader);
+        API.sigal_login.unlisten(this.onLogin);
+        API.sigal_logout.unlisten(this.onLogout);
     },
-    updateLoginHeader: function(){
+    onLogin: function(){
         this.refs.menu.forceUpdate();
     },
+    onLogout: function(){
+        this.refs.menu.forceUpdate();
+    },
+
     showRegisterPopup: function(){
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<RegisterPopup/>, this.refs.popup);  
@@ -28,7 +34,7 @@ var MainView = React.createClass({
     	return (
     		<div>
 				<Menu ref='menu'/>
-				<Page/>
+				<Page ref='page'/>
                 <div ref='popup'/>
     		</div>
 		);

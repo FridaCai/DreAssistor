@@ -10,11 +10,12 @@ import Project from './data/project.js';
 
 import Request from 'Request';
 import API from './api.js';
-import SuperAPI from '../../api.js';
 
 import RadioGroup from 'RadioGroup';
 import Pagination from 'Pagination';
 import Loading from 'Loading';
+
+import  SuperAPI from '../../api.js';
 
 var ProjectFilter = React.createClass({
     getInitialState(){
@@ -74,6 +75,9 @@ var PageTask = React.createClass({
         API.signal_timeline_task_create.listen(this.onTaskCreate);
         API.signal_edit_task.listen(this.onTaskEdit);
         API.signal_delete_task.listen(this.onTaskDelete);
+
+        SuperAPI.signal_login.listen(this.refresh);
+        SuperAPI.signal_logout.listen(this.refresh);
         this.refresh();
     },
 
@@ -87,6 +91,9 @@ var PageTask = React.createClass({
         API.signal_timeline_task_create.unlisten(this.onTaskCreate);
         API.signal_edit_task.unlisten(this.onTaskEdit);
         API.signal_delete_task.unlisten(this.onTaskDelete);
+
+        SuperAPI.signal_login.unlisten(this.refresh);
+        SuperAPI.signal_logout.unlisten(this.refresh);
     },
     onTaskDelete: function(e, param){
         var  task = param.task;
