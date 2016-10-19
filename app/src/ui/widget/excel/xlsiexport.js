@@ -162,11 +162,15 @@ var XLSIExportUI = React.createClass({
         var reader = new FileReader();
         var name = f.name;
         reader.onload = (function(e) {
-            var data = e.target.result;
-            var workbook = XLSX.read(data, {type: 'binary'});
-            this.onPopupShow(workbook);
+          var arraybuffer = e.target.result;
+          var data = new Uint8Array(arraybuffer);
+          var arr = new Array();
+          for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+          var bstr = arr.join("");
+          var workbook = XLSX.read(bstr, {type: 'binary'});
+          this.onPopupShow(workbook);
         }).bind(this);
-        reader.readAsBinaryString(f);
+        reader.readAsArrayBuffer(f);
       }
     },
 
