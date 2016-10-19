@@ -6,7 +6,9 @@ var RadioGroup = React.createClass({
             selectedId: this.props.param.selectedId,
         }
     },
-
+    componentWillReceiveProps: function(newProp){
+        this.setState({selectedId: newProp.param.selectedId})
+    },
     getValue: function() {
         return this.state.selectedId;
     },

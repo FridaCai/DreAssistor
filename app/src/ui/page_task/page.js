@@ -20,7 +20,7 @@ import  SuperAPI from '../../api.js';
 var ProjectFilter = React.createClass({
     getInitialState(){
         return {
-            selectedId: this.props.onlyMe ? 1:0,
+            onlyMe: this.props.onlyMe
         }
     },
     componentDidMount(){
@@ -29,12 +29,17 @@ var ProjectFilter = React.createClass({
     componentWillUnmount(){
 
     },
-
+    componentWillReceiveProps: function(newProp){
+        this.setState({onlyMe: newProp.onlyMe});
+    },
     render(){
         var self = this;
+        var selectedId = this.state.onlyMe ? 1:0;
+
+
         var radioGroup = {
             id: `projectFilter`,
-            selectedId: this.state.selectedId,
+            selectedId: selectedId,
             options: [{
                 id: 0,
                 label:"全部项目"
@@ -45,14 +50,11 @@ var ProjectFilter = React.createClass({
             onChange: (function(selectedId){
                 var onlyMe = (selectedId == 0 ? false: true);
                 self.props.onChange(onlyMe);
-
-                self.setState({selectedId: selectedId});
-
             }).bind(this)
         }
 
 
-        return (<div style={{clear:'both'}}><RadioGroup param={radioGroup}/></div>)
+        return (<div style={{clear:'both'}}><RadioGroup ref='radiogroup' param={radioGroup}/></div>)
         
     }
 })
@@ -76,9 +78,17 @@ var PageTask = React.createClass({
         API.signal_edit_task.listen(this.onTaskEdit);
         API.signal_delete_task.listen(this.onTaskDelete);
 
-        SuperAPI.signal_login.listen(this.refresh);
-        SuperAPI.signal_logout.listen(this.refresh);
+        SuperAPI.signal_login.listen(this.onLogIn);
+        SuperAPI.signal_logout.listen(this.onLogOut);
         this.refresh();
+    },
+    onLogIn: function(){
+        this.refresh();
+    },
+    onLogOut: function(){
+        this.setState({
+            onlyMe: false
+        }, this.refresh)
     },
 
     componentWillUnmount: function(){
@@ -249,16 +259,22 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
+        if(!SuperAPI.isLogin() && onlyMe){
+            ReactDOM.unmountComponentAtNode(this.refs.popup);    
+            ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+            this.refs.projectfilter.setState({onlyMe:false});
+            return;
+        }
+
+
+
         API.clearProjects();
-        this.forceUpdate((function(){
-            API.pagination = {
-                count: 0,
-                limit: 10,
-                offset: 0
-            }
-            this.setState({onlyMe: onlyMe}); //todo: set API.onlyMe.
-            this.refresh(onlyMe);
-        }).bind(this));
+        API.pagination = {
+            count: 0,
+            limit: 10,
+            offset: 0
+        }
+        this.setState({onlyMe: onlyMe}, this.refresh); //todo: set API.onlyMe.
     },
 
     refresh: function(onlyMe){
@@ -338,7 +354,7 @@ var PageTask = React.createClass({
                         <button type="button" className="btn btn-default" onClick={this.onStaticalAssistorPopupShow}>助手</button> 
                     </div> 
 
-                    <ProjectFilter onChange={this.onProjectFilterChange} onlyMe={this.state.onlyMe}/>
+                    <ProjectFilter ref='projectfilter' onChange={this.onProjectFilterChange} onlyMe={this.state.onlyMe}/>
                     {pageBody}
 
                     <div ref='popup' className='popup'></div>
