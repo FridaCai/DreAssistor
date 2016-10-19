@@ -302,6 +302,9 @@ export default class Item extends React.Component {
           $('body').css({
             cursor:'auto'
           });
+          $('html').css({
+            cursor:'auto'
+          });
           API.signal_taskpopup_show.dispatch({
               title: '修改豆豆',
               task: item,
@@ -318,6 +321,9 @@ export default class Item extends React.Component {
           $('body').css({
             cursor:'auto'
           });
+          $('html').css({
+            cursor:'auto'
+          });
           API.signal_delete_task.dispatch({
             task: item
           });
@@ -326,6 +332,9 @@ export default class Item extends React.Component {
         label: '复制豆豆',
         handler: function() {
           $('body').css({
+            cursor:'auto'
+          });
+          $('html').css({
             cursor:'auto'
           });
           alert('开发中 :)');

@@ -26,7 +26,13 @@ var Pagination = React.createClass({
   onPagination(curPage){
     this.props.onPagination(curPage); 
   },
-
+  componentWillReceiveProps: function(newProp){
+        this.setState({
+          offset:0,
+          curPage: newProp.curPage,
+          totalPage: newProp.totalPage
+        })
+  },
   render(){
     var {curPage, totalPage, limit, offset} = this.state;
 

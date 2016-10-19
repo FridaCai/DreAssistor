@@ -8,7 +8,8 @@ import Request from 'Request';
 var API = {
 	signal_page_navigate: new Signal(),
 	signal_registerpopup_show: new Signal(),
-	sigal_loginHeader_update: new Signal(),
+	signal_login: new Signal(),
+	signal_logout: new Signal(),
 	sigal_window_resizeend: new Signal(),
 
 

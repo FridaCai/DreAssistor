@@ -6,13 +6,13 @@
   "scripts": {
     "deploy-dev": "cnpm install && webpack -d --watch & http-server -p 8001 -c-1 ./",
     "deploy-ec2": "npm install && webpack -p && http-server -p 8001 -c-1 ./",
-    "deploy-patacserver": "npm install && webpack -p && http-server -p 8001 -c-1 ./",
     "stop": "killall node",
     "start-webpack": "webpack -d --watch",
     "start-webpack-release": "webpack -p",
     "generate-property-key-debug": "node-debug tool/generate_property_key/index.js",
     "generate-property-key": "node tool/generate_property_key/index.js",
-    "deploy-lenovo": "cnpm install && webpack -d --watch & http-server -p 8001 -c-1 ./"
+    "deploy-lenovo": "cnpm install && webpack -d --watch & http-server -p 8001 -c-1 ./",
+    "deploy-patac-server": "npm install && webpack -p && http-server -p 8001 -c-1 ./"
   },
   "repository": {
     "type": "git",
