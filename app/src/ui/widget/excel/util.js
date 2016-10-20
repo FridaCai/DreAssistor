@@ -57,7 +57,25 @@ var Util = {
                         if(range.e.r < R) range.e.r = R;
                         if(range.e.c < C) range.e.c = C;
 
-                        var cell = {v: data[R].cells[C].v };
+
+
+
+                        var cellUI = data[R].cells[C];
+                        var value = cellUI.v;
+                        if(cellUI.component && cellUI.component.displayName == 'Time'){
+                            value = moment(value).format("MM/DD/YYYY");
+                        }
+                        if(cellUI.component && cellUI.component.displayName == 'ColorCheckbox'){
+                            value = cellUI.param.label;
+                        }
+
+
+
+
+
+
+
+                        var cell = {v:  value};
 
 
                         if(cell.v == null) continue;
