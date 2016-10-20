@@ -21,7 +21,7 @@ var TmpUtil = {
 			var label = COMPONENT_LABEL_ENUM[key];
 			return Cell.create({component: Label, v: label});
 		}).bind(this))
-		cells.sort();
+		//cells.sort();
 		return Line.create({cells: cells});
 	},
 
