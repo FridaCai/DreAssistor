@@ -2,6 +2,7 @@ import Util from 'Util';
 import Attachment from '../../page_task/data/attachment.js';
 import "./style.less";
 import Request from 'Request';
+import Thumbnail from './thumbnail.js';
 
 var AttachmentList = React.createClass({
 	getInitialState: function(){
@@ -15,119 +16,110 @@ var AttachmentList = React.createClass({
 	onAddClk: function(){
 		this.refs.fileElem.click();
 	},
+	
+
+
 	fileElemChange: function(e){
-	    e.preventDefault();
+		const maxFileSize = 10 * 1000000; //10m
+
+		e.preventDefault();
+		var files = e.target.files;
+		var file = files[0];
+
+
+		if(file.size > maxFileSize){
+			//todo: show popup. do nothing.
+			//return;
+		}
+
+		
+
 	    
-	    var files = e.target.files;
-	    const maxFileSize = 2000000; //2m
+		var label = file.name; 
+		var id = Util.generateUUID();
+		//add new thumbnail
+		var attachment = Attachment.create({
+			id: id,
+			label: label,
+			status: 0,
+			progress: 0,
+		})
+		this.state.attachments.add(attachment);
 
-	    var formData = new FormData();
-
-	    for(var i=0; i<files.length; i++){
-	      var file = files[i];
-	      if(file.size < maxFileSize){
-	      	formData.append('uploads[]', file, file.name);	
-	      }else{
-	      	console.log('file is too large');
-	      }
-    	}
-
-
-
-
-
-    	var url = Request.getBackendAPI('uploadfile');
-	    $.ajax({
-	      url: url,
-	      type: 'POST',
-	      data: formData,
-	      processData: false,
-	      contentType: false,
-	      success: function(data){
-	          console.log('upload successful!\n' + data);
-	      },
-	      xhr: function() {
-	        // create an XMLHttpRequest
-	        var xhr = new XMLHttpRequest();
-
-	        // listen to the 'progress' event
-	        xhr.upload.addEventListener('progress', function(evt) {
-
-	          if (evt.lengthComputable) {
-	            // calculate the percentage of upload completed
-	            var percentComplete = evt.loaded / evt.total;
-	            percentComplete = parseInt(percentComplete * 100);
-
-	            // update the Bootstrap progress bar with the new percentage
-	            //$('.progress-bar').text(percentComplete + '%');
-	            //$('.progress-bar').width(percentComplete + '%');
-	            console.log(percentComplete)
-
-	            // once the upload reaches 100%, set the progress bar text to done
-	            //if (percentComplete === 100) {
-	              //$('.progress-bar').html('Done');
-	            //}
-
-	          }
-
-	        }, false);
-
-	        return xhr;
-	      }
-	    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	      /*var attachment = Attachment.create({
-	        id: Util.generateUUID(),
-	        label: label,
-	        url: url,
-	      })
-	      this.state.attachments.add(attachment);*/
-
-	    /*if(this.props.onAdd){
+	    if(this.props.onAdd){
 			this.props.onAdd.call(this.props.scope, this.state.attachments);
 		}
-	    this.forceUpdate();*/
+	    this.forceUpdate();
+
+
+
+	    //todo: save to db when click save button;
+		
+
+
+
+		//upload to file system and return guid.
+		var me = this;
+		var formData = new FormData();
+        formData.append('file', file, label);
+        formData.append('id', id);
+        var options = {
+            'contentType': false,
+            'processData': false,
+            'uploadProgress': function() {
+		        var xhr = new XMLHttpRequest();
+		        xhr.upload.addEventListener('progress', function(evt) {
+		          if (evt.lengthComputable) {
+		            attachment.update({
+		            	progress: parseInt(evt.loaded / evt.total * 100)
+		            });
+
+		            me.forceUpdate();
+		          }
+		        }, false);
+		        return xhr;
+	        }
+        };
+        var url = Request.getBackendAPI('uploadfile');
+
+        Request.postData(url, formData, options).then(function(result){
+        	attachment.update({
+        		status: 1, 
+        		guid: result.guid
+        	})
+
+        	me.forceUpdate();
+        }, function(result){
+        	attachment.update({
+				status: 2        		
+        	})
+        	me.forceUpdate();
+        }).catch((error) => {
+        	console.log(error);
+        });
+
+
+
+
+		//need to save guid, src filename, src file ext, to client dm
 	},
 
-	onDelete: function(id){
-	    this.state.attachments.deleteById(id);
+
+	onDelete: function(attachment){
+	    this.state.attachments.deleteById(attachment.id);
 	    this.forceUpdate();
 
 	    if(this.props.onDelete){
 	      this.props.onDelete.call(this.props.scope, this.state.attachments);
 	    }
 	},
-	onDownload: function(){
-
-	},
+  
+    onFileInputClk: function(){
+        this.refs.fileElem.value = null;  
+    },
+   
 	render(){
 		var attachments = this.state.attachments;
-
-		var allowPreview = function(url){
-			var suffixes = ['jpg', 'jpeg', 'gif', 'tif', 'tiff', 'png'];
-			for(var i=0; i<suffixes.length; i++){
-				var suffix = suffixes[i];
-				if(url.endsWith(`.${suffix}`)){
-					return true;
-				}
-			}	
-			return false;
-		};
 
 		return (
 			<div className='attachmentList'>
@@ -135,35 +127,20 @@ var AttachmentList = React.createClass({
 					<a href="#" className="btn btn-primary" role="button" onClick={this.onAddClk}>添加</a> 
 				</div>
 				<div className="row">
-
 				  {
 				  	 attachments.map((function(attachment){
-	                    var {id, url, label} = attachment;
-
-	                    var attachmentDom = allowPreview(url) 
-	                    	? (<img alt={label} src={url}/>)
-	                    	: (<span className="glyphicon glyphicon-paperclip" aria-hidden="true" style={{fontSize: '20px'}}></span>)
-
 	                    return (
-	                      <div className="col-sm-2" key={id}>
-						    <div className="thumbnail">
-						      {attachmentDom}
-						      <div className="caption">
-						        <h4>{label}</h4>
-						        <h5>
-						        	<a href="#" className="btn btn-primary" role="button" onClick={this.onDelete.bind(this, id)}>删除</a> 
-						        	<a href="#" className="btn btn-default" role="button" onClick={this.onDownload.bind(this, attachment)}>下载</a>
-					        	</h5>
-						      </div>
-						    </div>
+	                      <div className="col-sm-2" key={attachment.id}>
+						    <Thumbnail param={attachment} 
+						    	onDelete={this.onDelete.bind(this, attachment)}/>
 						  </div>
 	                    )
                   	}).bind(this))
 				  }
-
-
 		          <form className='upload'>
-		            <input name='uploadfile' type="file" ref="fileElem" multiple accept="*/*" onChange={this.fileElemChange}/>
+		            <input name='uploadfile' type="file" ref="fileElem" accept="*/*" 
+		            	onChange={this.fileElemChange}
+		            	onClick={this.onFileInputClk}/>
 		          </form>
 		        </div>
 			</div>
