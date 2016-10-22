@@ -111,7 +111,7 @@ var TmpUtil = {
 			        	expandComponent: AttachmentList,
 			        	expandComponentParam: {
 			        		id: key,
-			        		attachments: itms,
+			        		attachment: itms,
 			        		onDelete: function(itms){
 			        			this.v = itms;			        			
 			        		},
@@ -122,7 +122,7 @@ var TmpUtil = {
 			        }, 
 			        v:itms
 			    })
-			case COMPONENT_ENUM.ATTACHMENTS:
+			case COMPONENT_ENUM.ATTACHMENT:
 				//var itms = property[component] || new Attachments(); //?
 				var itms = property[component];
 				var label = COMPONENT_LABEL_ENUM[component];
@@ -138,7 +138,7 @@ var TmpUtil = {
 			        	expandComponent: AttachmentList,
 			        	expandComponentParam: {
 			        		id: key,
-			        		attachments: itms,
+			        		attachment: itms,
 			        		onDelete: function(itms){
 			        			this.v = itms;
 			        			

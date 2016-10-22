@@ -15,9 +15,8 @@ module.exports = class Attachment{
 		this.id = param.id || Util.generateUUID();
 		this.label = param.label; //source file name;
 		this.parent = param.parent;
-		this.guid = param.guid;
-		this.status = param.status; //0--loading; 1--complete; 2--fail
-		this.progress = param.progress; //0-100
+
+		this.update(param);
 	}
 
 	setParent(parent){
@@ -25,7 +24,7 @@ module.exports = class Attachment{
 	}
 	update(param){
 		this.guid = param.guid || undefined;
-		this.status = param.status || 0;
+		this.status = (param.status == undefined ? 1 : param.status); //0--loading; 1--complete; 2--fail
 		this.progress = param.progress || 0;
 	}
 	dump(){
@@ -34,6 +33,5 @@ module.exports = class Attachment{
 			label: this.label,
 			guid: this.guid
 		}
-		
 	}
 }

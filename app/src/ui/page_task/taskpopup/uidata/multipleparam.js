@@ -49,7 +49,7 @@ class MultipleParamUIData extends Base{
 	dm2ui(project, dm){
 		var needExpandLine = (function(components){
 			if(components.indexOf(COMPONENT_ENUM.CURVE)!=-1 
-				|| components.indexOf(COMPONENT_ENUM.ATTACHMENTS)!=-1 
+				|| components.indexOf(COMPONENT_ENUM.ATTACHMENT)!=-1 
 				|| components.indexOf(COMPONENT_ENUM.IMAGES)!=-1){
 				return true;
 			}

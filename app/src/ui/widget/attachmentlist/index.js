@@ -7,11 +7,11 @@ import Thumbnail from './thumbnail.js';
 var AttachmentList = React.createClass({
 	getInitialState: function(){
 		return {
-		  attachments: this.props.attachments,
+		  attachment: this.props.attachment,
 		}
 	},
 	getValue: function(){
-		return this.state.attachments;
+		return this.state.attachment;
 	},
 	onAddClk: function(){
 		this.refs.fileElem.click();
@@ -44,11 +44,9 @@ var AttachmentList = React.createClass({
 			status: 0,
 			progress: 0,
 		})
-		this.state.attachments.add(attachment);
+		this.state.attachment.add(attachment);
 
-	    if(this.props.onAdd){
-			this.props.onAdd.call(this.props.scope, this.state.attachments);
-		}
+
 	    this.forceUpdate();
 
 
@@ -74,7 +72,11 @@ var AttachmentList = React.createClass({
 		            	progress: parseInt(evt.loaded / evt.total * 100)
 		            });
 
-		            me.forceUpdate();
+		            try{
+						me.forceUpdate();
+		            }catch(err){
+		            	//do nothing. for the case that panel already closed;
+		            }
 		          }
 		        }, false);
 		        return xhr;
@@ -89,6 +91,9 @@ var AttachmentList = React.createClass({
         	})
 
         	me.forceUpdate();
+		    if(me.props.onAdd){
+				me.props.onAdd.call(me.props.scope, me.state.attachment);
+			}
         }, function(result){
         	attachment.update({
 				status: 2        		
@@ -106,11 +111,11 @@ var AttachmentList = React.createClass({
 
 
 	onDelete: function(attachment){
-	    this.state.attachments.deleteById(attachment.id);
+	    this.state.attachment.deleteById(attachment.id);
 	    this.forceUpdate();
 
 	    if(this.props.onDelete){
-	      this.props.onDelete.call(this.props.scope, this.state.attachments);
+	      this.props.onDelete.call(this.props.scope, this.state.attachment);
 	    }
 	},
   
@@ -119,7 +124,7 @@ var AttachmentList = React.createClass({
     },
    
 	render(){
-		var attachments = this.state.attachments;
+		var attachments = this.state.attachment;
 
 		return (
 			<div className='attachmentList'>

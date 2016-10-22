@@ -18,11 +18,20 @@ module.exports = class Attachments extends Array{
 		}).bind(this))
 	}
 
+	/*
+	dump attachment and save 2 server
+	ignore fail/loading one.
+	*/
 	dump(){
-		return super.map(function(at){
-			return at.dump();
+		var returnArr = [];
+		super.map(function(at){
+			if(at.status === 1){
+				returnArr.push(at.dump());
+			}
 		})
+		return returnArr;
 	}
+	
 	add(at){
 		super.unshift(at);
 	}

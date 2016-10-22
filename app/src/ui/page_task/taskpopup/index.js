@@ -30,7 +30,7 @@ var TaskPopup = React.createClass({
 	getContent: function() {
         try{
             const {
-              label, desc, exp, startTime, endTime, subtasks, markColor, priority, attachments, privacy, template
+              label, desc, exp, startTime, endTime, subtasks, markColor, priority, attachment, privacy, template
             } = this.state.task;
 
             var color = Util.convertIntColorToHex(markColor);
@@ -91,7 +91,7 @@ var TaskPopup = React.createClass({
 
                     <div className="line attachedFiles">
                         <label>附件</label>
-                        <AttachmentList attachments={attachments || new Attachments()} ref='attachmentlist'/>
+                        <AttachmentList attachment={attachment || new Attachments()} ref='attachmentlist'/>
                     </div>
                     <div className="line privacy">
                         <label>谁可以看</label>
@@ -152,7 +152,7 @@ var TaskPopup = React.createClass({
         this.state.task.subtasks = this.refs.breakdownList.getValue();
         this.state.task.markColor = Util.convertHexColorToInt(this.refs.markColorCP.state.color);
         this.state.task.priority = this.priorityDropdown.getValue();  
-        this.state.task.attachments  = this.refs.attachmentlist.getValue();
+        this.state.task.attachment  = this.refs.attachmentlist.getValue();
         this.state.task.privacy = this.refs.privacyRadioGroup.getValue();
         this.state.task.template = this.refs.templatePanel.getValue();
 

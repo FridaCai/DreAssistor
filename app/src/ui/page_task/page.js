@@ -212,7 +212,9 @@ var PageTask = React.createClass({
             var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
             ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
         }).bind(this), function(err){
-            console.error(err);
+            throw err;
+        }).catch(function(err){
+            console.error(err.stack);
         });
     },
 
