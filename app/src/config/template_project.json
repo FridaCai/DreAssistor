@@ -8,7 +8,8 @@ var ProjectTemplate = {
             {
               "text": "1.0T",
               "label": "engine",
-              "key": "PROJECT.ENGINE.LABEL"
+              "key": "PROJECT.ENGINE.LABEL",
+              "attachment":[]
             },
             {
               "text": "transmission1",

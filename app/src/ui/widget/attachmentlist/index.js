@@ -1,5 +1,6 @@
 import Util from 'Util';
 import Attachments from '../../page_task/data/attachments.js';
+import Attachment from '../../page_task/data/attachment.js';
 import "./style.less";
 import Request from 'Request';
 import Thumbnail from './thumbnail.js';
@@ -14,6 +15,20 @@ var AttachmentList = React.createClass({
 	},
 	componentDidMount: function(){
 		var {taskId, propertyId} = this.state;
+
+		var needQuery = function(id){
+			if(id === undefined){
+				return false;
+			}
+			if(Util.isUUID(id)){
+				return false;
+			}
+			return true;
+		}
+
+		if(!needQuery(taskId) && !needQuery(propertyId)){
+			return;
+		}
 		if(taskId == undefined && propertyId== undefined){
 			console.error('wrong');
 			return;
