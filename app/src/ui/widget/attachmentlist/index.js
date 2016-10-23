@@ -1,5 +1,5 @@
 import Util from 'Util';
-import Attachment from '../../page_task/data/attachment.js';
+import Attachments from '../../page_task/data/attachments.js';
 import "./style.less";
 import Request from 'Request';
 import Thumbnail from './thumbnail.js';
@@ -8,7 +8,34 @@ var AttachmentList = React.createClass({
 	getInitialState: function(){
 		return {
 		  attachment: this.props.attachment,
+		  taskId: this.props.taskId,
+		  propertyId: this.props.propertyId
 		}
+	},
+	componentDidMount: function(){
+		var {taskId, propertyId} = this.state;
+		if(taskId == undefined && propertyId== undefined){
+			console.error('wrong');
+			return;
+		}
+
+		var url = Request.getBackendAPI('attachment');
+		if(taskId != undefined){
+			url = `${url}/taskId/${taskId}`;
+		}else if(propertyId!=undefined){
+			url = `${url}/propertyId/${propertyId}`;
+		}
+
+		Request.getData(url).then((function(result){
+			if(result.errCode != -1){
+				return;
+			}
+
+			var attachment = Attachments.create(result.attachment);
+			this.setState({
+				attachment: attachment
+			})
+		}).bind(this));
 	},
 	getValue: function(){
 		return this.state.attachment;
@@ -16,8 +43,6 @@ var AttachmentList = React.createClass({
 	onAddClk: function(){
 		this.refs.fileElem.click();
 	},
-	
-
 
 	fileElemChange: function(e){
 		const maxFileSize = 10 * 1000000; //10m
@@ -124,6 +149,7 @@ var AttachmentList = React.createClass({
     },
    
 	render(){
+
 		var attachments = this.state.attachment;
 
 		return (

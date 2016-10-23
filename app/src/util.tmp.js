@@ -139,6 +139,7 @@ var TmpUtil = {
 			        	expandComponentParam: {
 			        		id: key,
 			        		attachment: itms,
+			        		propertyId: property.id,
 			        		onDelete: function(itms){
 			        			this.v = itms;
 			        			

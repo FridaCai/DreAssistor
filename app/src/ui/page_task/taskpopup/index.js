@@ -30,7 +30,7 @@ var TaskPopup = React.createClass({
 	getContent: function() {
         try{
             const {
-              label, desc, exp, startTime, endTime, subtasks, markColor, priority, attachment, privacy, template
+              id, label, desc, exp, startTime, endTime, subtasks, markColor, priority, attachment, privacy, template
             } = this.state.task;
 
             var color = Util.convertIntColorToHex(markColor);
@@ -91,7 +91,7 @@ var TaskPopup = React.createClass({
 
                     <div className="line attachedFiles">
                         <label>附件</label>
-                        <AttachmentList attachment={attachment || new Attachments()} ref='attachmentlist'/>
+                        <AttachmentList attachment={attachment || new Attachments()} taskId={id} ref='attachmentlist'/>
                     </div>
                     <div className="line privacy">
                         <label>谁可以看</label>
