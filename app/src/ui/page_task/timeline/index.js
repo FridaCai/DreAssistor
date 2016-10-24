@@ -142,10 +142,23 @@ var CTimeLine = React.createClass({
                 title: tag.label,
                 start_time: tagTime,
                 end_time: tagTime + 1,
-                color: Util.convertIntColorToHex(tag.markColor),
+                color: Util.convertIntColorToHex(Util.TAG_COLOR),
                 instance: tag,
             })
         })
+        items.push({
+            id: projectId + '_tag_sorp',
+            group: projectId + '_tag',
+            title: 'SORP',
+            start_time: project.sorp,
+            end_time: project.sorp + 1,
+            color: Util.convertIntColorToHex(Util.TAG_COLOR),
+            instance: Tag.create({
+                label: 'SORP',
+                week: 0
+            }),
+        });
+
         project.tasks.map(function(task){
             //var ft = passFilter(filter, [projectId, spId, task.id]);
             //if(ft){

@@ -135,17 +135,14 @@ var ProjectTemplate = {
       "tags": [
         {
           "label": "DSI",
-          "time": 1452430000000,
           "week": 30
         },
         {
           "label": "VPI",
-          "time": 1463921000000,
           "week": 20
         },
         {
           "label": "DSO",
-          "time": 1478437000000,
           "week": 10
         }
       ],
