@@ -43,6 +43,9 @@ var LoginContainer = React.createClass({
         }
     },
     onSignInClk: function(){
+        this.onSignIn();
+    },
+    onSignIn: function(){
       var email = this.refs.emailInput.value;
       var password = this.refs.passwordInput.value;
       Request.getData(Request.getBackendAPI('user'), {
@@ -70,6 +73,11 @@ var LoginContainer = React.createClass({
       API.signal_registerpopup_show.dispatch();
     },
 
+    onKeyUp: function(e){
+      if(e.key == 'Enter'){
+        this.onSignIn();
+      }
+    },
     render:function(){
       var msg = this.state.errormsg;
 
@@ -79,11 +87,11 @@ var LoginContainer = React.createClass({
             {msg}
           </div>
           <div className="form-group">
-            <input type="text" placeholder="Email" className="form-control" ref='emailInput'/>
+            <input type="text" placeholder="Email" className="form-control" ref='emailInput' onKeyUp={this.onKeyUp}/>
           </div>
 
           <div className="form-group">
-            <input type="password" placeholder="Password" className="form-control" ref='passwordInput'/>
+            <input type="password" placeholder="Password" className="form-control" ref='passwordInput' onKeyUp={this.onKeyUp}/>
           </div>
           <button className="btn btn-success" onClick={this.onSignInClk}>Sign in</button>
           <button className="btn btn-success" onClick={this.onRegisterClk}>Register</button>
