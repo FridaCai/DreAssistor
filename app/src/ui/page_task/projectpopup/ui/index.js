@@ -79,9 +79,8 @@ var ProjectPopup = React.createClass({
     },
     
     onEngineAdd: function(){
-        var project = API.getProject();
-        project.addEngine();
-        
+        API.ui2dm();
+        API.addEngine();
         API.dm2ui();
         this.refs.table.setState({uidata: API.uidata}); 
     },

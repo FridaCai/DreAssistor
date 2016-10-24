@@ -13,7 +13,7 @@ var Time = React.createClass({
 	render(){
 		var v = this.props.v;
 		return (
-			 <Datetime defaultValue={this.props.param.value} ref='time' onChange={this.onChange}/>
+			 <Datetime closeOnSelect={true} defaultValue={this.props.param.value} ref='time' onChange={this.onChange}/>
 		);
 	}
 })

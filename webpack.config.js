@@ -70,6 +70,7 @@ module.exports = {
             Pagination: path.join(__dirname, widgetPath, "/pagination/index.js"),
             Loading: path.join(__dirname, widgetPath, "/loading/index.js"),
             CurveComponent: path.join(__dirname, widgetPath, "/curve/index.js"),
+            LoadingMask: path.join(__dirname, widgetPath, "/loadingmask/index.js"),
 
             ProjectTemplate: path.join(__dirname, configPath, "/template_project.json"),
             TaskTemplate: path.join(__dirname, configPath, "/template_task.json"),

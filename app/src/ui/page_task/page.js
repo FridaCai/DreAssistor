@@ -16,6 +16,7 @@ import Pagination from 'Pagination';
 import Loading from 'Loading';
 
 import  SuperAPI from '../../api.js';
+import LoadingMask from 'LoadingMask';
 
 var ProjectFilter = React.createClass({
     getInitialState(){
@@ -139,13 +140,40 @@ var PageTask = React.createClass({
         }).bind(this));
     },
     onProjectDelete: function(e, param){
-        var  project = param.project;
-        var url = Request.getBackendAPI(`project/${project.id}`);
-        Request.deleteData(url).then((function(res){
-            if(res.errCode === -1){
-                this.refresh();    
-            }
-        }).bind(this));
+        //show make sure message.
+        //progressbar.
+        var onOK = (function(){
+            return new Promise((function(resolve, reject){
+                this.refs.loadingMask.show();
+
+                var  project = param.project;
+                var url = Request.getBackendAPI(`project/${project.id}`);
+                Request.deleteData(url).then((function(res){
+                    if(res.errCode === -1){
+                        this.refresh();    
+                    }
+                    this.refs.loadingMask.hide();
+                }).bind(this), (function(e){
+                    throw new Error();
+                }).bind(this)).catch((function(e){
+                    console.error(e.stack);
+
+                    this.refs.loadingMask.hide();
+                    var msg = '服务器故障';
+                    ReactDOM.unmountComponentAtNode(this.refs.popup);    
+                    ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+                }).bind(this));
+                
+                resolve();
+            }).bind(this));   
+        }).bind(this);
+            
+
+
+
+        var msg = `确定要删除？`;
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<MessageBox onOK={onOK} msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
     },
     onPageRefresh: function(e){
         this.refresh();
@@ -360,6 +388,7 @@ var PageTask = React.createClass({
                     {pageBody}
 
                     <div ref='popup' className='popup'></div>
+                    <LoadingMask ref='loadingMask'/>
                 </div>
             );  
         }catch(e){
