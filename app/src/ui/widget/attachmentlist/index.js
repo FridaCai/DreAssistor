@@ -4,6 +4,7 @@ import Attachment from '../../page_task/data/attachment.js';
 import "./style.less";
 import Request from 'Request';
 import Thumbnail from './thumbnail.js';
+import MessageBox from 'MessageBox';
 
 var AttachmentList = React.createClass({
 	getInitialState: function(){
@@ -47,6 +48,9 @@ var AttachmentList = React.createClass({
 			}
 
 			var attachment = Attachments.create(result.attachment);
+			attachment.sort(function(a1, a2){
+				return a1.id < a2.id
+			})
 			this.setState({
 				attachment: attachment
 			})
@@ -60,7 +64,7 @@ var AttachmentList = React.createClass({
 	},
 
 	fileElemChange: function(e){
-		const maxFileSize = 10 * 1000000; //10m
+		const maxFileSize = 50 * 1000000; //10m
 
 		e.preventDefault();
 		var files = e.target.files;
@@ -68,8 +72,10 @@ var AttachmentList = React.createClass({
 
 
 		if(file.size > maxFileSize){
-			//todo: show popup. do nothing.
-			//return;
+			var msg = `请上传小于50m的文件`;
+	        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+	        ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+			return;
 		}
 
 		
@@ -102,16 +108,17 @@ var AttachmentList = React.createClass({
         formData.append('file', file, label);
         formData.append('id', id);
         var options = {
-            'contentType': false,
-            'processData': false,
-            'uploadProgress': function() {
-		        var xhr = new XMLHttpRequest();
+            contentType: false,
+            processData: false,
+         	xhr: function() {
+                var xhr = new XMLHttpRequest();
 		        xhr.upload.addEventListener('progress', function(evt) {
 		          if (evt.lengthComputable) {
 		            attachment.update({
 		            	progress: parseInt(evt.loaded / evt.total * 100)
 		            });
-
+		            console.log('frida test');
+		          	console.log(attachment.progress);
 		            try{
 						me.forceUpdate();
 		            }catch(err){
@@ -120,7 +127,7 @@ var AttachmentList = React.createClass({
 		          }
 		        }, false);
 		        return xhr;
-	        }
+            }
         };
         var url = Request.getBackendAPI('uploadfile');
 
@@ -176,7 +183,7 @@ var AttachmentList = React.createClass({
 				  {
 				  	 attachments.map((function(attachment){
 	                    return (
-	                      <div className="col-sm-2" key={attachment.id}>
+	                      <div className="col-sm-3" key={attachment.id}>
 						    <Thumbnail param={attachment} 
 						    	onDelete={this.onDelete.bind(this, attachment)}/>
 						  </div>
@@ -188,6 +195,7 @@ var AttachmentList = React.createClass({
 		            	onChange={this.fileElemChange}
 		            	onClick={this.onFileInputClk}/>
 		          </form>
+		          <div ref='popup'></div>
 		        </div>
 			</div>
 			

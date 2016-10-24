@@ -10,7 +10,21 @@
 		clear: both;
 
 		.thumbnail{
+			
 			padding-bottom:0;
+			>img{
+				height: 150px;
+			}
+			>span{
+				height: 150px;
+				display:block;
+				
+				&:before{
+				    display: block;
+				    line-height: 160px;
+				}
+			}
+
 			.caption{
 				color: #a7a7a7;
 
@@ -29,8 +43,37 @@
 				h5{
 					margin:10px 0 0 0;
 
+					.btn{
+						width:45%;
+					}
 					.btn-default{
 						margin-left:5px;
+					}
+				}
+			}
+
+			&.load{
+				h5, h4{
+					visibility: hidden
+				}
+				>span{
+					>span{
+						line-height: 210px;
+					}
+				}
+			}
+			&.fail{
+				h5{
+					visibility: hidden
+				}
+				h4{
+					color: red;
+				}
+				>span{
+					>span{
+						font-size: 28px;
+						color: red;
+						line-height: 160px;
 					}
 				}
 			}

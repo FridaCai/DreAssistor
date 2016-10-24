@@ -53,29 +53,47 @@ var Thumbnail = React.createClass({
 			      <div className="caption">
 			        <h4>{label}</h4>
 			        <h5>
-			        	<a href="#" className="btn btn-primary" role="button" onClick={this.onDelete}>删除</a> 
-			        	<a href={url} className="btn btn-default" role="button" >下载</a>
+			        	<a href="#" className="btn btn-sm btn-primary" role="button" onClick={this.onDelete}>删除</a> 
+			        	<a href={url} className="btn btn-sm btn-default" role="button" >下载</a>
 		        	</h5>
 			      </div>
 			    </div>
 	        )
         }).bind(this);
 
-        var getLoadingDom = (function(progress){
-        	var label = `Loading... ${progress}`;
+        var getLoadingDom = (function(at){
+        	var label = `上传${at.progress}%`;
 
-        	return (<div className="thumbnail">
-				{label}
-		    </div>)
+        	return (
+        		<div className="thumbnail load">
+			      <span aria-hidden="true"><span>{label}</span></span>
+			      <div className="caption">
+			        <h4></h4>
+			        <h5 className={{visibility: 'hidden'}}>
+			        	<a href="javascript:void(0);" className="btn btn-sm btn-primary" role="button">删除</a> 
+			        	<a href="javascript:void(0);" className="btn btn-sm btn-default" role="button">下载</a>
+		        	</h5>
+			      </div>
+			    </div>
+    		)
         }).bind(this);
 
 
         var getFailDom = (function(progress){
-        	var label = `Fail!`;
+        	var label = `上传失败!`;
 
-        	return (<div className="thumbnail">
-				{label}
-		    </div>)
+        	return (
+        		<div className="thumbnail fail">
+			      <span aria-hidden="true"><span>!</span></span>
+			      <div className="caption">
+			        <h4>{label}</h4>
+			        <h5>
+			        	<a href="javascript:void(0);" className="btn btn-sm btn-primary" role="button">删除</a> 
+			        	<a href="javascript:void(0);" className="btn btn-sm btn-default" role="button">下载</a>
+		        	</h5>
+			      </div>
+			    </div>
+    		)
         }).bind(this);
 
 
