@@ -207,7 +207,7 @@ var XLSIExportUI = React.createClass({
     },
     
 	render: function(){
-        var isDisabled = this.props.disabled;
+        var isDisabled = this.props.isReadOnly;
 		return (
             <div className='xlsIExport'>
                 <button disabled={isDisabled} className="btn btn-primary importBtn" onClick={this.import}>导入excel</button> 

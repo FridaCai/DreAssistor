@@ -25,32 +25,41 @@ var AddOn = React.createClass({
     },
     onContextMenu: function(e){
         e.preventDefault();
-        
+            
         var project = this.props.project;
         this.props.onContextMenu({ 
-          left: e.pageX,
-          top: e.pageY,
-          btns: [{
-            label: '修改项目',
-            handler: function() {
-              API.signal_projectpopup_show.dispatch({
-                  title: '修改项目',
-                  project: project,
-                  onOK: (function(project){
-                    API.signal_edit_project.dispatch({
-                      project: project
-                    });
-                  }).bind(this),
-              });
-            }
-          },{
-            label: '删除项目',
-            handler: function() {
-              API.signal_delete_project.dispatch({
-                project: project
-              });
-            }
-          }]
+            left: e.pageX,
+            top: e.pageY,
+            btns: [{
+                label: '查看项目',
+                handler: function() {
+                  API.signal_projectpopup_show.dispatch({
+                      title: '查看项目',
+                      project: project,
+                      isReadOnly: true
+                  });
+                }
+            },{
+                label: '修改项目',
+                handler: function() {
+                  API.signal_projectpopup_show.dispatch({
+                      title: '修改项目',
+                      project: project,
+                      onOK: (function(project){
+                        API.signal_edit_project.dispatch({
+                          project: project
+                        });
+                      }).bind(this),
+                  });
+                }
+            },{
+                label: '删除项目',
+                handler: function() {
+                  API.signal_delete_project.dispatch({
+                    project: project
+                  });
+                }
+            }]
         });
     },
     render: function() {

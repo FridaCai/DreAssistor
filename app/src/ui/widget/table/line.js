@@ -22,11 +22,11 @@ var LineDOM = React.createClass({
 		return (
 			<tr>
             {
-                line.cells.map(function(cell){
+                line.cells.map((function(cell){
                 	if(!cell.isHide){
-                		return (<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id}/>)	
+                		return (<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id} isReadOnly={this.props.isReadOnly}/>)	
                 	}
-                })
+                }).bind(this))
             }
             </tr>
 		)

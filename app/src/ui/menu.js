@@ -15,7 +15,6 @@ var UserCenterContainer = React.createClass({
       API.resetLoginUser();
       API.removeToken();
       API.signal_logout.dispatch();
-
     },
     render: function(){
       var loginUser = API.getLoginUser();

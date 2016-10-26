@@ -288,8 +288,6 @@ export default class Item extends React.Component {
   };
 
   onContextMenu(item, e) {
-    e.preventDefault();
-    
     if(!(item instanceof Task))
       return;
 
@@ -297,6 +295,21 @@ export default class Item extends React.Component {
       left: e.pageX,
       top: e.pageY,
       btns: [{
+        label: '查看豆豆',
+        handler: function() {
+          $('body').css({
+            cursor:'auto'
+          });
+          $('html').css({
+            cursor:'auto'
+          });
+          API.signal_taskpopup_show.dispatch({
+              title: '查看豆豆',
+              task: item,
+              isReadOnly: true
+          });
+        }
+      },{
         label: '修改豆豆',
         handler: function() {
           $('body').css({
@@ -339,30 +352,8 @@ export default class Item extends React.Component {
           });
           alert('开发中 :)');
         }
-      }
-
-      /*,{
-        label: '统计助手',
-        handler: function() {
-          API.signal_statical_assistor_popup_show.dispatch({
-            title: '统计助手',
-            templateTask: task.templateTask,
-          })
-        }
-      },{
-        label: '前辈助手',
-        handler: function(){
-          API.signal_people_assistor_popup_show.dispatch({
-            title: '前辈助手',
-            templateTask: task.templateTask,
-          })
-        }
-      }*/
-
-
-      ],
+      }],
     });
-    
   }
 
   onMouseUp (e) {
@@ -370,6 +361,7 @@ export default class Item extends React.Component {
       this.startedClicking = false
       this.actualClick(e, 'click')
     }
+    this.onContextMenu(this.props.item.instance, e);
   };
 
   onTouchStart (e) {
@@ -420,13 +412,15 @@ export default class Item extends React.Component {
       lineHeight: `${dimensions.height}px`,
       backgroundColor: this.props.item.color,
     }
+
+    // onContextMenu = {this.onContextMenu.bind(this, this.props.item.instance)}
     return (
       <div key={this.itemId}
            ref='item'
            className={classNames}
            title={this.itemTitle}
            onMouseDown={this.onMouseDown.bind(this, this.props.item.instance)}
-           onContextMenu = {this.onContextMenu.bind(this, this.props.item.instance)}
+          
            onMouseUp={this.onMouseUp.bind(this)}
            onTouchStart={this.onTouchStart.bind(this)}
            onTouchEnd={this.onTouchEnd.bind(this)}

@@ -3,7 +3,6 @@ import {Cell} from 'Table';
 import {ExpandLine} from 'Table';
 import {Line} from 'Table';
 import {ExpandContainerDOM} from 'Table';
-import {ExpandCellDOM} from 'Table';
 import Label from 'Label';
 
 import {COMPONENT_ENUM} from '../../data/template/mix.js';

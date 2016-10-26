@@ -20,7 +20,10 @@ var CellDOM = React.createClass({
 	    	key: cell.id,
 	    	cell: cell,
         v: cell.v, //for data model.
-        param: cell.param, //for component like radio button.
+        param: $.extend({
+          isReadOnly: this.props.isReadOnly
+        }, cell.param), //for component like radio button.
+
 	    });
 
       return (

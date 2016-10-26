@@ -103,9 +103,9 @@ var TableDOM = React.createClass({
                 var line = lines[i];
                 var key = line.id + '_' + Util.generateUUID(); 
                 if(line instanceof ExpandLine){
-                    dom.push(<ExpandLineDOM line={line} key={key}/>);
+                    dom.push(<ExpandLineDOM line={line} key={key} isReadOnly={this.props.isReadOnly}/>);
                 }else{
-                    dom.push(<LineDOM line={line} key={key}/>);    
+                    dom.push(<LineDOM line={line} key={key} isReadOnly={this.props.isReadOnly}/>);    
                 }
             }
             return dom;
@@ -114,7 +114,7 @@ var TableDOM = React.createClass({
         var getHeaderDom = (function(header){
             if(!header.cells || header.cells.length==0)
                 return null;
-            return (<LineDOM line={header} key={header.id}/>)
+            return (<LineDOM line={header} key={header.id} isReadOnly={this.props.isReadOnly}/>)
         }).bind(this);
 
         return (
@@ -130,7 +130,7 @@ var TableDOM = React.createClass({
         )
     },
     getReverseTableDom: function(ui){
-        var getSheetDom = function(){
+        var getSheetDom = (function(){
             var headers = ui.headers[this.state.sheetIndex];
             var sheets = ui.sheets[this.state.sheetIndex];
 
@@ -159,10 +159,10 @@ var TableDOM = React.createClass({
                 }
 
                 var key = Util.generateUUID(); 
-                dom.push(<LineDOM line={line} key={key}/>);    
+                dom.push(<LineDOM line={line} key={key} isReadOnly={this.props.isReadOnly}/>);    
             }
             return dom;
-        }
+        }).bind(this);
 
         return (
             <table className='customTable'>

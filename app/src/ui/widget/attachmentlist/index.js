@@ -177,7 +177,7 @@ var AttachmentList = React.createClass({
 		return (
 			<div className='attachmentList'>
 				<div className='addBtn'>
-					<a href="#" className="btn btn-primary" role="button" onClick={this.onAddClk}>添加</a> 
+					<button disabled={this.props.isReadOnly} className="btn btn-primary" onClick={this.onAddClk}>添加</button> 
 				</div>
 				<div className="row">
 				  {
@@ -185,7 +185,7 @@ var AttachmentList = React.createClass({
 	                    return (
 	                      <div className="col-sm-3" key={attachment.id}>
 						    <Thumbnail param={attachment} 
-						    	onDelete={this.onDelete.bind(this, attachment)}/>
+						    	onDelete={this.onDelete.bind(this, attachment)} isReadOnly={this.props.isReadOnly}/>
 						  </div>
 	                    )
                   	}).bind(this))

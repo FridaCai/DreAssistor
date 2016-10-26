@@ -16,11 +16,15 @@ var ProjectPopup = React.createClass({
         return {
             title: this.props.title,
             onOK: this.props.onOK,
+            isReadOnly: this.props.isReadOnly
         };
     },
 
 	getContent: function() {
-        var disableXlsIExport = this.props.project ? true: false;
+        var xlsComponentReadOnly = this.props.project ? true: false;
+        if(this.state.isReadOnly){
+            xlsComponentReadOnly = true
+        }
         var sheetOptions = [{
             id: 'property',
             label: '属性',
@@ -38,18 +42,20 @@ var ProjectPopup = React.createClass({
 	    return (
             <div className='addProjectDiv'>
                 <XLSIExportUI ref='xlsIExport' 
-                    disabled={disableXlsIExport} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}
                     xls2ui = {API.xls2ui}
                     ui2xls = {API.ui2xls}
+                    isReadOnly =  {xlsComponentReadOnly}
                 />
 
                 <TableDOM ref='table' 
                     uidata={API.uidata} 
                     onDrop={this.onTableDrop}
-                    needUpdate = {needUpdate}
-                    onSwitchSheet = {this.onSwitchSheet}/>
+                    needUpdate={needUpdate}
+                    onSwitchSheet={this.onSwitchSheet}
+                    isReadOnly={this.props.isReadOnly}
+                />
             </div>
 	    );   
     },
@@ -160,7 +166,7 @@ var ProjectPopup = React.createClass({
     render: function() {
         var content = this.getContent();
         var title = this.state.title;
-        return (<MessageBox width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='projectPopupContainer' children={content}/>);
+        return (<MessageBox isReadOnly={this.props.isReadOnly} width={700} title={title} onOK={this.onOK} isShow={true} ref='msgbox' cName='projectPopupContainer' children={content}/>);
     },
 });
 

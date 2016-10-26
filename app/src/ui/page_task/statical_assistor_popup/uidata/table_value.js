@@ -72,10 +72,11 @@ class ValueTableUIData extends Base{
 	}
 	_getHandlerComponent(i){
 		var self = this;
-		return Cell.create(
-			{
-				component: Group, 
-				param: [{
+		return Cell.create({
+			component: Group,
+			param: {
+				items:	[
+				{
 					component: DragHandler,
 					param: {
 						label: '移动',
@@ -90,7 +91,8 @@ class ValueTableUIData extends Base{
 							e.dataTransfer.setData("text", JSON.stringify(obj));
 						}
 					}
-				}, {
+				},
+				{
 					component: Button,
 					param: {
 						label: '删除',
@@ -98,11 +100,11 @@ class ValueTableUIData extends Base{
 							ValueTableUIData.signal_line_delete.dispatch({index:i});
 						}	
 					}
-				}]
+				}
+				]
 			}
-		)
+		})
 	}
-
 	
 	ui2dm(dm){
 		dm.clear();

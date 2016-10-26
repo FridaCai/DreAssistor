@@ -113,7 +113,11 @@ var PageTask = React.createClass({
             if(res.errCode === -1){
                 this.refresh();    
             }
-        }).bind(this));
+        }).bind(this), (function(e){
+            throw e;
+        }).bind(this)).catch(function(e){
+
+        });
     },
     onTaskEdit: function(e, param){
         var task = param.task;
@@ -137,7 +141,27 @@ var PageTask = React.createClass({
             if(res.errCode === -1){
                 this.refresh();    
             }
-        }).bind(this));
+        }).bind(this), (function(e){
+            throw e;
+        }).bind(this)).catch(function(e){
+            switch(e.errCode){
+                case 8:
+                    //token timeout
+                    //popup : 请登录
+                    SuperAPI.signal_logout.dispatch();
+                    var msg = `请重新登录`;
+                    ReactDOM.unmountComponentAtNode(this.refs.popup);    
+                    ReactDOM.render(<MessageBox onOK={onOK} msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+                    break;
+                case 10:
+                    var msg = `没有操作权限`;
+                    ReactDOM.unmountComponentAtNode(this.refs.popup);    
+                    ReactDOM.render(<MessageBox onOK={onOK} msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+                    break;
+                default:
+                    console.error(e.errMsg);
+            }
+        });
     },
     onProjectDelete: function(e, param){
         //show make sure message.
@@ -247,14 +271,14 @@ var PageTask = React.createClass({
     },
 
     onProjectPopupShow: function(e, param){
-        if(!SuperAPI.isLogin()){
+        if(!SuperAPI.isLogin() && !param.isReadOnly){
             ReactDOM.unmountComponentAtNode(this.refs.popup);    
             ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
             return;
         }
 
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
-        ReactDOM.render(<ProjectPopup title={param.title} project={param.project} onOK={param.onOK}/>, this.refs.popup);  
+        ReactDOM.render(<ProjectPopup isReadOnly={param.isReadOnly} title={param.title} project={param.project} onOK={param.onOK}/>, this.refs.popup);  
     },
     
     onStaticalAssistorPopupShow:function(){

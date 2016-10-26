@@ -28,7 +28,6 @@ var CurveComponent = React.createClass({
 
   render: function(){
     try{
-      var disableXlsIExport = false;
       var sheetOptions = [{
           id: 'curve',
           label: '曲线',
@@ -39,7 +38,7 @@ var CurveComponent = React.createClass({
       return (
             <div className='curveComponent'>
                 <XLSIExportUI ref='xlsIExport' 
-                    disabled={disableXlsIExport} 
+                    isReadOnly={this.props.isReadOnly} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}
                     xls2ui = {this.xls2ui}

@@ -8,7 +8,12 @@
 import './style.css';
 
 var MessageBox = React.createClass({
-  getInitialState: function() {
+    getInitialState: function() {
+        var hideFooter = this.props.hideFooter;
+        if(this.props.isReadOnly){
+            hideFooter = true;
+        }
+
         return {
              title: this.props.title || '',
              disablemask: false,
@@ -19,7 +24,7 @@ var MessageBox = React.createClass({
              isShow: this.props.isShow || false,
              width: this.props.width || 400,
              cName: this.props.cName,
-             hideFooter: this.props.hideFooter,
+             hideFooter: hideFooter,
         }
     },
     componentWillReceiveProps: function(newProps) {

@@ -2,7 +2,6 @@ import {Base} from 'Table';
 import {Line} from 'Table';
 import {Cell} from 'Table';
 import Label from 'Label';
-import Group from 'Group';
 import Button from 'Button';
 import LinkButton from '../table/widget/linkbutton/index';
 import API from '../api';

@@ -182,25 +182,17 @@ class Property extends Base{
 			engines.map((function(engine){
 				var cells = [Cell.create({
 					component: Group,
-					param: [
-					/*{
-						component: Button,
-						param: {
-							label: "复制",
-							onClick: function(){
-								Property.signal_copy_engine.dispatch({engine: engine});
+					param: {
+						items:	[{
+							component: Button,
+							param: {
+								label: "删除",
+								onClick: function(){
+									Property.signal_delete_engine.dispatch({engine: engine});
+								}
 							}
-						}
-					},*/
-					{
-						component: Button,
-						param: {
-							label: "删除",
-							onClick: function(){
-								Property.signal_delete_engine.dispatch({engine: engine});
-							}
-						}
-					}]
+						}]
+					}
 				})];
 				this.ui.push(
 					Line.create({cells: cells})
