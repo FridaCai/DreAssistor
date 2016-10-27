@@ -10,6 +10,7 @@ var ColorCheckbox = React.createClass({
 			isCheck: this.props.param.isCheck,
 			label: this.props.param.label,	
 			scope: this.props.param.scope,
+			isReadOnly: this.props.param.isReadOnly
 		}
 	},
 
@@ -28,7 +29,8 @@ var ColorCheckbox = React.createClass({
 
 		var checkboxParam = {
 			isCheck: isCheck,
-			onChange: this.onCheckboxChange
+			onChange: this.onCheckboxChange,
+			isReadOnly: this.state.isReadOnly
 		}
 		return (
 			<div className='colorcheckbox'>

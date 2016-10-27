@@ -102,14 +102,12 @@ class Property extends Base{
 		})
 	}
 
-
-
 	dm2ui(project){
 		//todo: refactor. copy from multipleparam.js
 		var cells = [];
 		var needExpandLine = (function(components){
 			if(components.indexOf(COMPONENT_ENUM.CURVE)!=-1 
-				|| components.indexOf(COMPONENT_ENUM.ATTACHMENTS)!=-1 
+				|| components.indexOf(COMPONENT_ENUM.ATTACHMENT)!=-1 
 				|| components.indexOf(COMPONENT_ENUM.IMAGES)!=-1){
 				return true;
 			}
@@ -182,6 +180,28 @@ class Property extends Base{
 
 			var engines = project.engines;
 			engines.map((function(engine){
+				var cells = [Cell.create({
+					component: Group,
+					param: {
+						items:	[{
+							component: Button,
+							param: {
+								label: "删除",
+								onClick: function(){
+									Property.signal_delete_engine.dispatch({engine: engine});
+								}
+							}
+						}]
+					}
+				})];
+				this.ui.push(
+					Line.create({cells: cells})
+				);
+
+
+
+
+
 				var lineGroup = [];
 				engine.properties.map((function(property){
 					if(property instanceof SingleParam){
@@ -221,30 +241,7 @@ class Property extends Base{
 					})
 				);
 
-				//todo: getCellByComponent ? 
-				var cells = [Cell.create({
-					component: Group,
-					param: [{
-						component: Button,
-						param: {
-							label: "复制",
-							onClick: function(){
-								Property.signal_copy_engine.dispatch({engine: engine});
-							}
-						}
-					},{
-						component: Button,
-						param: {
-							label: "删除",
-							onClick: function(){
-								Property.signal_delete_engine.dispatch({engine: engine});
-							}
-						}
-					}]
-				})];
-				this.ui.push(
-					Line.create({cells: cells})
-				);
+
 			}).bind(this));
 		}).call(this);
 	}

@@ -29,6 +29,9 @@ var API = {
 		this.uidata.task.ui2dm(this.project);
 	},
 
+	addEngine: function(){
+        this.project.addEngine();
+	},
 	dm2ui: function(){
 		if(!this.project){
 			return;

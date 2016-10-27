@@ -45,19 +45,7 @@ class Tag extends Base {
 		}
 	}
 	
-	dump(){
-		var obj = [];
 
-		this.ui.map(function(line){
-			var lineObj = [];
-			line.map(function(cell){
-				lineObj.push(JSON.stringify(cell.dump(), '', 2));
-			})
-			obj.push(lineObj)
-		})
-
-		console.table(obj);
-	}
 	dm2ui(project){
 		this.ui = [];
 		
@@ -65,55 +53,54 @@ class Tag extends Base {
 			return tag2.week - tag1.week;
 		});
 
-        var findByWeek = function(targets, week) { //can be task or tag.
+        var findByWeek = function(targets, week) {
             return targets.find(function(target){
                 return target.week === week;
             })
         }
 
-
 		var loop = tags[0].week;
 		for(var i=loop; i>=0; i--){
-            var tag = findByWeek(tags, i);
             var autoTime = ExcelUtil.convertUnixTime2YYYYMMDD(ExcelUtil.getTimeBySorpWeek(project.sorp, i));
             
-            var line;
+            var tag = findByWeek(tags, i);
+            var id = undefined;
+            var adjustTime = undefined;
+            var label = undefined;
             if(tag){
-            	//var adjustTime = ExcelUtil.convertUnixTime2YYYYMMDD(tag.time);
-            	var adjustTime = tag.time;
-
-				line = Line.create(		
-	            	{
-	            		id: tag.id,
-	            		cells: [
-			        		Cell.create({component: Label, v: i}), 
-			            	Cell.create({component: Label, v:autoTime}), 
-							Cell.create({
-			        			component: Time,
-			        			param: {
-			        				value: adjustTime,
-			        				onChange: function(v){
-			        					this.v = v;
-			        				}
-			        			},
-			        			v: adjustTime
-			        		}),
-			        		Cell.create({component: Label, v: tag.label})
-			        	]
-			        }
-	        	);
-            }else{
-            	var line = Line.create(
-	            	{
-	            		cells: [
-			        		Cell.create({component: Label, v: i}), 
-			            	Cell.create({component: Label, v:autoTime}), 
-							Cell.create({component: Label, v: ''}),
-			        		Cell.create({component: Label, v:''})
-			        	]
-			        }
-	        	);
+            	id = tag.id;
+            	adjustTime = tag.time;
+            	label = tag.label;
             }
+
+			var line = Line.create({
+        		id: id,
+        		cells: [
+	        		Cell.create({component: Label, v: i}), 
+	            	Cell.create({component: Label, v:autoTime}), 
+					Cell.create({
+	        			component: Time,
+	        			param: {
+	        				value: adjustTime,
+	        				onChange: function(v){
+	        					this.v = v;
+	        				}
+	        			},
+	        			v: adjustTime
+	        		}),
+	        		Cell.create({
+	        			component: Input, 
+	        			param: {
+	        				value: label,
+	        				onChange: function(v){
+	        					this.v = v;
+	        				}
+	        			}, 
+
+	        			v: label
+	        		})
+	        	]
+	        });
             this.ui.push(line);
         }
 	}

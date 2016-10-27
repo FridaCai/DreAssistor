@@ -159,7 +159,7 @@ var API = {
 		var project = tag.parent.parent;
 
         var time = (function(sorp, week, adjustTime){
-            var autoTime = ExcelUtil.getTimeBySorpWeek(sorp.time, week);
+            var autoTime = ExcelUtil.getTimeBySorpWeek(sorp, week);
             return adjustTime || autoTime;
         }).call(this, project.sorp, tag.week, tag.time)
 
@@ -169,7 +169,9 @@ var API = {
 		count: 0,
 		limit: 10,
 		offset: 0,
-	},
+	}
+
+
 }
 
 //need more sophisticate design.

@@ -30,8 +30,12 @@ var ExpandLindDOM = React.createClass({
 	    var isOpen = line.isOpen();
 
 	    var {expandComponent, expandComponentParam} = line.cells[0].param;
-	    var container = this.refs.cell.refs.component.refs.expandDiv;
+	    if(expandComponentParam){
+	    	expandComponentParam.isReadOnly = this.props.isReadOnly;	
+	    }
+	    
 
+	    var container = this.refs.cell.refs.component.refs.expandDiv;
 		if(!isOpen){
             ReactDOM.unmountComponentAtNode(container);  
             runExpandAmination(isOpen).then((function(){
@@ -60,7 +64,7 @@ var ExpandLindDOM = React.createClass({
 
 		return (
 			<tr ref='line'>
- 				<CellDOM cell={cell} widthStyle={widthStyle} key={cell.id} ref='cell'/>
+ 				<CellDOM isReadOnly={this.props.isReadOnly} cell={cell} widthStyle={widthStyle} key={cell.id} ref='cell'/>
             </tr>
 		)
 	}

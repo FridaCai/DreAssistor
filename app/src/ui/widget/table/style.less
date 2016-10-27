@@ -44,6 +44,11 @@
 				   		}
 				   	}
 
+				   	.expandDiv{
+				   		height: 100%;
+				   		overflow: auto;
+				   	}
+
 	    			>td{
 					    padding: 2px;
 					    height: 25px;
@@ -54,44 +59,15 @@
 					    display: inline-block;
 					    min-width: 100px;
 
+					    &.ExpandCellDOM{
+					    	cursor:pointer;
+					    }
+
 					    >input[type=text]{
 						    width: 100%;
 						    border: none;
 						    text-align: inherit;
 						}
-					
-					    >.cdropdown{
-					    	position:absolute;
-
-					    	button{
-					    		font-size: 12px;
-					    		height: 21px;
-					    		text-align: center;
-					    		width: 100%;
-					    		border:none;
-
-					    		.utext{
-					    			margin-left: 20px;
-					    		}
-					    	}
-
-					    	ul{
-					    		padding-bottom:5px;
-					    		text-align: center;
-					    		font-size: 12px;
-
-					    		li{
-					    			height: 21px;
-					    			a{
-					    			    margin-left: 0;
-										margin-bottom: 5px;
-					    			    color: inherit;
-    									font-size: 12px;
-					    			}
-					    		}
-					    	}
-					    }
-
 	    			}
 	    		}
 	    	}

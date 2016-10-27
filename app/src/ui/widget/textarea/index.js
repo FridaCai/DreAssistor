@@ -1,15 +1,13 @@
 import './style.less';
 
-
-var Input = React.createClass({
+var TextArea = React.createClass({
 	getInitialState(){
 		return {
 			value: this.props.param.value,
 			onChange: this.props.param.onChange,
 			onBlur: this.props.param.onBlur,	
 			scope: this.props.param.scope,
-			isReadOnly: this.props.param.isReadOnly,
-			className: this.props.param.className
+			isReadOnly: this.props.param.isReadOnly
 		}
 	},
 	getValue(){
@@ -27,17 +25,17 @@ var Input = React.createClass({
 		this.state.onBlur && this.state.onBlur.call(scope);
 	},
 	render(){
-		var className = this.state.className ? this.state.className: '';
+		var {value, onChange, onBlur, scope, isReadOnly} = this.state;
+
         return (
-            <input ref='input' 
-            	disabled={this.state.isReadOnly}
-            	defaultValue={this.state.value}
-                type='text' 
-                onChange={this.onChange} 
-                onBlur={this.onBlur}
-                className={className}/>
+        	<textarea 
+        		defaultValue={value} 
+        		disabled={this.state.isReadOnly}
+        		onChange={this.onChange}
+                onBlur={this.onBlur}>
+    		</textarea>
         )
 	}
 })
-module.exports = Input;
+module.exports = TextArea;
 

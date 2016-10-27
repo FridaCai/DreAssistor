@@ -7,7 +7,7 @@ exports.COMPONENT_ENUM = {
 	'LABEL': 'label',
 	'STATUS': 'status',
 	'REFKEY': 'refKey',
-	'ATTACHMENTS': 'attachments',
+	'ATTACHMENT': 'attachment',
 	'VALUE': 'value',
 	'CURVE': 'curve',
 	'IMAGES': 'images',
@@ -21,7 +21,7 @@ exports.COMPONENT_LABEL_ENUM = {
 	'label': "属性",
 	'status': '状态',
 	'refKey': '目标',
-	'attachments': '附件',
+	'attachment': '附件',
 	'value': '数值',
 	'curve': '曲线',
 	'images':'图片',
@@ -40,7 +40,7 @@ class SingleParam{
 	}
 	update(param){
 		this.status = param.status;
-		this.attachments =  param.attachment ? Attachments.create(param.attachment): undefined;
+		this.attachment =  param.attachment ? Attachments.create(param.attachment): undefined;
 		this.value = param.value;
 		this.curve = param.curve == undefined ?  undefined: Curve.create(param.curve); 
 		this.images = param.image ? Images.create(param.image) : undefined;
@@ -70,7 +70,7 @@ class SingleParam{
 			label: this.label,
 			status: this.status,
 			refKey: this.refKey,
-			attachment: this.attachments ? this.attachments.dump() : undefined,
+			attachment: this.attachment ? this.attachment.dump() : undefined,
 			value: this.value,
 			curve: this.curve ? this.curve.dump(): undefined,
 			image: this.images ? this.images.dump(): undefined,

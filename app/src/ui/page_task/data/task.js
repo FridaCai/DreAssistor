@@ -45,7 +45,7 @@ module.exports = class Task {
 		this.markColor = param.markColor || 6076508;
 		this.priority = param.priority || 0;
 		this.privacy = param.privacy || 0;
-		this.attachments = Attachments.create(param.attachment);
+		this.attachment = Attachments.create(param.attachment);
 		this.subtasks = Subtasks.create(param.subtask);
 		
 		if(param.template){
@@ -101,7 +101,7 @@ module.exports = class Task {
 			desc: this.desc,
 			exp: this.exp,
 			markColor: this.markColor,
-			attachment: this.attachments.dump(),
+			attachment: this.attachment.dump(),
 			creatorId: this.creatorId,
 			priority: this.priority,
 			subtask: this.subtasks.dump(),

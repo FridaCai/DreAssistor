@@ -3,7 +3,6 @@ import {Cell} from 'Table';
 import {ExpandLine} from 'Table';
 import {Line} from 'Table';
 import {ExpandContainerDOM} from 'Table';
-import {ExpandCellDOM} from 'Table';
 import Label from 'Label';
 
 import {COMPONENT_ENUM} from '../../data/template/mix.js';
@@ -49,7 +48,7 @@ class MultipleParamUIData extends Base{
 	dm2ui(project, dm){
 		var needExpandLine = (function(components){
 			if(components.indexOf(COMPONENT_ENUM.CURVE)!=-1 
-				|| components.indexOf(COMPONENT_ENUM.ATTACHMENTS)!=-1 
+				|| components.indexOf(COMPONENT_ENUM.ATTACHMENT)!=-1 
 				|| components.indexOf(COMPONENT_ENUM.IMAGES)!=-1){
 				return true;
 			}

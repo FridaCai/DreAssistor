@@ -7,7 +7,8 @@ import RadioGroup from 'RadioGroup';
 var BreakDownList = React.createClass({
     getInitialState: function() {
         return {
-            subtasks: this.props.subtasks,
+            subtasks: this.props.param.subtasks,
+            isReadOnly: this.props.param.isReadOnly
         }
     },
     getValue(){
@@ -31,6 +32,8 @@ var BreakDownList = React.createClass({
     },
     render: function(){
         var newValue = '';
+        var isReadOnly = this.state.isReadOnly;
+
         return (
             <div className='listContainer'>
                 <ul className="list-group">
@@ -52,13 +55,15 @@ var BreakDownList = React.createClass({
                             onChange: (function(selectedId){
                                 subtask.status = (selectedId === 0 ? true: false);
                             }).bind(this),
+                            isReadOnly: isReadOnly
                         }
 
                         return (
                             <li className="list-group-item" key={id}>
                                 {label}
                                 <button className='btn btn-default deleteBtn' 
-                                    onClick={this.onDeleteClk.bind(this, id)}>
+                                    onClick={this.onDeleteClk.bind(this, id)}
+                                    disabled={isReadOnly}>
                                     Delete
                                 </button>
                                 <RadioGroup param={radioGroup} ref='completeStatusRadioGroup'/>
@@ -68,9 +73,9 @@ var BreakDownList = React.createClass({
                 }
                 </ul>
                 <div className="input-group">
-                  <input type="text" className="form-control" ref='labelInput' defaultValue={newValue} placeholder="请输入子豆豆名称" />
+                  <input disabled={isReadOnly} type="text" className="form-control" ref='labelInput' defaultValue={newValue} placeholder="请输入子豆豆名称" />
                   <span className="input-group-btn">
-                    <button className="btn btn-default" type="button" onClick={this.onAddClk}>
+                    <button className="btn btn-default" type="button" disabled={isReadOnly} onClick={this.onAddClk}>
                         添加子豆豆
                     </button>
                   </span>

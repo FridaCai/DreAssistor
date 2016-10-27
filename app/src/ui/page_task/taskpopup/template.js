@@ -1,4 +1,3 @@
-import CDropDown from 'CDropDown';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_multiplesheet.js';
 import EWOTemplate from './template_ewo.js';
@@ -32,6 +31,7 @@ var TaskTemplatePanel = React.createClass({
                 })
             },
             project: this.props.project,
+            isReadOnly: this.props.isReadOnly,
         }
     },
 
@@ -44,7 +44,11 @@ var TaskTemplatePanel = React.createClass({
     },
 
     updateTemplatePanelByIndex: function(index){
-        var el = React.createElement(this.templatePanel[index], {param: this.state.param, project: this.state.project});
+        var el = React.createElement(this.templatePanel[index], {
+            param: this.state.param, 
+            project: this.state.project, 
+            isReadOnly: this.state.isReadOnly
+        });
         this.dom = ReactDOM.render(el, this.refs.templatePanel);
     },
     getValue: function(){

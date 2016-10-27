@@ -5,14 +5,14 @@ var Group = React.createClass({
 	},
 
 	render(){
-		var scope = this.props.param.scope;
+		var {scope, isReadOnly, items} = this.props.param;
         return (
         	<div className='buttonGroup'>
 	        	{
-	        		this.props.param.map(function(p, index){
+	        		items.map(function(p, index){
 						var {component, param, v} = p;
 
-						var eleParam = $.extend({scope: scope}, param);
+						var eleParam = $.extend({scope: scope, isReadOnly: isReadOnly}, param);
 				    	var el = React.createElement(component, {param: eleParam, key:index, v:v});
 				    	return el;
 					})

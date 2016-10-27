@@ -52,7 +52,7 @@ export default class Block extends React.Component {
             endTime: self.state.endTime,
             desc: '',
             markColor: 2201331,
-            attachments: [],
+            attachment: [],
             creatorId: API.getLoginUser().id,
             peopleIds: [],
             priority: 0,

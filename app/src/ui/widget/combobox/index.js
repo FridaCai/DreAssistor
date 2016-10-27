@@ -25,15 +25,12 @@ var ComboBox = React.createClass({
 	},
 
 	render(){
-		var options = this.props.param.options;
+		var {options, prompt, isReadOnly} = this.props.param;
 		var selectedId = this.state.selectedId;
 		var selectedItem = (selectedId == undefined) ? null:  options.find(function(op){
 			return op.id === selectedId;
 		});
-		var prompt = this.props.param.prompt;
 		var selectedLabel = selectedItem ? selectedItem.label : prompt;
-		
-
 
 		var style = this.state.isOpen ? {
 			display: 'block'
@@ -43,7 +40,7 @@ var ComboBox = React.createClass({
 
 		return (
 			<span className="cdropdown">
-				<button type="button" title={selectedLabel} onClick={this.onToggle}>
+				<button type="button" title={selectedLabel} onClick={this.onToggle} disabled={isReadOnly}>
 					<span className="utext">{selectedLabel}</span>
 					<span className="caret"></span>
 				</button>

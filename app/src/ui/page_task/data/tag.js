@@ -30,14 +30,17 @@ module.exports = class Tag {
 		this.week = param.week;
 	}
 	dump(){
-		return {
+		var obj = {
 			id: Util.isUUID(this.id) ? undefined: this.id,
 			label: this.label,
-			time: this.time,
 			week: this.week,
 			width: this.width,
 			markColor: this.markColor,
 			comment: `time: ${new Date(this.time)}`
 		}
+		if(this.time){
+			obj.time = this.time;
+		}
+		return obj;
 	}
 }

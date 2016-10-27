@@ -25,32 +25,41 @@ var AddOn = React.createClass({
     },
     onContextMenu: function(e){
         e.preventDefault();
-        
+            
         var project = this.props.project;
         this.props.onContextMenu({ 
-          left: e.pageX,
-          top: e.pageY,
-          btns: [{
-            label: '修改项目',
-            handler: function() {
-              API.signal_projectpopup_show.dispatch({
-                  title: '修改项目',
-                  project: project,
-                  onOK: (function(project){
-                    API.signal_edit_project.dispatch({
-                      project: project
-                    });
-                  }).bind(this),
-              });
-            }
-          },{
-            label: '删除项目',
-            handler: function() {
-              API.signal_delete_project.dispatch({
-                project: project
-              });
-            }
-          }]
+            left: e.pageX,
+            top: e.pageY,
+            btns: [{
+                label: '查看项目',
+                handler: function() {
+                  API.signal_projectpopup_show.dispatch({
+                      title: '查看项目',
+                      project: project,
+                      isReadOnly: true
+                  });
+                }
+            },{
+                label: '修改项目',
+                handler: function() {
+                  API.signal_projectpopup_show.dispatch({
+                      title: '修改项目',
+                      project: project,
+                      onOK: (function(project){
+                        API.signal_edit_project.dispatch({
+                          project: project
+                        });
+                      }).bind(this),
+                  });
+                }
+            },{
+                label: '删除项目',
+                handler: function() {
+                  API.signal_delete_project.dispatch({
+                    project: project
+                  });
+                }
+            }]
         });
     },
     render: function() {
@@ -58,8 +67,7 @@ var AddOn = React.createClass({
         return (
             <div>
                 <div style={{cursor: 'pointer'}} 
-                    onClick={this.onContextMenu} 
-                    onContextMenu = {this.onContextMenu}>
+                    onContextMenu={this.onContextMenu}>
                     <h3>{project.label}</h3>
                 </div>
             </div>
@@ -142,10 +150,23 @@ var CTimeLine = React.createClass({
                 title: tag.label,
                 start_time: tagTime,
                 end_time: tagTime + 1,
-                color: Util.convertIntColorToHex(tag.markColor),
+                color: Util.convertIntColorToHex(Util.TAG_COLOR),
                 instance: tag,
             })
         })
+        items.push({
+            id: projectId + '_tag_sorp',
+            group: projectId + '_tag',
+            title: 'SORP',
+            start_time: project.sorp,
+            end_time: project.sorp + 1,
+            color: Util.convertIntColorToHex(Util.TAG_COLOR),
+            instance: Tag.create({
+                label: 'SORP',
+                week: 0
+            }),
+        });
+
         project.tasks.map(function(task){
             //var ft = passFilter(filter, [projectId, spId, task.id]);
             //if(ft){

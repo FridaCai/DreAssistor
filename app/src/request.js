@@ -45,13 +45,6 @@ var postData = function(url, data, options) {
             dataType: 'json',
             success: resolve,
             error: reject,
-            xhr: function() {
-                var xhr = $.ajaxSettings.xhr();
-                if (options.uploadProgress) {
-                    xhr.upload.addEventListener('progress', options.uploadProgress, false);
-                }
-                return xhr;
-            },
         };
         $.extend(params, options);
         jqxhr = $.ajax(params);
