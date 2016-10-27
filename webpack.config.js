@@ -52,8 +52,6 @@ module.exports = {
             Signal: path.join(__dirname, toolPath, "/signal.js"),
             Request: path.join(__dirname, toolPath, "/request.js"),
             TmpUtil: path.join(__dirname, toolPath, "/util.tmp.js"),
-
-            CDropDown: path.join(__dirname, widgetPath, "/dropdown/index.js"),
             Button: path.join(__dirname, widgetPath, "/button/index.js"),
             Checkbox: path.join(__dirname, widgetPath, "/checkbox/index.js"),
             Group: path.join(__dirname, widgetPath, "/group/index.js"),

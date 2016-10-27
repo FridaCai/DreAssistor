@@ -6,7 +6,7 @@ import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import ColorPicker from 'react-colors-picker';
 import 'react-colors-picker/assets/index.css';
-import CDropDown from 'CDropDown';
+import ComboBox from 'ComboBox';
 import moment from 'moment';
 
 import BreakDownList from './breakdown_list.js';
@@ -17,8 +17,6 @@ import PrivacyRadioGroup from './privacy_radiogroup.js';
 import Attachments from '../data/attachments.js';
 
 var TaskPopup = React.createClass({
-    priorityDropdown: undefined,
-
 	getInitialState: function() {
         return {
             task: this.props.task,
@@ -42,6 +40,23 @@ var TaskPopup = React.createClass({
                 .label;
 
             var exp = '';
+            var priorityComboBox = {
+                id: 'priorityComboBox',
+                defaultKey: priority,
+                options:  [{
+                    id: 0,
+                    label:"低"
+                },{
+                    id: 1,
+                    label: "中"
+                },{
+                    id: 2,
+                    label: "高"
+                }],
+                onchange: (function(key){
+                    
+                }).bind(this)
+            };
             return (
                 <div className="panel-body">
                     <div className='line name'>
@@ -86,7 +101,7 @@ var TaskPopup = React.createClass({
                     </div>
                     <div className="line priority">
                         <label>优先级</label>
-                        <span ref='priorityDropdown'></span>
+                        <ComboBox ref='priorityComboBox' param={priorityComboBox}/>
                     </div>
 
                     <div className="line attachedFiles">
@@ -111,37 +126,10 @@ var TaskPopup = React.createClass({
         }
         
     },
-    componentDidMount: function(){
-        this.updateJqueryComponent();
-    },
+
     componentWillUnmount: function(){
     },
-    updateJqueryComponent: function() {
-    	(function updatePriorityDropdown(){
-            var defaultKey = this.state.task.priority;
-    		var container = this.refs.priorityDropdown;
-	        var options = [{
-	            id: 0,
-	            label:"低"
-	        },{
-	            id: 1,
-	            label: "中"
-	        },{
-	            id: 2,
-	            label: "高"
-	        }];
-	        
-	        var param = {
-	            id: "priorityDropdown", //string.
-	            defaultKey: defaultKey, //string. existed id in options.
-	            options: options,
-	            onchange: (function(key){
-	                
-	            }).bind(this),
-	        };
-	        this.priorityDropdown = CDropDown.create(container, param);
-    	}).call(this);
-    },
+
 
     onOK:function() {
         this.state.task.label = this.refs.labelInput.value;
@@ -151,7 +139,7 @@ var TaskPopup = React.createClass({
         this.state.task.endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
         this.state.task.subtasks = this.refs.breakdownList.getValue();
         this.state.task.markColor = Util.convertHexColorToInt(this.refs.markColorCP.state.color);
-        this.state.task.priority = this.priorityDropdown.getValue();  
+        this.state.task.priority = this.refs.priorityComboBox.getValue();  
         this.state.task.attachment  = this.refs.attachmentlist.getValue();
         this.state.task.privacy = this.refs.privacyRadioGroup.getValue();
         this.state.task.template = this.refs.templatePanel.getValue();

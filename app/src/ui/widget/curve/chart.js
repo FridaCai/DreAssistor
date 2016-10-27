@@ -55,9 +55,6 @@ var Chart = React.createClass({
       var numXLbl = Math.min(20, labels.length);
       var step = Math.round(labels.length / numXLbl);
 
-
-
-
       this._chart = new Chartist.Line(selector, {
         labels: labels,
         series: series,
@@ -95,20 +92,6 @@ var Chart = React.createClass({
     
   },
 
-  
-  /*onCurveToggle:function(param){
-    var index = param.index;
-    var isShowCurve = param.isShowCurve;
-
-    if(isShowCurve){
-      $($('.ct-series')[index]).show();     
-    }else{
-      $($('.ct-series')[index]).hide();   
-    }
-    
-  },*/
-
-  
   render: function(){
     var id = this.state.id;
     var className = `ct-chart ct-perfect-fourth curveid_${id}`;

@@ -14,10 +14,10 @@ var Button = React.createClass({
 	},
 
 	render(){
-		var label = this.props.param.label;
+		var {label, isReadOnly} = this.props.param;
         return (
         	<div className='buttonGroup'>
-	        	<button
+	        	<button disabled={isReadOnly}
 					className="btn btn-primary btn-xs" 
 					onClick={this.onClick}>
 					{label}

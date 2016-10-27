@@ -8,6 +8,7 @@ var Input = React.createClass({
 			onChange: this.props.param.onChange,
 			onBlur: this.props.param.onBlur,	
 			scope: this.props.param.scope,
+			isReadOnly: this.props.param.isReadOnly
 		}
 	},
 	getValue(){
@@ -27,6 +28,7 @@ var Input = React.createClass({
 	render(){
         return (
             <input ref='input' 
+            	disabled={this.state.isReadOnly}
             	defaultValue={this.state.value}
                 type='text' 
                 onChange={this.onChange} //todo: onchange and onblur.

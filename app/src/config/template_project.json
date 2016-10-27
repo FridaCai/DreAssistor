@@ -9,6 +9,11 @@ var ProjectTemplate = {
               "text": "new engine",
               "label": "engine",
               "key": "PROJECT.ENGINE.LABEL",
+            },{
+              "dropdown": "大众",
+              "key": "PROJECT.TASK.BENCHMARK.VIHICLE.BRAND",
+              "curve": {},
+              "status": false
             }
           ]
         }

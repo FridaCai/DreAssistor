@@ -17,9 +17,7 @@ var RadioGroup = React.createClass({
         this.props.param.onChange && this.props.param.onChange.call(this.props.param.scope, optionId);
     },
     render: function(){
-        var id = this.props.param.id;
-        var label = this.props.param.label;
-        var options = this.props.param.options;
+        var {id, label, options, isReadOnly} = this.props.param;
         var selectedId = this.state.selectedId;
 
         return (
@@ -33,7 +31,7 @@ var RadioGroup = React.createClass({
 
                         return (
                             <div key={optionId} className='item'>
-                                <input name={id} type="radio" checked={checked} 
+                                <input disabled={isReadOnly} name={id} type="radio" checked={checked} 
                                     onChange={this.onChange.bind(this, optionId)}/>
                                 <label>{label}</label>    
                             </div>

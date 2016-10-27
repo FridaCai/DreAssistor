@@ -1,4 +1,3 @@
-import CDropDown from 'CDropDown';
 import NormalTemplate from './template_normal.js';
 import HotIssueTemplate from './template_multiplesheet.js';
 import EWOTemplate from './template_ewo.js';

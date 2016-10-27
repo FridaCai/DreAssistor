@@ -288,6 +288,8 @@ export default class Item extends React.Component {
   };
 
   onContextMenu(item, e) {
+    e.stopPropagation();
+    e.preventDefault();
     if(!(item instanceof Task))
       return;
 
@@ -361,7 +363,7 @@ export default class Item extends React.Component {
       this.startedClicking = false
       this.actualClick(e, 'click')
     }
-    this.onContextMenu(this.props.item.instance, e);
+    
   };
 
   onTouchStart (e) {
@@ -420,7 +422,7 @@ export default class Item extends React.Component {
            className={classNames}
            title={this.itemTitle}
            onMouseDown={this.onMouseDown.bind(this, this.props.item.instance)}
-          
+           onContextMenu={this.onContextMenu.bind(this, this.props.item.instance)}
            onMouseUp={this.onMouseUp.bind(this)}
            onTouchStart={this.onTouchStart.bind(this)}
            onTouchEnd={this.onTouchEnd.bind(this)}

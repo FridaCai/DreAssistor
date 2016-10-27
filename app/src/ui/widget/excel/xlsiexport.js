@@ -1,5 +1,5 @@
 import MessageBox from 'MessageBox';
-import CDropDown from 'CDropDown';
+import ComboBox from 'ComboBox';
 import RadioGroup from 'RadioGroup';
 import Util from 'Util';
 
@@ -28,29 +28,12 @@ var ControllerGroup = React.createClass({
             writeMode: [0]
         }]);
         return {
-            dropdownSelected:undefined,
+            comboboxSelected:undefined,
             radioSelected: 0,
             sheetOptions: ops,
         };
     },
-    componentDidMount: function(){
-        var id = 'dropDown';
-        var container = this.refs.dropDown;
-        var options = this.state.sheetOptions;
-        var prompt = '请选择数据类型';
-        var param = {
-            id: id, //string.
-            defaultKey: null, 
-            prompt: prompt,
-            options: options,
-            onchange: (function(key){
-                this.setState({dropdownSelected: key});
-            }).bind(this),
-        };
-
-        CDropDown.create(container, param);
-    },
-
+   
     getValue:function(){
         return this.state;
     },
@@ -69,7 +52,7 @@ var ControllerGroup = React.createClass({
                 return (option.id === selectedKey)
             })
             return (option.writeMode.length != 1)
-        })(this.state.sheetOptions, this.state.dropdownSelected)
+        })(this.state.sheetOptions, this.state.comboboxSelected)
 
         var dom = showRadioGroup ? (
             <RadioGroup style={{float:'left', marginLeft:20}} 
@@ -77,9 +60,18 @@ var ControllerGroup = React.createClass({
                 ref='radioGroup' />
         ): null;
 
+        var comboBoxParam = {
+            id: 'comboBoxParam',
+            defaultKey: null,
+            prompt: '请选择数据类型',
+            options: this.state.sheetOptions,
+            onchange: (function(key){
+                this.setState({comboboxSelected: key});
+            }).bind(this),
+        }
         return (
             <div className='controllerGroup' style={{float:'left'}}>
-                <span ref='dropDown' className='dropdown'/>
+                <ComboBox ref='comboBox' param={comboBoxParam}/>
                 {dom}
             </div>      
         )
@@ -130,11 +122,11 @@ var Popup = React.createClass({
         var sheets = this.state.workbook.Sheets;
         var sheetNames = this.state.workbook.SheetNames;        
         for(var i=0; i<sheetNames.length; i++){
-            var {dropdownSelected, radioSelected} = this.refs[`controllerGroup_${i}`].getValue();
-            if(dropdownSelected && dropdownSelected!='no'){
+            var {comboboxSelected, radioSelected} = this.refs[`controllerGroup_${i}`].getValue();
+            if(comboboxSelected && comboboxSelected!='no'){
                 var sn = sheetNames[i];
                 var s = sheets[sn];
-                result[dropdownSelected].push({sheetName: sn, sheet: s, mode: radioSelected})
+                result[comboboxSelected].push({sheetName: sn, sheet: s, mode: radioSelected})
             }
         }
 

@@ -67,8 +67,7 @@ var AddOn = React.createClass({
         return (
             <div>
                 <div style={{cursor: 'pointer'}} 
-                    onClick={this.onContextMenu} 
-                    onContextMenu = {this.onContextMenu}>
+                    onContextMenu={this.onContextMenu}>
                     <h3>{project.label}</h3>
                 </div>
             </div>

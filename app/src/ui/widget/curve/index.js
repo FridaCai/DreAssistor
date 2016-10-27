@@ -33,12 +33,11 @@ var CurveComponent = React.createClass({
           label: '曲线',
           writeMode:[0]
       }];
-      var id = this.props.id;
-
+      var {id, isReadOnly} = this.props;
       return (
             <div className='curveComponent'>
                 <XLSIExportUI ref='xlsIExport' 
-                    isReadOnly={this.props.isReadOnly} 
+                    isReadOnly={isReadOnly} 
                     sheetOptions={sheetOptions}
                     onXlsImport={this.onXlsImport}
                     xls2ui = {this.xls2ui}
@@ -48,8 +47,9 @@ var CurveComponent = React.createClass({
                 <TableDOM ref='table' 
                     uidata={this.api.uidata} 
                     onDrop={this.onTableDrop}
-                    isReverse={true}/>
-               <Chart curve={this.api.curve} ref='chart' id={id}/>
+                    isReverse={true}
+                    isReadOnly={isReadOnly}/>
+               <Chart curve={this.api.curve} isReadOnly={isReadOnly} ref='chart' id={id}/>
             </div>
       );  
     }catch(e){

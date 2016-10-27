@@ -1,6 +1,6 @@
 var Checkbox = React.createClass({
 	render(){
-		var {isCheck, onChange, label} = this.props.param;
+		var {isCheck, onChange, label, isReadOnly} = this.props.param;
 
 		label = label || '';
 		onChange = onChange || function(){};
@@ -15,6 +15,7 @@ var Checkbox = React.createClass({
 		return (
 			<div className='checkBox' style={{float: 'left'}}>
 				<input type="checkbox" 
+					disabled={isReadOnly}
 					defaultChecked={isCheck} 
 					onChange={onChange}>
 				</input>	

@@ -1,4 +1,3 @@
-import ComboBox from 'ComboBox';
 import Util from 'Util';
 import API from '../api.js';
 

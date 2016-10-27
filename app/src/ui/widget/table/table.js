@@ -64,7 +64,10 @@ var TableDOM = React.createClass({
         }).call(this)
     },
 
-    onDrop: function(e){//for edit case, do nothing for drop.
+    onDrop: function(e){
+        if(this.props.isReadOnly)
+            return;
+        
         e.stopPropagation();
         e.preventDefault();
         this.state.onDrop(e.dataTransfer);

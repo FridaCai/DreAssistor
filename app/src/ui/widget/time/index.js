@@ -1,4 +1,5 @@
 import Datetime from 'react-datetime';
+import Input from 'Input';
 import 'react-datetime/css/react-datetime.css';
 import './style.less';
 
@@ -12,9 +13,15 @@ var Time = React.createClass({
 	},
 	render(){
 		var v = this.props.v;
-		return (
-			 <Datetime closeOnSelect={true} defaultValue={this.props.param.value} ref='time' onChange={this.onChange}/>
-		);
+		var {isReadOnly, value} = this.props.param;
+
+		return (function(){
+			if(isReadOnly){
+				return (<Input param={this.props.param}/>);	
+			}else{
+				return (<Datetime closeOnSelect={true} defaultValue={value} ref='time' onChange={this.onChange}/>);
+			}
+		}).call(this);
 	}
 })
 module.exports = Time;
