@@ -40,9 +40,11 @@ var TaskPopup = React.createClass({
                 .label;
 
             var exp = '';
+            var priority = priority ? priority : 0;
+
             var priorityComboBox = {
                 id: 'priorityComboBox',
-                defaultKey: priority,
+                selectedId: priority,
                 options:  [{
                     id: 0,
                     label:"低"

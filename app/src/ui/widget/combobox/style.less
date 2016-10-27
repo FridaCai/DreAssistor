@@ -1,79 +1,153 @@
-.dataTable .sheet table tbody > tr td.ComboBox{
-  overflow: visible;
-  position: relative;
+.cdropdown{
+  position:relative;
+  float:left;
+  width: auto;
+  left:0;
 
-  .cdropdown{
-    float:left;
-    width: 100%;
-    left:0;
+  &.disable{
+    opacity: 0.5;
+  }
 
-    &.disable{
-      opacity: 0.5;
-    }
+  img, svg{
+    margin: 5px 0 0 5px;
+    width: 10px;
+    height: 10px;
+    float: left;
+  }
 
-    img, svg{
-      margin: 5px 0 0 5px;
+  button{
+    height: 26px;
+    width: 110px;
+    font-size: 13px;
+    text-align: left;
+    padding-left: 0;
+    outline: none;
+    background: none;
+    border: solid 1px #ccc;
+
+    svg{
+      margin: 5px 0 0 10px;
       width: 10px;
       height: 10px;
       float: left;
     }
 
-    button{
+    .utext{
+      margin-left:10px;
+    }
 
-      svg{
+    .caret{
+      margin-left:8px;
+    }
+  }
+
+  >ul{
+    //width: 150%;
+    height:auto;
+    max-height: 136px;
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+    min-width: 0;
+    bottom: auto;
+    padding: 0;
+
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    left: 0;
+    z-index: 1000;
+    position:absolute;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+
+    li{
+      float: none;
+      height: 26px;
+      width:100%;
+      list-style: none;
+
+      a{
+        padding: 0;
         margin: 5px 0 0 10px;
-        width: 10px;
-        height: 10px;
-        float: left;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        clear: none;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        text-decoration: none;
+        font-size: 12px;
       }
+
+      &:hover{
+        cursor:pointer;
+        background-color: #f5f5f5;
+      }
+    }
+  }
+}
+
+
+
+.line
+{
+  .cdropdown button{
+    border-radius: 2px;
+    width: 150px;
+
+    .caret{
+        float: right;
+        margin-top: 7px;
+    }
+  }
+} 
+
+
+
+.dataTable .sheet table.customTable > tbody > tr > td.ComboBox{
+  overflow: visible;
+  position: relative;
+
+  >.cdropdown{
+    width: 100%;
+
+    button{
+      font-size: 12px;
+      height: 21px;
+      text-align: center;
+      width: 100%;
+      border:none;
+      background: none;
+      padding-left: 0;
 
       .utext{
-        margin-left:10px;
-      }
-
-      .caret{
-        margin-left:8px;
+        margin-left: 20px;
       }
     }
 
-    >ul{
-      //width: 150%;
-      height:auto;
-      max-height: 136px;
-      display: none;
-      width: 100%;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      overflow-y: auto;
-      overflow-x: hidden;
-      margin: 0;
-      min-width: 0;
-      bottom: auto;
-      padding: 0;
-
-      border: 1px solid #ccc;
-      border-radius: 0;
-      box-shadow: none;
-      left: 0;
-      z-index: 1000;
-      position:absolute;
-      list-style: none;
-      background-color: #fff;
-      background-clip: padding-box;
+    ul{
+      padding-bottom:5px;
+      text-align: center;
 
       li{
-        float: none;
-        height: 26px;
-        width:100%;
-        list-style: none;
-
-        &:hover{
-          cursor:pointer;
-          background-color: #f5f5f5;
+        height: 21px;
+        a{
+            margin-left: 0;
+            margin-bottom: 5px;
         }
       }
     }
   }
 }
+
+
 
