@@ -46,7 +46,8 @@ var MultipleSheetTemplate = React.createClass({
             <div className='mixParamTemplate'>
                <TableDOM ref='table' 
                     uidata={uidata}
-                    onSwitchSheet={this.onSwitchSheet}/>
+                    onSwitchSheet={this.onSwitchSheet}
+                    isReadOnly={this.props.isReadOnly}/>
             </div>
         )
     }

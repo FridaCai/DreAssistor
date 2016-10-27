@@ -69,7 +69,8 @@ module.exports = {
             Loading: path.join(__dirname, widgetPath, "/loading/index.js"),
             CurveComponent: path.join(__dirname, widgetPath, "/curve/index.js"),
             LoadingMask: path.join(__dirname, widgetPath, "/loadingmask/index.js"),
-
+            TextArea: path.join(__dirname, widgetPath, "/textarea/index.js"),
+            ColorPicker: path.join(__dirname, widgetPath, "/colorpicker/index.js"),
             ProjectTemplate: path.join(__dirname, configPath, "/template_project.json"),
             TaskTemplate: path.join(__dirname, configPath, "/template_task.json"),
             CurveTemplate: path.join(__dirname, configPath, "/template_curve.json"),

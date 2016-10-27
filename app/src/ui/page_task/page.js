@@ -244,6 +244,7 @@ var PageTask = React.createClass({
         var taskId = param.task.id;
         var project = task.parent.parent; //for ref key.
         var projectId = project.id;
+        var isReadOnly = param.isReadOnly;
 
         var queryTaskUrl = Request.getBackendAPI(`task/${taskId}`);
         var queryProjectUrl = Request.getBackendAPI(`project/${projectId}`);
@@ -262,7 +263,7 @@ var PageTask = React.createClass({
             project.update(projectRes.project);
 
             var result = ReactDOM.unmountComponentAtNode(this.refs.popup);    
-            ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK}/>, this.refs.popup);  
+            ReactDOM.render(<TaskPopup title={param.title} task={task} onOK={param.onOK} isReadOnly={isReadOnly}/>, this.refs.popup);  
         }).bind(this), function(err){
             throw err;
         }).catch(function(err){
