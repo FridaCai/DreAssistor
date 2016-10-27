@@ -66,7 +66,7 @@ var TaskPopup = React.createClass({
                 isReadOnly: isReadOnly
             }
             var expParam = {
-                value: "",
+                value: exp,
                 isReadOnly: isReadOnly
             }
             var startTimeParam={
@@ -181,10 +181,10 @@ var TaskPopup = React.createClass({
         this.state.task.label = this.refs.labelInput.getValue();
         this.state.task.desc = this.refs.descTA.getValue();
         this.state.task.exp = this.refs.expTA.getValue();
-        this.state.task.startTime = this.refs.startTimeDT.state.selectedDate.valueOf();
-        this.state.task.endTime = this.refs.endTimeDT.state.selectedDate.valueOf();
+        this.state.task.startTime = this.refs.startTimeDT.getValue();
+        this.state.task.endTime = this.refs.endTimeDT.getValue();
         this.state.task.subtasks = this.refs.breakdownList.getValue();
-        this.state.task.markColor = this.refs.markColorCP.getValue();
+        this.state.task.markColor = Util.convertHexColorToInt(this.refs.markColorCP.getValue());
         this.state.task.priority = this.refs.priorityComboBox.getValue();  
         this.state.task.attachment  = this.refs.attachmentlist.getValue();
         this.state.task.privacy = this.refs.privacyRadioGroup.getValue();

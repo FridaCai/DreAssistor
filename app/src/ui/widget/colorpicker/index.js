@@ -4,21 +4,18 @@ import './style.less';
 
 var ColorPicker = React.createClass({
 	getValue(){
-		return this.refs.time.state.selectedDate.valueOf();
+		return this.refs.colorpicker.state.color;
 	},
-	onChange(time){
-		var unixTime = time.valueOf();
-		this.props.param.onChange && this.props.param.onChange.call(this.props.param.scope, unixTime);
-	},
+
 	render(){
 		var {isReadOnly, value} = this.props.param;
 
 		return (function(){
 			if(isReadOnly){
 				var style={background: value};
-				return (<div className='colorpicker readonly' style={style}/>);	
+				return (<div  className='colorpicker readonly' style={style}/>);	
 			}else{
-				return (<CP animation="slide-up" color={value}/>);
+				return (<CP ref='colorpicker' animation="slide-up" color={value}/>);
 			}
 		}).call(this);
 	}
