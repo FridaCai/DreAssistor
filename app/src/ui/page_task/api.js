@@ -15,6 +15,7 @@ var API = {
 	signal_timeline_task_create: new Signal(),
 	signal_edit_task: new Signal(),
 	signal_delete_task: new Signal(),
+	signal_popup_show: new Signal(),
 	
 	_templateTasks: new TemplateTasks(),
 	setTemplateTasks: function(value){

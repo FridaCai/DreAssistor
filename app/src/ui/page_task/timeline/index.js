@@ -1,11 +1,12 @@
 import Timeline from './lib/Timeline.jsx';
 import moment from 'moment';
 import API from '../api.js';
+import GlobalAPI from '../../../api.js';
 import Util from 'Util';
 import Signal from '../../../signal.js';
 import Task from '../data/task.js';
 import Tag from '../data/tag.js';
-import ContextMenu from '../contextmenu.jsx';
+import ContextMenu from 'ContextMenu';
 
 var AddOn = React.createClass({
     getInitialState: function() {
@@ -27,38 +28,47 @@ var AddOn = React.createClass({
         e.preventDefault();
             
         var project = this.props.project;
+        var hasAuth = GlobalAPI.clientAuthVerify(project.creatorId);
+
         this.props.onContextMenu({ 
             left: e.pageX,
             top: e.pageY,
             btns: [{
                 label: '查看项目',
-                handler: function() {
-                  API.signal_projectpopup_show.dispatch({
+                handler: function() {    
+                    API.signal_projectpopup_show.dispatch({
                       title: '查看项目',
                       project: project,
                       isReadOnly: true
-                  });
-                }
+                    });   
+                },
+
             },{
                 label: '修改项目',
                 handler: function() {
-                  API.signal_projectpopup_show.dispatch({
-                      title: '修改项目',
-                      project: project,
-                      onOK: (function(project){
-                        API.signal_edit_project.dispatch({
-                          project: project
-                        });
-                      }).bind(this),
-                  });
-                }
+                    GlobalAPI.authVerify(project.creatorId).then(function(){
+                        API.signal_projectpopup_show.dispatch({
+                            title: '修改项目',
+                            project: project,
+                            onOK: (function(project){
+                            API.signal_edit_project.dispatch({
+                                project: project
+                            });
+                        }).bind(this),
+                      });
+                    })
+                },
+                disabled: hasAuth ? false:true,
             },{
                 label: '删除项目',
                 handler: function() {
-                  API.signal_delete_project.dispatch({
-                    project: project
-                  });
-                }
+                    GlobalAPI.authVerify(project.creatorId).then(function(){
+                        API.signal_delete_project.dispatch({
+                            project: project
+                        });
+                    });
+                },
+                disabled: hasAuth ? false:true,
             }]
         });
     },

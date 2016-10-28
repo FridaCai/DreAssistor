@@ -2,6 +2,7 @@ import interact from 'interact.js'
 import { _get } from '../utils'
 import API from '../../../api.js'
 import Task from '../../../data/task.js'
+import GlobalAPI from '../../../../../api.js';
 
 export default class Item extends React.Component {
   constructor (props) {
@@ -287,11 +288,15 @@ export default class Item extends React.Component {
     e.stopPropagation();
   };
 
-  onContextMenu(item, e) {
+  onContextMenu(task, e) {
     e.stopPropagation();
     e.preventDefault();
-    if(!(item instanceof Task))
+
+    if(!(task instanceof Task))
       return;
+
+    var loginUser = GlobalAPI.getLoginUser();
+    var hasAuth = GlobalAPI.clientAuthVerify(task.creatorId);
 
     this.props.onContextMenu({
       left: e.pageX,
@@ -299,59 +304,41 @@ export default class Item extends React.Component {
       btns: [{
         label: '查看豆豆',
         handler: function() {
-          $('body').css({
-            cursor:'auto'
-          });
-          $('html').css({
-            cursor:'auto'
-          });
           API.signal_taskpopup_show.dispatch({
               title: '查看豆豆',
-              task: item,
+              task: task,
               isReadOnly: true
           });
         }
       },{
         label: '修改豆豆',
         handler: function() {
-          $('body').css({
-            cursor:'auto'
+          GlobalAPI.authVerify(task.creatorId).then(function(){
+            API.signal_taskpopup_show.dispatch({
+                title: '修改豆豆',
+                task: task,
+                onOK: (function(task){
+                  API.signal_edit_task.dispatch({
+                    task: task
+                  });
+                }).bind(this),
+            });
           });
-          $('html').css({
-            cursor:'auto'
-          });
-          API.signal_taskpopup_show.dispatch({
-              title: '修改豆豆',
-              task: item,
-              onOK: (function(task){
-                API.signal_edit_task.dispatch({
-                  task: task
-                });
-              }).bind(this),
-          });
-        }
+        },
+        disabled: hasAuth?false:true,
       },{
         label: '删除豆豆',
         handler: function() {
-          $('body').css({
-            cursor:'auto'
+          GlobalAPI.authVerify(task.creatorId).then(function(){
+            API.signal_delete_task.dispatch({
+              task: task
+            });
           });
-          $('html').css({
-            cursor:'auto'
-          });
-          API.signal_delete_task.dispatch({
-            task: item
-          });
-        }
+        },
+        disabled: hasAuth?false:true,
       },{
         label: '复制豆豆',
         handler: function() {
-          $('body').css({
-            cursor:'auto'
-          });
-          $('html').css({
-            cursor:'auto'
-          });
           alert('开发中 :)');
         }
       }],

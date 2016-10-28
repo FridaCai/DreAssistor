@@ -10,11 +10,10 @@ var API = {
 	signal_registerpopup_show: new Signal(),
 	signal_login: new Signal(),
 	signal_logout: new Signal(),
+	signal_login_timeout: new Signal(), //find login timeout when verify auth;
 	sigal_window_resizeend: new Signal(),
-
-
-
-
+	signal_server_fail: new Signal(),
+	
 	pageMap: {
 		home: {
 			label: '首页',
@@ -28,10 +27,6 @@ var API = {
 	},
 
 	curpage: 'home',
-
-
-
-
 
 	_loginUser: undefined,
 	setLoginUser: function(userObj){
@@ -72,38 +67,62 @@ var API = {
 		});
 	},
 
-	initLoginStatus: function(){
-		return new Promise((function(resolve, reject){
-			if(this._loginUser){
-				resolve();
-				return;
-			}
-
-			if(!this.getToken()){
-				resolve();
-				return;
-			}
-
-			$.ajaxSetup({
-				headers: {
-				  'x-access-token': this.getToken()
-				}
+	_getLoginUser: function(){
+		var token = this.getToken();
+		if(!token){
+			return Promise.reject({
+				errCode: 7
 			});
-			Request.getData(Request.getBackendAPI('authTest')).then((function(res){
-				if(res.errCode!=-1){
-					this.removeToken();
-					resolve();					
-					return;
-				}
+		}
 
-				this.setLoginUser(res.user);
-				resolve();
-				return;
+		$.ajaxSetup({
+			headers: {
+			  'x-access-token': this.getToken()
+			}
+		});
 
-			}).bind(this));	
-		}).bind(this))
+		return Request.getData(Request.getBackendAPI('authTest')).then((function(res){
+			if(res.errCode!=-1){
+				return Promise.reject(res);			
+			}else{
+				return Promise.resolve(res.user);
+			}
+		}).bind(this));	
+	},
+	clientAuthVerify: function(ownerId){
+		return this._clientAuthVerify(ownerId);
+	},
+	_clientAuthVerify: function(ownerId){
+		var loginUser = this.getLoginUser();
+		return (loginUser && (ownerId === loginUser.id))
+	},
+
+	authVerify: function(ownerId){
+		return this._getLoginUser().then((function(){
+		  	if(this._clientAuthVerify(ownerId)){
+				return Promise.resolve();
+    		}
+			throw new Error('unknown error');	
+    	}).bind(this), (function(res){
+			if(res.errCode===8){
+                this.signal_login_timeout.dispatch();
+                return Promise.reject();
+            }
+            throw new Error(JSON.stringify(res, '', 2));
+    	}).bind(this)).catch(function(e){
+			console.error(e.stack);
+			this.signal_server_fail.dispatch();
+    	});
+	},
+
+	updateLoginUser: function(){
+		this.resetLoginUser();
+		return this._getLoginUser().then((function(user){
+			this.setLoginUser(user);
+		}).bind(this), (function(){
+			this.removeToken();
+		}).bind(this));
 	}
-
 }
 
 

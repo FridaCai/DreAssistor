@@ -1,4 +1,4 @@
-import API from '../../api.js';
+import './style.less';
 
 export default class ContextMenu extends React.Component {
   constructor(props){
@@ -28,7 +28,19 @@ export default class ContextMenu extends React.Component {
       isShow: false,
     })
   }
+  onBtnClk(handler, e){
+    e.stopPropagation();
+    $('body').css({
+      cursor:'auto'
+    });
+    $('html').css({
+      cursor:'auto'
+    });
 
+    if(handler){
+      handler.call(this);
+    }
+  }
   render() {
     var style = {
       display: this.state.isShow ? 'block': 'none',
@@ -43,14 +55,21 @@ export default class ContextMenu extends React.Component {
         <ul style={style} className="dropdown-menu" aria-labelledby="dropdownMenu4">
         {
           
-          this.state.btns.map(function(btn){
+          this.state.btns.map((function(btn){
             var label = btn.label;
             var handler = btn.handler;
+            var className = "";
+
+            var disabled = btn.disabled;
+            if(disabled){
+              className = 'disabled'; 
+              handler = null;
+            }
 
             return (
-              <li key={`btn_${i++}`}><a href="#" onClick={handler}>{label}</a></li>
+              <li className={className} key={`btn_${i++}`}><a href="javascript:void(0);" onClick={this.onBtnClk.bind(this, handler)}>{label}</a></li>
             )
-          })
+          }).bind(this))
         }
         </ul>
       </div>

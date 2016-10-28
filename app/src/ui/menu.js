@@ -21,7 +21,7 @@ var UserCenterContainer = React.createClass({
         return (
           <ul className="nav navbar-nav navbar-right" data-reactid=".0.0.0.1.1">
             <li className="dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                 {loginUser.name}
                 <span className="caret"></span>
               </a>

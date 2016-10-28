@@ -79,6 +79,8 @@ var PageTask = React.createClass({
         API.signal_edit_task.listen(this.onTaskEdit);
         API.signal_delete_task.listen(this.onTaskDelete);
 
+        API.signal_popup_show.listen(this.onPopupShow);
+
         SuperAPI.signal_login.listen(this.onLogIn);
         SuperAPI.signal_logout.listen(this.onLogOut);
         this.refresh();
@@ -103,8 +105,15 @@ var PageTask = React.createClass({
         API.signal_edit_task.unlisten(this.onTaskEdit);
         API.signal_delete_task.unlisten(this.onTaskDelete);
 
+        API.signal_popup_show.unlisten(this.onPopupShow);
+
         SuperAPI.signal_login.unlisten(this.refresh);
         SuperAPI.signal_logout.unlisten(this.refresh);
+    },
+    onPopupShow: function(e, param){
+        var msg = param.msg;
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
     },
     onTaskDelete: function(e, param){
         var  task = param.task;
@@ -116,7 +125,7 @@ var PageTask = React.createClass({
         }).bind(this), (function(e){
             throw e;
         }).bind(this)).catch(function(e){
-
+            console.error(e.stack);
         });
     },
     onTaskEdit: function(e, param){
@@ -146,17 +155,15 @@ var PageTask = React.createClass({
         }).bind(this)).catch(function(e){
             switch(e.errCode){
                 case 8:
-                    //token timeout
-                    //popup : 请登录
                     SuperAPI.signal_logout.dispatch();
                     var msg = `请重新登录`;
                     ReactDOM.unmountComponentAtNode(this.refs.popup);    
-                    ReactDOM.render(<MessageBox onOK={onOK} msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+                    ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
                     break;
                 case 10:
                     var msg = `没有操作权限`;
                     ReactDOM.unmountComponentAtNode(this.refs.popup);    
-                    ReactDOM.render(<MessageBox onOK={onOK} msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+                    ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
                     break;
                 default:
                     console.error(e.errMsg);
@@ -191,9 +198,6 @@ var PageTask = React.createClass({
                 resolve();
             }).bind(this));   
         }).bind(this);
-            
-
-
 
         var msg = `确定要删除？`;
         ReactDOM.unmountComponentAtNode(this.refs.popup);    

@@ -64,7 +64,7 @@ window.Promise = require('es6-promise').Promise;
 
 
     
-    API.initLoginStatus().then(function(){
+    API.updateLoginUser().then(function(){
         ReactDOM.render(<MainView/>, $("#domContainer")[0]);    
     })
 

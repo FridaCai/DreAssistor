@@ -19,7 +19,7 @@ module.exports = class Task {
 	}
 	init(param){
 		this.id = param.id || Util.generateUUID();
-		this.creatorId = param.creatorId;
+		
 		this.parent = undefined;
 		this._updateMeta(param);
 	}
@@ -47,6 +47,7 @@ module.exports = class Task {
 		this.privacy = param.privacy || 0;
 		this.attachment = Attachments.create(param.attachment);
 		this.subtasks = Subtasks.create(param.subtask);
+		this.creatorId = param.creatorId;
 		
 		if(param.template){
 			this.template = TemplateFactory.create(param.template);

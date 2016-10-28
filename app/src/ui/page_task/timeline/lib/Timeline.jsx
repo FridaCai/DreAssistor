@@ -14,7 +14,6 @@ import Tag from '../../data/tag.js';
 import Task from '../../data/task.js';
 
 
-import ContextMenu from '../../contextmenu.jsx';
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
