@@ -91,6 +91,7 @@ var ConditionPanel = React.createClass({
 
         var showHint = this.state.showHint;
         var hintStyle = showHint ? {display: 'block'} : {display:'none'};
+
     	return (
     		<div className='conditionPanel'>
     			<div className='line'>
@@ -106,15 +107,19 @@ var ConditionPanel = React.createClass({
     				<Input param={inputParam}  ref='searchClauseInput'/>
                     <span className='hint' onClick={this.toggleHint}>?</span>
     				<div className="expressSearchHint" style={hintStyle}  >
-  							eg:
-  							<br/>	
+                            任性搜索：                     
+  							<br/>
+                            输入任意关键字
+                            <br/><br/>
+                            条件搜索：
+                            <br/>
   							发动机<b>=</b>1.0T
 	    					<br/>
 	    					成本<b>=</b><b>*</b>
 	    					<br/>
 	    					发动机<b>=</b>1.0T<b>&amp;</b>品牌<b>=</b>大众
-							<br/><br/>
-							常用关键字：<br/>发动机，成本，品牌，重量
+                            <br/>
+							可选关键字：发动机，成本，品牌，重量
 					</div>
     			</div>
     			<div className='line'>
