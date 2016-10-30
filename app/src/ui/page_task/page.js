@@ -5,8 +5,8 @@ import ProjectPopup from './projectpopup/ui/index.js';
 import StaticalAssistorPopup from './statical_assistor_popup/ui/index.js';
 import MessageBox from 'MessageBox';
 import Util from 'Util';
-import Task from './data/task.js';
-import Project from './data/project.js';
+import Task from 'data/task.js';
+import Project from 'data/project.js';
 
 import Request from 'Request';
 import API from './api.js';
@@ -15,7 +15,7 @@ import RadioGroup from 'RadioGroup';
 import Pagination from 'Pagination';
 import Loading from 'Loading';
 
-import  SuperAPI from '../../api.js';
+import  GlobalAPI from 'api.js';
 import LoadingMask from 'LoadingMask';
 
 var ProjectFilter = React.createClass({
@@ -81,8 +81,8 @@ var PageTask = React.createClass({
 
         API.signal_popup_show.listen(this.onPopupShow);
 
-        SuperAPI.signal_login.listen(this.onLogIn);
-        SuperAPI.signal_logout.listen(this.onLogOut);
+        GlobalAPI.signal_login.listen(this.onLogIn);
+        GlobalAPI.signal_logout.listen(this.onLogOut);
         this.refresh();
     },
     onLogIn: function(){
@@ -107,8 +107,8 @@ var PageTask = React.createClass({
 
         API.signal_popup_show.unlisten(this.onPopupShow);
 
-        SuperAPI.signal_login.unlisten(this.refresh);
-        SuperAPI.signal_logout.unlisten(this.refresh);
+        GlobalAPI.signal_login.unlisten(this.refresh);
+        GlobalAPI.signal_logout.unlisten(this.refresh);
     },
     onPopupShow: function(e, param){
         var msg = param.msg;
@@ -155,7 +155,7 @@ var PageTask = React.createClass({
         }).bind(this)).catch(function(e){
             switch(e.errCode){
                 case 8:
-                    SuperAPI.signal_logout.dispatch();
+                    GlobalAPI.signal_logout.dispatch();
                     var msg = `请重新登录`;
                     ReactDOM.unmountComponentAtNode(this.refs.popup);    
                     ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
@@ -208,14 +208,14 @@ var PageTask = React.createClass({
     },
 
     onTaskCreate: function(e, param){
-        if(!SuperAPI.isLogin()){
+        if(!GlobalAPI.isLogin()){
             ReactDOM.unmountComponentAtNode(this.refs.popup);    
             ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
             return;
         }
 
-        var creator = SuperAPI.getLoginUser();
-        var templateTask = SuperAPI.getTemplateTasks().findById(param.templateTaskId);
+        var creator = GlobalAPI.getLoginUser();
+        var templateTask = GlobalAPI.getTemplateTasks().findById(param.templateTaskId);
 
         var task = Task.create({   
             template:templateTask.template,
@@ -276,7 +276,7 @@ var PageTask = React.createClass({
     },
 
     onProjectPopupShow: function(e, param){
-        if(!SuperAPI.isLogin() && !param.isReadOnly){
+        if(!GlobalAPI.isLogin() && !param.isReadOnly){
             ReactDOM.unmountComponentAtNode(this.refs.popup);    
             ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
             return;
@@ -301,7 +301,7 @@ var PageTask = React.createClass({
         this.onProjectPopupShow(e, {
             title: '添加项目', 
             onOK: function(project){
-                var creator = SuperAPI.getLoginUser();
+                var creator = GlobalAPI.getLoginUser();
                 project.setCreator(creator);
 
                 var url = Request.getBackendAPI('project');
@@ -318,7 +318,7 @@ var PageTask = React.createClass({
     },
 
     onProjectFilterChange: function(onlyMe){
-        if(!SuperAPI.isLogin() && onlyMe){
+        if(!GlobalAPI.isLogin() && onlyMe){
             ReactDOM.unmountComponentAtNode(this.refs.popup);    
             ReactDOM.render(<MessageBox msg={'请先登录'} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
             this.refs.projectfilter.setState({onlyMe:false});
@@ -350,7 +350,7 @@ var PageTask = React.createClass({
 
 
         if(onlyMe){
-            var loginUser = SuperAPI.getLoginUser();
+            var loginUser = GlobalAPI.getLoginUser();
             if(loginUser){
                 param.userId = loginUser.id;
             }

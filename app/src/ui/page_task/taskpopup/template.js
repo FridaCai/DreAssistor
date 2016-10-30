@@ -8,7 +8,7 @@ import HardToolingTemplate from './template_multiplesheet.js';
 import PPVMRDTemplate from './template_multiplesheet.js';
 import BenchmarkTemplate from './template_multiplesheet.js';
 
-import TemplateFactory from '../data/template/factory.js';
+import TemplateFactory from 'data/template/factory.js';
 
 var TaskTemplatePanel = React.createClass({
     templatePanel: [NormalTemplate, 

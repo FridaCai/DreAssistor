@@ -1,4 +1,4 @@
-import Normal from '../data/template/normal.js';
+import Normal from 'data/template/normal.js';
 var NormalTemplate = React.createClass({
 	getValue(){
         var normal = new Normal();

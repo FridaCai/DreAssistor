@@ -14,7 +14,7 @@ import AttachmentList from 'AttachmentList';
 import TaskTemplatePanel from './template.js';
 import RadioGroup from 'RadioGroup';
 
-import Attachments from '../data/attachments.js';
+import Attachments from 'data/attachments.js';
 
 var TaskPopup = React.createClass({
 	getInitialState: function() {

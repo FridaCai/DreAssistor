@@ -75,6 +75,7 @@ module.exports = {
             ProjectTemplate: path.join(__dirname, configPath, "/template_project.json"),
             TaskTemplate: path.join(__dirname, configPath, "/template_task.json"),
             CurveTemplate: path.join(__dirname, configPath, "/template_curve.json"),
+            DropDownOptions: path.join(__dirname, configPath, "/dropdown.json")
         }
     }
 };

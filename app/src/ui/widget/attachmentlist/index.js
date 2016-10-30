@@ -1,6 +1,6 @@
 import Util from 'Util';
-import Attachments from '../../page_task/data/attachments.js';
-import Attachment from '../../page_task/data/attachment.js';
+import Attachments from 'data/attachments.js';
+import Attachment from 'data/attachment.js';
 import "./style.less";
 import Request from 'Request';
 import Thumbnail from './thumbnail.js';

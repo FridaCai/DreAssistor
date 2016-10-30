@@ -51,10 +51,10 @@ var Thumbnail = React.createClass({
 			    <div className="thumbnail">
 			      {attachmentDom}
 			      <div className="caption">
-			        <h4>{label}</h4>
+			        <h4 title={label}>{label}</h4>
 			        <h5>
 			        	<button disabled={this.props.isReadOnly} className="btn btn-primary btn-sm" onClick={this.onDelete}>删除</button> 
-			        	<a href={url} className="btn btn-sm btn-default" role="button" >下载</a>
+			        	<a target='_blank' href={url} className="btn btn-sm btn-default" role="button" >下载</a>
 		        	</h5>
 			      </div>
 			    </div>

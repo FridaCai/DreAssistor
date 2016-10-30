@@ -1,9 +1,9 @@
 import MessageBox from 'MessageBox';
-import API from '../../api.js';
+import GlobalAPI from 'api.js';
 import Util from 'Util';
-import Request from '../../request.js';
+import Request from 'Request';
 import {ENUM, CError} from '../../exception.js';
-import User from '../../data/user.js';
+import User from 'data/user.js';
 
 var RegisterPopup = React.createClass({
   	getInitialState: function() {
@@ -107,13 +107,13 @@ var RegisterPopup = React.createClass({
                 throw new CError(res.errCode);
 			}
 
-			API.setLoginUser({
+			GlobalAPI.setLoginUser({
                 id: res.userId,
                 name: name,
                 email: email,
             });
-            API.setToken(res.token, res.expires);
-			API.signal_login.dispatch();
+            GlobalAPI.setToken(res.token, res.expires);
+			GlobalAPI.signal_login.dispatch();
             Promise.resolve(); 
             
 		}).bind(this)).catch((function(e){

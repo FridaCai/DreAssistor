@@ -1,7 +1,7 @@
 import Signal from 'Signal';
-import Task from './data/task.js';
-import Projects from './data/projects.js';
-import Users from '../../data/users.js';
+import Task from 'data/task.js';
+import Projects from 'data/projects.js';
+import Users from 'data/users.js';
 import {ExcelUtil} from 'XlsIExport';
 
 var API = {

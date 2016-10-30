@@ -5,10 +5,10 @@ import {Line} from 'Table';
 import {ExpandContainerDOM} from 'Table';
 import Label from 'Label';
 
-import {COMPONENT_ENUM} from '../../data/template/mix.js';
-import {COMPONENT_LABEL_ENUM} from '../../data/template/mix.js';
+import {COMPONENT_ENUM} from 'data/template/mix.js';
+import {COMPONENT_LABEL_ENUM} from 'data/template/mix.js';
 
-import {SingleParam} from '../../data/template/mix.js';
+import {SingleParam} from 'data/template/mix.js';
 
 import Util from 'Util';
 import TmpUtil from 'TmpUtil';

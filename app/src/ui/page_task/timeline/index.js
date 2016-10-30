@@ -1,11 +1,11 @@
 import Timeline from './lib/Timeline.jsx';
 import moment from 'moment';
 import API from '../api.js';
-import GlobalAPI from '../../../api.js';
+import GlobalAPI from 'api.js';
 import Util from 'Util';
-import Signal from '../../../signal.js';
-import Task from '../data/task.js';
-import Tag from '../data/tag.js';
+import Signal from 'Signal';
+import Task from 'data/task.js';
+import Tag from 'data/tag.js';
 import ContextMenu from 'ContextMenu';
 
 var AddOn = React.createClass({

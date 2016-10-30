@@ -1,6 +1,6 @@
 import API from '../../../api.js';
 import Util from 'Util';
-import Task from '../../../data/task.js';
+import Task from 'data/task.js';
 
 
 export default class Block extends React.Component {

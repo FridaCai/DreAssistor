@@ -1,8 +1,8 @@
 import interact from 'interact.js'
 import { _get } from '../utils'
 import API from '../../../api.js'
-import Task from '../../../data/task.js'
-import GlobalAPI from '../../../../../api.js';
+import Task from 'data/task.js'
+import GlobalAPI from 'api';
 
 export default class Item extends React.Component {
   constructor (props) {

@@ -1,7 +1,7 @@
-import Projects from '../data/projects';
-import Task from '../data/task';
+import Projects from 'data/projects';
+import Task from 'data/task';
 import Signal from 'Signal';
-import GloabalAPI from '../api.js';
+import GloabalAPI from 'api';
 
 import TCDM from './data/table/table';
 import ValueTableUIData from './uidata/table';
@@ -10,7 +10,7 @@ import CurveTableUIData from './uidata/curve';
 import Request from 'Request';
 
 import Curves from './data/curve/curves';
-import TemplateTasks from '../data/templatetasks.js';
+import TemplateTasks from 'data/templatetasks.js';
 
 var API = {
 	signal_treeNode_click: new Signal(),

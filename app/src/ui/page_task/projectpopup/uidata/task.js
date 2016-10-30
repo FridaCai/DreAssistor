@@ -1,5 +1,5 @@
 import {Base} from 'Table';
-import TaskData from '../../data/task.js';
+import TaskData from 'data/task.js';
 import {Cell} from 'Table';
 import {Line} from 'Table';
 import Label from 'Label';

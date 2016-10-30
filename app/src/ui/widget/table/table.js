@@ -1,4 +1,4 @@
-import {sigal_window_resizeend} from '../../../api.js';
+import {sigal_window_resizeend} from 'api';
 import {ExpandLine} from 'Table';
 import {LineDOM} from 'Table';
 import {CellDOM} from 'Table';

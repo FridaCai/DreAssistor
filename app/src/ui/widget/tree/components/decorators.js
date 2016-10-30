@@ -2,9 +2,9 @@
 import Radium from 'radium';
 
 //todo: bad...
-import Projects from '../../../page_task/data/projects';
-import Project from '../../../page_task/data/project';
-import Task from '../../../page_task/data/task';
+import Projects from 'data/projects';
+import Project from 'data/project';
+import Task from 'data/task';
 
 const Loading = (props) => {
     return (

@@ -1,7 +1,7 @@
-import API from '../api.js';
+import API from 'api.js';
 import {ENUM, CError} from '../exception.js';
-import User from '../data/user.js';
-import Request from '../request.js';
+import User from 'data/user.js';
+import Request from 'Request';
 
        
 var UserCenterContainer = React.createClass({

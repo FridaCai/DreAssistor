@@ -1,4 +1,4 @@
-import EWO from '../data/template/ewo.js';
+import EWO from 'data/template/ewo.js';
 
 var EWOTemplate = React.createClass({
   	getValue(){

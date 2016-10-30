@@ -5,13 +5,12 @@ import Signal from 'Signal';
 import Label from 'Label';
 import Button from 'Button';
 import Group from 'Group';
-import {COMPONENT_ENUM} from '../../data/template/mix.js';
-import {SingleParam} from '../../data/template/mix.js';
+import {COMPONENT_ENUM} from 'data/template/mix.js';
+import {SingleParam} from 'data/template/mix.js';
 import {ExpandLine} from "Table";
 import {ExpandContainerDOM} from "Table";
 import {LineGroup} from "Table";
-import DROPDOWN_OPTIONS from '../../../../config/dropdown.json';
-import Engine from '../../data/engine.js';
+import Engine from 'data/engine.js';
 import TmpUtil from 'TmpUtil';
 
 class Property extends Base{

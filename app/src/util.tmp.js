@@ -10,10 +10,10 @@ import {Line} from "Table";
 import ComboBox from 'ComboBox'; 
 import CurveComponent from 'CurveComponent';
 
-import {COMPONENT_LABEL_ENUM, COMPONENT_ENUM} from './ui/page_task/data/template/mix.js'; //todo: 
-import Images from './ui/page_task/data/images.js';
-import Attachments from './ui/page_task/data/attachments.js';
-import DROPDOWN_OPTIONS from './config/dropdown.json';
+import {COMPONENT_LABEL_ENUM, COMPONENT_ENUM} from 'data/template/mix.js'; 
+import Images from 'data/images.js';
+import Attachments from 'data/attachments.js';
+import DropDownOptions from 'DropDownOptions';
 
 var TmpUtil = {
 	getHeader(components){
@@ -204,7 +204,7 @@ var TmpUtil = {
 				});
 			case COMPONENT_ENUM.DROPDOWN:
 				var key = property.key;
-				var optionStrings = DROPDOWN_OPTIONS[key];
+				var optionStrings = DropDownOptions[key];
 
 				var options = optionStrings.map(function(label, index){
 			    	return {

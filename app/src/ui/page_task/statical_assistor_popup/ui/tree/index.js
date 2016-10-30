@@ -4,14 +4,13 @@
 import { StyleRoot } from 'radium';
 import {Treebeard, decorators} from 'Tree';
 
-import data from './data'; //for testing.
+import data from './data'; 
 import styles from './styles';
 import * as filters from './filter';
 import API from '../../api';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
-// Example: Customising The Header Decorator To Include Icons
 decorators.Header = (props) => {
     const style = props.style;
     const iconType = props.node.children ? 'folder' : 'file-text';

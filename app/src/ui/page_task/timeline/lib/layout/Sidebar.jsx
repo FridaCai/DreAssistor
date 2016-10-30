@@ -1,5 +1,4 @@
 import { _get, arraysEqual } from '../utils.js'
-//import API from '../../../../api.js'
 
 
 export default class Sidebar extends React.Component {

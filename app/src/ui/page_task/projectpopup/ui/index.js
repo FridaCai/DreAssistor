@@ -1,15 +1,16 @@
 import MessageBox from 'MessageBox';
 import {XLSIExportUI} from 'XlsIExport';
-       
 import {TableDOM} from 'Table';
-import API from '../api.js';
-import Project from '../../data/project.js'; //todo: datamodel and controller put together? //todo: import 'moment'. rather than relative path. not good for refactor.
-import Property from '../data/property.js';
-import Tag from '../data/tag.js';
 
+import API from '../api.js';
 import Request from 'Request';
 
 import ProjectTemplate from 'ProjectTemplate';
+
+import Property from '../uidata/property.js';
+import Tag from '../uidata/tag.js';
+
+import Project from 'data/project.js';
 
 var ProjectPopup = React.createClass({
 	getInitialState: function() {

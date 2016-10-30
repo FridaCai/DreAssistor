@@ -1,7 +1,7 @@
 import Util from 'Util';
 import API from '../api.js';
-import Subtasks from '../data/subtasks.js';
-import Subtask from '../data/subtask.js';
+import Subtasks from 'data/subtasks.js';
+import Subtask from 'data/subtask.js';
 import RadioGroup from 'RadioGroup';
 
 var BreakDownList = React.createClass({

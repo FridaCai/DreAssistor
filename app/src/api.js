@@ -1,14 +1,14 @@
 import Signal from 'Signal';
-import User from './data/user.js';
+import User from 'data/user.js';
 import Request from 'Request';
-import TemplateTasks from 'ui/page_task/data/templatetasks.js'; //todo
+import TemplateTasks from 'data/templatetasks.js'; 
 
 var API = {
 	signal_page_navigate: new Signal(),
 	signal_registerpopup_show: new Signal(),
 	signal_login: new Signal(),
 	signal_logout: new Signal(),
-	signal_login_timeout: new Signal(), //find login timeout when verify auth;
+	signal_login_timeout: new Signal(),
 	sigal_window_resizeend: new Signal(),
 	signal_server_fail: new Signal(),
 	

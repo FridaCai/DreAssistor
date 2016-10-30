@@ -11,9 +11,9 @@ import Request from 'Request';
 import API from '../api';
 import Util from '../util';
 
-import Project from 'ui/page_task/data/project'; //todo: mv to src/data folder.
-import Task from 'ui/page_task/data/task';//todo: mv to src/data folder.
-import Engine from 'ui/page_task/data/engine';
+import Project from 'data/project'; //todo: mv to src/data folder.
+import Task from 'data/task';//todo: mv to src/data folder.
+import Engine from 'data/engine';
 
 
 import TreeUIData from '../uidata/tree';

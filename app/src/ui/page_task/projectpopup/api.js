@@ -1,9 +1,11 @@
-import Signal from '../../../signal.js';
-import Request from '../../../request.js';
-import Task from './data/task.js';
-import Tag from './data/tag.js';
-import Property from './data/property.js';
-import Project from '../data/project.js';
+import Signal from 'Signal';
+import Request from 'Request';
+
+import Task from './uidata/task.js';
+import Tag from './uidata/tag.js';
+import Property from './uidata/property.js';
+
+import Project from 'data/project.js';
 import SaveAs from 'browser-saveas';
 import {ExcelUtil} from 'XlsIExport';
 

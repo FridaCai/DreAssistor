@@ -1,4 +1,4 @@
-import API from '../api.js';
+import API from 'api.js';
 import PageHome from './page_home/page.js';
 import PageTask from './page_task/page.js';
 import PageHotIssue from './page_hotissue/page.js';

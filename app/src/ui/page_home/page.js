@@ -1,4 +1,4 @@
-import API from '../../api.js';
+import API from 'api.js';
 import './style.less';
 
 var PageHome = React.createClass({

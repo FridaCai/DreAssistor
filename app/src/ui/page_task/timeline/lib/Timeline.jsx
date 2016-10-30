@@ -10,8 +10,8 @@ import HorizontalLines from './lines/HorizontalLines.jsx'
 import TodayLine from './lines/TodayLine.jsx'
 
 import API from '../../api.js';
-import Tag from '../../data/tag.js';
-import Task from '../../data/task.js';
+import Tag from 'data/tag.js';
+import Task from 'data/task.js';
 
 
 
