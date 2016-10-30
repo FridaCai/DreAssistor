@@ -39,12 +39,7 @@ Table._defaultParam = {
 		x: [{label:'请拖入数据', path:''}],
 		y1: [{label: '请拖入数据', path:''}],
 		y2: [{label: '请拖入数据', path:''}]
-	}],
-	/*sheets: [{
-		x: [{label:'A', path:''}, {label:'B', path:''}],
-		y1: [{label: '50', path:''}, {label:'100', path:''}],
-		y2: [{label: '50', path:''}, {label:'100', path:''}]
-	}]*/
+	}]
 };
 
 module.exports = Table;

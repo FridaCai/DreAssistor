@@ -1,5 +1,6 @@
 import Util from 'Util';
 import API from '../api.js';
+import GlobalAPI from 'api';
 import moment from 'moment';
 
 import MessageBox from 'MessageBox';
@@ -33,7 +34,7 @@ var TaskPopup = React.createClass({
             } = this.state.task;
             
             var project = (this.state.task.parent && this.state.task.parent.parent) ? this.state.task.parent.parent: null; 
-            var templateLbl = API.getTemplateEnum()
+            var templateLbl = GlobalAPI.getTemplateEnum()
                 .find((function(item){
                     return item.id == this.state.task.template.type;
                 }).bind(this))

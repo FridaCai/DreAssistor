@@ -1,31 +1,24 @@
-
 import DataTree from './tree/index';
-
-import {TableDOM} from 'Table';
-
-import Request from 'Request';
-import Project from '../data/project';
-import Task from '../data/task';
-import Engine from '../data/engine';
-
-import API from './api';
-import TreeUIData from './uidata_tree/tree';
-import ValueTableUIData from './uidata/table_value';
-import CurveTableUIData from './uidata_curve/curve';
-import CurveUIData from './uidata/curve';
-
 import Button from 'Button';
 import Checkbox from 'Checkbox';
-
-
+import {TableDOM} from 'Table';
 import ConditionPanel from './conditionpanel/index';
-
 import ValueChart from './chart/valuechart';
 import CurveChart from './chart/curvechart';
 
 
-import TaskTemplate from 'TaskTemplate';
-import API2 from '../api.js';
+import Request from 'Request';
+import API from '../api';
+import Util from '../util';
+
+import Project from 'ui/page_task/data/project'; //todo: mv to src/data folder.
+import Task from 'ui/page_task/data/task';//todo: mv to src/data folder.
+import Engine from 'ui/page_task/data/engine';
+
+
+import TreeUIData from '../uidata/tree';
+import ValueTableUIData from '../uidata/table';
+import CurveTableUIData from '../uidata/curve';
 
 var Content = React.createClass({
 
@@ -58,8 +51,9 @@ var Content = React.createClass({
             }
         }
     */
+
+    //only for hotissue.
     onDragTreeDataInTable: function(param){
-        //only for hotissue.
         if(this.props.taskType != 2)
             return;
 
@@ -113,13 +107,8 @@ var Content = React.createClass({
         }).bind(this)).catch(function(e){
             console.error(e.stack);
         });
-
-
-
-
-
-
     },
+
     appendNewTableLLine: function(){
         API.appendNewTableLine();
 
@@ -131,6 +120,7 @@ var Content = React.createClass({
             }
         })
     },
+
     clearTable: function(){
         API.clearTable();
         API.dm2ui();
@@ -141,6 +131,7 @@ var Content = React.createClass({
             }
         })
     },
+    
     onTableLineDelete: function(e, param){
         var index = param.index;
         API.deleteAt(index);
@@ -153,6 +144,7 @@ var Content = React.createClass({
             }
         })
     },
+    
     onTableLineMove: function(e, param){
         var {startIndex, endIndex} = param;
         API.move(startIndex, endIndex);
@@ -172,13 +164,13 @@ var Content = React.createClass({
         switch(sheetIndex){
             case 0:
                 var dm = API.getTCDM();
-                uidata = CurveUIData.convertDM2CurveData(dm);
+                uidata = Util.convertDM2CurveData(dm);
                 ReactDOM.unmountComponentAtNode(this.refs.chart);    
                 target = ReactDOM.render(<ValueChart id='statica_value' uidata={uidata}/>, this.refs.chart);
                 break;
             case 1:
                 var dm = API.getCurveDM();
-                uidata = CurveUIData.convertCurveDM2CurveData(dm);//bad name. convert table curve data to chart data. 
+                uidata = Util.convertCurveDM2CurveData(dm);//bad name. convert table curve data to chart data. 
                 ReactDOM.unmountComponentAtNode(this.refs.chart);    
                 target = ReactDOM.render(<CurveChart id='statica_curve' uidata={uidata}/>, this.refs.chart);
                 break;
@@ -186,20 +178,6 @@ var Content = React.createClass({
         target.update({uidata: uidata});
     },
 	render: function() {
-        /*start of testing code*/
-        API2.setTemplateTasks(TaskTemplate); 
-        
-        var templateenum = TaskTemplate.map(function(task){
-            return {id: task.id, label: task.label}
-        });
-        API2.setTemplateEnum(templateenum);  
-/*end of testing code*/
-
-
-
-
-
-
         var uidata = {
             value: API.getValueTableUIData(),
             curve: API.getCurveTableUIData()
@@ -221,7 +199,6 @@ var Content = React.createClass({
             label: '画曲线',
             onClick: this.drawCurve
         }
-//<Chart ref='chart' id='statical_assistor_popup_curve'/>
 	    return (
 	    	<div className='staticalassistorpopup'>
 	    		<div className='trees'>
@@ -298,8 +275,6 @@ var Content = React.createClass({
 
         CurveTableUIData.signal_treedata_dragin.listen(this.onCurveDragIn);
         CurveTableUIData.signal_curve_delete.listen(this.onCurveDelete);
-
-
 
         var param;
         if(this.props.taskType != undefined){

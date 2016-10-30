@@ -1,6 +1,6 @@
 import ComboBox from 'ComboBox';
 import Util from 'Util';
-import API from '../api.js';
+import API from '../../api.js';
 
 var ValueChart = React.createClass({
     _chart:undefined,

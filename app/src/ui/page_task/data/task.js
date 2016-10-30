@@ -2,6 +2,7 @@ import Subtasks from './subtasks.js';
 import Attachments from './attachments.js';
 import Util from 'Util';
 import TemplateFactory from './template/factory';
+import moment from 'moment';
 
 module.exports = class Task {
 	static create(param){

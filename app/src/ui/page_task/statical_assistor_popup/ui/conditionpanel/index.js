@@ -3,8 +3,7 @@ import RadioGroup from 'RadioGroup';
 import ComboBox from 'ComboBox';
 import Input from 'Input';
 import Button from 'Button';
-import GlobalAPI from '../../../../api'; //bad.
-import API from '../../api';
+import GlobalAPI from 'api';
 
 var ConditionPanel = React.createClass({
 	getInitialState: function() {
@@ -60,7 +59,7 @@ var ConditionPanel = React.createClass({
 
 
 
-        var options = [{id: -1, label:'全部'}].concat(API.getAllTemplateTaskTypes());
+        var options = [{id: -1, label:'全部'}].concat(GlobalAPI.getAllTemplateTaskTypes());
         var comboBoxParam = {
             id: '',
             options: options,
@@ -69,7 +68,7 @@ var ConditionPanel = React.createClass({
 
 
         if(this.props.taskType != undefined){
-            var taskTemplate = API.findTemplateByType(this.props.taskType);
+            var taskTemplate = GlobalAPI.findTemplateByType(this.props.taskType);
             var label = taskTemplate.label;
             options = [{id: this.props.taskType, label: label}];
             comboBoxParam = {

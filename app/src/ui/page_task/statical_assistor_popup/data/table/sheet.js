@@ -48,7 +48,6 @@ module.exports = class Sheet{
 		this.y2.splice(index, 1);
 	}
 	update(param){
-
 		var {index, xCell, y1Cell, y2Cell} = param;
 		this.x[index].update(xCell);
 		this.y1[index].update(y1Cell);
@@ -71,8 +70,6 @@ module.exports = class Sheet{
 			y1: this.y1[startIndex],
 			y2: this.y2[startIndex]
 		}
-
-
 		if(startIndex > endIndex){
 			this.deleteAt(startIndex);
 			this.insertAt(param, endIndex);

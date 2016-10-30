@@ -2,7 +2,7 @@ import CTimeLine from './timeline/index.js';
 import TemplateTaskList from './templatetasklist/index.js';
 import TaskPopup from './taskpopup/index.js';
 import ProjectPopup from './projectpopup/ui/index.js';
-import StaticalAssistorPopup from './statical_assistor_popup/index.js';
+import StaticalAssistorPopup from './statical_assistor_popup/ui/index.js';
 import MessageBox from 'MessageBox';
 import Util from 'Util';
 import Task from './data/task.js';
@@ -215,7 +215,7 @@ var PageTask = React.createClass({
         }
 
         var creator = SuperAPI.getLoginUser();
-        var templateTask = API.getTemplateTasks().findById(param.templateTaskId);
+        var templateTask = SuperAPI.getTemplateTasks().findById(param.templateTaskId);
 
         var task = Task.create({   
             template:templateTask.template,

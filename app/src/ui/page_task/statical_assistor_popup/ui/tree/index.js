@@ -7,7 +7,7 @@ import {Treebeard, decorators} from 'Tree';
 import data from './data'; //for testing.
 import styles from './styles';
 import * as filters from './filter';
-import API from '../api';
+import API from '../../api';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 

@@ -1,9 +1,7 @@
 import Signal from 'Signal';
 import User from './data/user.js';
 import Request from 'Request';
-
-//import Signal from './signal.js';
-//import Request from './request.js';
+import TemplateTasks from 'ui/page_task/data/templatetasks.js'; //todo
 
 var API = {
 	signal_page_navigate: new Signal(),
@@ -14,6 +12,37 @@ var API = {
 	sigal_window_resizeend: new Signal(),
 	signal_server_fail: new Signal(),
 	
+
+	_templateTasks: new TemplateTasks(),
+	setTemplateTasks: function(value){
+		this._templateTasks = new TemplateTasks();
+		this._templateTasks.init(value);
+	},
+	getTemplateTasks: function(){
+		return this._templateTasks;
+	},
+
+	findTemplateByType: function(type){
+		return this._templateTasks.findById(type);
+	},
+	getAllTemplateTaskTypes: function(){
+		return this._templateTasks.map(function(templatetask){
+			return {
+				id: templatetask.template.type,
+				label: templatetask.label,
+			}
+		})
+	},
+	_templateEnum: undefined,
+	setTemplateEnum:function(value){
+		this._templateEnum = value;
+	},
+	getTemplateEnum: function(){
+		return this._templateEnum;
+	},
+
+
+
 	pageMap: {
 		home: {
 			label: '首页',

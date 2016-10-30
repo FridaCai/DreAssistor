@@ -1,5 +1,5 @@
 import Util from 'Util';
-import API from '../api.js';
+import API from '../../api.js';
 
 var CurveChart = React.createClass({
     _chart:undefined,

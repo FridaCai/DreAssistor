@@ -1,7 +1,5 @@
 import Signal from 'Signal';
-//import Signal from '../../signal.js';
 import Task from './data/task.js';
-import TemplateTasks from './data/templatetasks.js';
 import Projects from './data/projects.js';
 import Users from '../../data/users.js';
 import {ExcelUtil} from 'XlsIExport';
@@ -17,26 +15,6 @@ var API = {
 	signal_delete_task: new Signal(),
 	signal_popup_show: new Signal(),
 	
-	_templateTasks: new TemplateTasks(),
-	setTemplateTasks: function(value){
-		this._templateTasks = new TemplateTasks();
-		this._templateTasks.init(value);
-	},
-	getTemplateTasks: function(){
-		return this._templateTasks;
-	},
-
-	findTemplateByType: function(type){
-		return this._templateTasks.findById(type);
-	},
-	getAllTemplateTaskTypes: function(){
-		return this._templateTasks.map(function(templatetask){
-			return {
-				id: templatetask.template.type,
-				label: templatetask.label,
-			}
-		})
-	},
 
 	_projects: undefined,
 	setProjects: function(value){
@@ -49,32 +27,6 @@ var API = {
 	clearProjects: function(){
 		this._projects=undefined;
 	},
-	
-
-	_templateEnum: undefined,
-	setTemplateEnum:function(value){
-		this._templateEnum = value;
-	},
-	getTemplateEnum: function(){
-		return this._templateEnum;
-	},
-
-
-
-	//for statical assistor panel
-	getStaticalProperties: function(tasks){
-		var properties = [];
-		
-		tasks.map(function(task){
-			task.statical.map(function(property){
-				if(properties.indexOf(property) === -1){
-					properties.push(property);
-				}
-			})
-		})
-		return properties;
-	},
-
 
 	//for user assistor panel
 	_users:[],

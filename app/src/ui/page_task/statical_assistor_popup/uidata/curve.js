@@ -1,100 +1,82 @@
-module.exports = class CurveData{
-	static convertDM2CurveData(dm){
-		var labels = dm.sheets[0].x.map(function(cell){
-			return cell.label;
-		})
+import {Base} from 'Table';
+import {Line} from 'Table';
+import {Cell} from 'Table';
+import Label from 'Label';
+import Button from 'Button';
+import LinkButton from '../ui/table/widget/linkbutton/index';
+import API from '../api';
+import Signal from 'Signal';
+import DragHandler from '../ui/table/widget/draghandler/index';
 
-		var series = dm.sheets[0].y1.map(function(cell){
-			return cell.label;
-		})
+class CurveTableUIData extends Base{
+	constructor(){
+		super();
+		this.sheetName = "曲线统计";
 
-		return {
-			labels: labels,
-			series: series,
-		}
+
+		this.header = Line.create({cells: [
+			this._getDataComponent({label: 'Drag Data Here!'})
+		]});
 	}
+	
+	_getDataComponent(param){
+		var self = this;
+		var txt = 'Drag Data Here!';
 
-	static convertCurveDM2CurveData(dms){
-		//get the union labels in all dms. and sort.
-		var labelUnion = [];
-		dms.map(function(dm){
-			var series = dm.series;
-			var index = series[0].data;
-			
-			dm.data[index].map(function(label){
-				if(labelUnion.indexOf(label) === -1){
-					labelUnion.push(label);
+
+		return Cell.create({
+			component: LinkButton, 
+			param: {
+				value: txt,
+				onClick: function(){
+					 //todo: navigate back to tree
+				},
+				dragDataFromTree:function(data){
+					CurveTableUIData.signal_treedata_dragin.dispatch(data);
 				}
-			})
+			},
+			v: {label: txt}
 		})
-		labelUnion.sort(function(a,b){
-			return a-b;
-		});
-
-
-
-
-
-
+	}
+	ui2dm(dm){
 		
-		//go though each dm, find missing label
-		//go through compensation arr and filling the series data with 0;
-		
-		var drawLabels = labelUnion;
-		var drawSeries = [];
+	}
+	dm2ui(dm){
+		this.ui = [];
+		dm.map((function(curve, index){
+			this.id = curve.id;
 
-		dms.map(function(dm, i){
-			var index = dm.series[0].data;
-			var labels = dm.data[index];
-
-			var xCurveMap = {};
-			labelUnion.map(function(lu,j){
-				var series = [];
-
-				var labelPos = labels.indexOf(lu);
-				if(labelPos === -1){
-					for(var k=1; k<dm.series.length; k++){
-						series.push(undefined);
-						//var serieIndex = dm.series[k].data;
-						//dm.series[serieIndex].push(0);
+			this.ui.push(Line.create({cells: [Cell.create({
+					component: Button,
+					param: {
+						label: "删除",
+						onClick: function(){
+							CurveTableUIData.signal_curve_delete.dispatch({index: index});
+						}
 					}
-				}else{
-					for(var k=1; k<dm.series.length; k++){
-						var serieIndex = dm.series[k].data;
-						series.push(dm.data[serieIndex][labelPos]);
-					}
-				}
-				xCurveMap[lu] = series;
-			})
+				})]
+			}));
+
+			curve.series.map((function(serie){
+				var label = serie.label;
+				var index = serie.data;
+
+				//todo: color and checkbox.
+				var arr = curve.data[index].map(function(value){
+					return Cell.create({component: Label, v: value});
+				});
+				var cells = [Cell.create({component: Label, v: label})].concat(arr);
+				this.ui.push(Line.create({cells: cells}));
+			}).bind(this));
 
 
+		}).bind(this));
 
-			var seriesNum = xCurveMap[labelUnion[0]].length;
-
-			for(var i=0; i<seriesNum; i++){
-				var oneSerie = labelUnion.map(function(label){
-					return xCurveMap[label][i]
-				})
-				drawSeries.push(oneSerie);
-			}
-		})
-
-
-
-
-
-
-
-		
-
-
-
-		//combine all series.
-
-
-		return {
-			labels:drawLabels,
-			series: drawSeries
-		}
 	}
 }
+
+CurveTableUIData.signal_treedata_dragin = new Signal();
+CurveTableUIData.signal_curve_delete = new Signal();
+
+module.exports = CurveTableUIData;
+

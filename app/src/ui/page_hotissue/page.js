@@ -1,5 +1,5 @@
 import API from '../../api.js';
-import StaticalPage from '../page_task/statical_assistor_popup/page';
+import StaticalPage from '../page_task/statical_assistor_popup/ui/page';
 
 var PageHotIssue = React.createClass({
   getInitialState: function() {

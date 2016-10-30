@@ -1,10 +1,7 @@
-import moment from 'moment';
 import API from '../api.js';
+import GlobalAPI from 'api';
 import Util from 'Util';
 import MessageBox from 'MessageBox';
-import TaskTemplate from 'TaskTemplate';
-
-
 import './style.less';
 
 var TemplateTaskList = React.createClass({
@@ -38,22 +35,12 @@ var TemplateTaskList = React.createClass({
     },
     
     render: function() {
-        //todo: template task both used in timeline page and statical page.
-        //load data not only in timeline page.
-        API.setTemplateTasks(TaskTemplate); 
-        
-        var templateenum = TaskTemplate.map(function(task){
-            return {id: task.id, label: task.label}
-        });
-        API.setTemplateEnum(templateenum);    
-        
-
         return (
             <div className='taskList'>
 				<span className="label label-primary addTaskBtn" onClick={this.onAddTaskBtnClk}>+</span>
 
 				{
-					API.getTemplateTasks().map((function(task){
+					GlobalAPI.getTemplateTasks().map((function(task){
 						var id = task.id;
 						var label = task.label;
 						var style = {

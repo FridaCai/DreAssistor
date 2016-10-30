@@ -4,10 +4,10 @@ import {Cell} from 'Table';
 import Label from 'Label';
 import Group from 'Group';
 import Button from 'Button';
-import LinkButton from '../table/widget/linkbutton/index';
+import LinkButton from '../ui/table/widget/linkbutton/index';
 import API from '../api';
 import Signal from 'Signal';
-import DragHandler from '../table/widget/draghandler/index';
+import DragHandler from '../ui/table/widget/draghandler/index';
 
 class ValueTableUIData extends Base{
 	constructor(){

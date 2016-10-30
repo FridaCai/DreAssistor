@@ -3,18 +3,16 @@ import Task from '../data/task';
 import Signal from 'Signal';
 import GloabalAPI from '../api.js';
 
-import TCDM from './data/table';
-import ValueTableUIData from './uidata/table_value';
-import CurveTableUIData from './uidata_curve/curve';
+import TCDM from './data/table/table';
+import ValueTableUIData from './uidata/table';
+import CurveTableUIData from './uidata/curve';
 
 import Request from 'Request';
 
-import Curves from './data_curve/curves';
+import Curves from './data/curve/curves';
 import TemplateTasks from '../data/templatetasks.js';
 
-
 var API = {
-
 	signal_treeNode_click: new Signal(),
 	signal_table_refresh: new Signal(),
 
@@ -90,29 +88,6 @@ var API = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/*
 		dm for table curve.
 	*/
@@ -149,26 +124,6 @@ var API = {
 		this._curveDM.deleteAt(index);
 	},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	dm2ui: function(){
 		this._valueTableUIData.dm2ui(this._tcDM);
 	},
@@ -194,38 +149,6 @@ var API = {
 			return result;
 		})
 	},
-
-
-
-
-
-
-
-
-
-
-	/*start of testing code*/
-    _templateTasks: new TemplateTasks(),
-    setTemplateTasks: function(value){
-        this._templateTasks = new TemplateTasks();
-        this._templateTasks.init(value);
-    },
-    getTemplateTasks: function(){
-        return this._templateTasks;
-    },
-
-    findTemplateByType: function(type){
-        return this._templateTasks.findById(type);
-    },
-    getAllTemplateTaskTypes: function(){
-        return this._templateTasks.map(function(templatetask){
-            return {
-                id: templatetask.template.type,
-                label: templatetask.label,
-            }
-        })
-    },
-	/*end of testing code*/
 }
 
 window.statical={
