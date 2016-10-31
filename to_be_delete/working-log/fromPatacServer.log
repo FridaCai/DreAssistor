@@ -1,3 +1,7 @@
+alter table task add `privacy` tinyint(1) DEFAULT '0';
+alter table attachment drop creator_id;
+
+======================
 learn bat from homestyler flash version
 
 ================================================================
