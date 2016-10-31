@@ -18,7 +18,7 @@ var ExpandCellDOM = React.createClass({
         var expandLine = table.getBrotherLine(cell.line);
         expandLine.updateByExpand(isOpen, cell);
 
-        cell.param.onExpandToggle();
+        cell.param.onExpandToggle(isOpen);
     },
 
     render(){

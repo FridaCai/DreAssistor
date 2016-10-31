@@ -31,7 +31,7 @@ var Thumbnail = React.createClass({
 				var suffixes = ['jpg', 'jpeg', 'gif', 'tif', 'tiff', 'png'];
 				for(var i=0; i<suffixes.length; i++){
 					var suffix = suffixes[i];
-					if(label.endsWith(`.${suffix}`)){
+					if(label.toLowerCase().endsWith(`.${suffix}`)){
 						return true;
 					}
 				}	

@@ -91,11 +91,11 @@ var TmpUtil = {
 				return Cell.create({
 					component: Label, 
 					param: {
-						value: property.value
+						value: property[component].value
 					},
-					v: property.v
+					v: property[component].v
 				});
-			case COMPONENT_ENUM.IMAGES:
+			/*case COMPONENT_ENUM.IMAGES:
 				//var itms = property[component] || new Images();  //???
 				var itms = property[component];
 				var label = COMPONENT_LABEL_ENUM[component];
@@ -113,15 +113,15 @@ var TmpUtil = {
 			        		id: key,
 			        		attachment: itms,
 			        		onDelete: function(itms){
-			        			this.v = itms;			        			
+			        			target.signal_data_change.dispatch(); 			        			
 			        		},
 			        		onAdd: function(itms){
-			        			this.v = itms;
+			        			target.signal_data_change.dispatch(); 
 			        		}
 			        	}
 			        }, 
 			        v:itms
-			    })
+			    })*/
 			case COMPONENT_ENUM.ATTACHMENT:
 				//var itms = property[component] || new Attachments(); //?
 				var itms = property[component];
@@ -132,20 +132,23 @@ var TmpUtil = {
 	        		param: {
 			        	label: label,
 			        	isOpen: false,
-			        	onExpandToggle: function(){
-			        		target.signal_expand_toggle.dispatch(); //to do: override duplicate? call expand toggle again and again.
+			        	onExpandToggle: function(isOpen){
+			        		target.signal_expand_toggle.dispatch({isOpen: isOpen}); //to do: override duplicate? call expand toggle again and again.
 			        	},
 			        	expandComponent: AttachmentList,
 			        	expandComponentParam: {
 			        		id: key,
-			        		attachment: itms,
-			        		propertyId: property.id,
+		        			attachment: itms,
+		        			propertyId: property.id,
 			        		onDelete: function(itms){
-			        			this.v = itms;
-			        			
+			        			debugger;
+			        			this.v=itms;
+			        			//target.signal_data_change.dispatch(); 
 			        		},
 			        		onAdd: function(itms){
-			        			this.v = itms;
+			        			debugger;
+			        			this.v=itms;
+			        			//target.signal_data_change.dispatch(); 
 			        		}
 			        	}
 			        }, 
@@ -182,7 +185,7 @@ var TmpUtil = {
 			        		templateKey: property.key,
 			        		onImportCurve: function(curve){
 			        			this.v = curve;
-			        			target.signal_data_change.dispatch();
+			        			//target.signal_data_change.dispatch();
 			        		}
 			        	}
 		        	}, 

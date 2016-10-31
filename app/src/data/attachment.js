@@ -15,7 +15,7 @@ module.exports = class Attachment{
 		this.id = param.id || Util.generateUUID();
 		this.label = param.label; //source file name;
 		this.parent = param.parent;
-
+		this.isDirty = (param && param.isDirty) ? param.isDirty : false;
 		this.update(param);
 	}
 
@@ -33,5 +33,8 @@ module.exports = class Attachment{
 			label: this.label,
 			guid: this.guid
 		}
+	}
+	getIsDirty(){
+		return this.isDirty;
 	}
 }

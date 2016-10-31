@@ -11,25 +11,31 @@ var AttachmentList = React.createClass({
 		return {
 		  attachment: this.props.attachment,
 		  taskId: this.props.taskId,
-		  propertyId: this.props.propertyId
+		  propertyId: this.props.propertyId,
+		  scope: this.props.scope,
+		  onAdd: this.props.onAdd,
+		  onDelete: this.props.onDelete
 		}
 	},
 	componentDidMount: function(){
-		var {taskId, propertyId} = this.state;
+		var {taskId, propertyId, attachment} = this.state;
+
 
 		var needQuery = function(id){
-			if(id === undefined){
+			if(id === undefined)
 				return false;
-			}
 			if(Util.isUUID(id)){
 				return false;
 			}
 			return true;
 		}
-
+		
 		if(!needQuery(taskId) && !needQuery(propertyId)){
 			return;
 		}
+		if(attachment.getIsDirty())
+			return;
+
 		if(taskId == undefined && propertyId== undefined){
 			console.error('wrong');
 			return;
@@ -138,8 +144,8 @@ var AttachmentList = React.createClass({
         	})
 
         	me.forceUpdate();
-		    if(me.props.onAdd){
-				me.props.onAdd.call(me.props.scope, me.state.attachment);
+		    if(me.state.onAdd){
+				me.state.onAdd.call(me.state.scope, me.state.attachment);
 			}
         }, function(result){
         	attachment.update({
@@ -161,8 +167,8 @@ var AttachmentList = React.createClass({
 	    this.state.attachment.deleteById(attachment.id);
 	    this.forceUpdate();
 
-	    if(this.props.onDelete){
-	      this.props.onDelete.call(this.props.scope, this.state.attachment);
+	    if(this.state.onDelete){
+	      this.state.onDelete.call(this.state.scope, this.state.attachment);
 	    }
 	},
   

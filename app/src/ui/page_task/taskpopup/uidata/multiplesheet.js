@@ -22,8 +22,8 @@ class MultipleSheetUIData extends Array{
 				multipleparam.setSheetName(sheetName);
 				multipleparam.dm2ui(project, sheet);
 
-				multipleparam.signal_expand_toggle.listen((function(){
-					this.onExplandToggle();
+				multipleparam.signal_expand_toggle.listen((function(e, param){
+					this.onExplandToggle(param);
 				}).bind(this));
 				multipleparam.signal_data_change.listen((function(){
 					this.onDataChange();
@@ -40,8 +40,8 @@ class MultipleSheetUIData extends Array{
 			multipleparam.ui2dm(dm.sheets[index]);
 		}).bind(this));
 	}
-	onExplandToggle(){
-		this.signal_expand_toggle.dispatch();
+	onExplandToggle(param){
+		this.signal_expand_toggle.dispatch(param);
 	}
 	onDataChange(){
 		this.signal_data_change.dispatch();

@@ -18,11 +18,16 @@ var MultipleSheetTemplate = React.createClass({
         this.state.uidata.signal_expand_toggle.listen(this.onExpandToggle);
         this.state.uidata.signal_data_change.listen(this.onDataChange);
     },
-    onExpandToggle: function(){
-        this.refs.table.forceUpdate();
+    onExpandToggle: function(e, param){
+        if(!param.isOpen){
+            this.state.uidata.ui2dm(this.state.dm);
+            this.state.uidata.dm2ui(this.props.project, this.state.dm);
+        }
+        this.refs.table.update({
+            uidata: this.state.uidata
+        });
     },
     onDataChange: function(){
-        return;
         this.state.uidata.ui2dm(this.state.dm);
         this.state.uidata.dm2ui(this.props.project, this.state.dm);
         this.refs.table.setState({uidata: this.state.uidata});

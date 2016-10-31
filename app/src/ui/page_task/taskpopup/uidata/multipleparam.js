@@ -60,7 +60,8 @@ class MultipleParamUIData extends Base{
 			if(property instanceof SingleParam){
 				var cells = this.components.map((function(component){
 					if(component === COMPONENT_ENUM.REFKEY){
-						var refKeyTmpDM = {
+						var refKeyTmpDM = {};
+						refKeyTmpDM[component] = {
 							value: Util.getValueByProjectRefKey(property.refKey, project),
 							v: property.refKey
 						};

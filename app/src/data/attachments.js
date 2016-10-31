@@ -12,6 +12,7 @@ module.exports = class Attachments extends Array{
 	}
 
 	init(param){
+		this.isDirty = (param && param.isDirty) ? param.isDirty : false;
 		param && param.map((function(a){
 			var attachment = Attachment.create(a);
 			super.push(attachment);
@@ -34,6 +35,7 @@ module.exports = class Attachments extends Array{
 	
 	add(at){
 		super.unshift(at);
+		this.isDirty = true;
 	}
 	deleteById(id){
 		var index = -1;
@@ -45,5 +47,17 @@ module.exports = class Attachments extends Array{
 			}
 		}
 		this.splice(index, 1);
+		this.isDirty = true;
+	}
+	getIsDirty(){
+		if(this.isDirty){
+			return true;
+		}		
+		for(var i=0; i<this.length; i++){
+			var at = this[i];
+			if(at.getIsDirty())
+				return true;
+		}
+		return false;
 	}
 }
