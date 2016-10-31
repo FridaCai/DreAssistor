@@ -361,13 +361,17 @@ var PageTask = React.createClass({
                 if(result.errCode == -1){
                     API.setProjects(result.projects);   
                     API.pagination.count = result.count;
-                    this.forceUpdate();
+                    this.forceUpdate(this.clientRefresh);
                 }
             }).bind(this),function(e){
                 throw e
             }).catch(function(e){
                 console.error(e.stack);
             });    
+    },
+    clientRefresh: function(){
+        var w = $('body').width()-1;
+        $('body').width(w);
     },
     onPagination:function(offset){
         API.clearProjects();
