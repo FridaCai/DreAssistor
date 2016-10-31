@@ -361,7 +361,7 @@ var PageTask = React.createClass({
                 if(result.errCode == -1){
                     API.setProjects(result.projects);   
                     API.pagination.count = result.count;
-                    this.forceUpdate(this.clientRefresh);
+                    this.forceUpdate();
                 }
             }).bind(this),function(e){
                 throw e
@@ -369,10 +369,7 @@ var PageTask = React.createClass({
                 console.error(e.stack);
             });    
     },
-    clientRefresh: function(){
-        var w = $('body').width()-1;
-        $('body').width(w);
-    },
+
     onPagination:function(offset){
         API.clearProjects();
         this.forceUpdate((function(){

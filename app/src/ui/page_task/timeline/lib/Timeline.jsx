@@ -768,9 +768,8 @@ export default class ReactCalendarTimeline extends React.Component {
     }
 
 
-    var w = width - 4; //ticky.
     const scrollComponentStyle = {
-      width: `${w}px`,
+      width: `${width}px`,
       height: `${height + 20}px`,
       cursor: isDragging ? 'move' : 'default'
     }
