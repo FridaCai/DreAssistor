@@ -95,33 +95,7 @@ var TmpUtil = {
 					},
 					v: property[component].v
 				});
-			/*case COMPONENT_ENUM.IMAGES:
-				//var itms = property[component] || new Images();  //???
-				var itms = property[component];
-				var label = COMPONENT_LABEL_ENUM[component];
-
-				return Cell.create({
-	        		component: ExpandCellDOM, 
-	        		param: {
-			        	label: label,
-			        	isOpen: false,
-			        	onExpandToggle: function(){
-			        		target.signal_expand_toggle.dispatch();
-			        	},
-			        	expandComponent: AttachmentList,
-			        	expandComponentParam: {
-			        		id: key,
-			        		attachment: itms,
-			        		onDelete: function(itms){
-			        			target.signal_data_change.dispatch(); 			        			
-			        		},
-			        		onAdd: function(itms){
-			        			target.signal_data_change.dispatch(); 
-			        		}
-			        	}
-			        }, 
-			        v:itms
-			    })*/
+			
 			case COMPONENT_ENUM.ATTACHMENT:
 				//var itms = property[component] || new Attachments(); //?
 				var itms = property[component];
@@ -141,14 +115,10 @@ var TmpUtil = {
 		        			attachment: itms,
 		        			propertyId: property.id,
 			        		onDelete: function(itms){
-			        			debugger;
 			        			this.v=itms;
-			        			//target.signal_data_change.dispatch(); 
 			        		},
 			        		onAdd: function(itms){
-			        			debugger;
 			        			this.v=itms;
-			        			//target.signal_data_change.dispatch(); 
 			        		}
 			        	}
 			        }, 
@@ -174,8 +144,8 @@ var TmpUtil = {
 					param: {
 			        	label: '曲线图',
 			        	isOpen: false, //need? redundant???
-			        	onExpandToggle: function(){
-			        		target.signal_expand_toggle.dispatch();
+			        	onExpandToggle: function(isOpen){
+			        		target.signal_expand_toggle.dispatch({isOpen: isOpen});
 			        	},
 			        	expandComponent: CurveComponent,
 			        	expandComponentParam: {

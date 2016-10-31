@@ -19,8 +19,6 @@ var AttachmentList = React.createClass({
 	},
 	componentDidMount: function(){
 		var {taskId, propertyId, attachment} = this.state;
-
-
 		var needQuery = function(id){
 			if(id === undefined)
 				return false;
