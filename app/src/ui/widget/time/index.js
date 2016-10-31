@@ -18,7 +18,7 @@ var Time = React.createClass({
 		return (function(){
 			if(isReadOnly){
 				var param = {
-					value: Util.convertUnixTimeToTime(value),
+					value: value ? Util.convertUnixTimeToTime(value): "",
 					isReadOnly: isReadOnly,
 					className: 'Time readonly'
 				}
