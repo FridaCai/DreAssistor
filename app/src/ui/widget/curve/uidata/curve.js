@@ -51,7 +51,7 @@ class CurveUI extends Base{
 
 	ui2dm(curve){
 		var pretty = function(value){
-      		return Math.round(value * 100) / 100;
+      		return Math.round(parseFloat(value) * 100) / 100;
 		}
    
         var series = this.header.cells.map(function(h, i){
@@ -78,7 +78,11 @@ class CurveUI extends Base{
         for(var i=0; i<lineNum; i++){
         	var line = [];
         	for(var j=0; j<columnNum; j++){
-        		line.push(pretty(this.ui[j].cells[i].v));
+        		var tmp = this.ui[j].cells[i].v;
+        		tmp = pretty(tmp);
+        		tmp = tmp ? tmp:0;
+
+        		line.push(pretty(tmp));
         	}
         	data.push(line);
         }

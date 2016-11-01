@@ -13,16 +13,6 @@ var CurveComponent = React.createClass({
   getInitialState: function(){
     this.api = new API();
     this.api.init();
-
-    /*(function(curve, api){
-        if(curve.needTemplate)
-    	   	return;
-
-        api.setCurve(curve);
-        if(curve.data){
-          api.dm2ui();
-        }
-    })(this.props.curve, this.api);*/ //need propertyId
     return {};
   },
 
@@ -90,40 +80,55 @@ var CurveComponent = React.createClass({
 
   componentDidMount: function(){
       this.api.signal_curve_toggle.listen(this.onCurveToggle);
-      
-      var curveParam = (function(key, template){
-        var index = template[key] || 0;
-        return template.curves[index]
-      })(this.props.templateKey, CurveTemplate);
 
-      var propertyId = this.props.propertyId;
-      if(GlobalUtil.isUUID(propertyId)){
-        this.props.curve.update(curveParam);
-        this.api.setCurve(this.props.curve); 
-        this.api.dm2ui();
-        this.forceUpdate();         
-        return;
-      }
+      var {curve, propertyId, templateKey} = this.props;
 
 
-
-
-      var url = Request.getBackendAPI(`curve/propertyId/${propertyId}`); //todo.
-      Request.getData(url).then((function(result){
-        if(result.errCode == -1){
-          if(result.curve){
-            curveParam = result.curve;
-          }
-
-          this.props.curve.update(curveParam);
-          this.api.setCurve(this.props.curve); 
-          this.api.dm2ui();
-          this.forceUpdate();            
+      var getCurve = (function(){
+        if(curve && curve.getIsDirty()){
+          return Promise.resolve(curve);
         }
+
+        var curveTemplate = (function(key, template){
+          var index = template[key] || 0;
+          return template.curves[index]
+        })(templateKey, CurveTemplate);
+
+        if(GlobalUtil.isUUID(propertyId)){
+          return Promise.resolve(curveTemplate);
+        }
+
+
+        var url = Request.getBackendAPI(`curve/propertyId/${propertyId}`); 
+        return new Promise(function(resolve, reject){
+          Request.getData(url).then((function(result){
+            if(result.errCode == -1 ){
+              if(result.curve){
+                return resolve(result.curve);
+              }else{
+                return resolve(curveTemplate);
+              }
+            }else{
+              throw e;
+            }
+          }).bind(this), function(e){
+            throw e;
+          }).catch(function(e){
+              reject(e);
+          });
+        });
+      }).bind(this);
+
+
+
+      getCurve().then((function(result){
+          this.api.setCurve(Curve.create(result)); 
+          this.api.dm2ui();
+          this.forceUpdate();         
       }).bind(this), function(e){
         throw e;
       }).catch(function(e){
-          console.error(e.stack);
+        console.error(e.stack);
       });
   },
 

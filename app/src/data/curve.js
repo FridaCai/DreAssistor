@@ -32,7 +32,9 @@ module.exports = class Curve {
 	setIsDirty(value){
 		this.isDirty = value;
 	}
-
+	getIsDirty(){
+		return this.isDirty;
+	}
 	dump(){
 		var obj = {};
 		if(this.isDirty){
