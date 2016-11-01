@@ -18,33 +18,40 @@ var signal_request_send = new Signal();
 var signal_response_receive = new Signal();
 var signal_response_fail = new Signal();
 
+var _success = function(resolve, reject, res){
+    if(res.errCode == -1){
+        resolve(res);    
+        signal_response_receive.dispatch();
+    }else{
+        var error = new Error(res.errMsg);
+        reject(error);
+        signal_response_fail.dispatch({error: error});
+    }
+}
+
+var _error = function(reject, e){
+    var error = new Error();
+    reject(error);
+    signal_response_fail.dispatch({error: error});
+}
+
+
 var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
 
     this.signal_request_send.dispatch();
-    return new Promise(function(resolve, reject) {
+    return new Promise((function(resolve, reject) {
         var params = {
             url: url,
             type: 'GET',
             data: data,
-            success: function(res){
-                if(res.errCode == -1){
-                    resolve(res);    
-                    signal_response_receive.dispatch();
-                }else{
-                    reject(new Error(res.errMsg));
-                    signal_response_fail.dispatch();
-                }
-            },
-            error: function(e){
-                reject(e);
-                signal_response_fail.dispatch();
-            }
+            success: _success.bind(this, resolve, reject),
+            error: _error.bind(this, reject)
         };
         $.extend(params, options);
         $.ajax(params);
-    });
+    }).bind(this));
 }
 
 var postData = function(url, data, options) {
@@ -63,8 +70,8 @@ var postData = function(url, data, options) {
             contentType: 'application/json',
             data: dataString,
             dataType: 'json',
-            success: resolve,
-            error: reject,
+            success: _success.bind(this, resolve, reject),
+            error: _error.bind(this, reject)
         };
         $.extend(params, options);
         jqxhr = $.ajax(params);
@@ -86,8 +93,8 @@ var putData = function(url, data, options) {
             contentType: 'application/json',
             data: dataString,
             dataType: 'json',
-            success: resolve,
-            error: reject
+            success: _success.bind(this, resolve, reject),
+            error: _error.bind(this, reject)
         };
         $.extend(params, options);
         $.ajax(params);
@@ -99,8 +106,8 @@ var deleteData = function(url, options) {
         var params = {
             url: url,
             type: 'DELETE',
-            success: resolve,
-            error: reject
+            success: _success.bind(this, resolve, reject),
+            error: _error.bind(this, reject)
         };
         $.extend(params, options);
         $.ajax(params);

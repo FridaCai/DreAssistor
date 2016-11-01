@@ -39,21 +39,19 @@ var MainView = React.createClass({
         Request.signal_request_send.unlisten(this.onRequestSend);
         Request.signal_response_receive.unlisten(this.onResponseReceive);
     },
-    onResponseReceive: function(e){
+    onResponseReceive: function(){
         this.refs.loadingMask.hide();
     },
-    onRequestSend: function(e){
+    onRequestSend: function(){
         this.refs.loadingMask.show();
     },
-    onServerFail: function(e){
+    onServerFail: function(e, param){
         this.refs.loadingMask.hide();
-        console.error(e.stack);
+        console.error(param.error.stack);
 
         var msg='服务器异常！';
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
-
-
     },
     onLogin: function(){
         this.refs.menu.forceUpdate();
