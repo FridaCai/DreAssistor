@@ -1,6 +1,4 @@
 import Signal from 'Signal';
-import Request from 'Request';
-
 import Task from './uidata/task.js';
 import Tag from './uidata/tag.js';
 import Property from './uidata/property.js';

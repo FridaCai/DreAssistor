@@ -1,4 +1,6 @@
 import SystemConfig from './config/system';
+import Signal from 'Signal';
+
 var env = SystemConfig.backendAPI;
 
 var getBackendAPI = function(url){
@@ -10,17 +12,35 @@ var getMockupAPI = function(url){
 	return prefix + url;
 }
 
+
+//to notify common ui: show progress bar, hide progress bar, alert error.
+var signal_request_send = new Signal();
+var signal_response_receive = new Signal();
+var signal_response_fail = new Signal();
+
 var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
 
+    this.signal_request_send.dispatch();
     return new Promise(function(resolve, reject) {
         var params = {
             url: url,
             type: 'GET',
             data: data,
-            success: resolve,
-            error: reject
+            success: function(res){
+                if(res.errCode == -1){
+                    resolve(res);    
+                    signal_response_receive.dispatch();
+                }else{
+                    reject(new Error(res.errMsg));
+                    signal_response_fail.dispatch();
+                }
+            },
+            error: function(e){
+                reject(e);
+                signal_response_fail.dispatch();
+            }
         };
         $.extend(params, options);
         $.ajax(params);
@@ -86,6 +106,7 @@ var deleteData = function(url, options) {
         $.ajax(params);
     });
 };
+
 module.exports = {
 	postData: postData,
 	getData: getData,
@@ -93,4 +114,7 @@ module.exports = {
     deleteData: deleteData,
 	getBackendAPI: getBackendAPI,
 	getMockupAPI: getMockupAPI,
+    signal_request_send: signal_request_send,
+    signal_response_receive: signal_response_receive,
+    signal_response_fail: signal_response_fail
 }

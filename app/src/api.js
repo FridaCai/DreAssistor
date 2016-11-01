@@ -10,7 +10,6 @@ var API = {
 	signal_logout: new Signal(),
 	signal_login_timeout: new Signal(),
 	sigal_window_resizeend: new Signal(),
-	signal_server_fail: new Signal(),
 	
 
 	_templateTasks: new TemplateTasks(),
@@ -140,7 +139,8 @@ var API = {
             throw new Error(JSON.stringify(res, '', 2));
     	}).bind(this)).catch(function(e){
 			console.error(e.stack);
-			this.signal_server_fail.dispatch();
+			//this.signal_server_fail.dispatch();
+			//todo.
     	});
 	},
 

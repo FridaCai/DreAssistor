@@ -3,6 +3,8 @@ import Page from './page.js';
 import RegisterPopup from './membership/registerpopup.js';
 import API from "../api.js";
 import MessageBox from 'MessageBox';
+import Request from 'Request';
+import LoadingMask from 'LoadingMask';
 
 var MainView = React.createClass({
 	getInitialState: function() {
@@ -15,10 +17,9 @@ var MainView = React.createClass({
         API.signal_logout.listen(this.onLogout);
         API.signal_login_timeout.listen(this.onLoginTimeOut);
         
-
-
-        API.signal_server_fail.listen(this.onServerFail);
-
+        Request.signal_response_fail.listen(this.onServerFail);
+        Request.signal_request_send.listen(this.onRequestSend);
+        Request.signal_response_receive.listen(this.onResponseReceive);
     },
 
 
@@ -34,12 +35,25 @@ var MainView = React.createClass({
         API.signal_logout.unlisten(this.onLogout);
         API.signal_login_timeout.unlisten(this.onLoginTimeOut);
 
-        API.signal_server_fail.unlisten(this.onServerFail);
+        Request.signal_response_fail.unlisten(this.onServerFail);
+        Request.signal_request_send.unlisten(this.onRequestSend);
+        Request.signal_response_receive.unlisten(this.onResponseReceive);
     },
-    onServerFail: function(){
+    onResponseReceive: function(e){
+        this.refs.loadingMask.hide();
+    },
+    onRequestSend: function(e){
+        this.refs.loadingMask.show();
+    },
+    onServerFail: function(e){
+        this.refs.loadingMask.hide();
+        console.error(e.stack);
+
         var msg='服务器异常！';
         ReactDOM.unmountComponentAtNode(this.refs.popup);    
         ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+
+
     },
     onLogin: function(){
         this.refs.menu.forceUpdate();
@@ -58,6 +72,7 @@ var MainView = React.createClass({
 				<Menu ref='menu'/>
 				<Page ref='page'/>
                 <div ref='popup'/>
+                <LoadingMask ref='loadingMask'/>
     		</div>
 		);
     }

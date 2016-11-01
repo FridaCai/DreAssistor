@@ -13,10 +13,8 @@ import API from './api.js';
 
 import RadioGroup from 'RadioGroup';
 import Pagination from 'Pagination';
-import Loading from 'Loading';
 
 import  GlobalAPI from 'api.js';
-import LoadingMask from 'LoadingMask';
 
 var ProjectFilter = React.createClass({
     getInitialState(){
@@ -116,18 +114,22 @@ var PageTask = React.createClass({
         ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
     },
     onTaskDelete: function(e, param){
-        var  task = param.task;
-        var url = Request.getBackendAPI(`task/${task.id}`);
-        Request.deleteData(url).then((function(res){
-            if(res.errCode === -1){
-                this.refresh();    
-            }
-        }).bind(this), (function(e){
-            throw e;
-        }).bind(this)).catch(function(e){
-            console.error(e.stack);
-        });
+        var onOK = (function(){
+            return new Promise((function(resolve, reject){
+                var  task = param.task;
+                var url = Request.getBackendAPI(`task/${task.id}`);
+                Request.deleteData(url).then((function(res){
+                    this.refresh();    
+                }).bind(this));
+                resolve();
+            }).bind(this));   
+        }).bind(this);
+
+        var msg = `确定要删除？`;
+        ReactDOM.unmountComponentAtNode(this.refs.popup);    
+        ReactDOM.render(<MessageBox onOK={onOK} msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
     },
+
     onTaskEdit: function(e, param){
         var task = param.task;
         var projectId = task.parent.parent.id;
@@ -137,9 +139,7 @@ var PageTask = React.createClass({
             task: task.dump(),
         }
         Request.putData(url, data).then((function(res){
-            if(res.errCode === -1){
-                this.refresh();    
-            }
+            this.refresh();    
         }).bind(this));
     },
     onProjectEdit: function(e, param){
@@ -147,12 +147,10 @@ var PageTask = React.createClass({
         var url = Request.getBackendAPI(`project/${project.id}`);
         var data = project.dump();
         Request.putData(url, data).then((function(res){
-            if(res.errCode === -1){
-                this.refresh();    
-            }
+            this.refresh();    
         }).bind(this), (function(e){
             throw e;
-        }).bind(this)).catch(function(e){
+        }).bind(this)).catch(function(e){ 
             switch(e.errCode){
                 case 8:
                     GlobalAPI.signal_logout.dispatch();
@@ -171,30 +169,13 @@ var PageTask = React.createClass({
         });
     },
     onProjectDelete: function(e, param){
-        //show make sure message.
-        //progressbar.
         var onOK = (function(){
             return new Promise((function(resolve, reject){
-                this.refs.loadingMask.show();
-
                 var  project = param.project;
                 var url = Request.getBackendAPI(`project/${project.id}`);
                 Request.deleteData(url).then((function(res){
-                    if(res.errCode === -1){
-                        this.refresh();    
-                    }
-                    this.refs.loadingMask.hide();
-                }).bind(this), (function(e){
-                    throw new Error();
-                }).bind(this)).catch((function(e){
-                    console.error(e.stack);
-
-                    this.refs.loadingMask.hide();
-                    var msg = '服务器故障';
-                    ReactDOM.unmountComponentAtNode(this.refs.popup);    
-                    ReactDOM.render(<MessageBox msg={msg} cName={'msg_4_2'} isShow={true}/>, this.refs.popup);
+                    this.refresh();    
                 }).bind(this));
-                
                 resolve();
             }).bind(this));   
         }).bind(this);
@@ -348,7 +329,6 @@ var PageTask = React.createClass({
             offset: offset * limit,
         }
 
-
         if(onlyMe){
             var loginUser = GlobalAPI.getLoginUser();
             if(loginUser){
@@ -356,18 +336,12 @@ var PageTask = React.createClass({
             }
         }
 
-        Request.getData(Request.getBackendAPI('project'), param)
-            .then((function(result){
-                if(result.errCode == -1){
-                    API.setProjects(result.projects);   
-                    API.pagination.count = result.count;
-                    this.forceUpdate();
-                }
-            }).bind(this),function(e){
-                throw e
-            }).catch(function(e){
-                console.error(e.stack);
-            });    
+        var url = Request.getBackendAPI('project');
+        Request.getData(url, param).then((function(result){
+            API.setProjects(result.projects);   
+            API.pagination.count = result.count;
+            this.forceUpdate();
+        }).bind(this));   
     },
 
     onPagination:function(offset){
@@ -383,11 +357,7 @@ var PageTask = React.createClass({
         var pageBody = (function(){
             var projects = API.getProjects();
             if(!projects){
-                return (
-                    <div className='loadingContainer'>
-                        <Loading/>
-                    </div>
-                );
+                return null;
             }else{
                 var dom = API.getProjects().map(function(project){
                     return (<CTimeLine project={project} key={project.id}/>)
@@ -418,7 +388,7 @@ var PageTask = React.createClass({
                     {pageBody}
 
                     <div ref='popup' className='popup'></div>
-                    <LoadingMask ref='loadingMask'/>
+                   
                 </div>
             );  
         }catch(e){

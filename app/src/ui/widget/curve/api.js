@@ -1,5 +1,4 @@
 import Signal from 'Signal';
-import Request from 'Request';
 import Curve from 'data/curve.js'; 
 import CurveUI from './uidata/curve.js';
 
