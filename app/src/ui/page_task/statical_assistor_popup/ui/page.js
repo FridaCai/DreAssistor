@@ -201,12 +201,16 @@ var Content = React.createClass({
         }
 	    return (
 	    	<div className='staticalassistorpopup'>
-	    		<div className='trees'>
+	    		<div className='left'>
                     <ConditionPanel ref='conditionpanel' onOK={this.onSearch} taskType={this.props.taskType}/>
-	    			<DataTree ref='tree'/>	
-					<DataTree ref='subtree'/>		    			
+                    <SearchResultPanel/>
+
+                    <div className='trees'>
+                        <DataTree ref='tree'/>  
+                        <DataTree ref='subtree'/>                       
+                    </div>
 	    		</div>
-				<div className='tableChart'>
+				<div className='right'>
                     <Button param={newLineBtnParam}/>
                     <Button param={clearTableBtnParam}/>
 					<TableDOM uidata={uidata} ref='table' onDrop={this.onDragTreeDataInTable}/>
