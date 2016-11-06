@@ -12,7 +12,7 @@ module.exports = class Projects extends Array{
 	}
 
 	init(param){
-		param.map((function(p){
+		param && param.map((function(p){
 			var project = new Project();
 			project.init(p);
 			//project.setParent(this); //need?
