@@ -9,10 +9,10 @@ var SearchResultPanel = React.createClass({
     },
     
 	render(){
-		var uidata=
-        return ( 
+	   return null;
+        /*return ( 
         	<TableDOM uidata={uidata} ref='table' onDrop={this.onDragTreeDataInTable}/>
-    	)
+    	)*/
 	}
 })
 

@@ -3,6 +3,7 @@ import Button from 'Button';
 import Checkbox from 'Checkbox';
 import {TableDOM} from 'Table';
 import ConditionPanel from './conditionpanel/index';
+import SearchResultPanel from './searchresultpanel/index';
 import ValueChart from './chart/valuechart';
 import CurveChart from './chart/curvechart';
 

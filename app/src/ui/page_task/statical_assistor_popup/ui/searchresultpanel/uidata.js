@@ -1,3 +1,4 @@
+import {Base} from 'Table';
 class SearchPanelUIData extends Base{
 	constructor(){
 		super();

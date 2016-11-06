@@ -95,18 +95,12 @@ var ConditionPanel = React.createClass({
     	return (
     		<div className='conditionPanel'>
     			<div className='line'>
-	    			<label>项目</label>
-	    			<RadioGroup param={radioGroupParam} ref='projectCreatorRadioGroup'/>
-    			</div>
-    			<div className='line'>
-    				<label>豆豆</label>
-    				<ComboBox param={comboBoxParam}  ref='taskTypeComboBox'/>
-    			</div>
-    			<div className='line'>
     				<label>条件</label>
     				<Input param={inputParam}  ref='searchClauseInput'/>
                     <span className='hint' onClick={this.toggleHint}>?</span>
-    				<div className="expressSearchHint" style={hintStyle}  >
+    				<Button param={okBtnParam}/>
+                    
+                    <div className="expressSearchHint" style={hintStyle}  >
                             任性搜索：                     
   							<br/>
                             输入任意关键字
@@ -121,11 +115,8 @@ var ConditionPanel = React.createClass({
                             <br/>
 							可选关键字：发动机，成本，品牌，重量
 					</div>
+
     			</div>
-    			<div className='line'>
-    				<Button param={okBtnParam}/>
-    			</div>
-    			
     		</div>
 		)
     }
