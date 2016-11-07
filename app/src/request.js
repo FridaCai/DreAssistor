@@ -40,7 +40,8 @@ var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
 
-    url = url + Math.random();
+    var random = Math.random();
+    url = (url.indexOf('?') === -1) ? `${url}?avoidcache=${random}` : `${url}&avoidcache=${random}` ;
     this.signal_request_send.dispatch();
     return new Promise((function(resolve, reject) {
         var params = {
