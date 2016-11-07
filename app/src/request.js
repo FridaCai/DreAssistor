@@ -21,13 +21,13 @@ var signal_response_receive = new Signal();
 var signal_response_fail = new Signal();
 
 var _success = function(resolve, reject, res){
-    if(res.errCode == -1){
-        resolve(res);    
-        signal_response_receive.dispatch();
-    }else{
+    if(res.errCode === 3){
         var error = new Error(res.errMsg);
         reject(error);
         signal_response_fail.dispatch({error: error});
+    }else{
+        resolve(res);    
+        signal_response_receive.dispatch();
     }
 }
 

@@ -52,19 +52,16 @@ var LoginContainer = React.createClass({
         password: password
       }).then((function(res){
         if(res.errCode != -1){
-          throw new CError(res.errCode);
+            var msg = ENUM[res.errCode]().res.msg;
+            this.setState({
+              errormsg: msg
+            })
+        }else{
+          API.setLoginUser(res.user);
+          API.setToken(res.token);
+          
+          API.signal_login.dispatch();  
         }
-        API.setLoginUser(res.user);
-        API.setToken(res.token);
-        
-        API.signal_login.dispatch();
-
-      }).bind(this)).catch((function(e){
-        var msg = ENUM[e.key]().res.msg;
-
-        this.setState({
-          errormsg: msg
-        })
       }).bind(this));
     },
 
