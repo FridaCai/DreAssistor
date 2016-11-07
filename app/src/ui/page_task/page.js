@@ -292,6 +292,9 @@ var PageTask = React.createClass({
                 };
 
                 Request.postData(url, data, options).then(function(){
+                    var info = $(self.refs.testPanel).val() + '\n' + 'post data success!';
+                    $(self.refs.testPanel).val(info);
+
                     self.refresh();
                 })
             }
@@ -338,6 +341,11 @@ var PageTask = React.createClass({
 
         var url = Request.getBackendAPI('project');
         Request.getData(url, param).then((function(result){
+            var info = $(this.refs.testPanel).val() + '\n' + 'get data success!';
+            $(this.refs.testPanel).val(info);
+
+
+
             API.setProjects(result.projects);   
             API.pagination.count = result.count;
             this.forceUpdate();
@@ -378,6 +386,7 @@ var PageTask = React.createClass({
             return (
                 <div className='pageTask'>
                     <TemplateTaskList/>
+                    <textarea ref="testPanel">Testing...</textarea>
 
                     <div className="btn-group" role="group" aria-label="Basic example"> 
                         <button type="button" className="btn btn-default" onClick={this.onAddProjectPopupShow}>添加项目</button> 
