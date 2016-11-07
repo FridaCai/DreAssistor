@@ -56,11 +56,15 @@ var getData = function(url, data, options) {
 
 var postData = function(url, data, options) {
     options = options || {};
+
+    
     var dataString = JSON.stringify(data);
     if (options.contentType === 'application/x-www-form-urlencoded; charset=UTF-8'
         || options.contentType === false) {
         dataString = data;
     }
+
+    this.signal_request_send.dispatch();
 
     var jqxhr;
     var promise = new Promise(function(resolve, reject) {
@@ -86,6 +90,8 @@ var postData = function(url, data, options) {
 var putData = function(url, data, options) {
     options = options || {};
     var dataString = JSON.stringify(data);
+    this.signal_request_send.dispatch();
+
     return new Promise(function(resolve, reject) {
         var params = {
             url: url,
@@ -102,6 +108,8 @@ var putData = function(url, data, options) {
 };
 var deleteData = function(url, options) {
     options = options || {};
+    this.signal_request_send.dispatch();
+    
     return new Promise(function(resolve, reject) {
         var params = {
             url: url,
