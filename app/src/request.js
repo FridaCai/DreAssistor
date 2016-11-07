@@ -4,6 +4,8 @@ import Signal from 'Signal';
 var env = SystemConfig.backendAPI;
 
 var getBackendAPI = function(url){
+    var random = Math.random();
+    url = (url.indexOf('?') === -1) ? `${url}?avoidcache=${random}` : `${url}&avoidcache=${random}` ;
 	return env + url;
 }
 
@@ -19,13 +21,13 @@ var signal_response_receive = new Signal();
 var signal_response_fail = new Signal();
 
 var _success = function(resolve, reject, res){
-    if(res.errCode == -1){
-        resolve(res);    
-        signal_response_receive.dispatch();
-    }else{
+    if(res.errCode === 3){
         var error = new Error(res.errMsg);
         reject(error);
         signal_response_fail.dispatch({error: error});
+    }else{
+        resolve(res);    
+        signal_response_receive.dispatch();
     }
 }
 
@@ -39,7 +41,6 @@ var _error = function(reject, e){
 var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
-
     this.signal_request_send.dispatch();
     return new Promise((function(resolve, reject) {
         var params = {
@@ -61,6 +62,8 @@ var postData = function(url, data, options) {
         || options.contentType === false) {
         dataString = data;
     }
+
+    this.signal_request_send.dispatch();
 
     var jqxhr;
     var promise = new Promise(function(resolve, reject) {
@@ -86,6 +89,8 @@ var postData = function(url, data, options) {
 var putData = function(url, data, options) {
     options = options || {};
     var dataString = JSON.stringify(data);
+    this.signal_request_send.dispatch();
+
     return new Promise(function(resolve, reject) {
         var params = {
             url: url,
@@ -102,6 +107,8 @@ var putData = function(url, data, options) {
 };
 var deleteData = function(url, options) {
     options = options || {};
+    this.signal_request_send.dispatch();
+    
     return new Promise(function(resolve, reject) {
         var params = {
             url: url,

@@ -4,6 +4,6 @@
 echo start backend...
 
 cd D:\DreAssisstor\site\DreAssistor_backend_swagger
-git pull origin master
+git pull origin release
 npm run deploy-patac-server
 
