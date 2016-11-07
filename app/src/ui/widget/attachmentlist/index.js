@@ -39,12 +39,13 @@ var AttachmentList = React.createClass({
 			return;
 		}
 
-		var url = Request.getBackendAPI('attachment');
+		var url = 'attachment';
 		if(taskId != undefined){
 			url = `${url}/taskId/${taskId}`;
 		}else if(propertyId!=undefined){
 			url = `${url}/propertyId/${propertyId}`;
 		}
+		url = Request.getBackendAPI(url);
 
 		Request.getData(url).then((function(result){
 			if(result.errCode != -1){
