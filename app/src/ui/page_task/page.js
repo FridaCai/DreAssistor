@@ -341,7 +341,7 @@ var PageTask = React.createClass({
 
         var url = Request.getBackendAPI('project');
         Request.getData(url, param).then((function(result){
-            var info = $(this.refs.testPanel).val() + '\n' + 'get data success!';
+            var info = $(this.refs.testPanel).val() + '\n' + 'get data success! count: ' + result.count;
             $(this.refs.testPanel).val(info);
 
 
