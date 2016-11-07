@@ -4,6 +4,8 @@ import Signal from 'Signal';
 var env = SystemConfig.backendAPI;
 
 var getBackendAPI = function(url){
+    var random = Math.random();
+    url = (url.indexOf('?') === -1) ? `${url}?avoidcache=${random}` : `${url}&avoidcache=${random}` ;
 	return env + url;
 }
 
@@ -39,9 +41,6 @@ var _error = function(reject, e){
 var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
-
-    var random = Math.random();
-    url = (url.indexOf('?') === -1) ? `${url}?avoidcache=${random}` : `${url}&avoidcache=${random}` ;
     this.signal_request_send.dispatch();
     return new Promise((function(resolve, reject) {
         var params = {
@@ -58,8 +57,6 @@ var getData = function(url, data, options) {
 
 var postData = function(url, data, options) {
     options = options || {};
-
-    
     var dataString = JSON.stringify(data);
     if (options.contentType === 'application/x-www-form-urlencoded; charset=UTF-8'
         || options.contentType === false) {
