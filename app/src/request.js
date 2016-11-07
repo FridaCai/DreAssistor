@@ -40,6 +40,7 @@ var getData = function(url, data, options) {
     options = options || {};
     options.dataType = options.dataType || 'json';
 
+    url = url + Math.random();
     this.signal_request_send.dispatch();
     return new Promise((function(resolve, reject) {
         var params = {
