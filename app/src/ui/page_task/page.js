@@ -386,7 +386,7 @@ var PageTask = React.createClass({
             return (
                 <div className='pageTask'>
                     <TemplateTaskList/>
-                    <textarea ref="testPanel">Testing...</textarea>
+                    <textarea ref="testPanel" style={{display:'none'}}>Testing...</textarea>
 
                     <div className="btn-group" role="group" aria-label="Basic example"> 
                         <button type="button" className="btn btn-default" onClick={this.onAddProjectPopupShow}>添加项目</button> 
