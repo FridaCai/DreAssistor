@@ -1,13 +1,13 @@
 module.exports = class Normal{
-	static create(param){
+	static create(){
 		var normal = new Normal();
-		normal.init(param);
+		normal.init();
 		return normal;
 	}
 	constructor(){
 	}
-	init(param){
-		this.type = param.type;
+	init(){
+		this.type = 0;
 		this.sheets = [];
 		this.sheetNames = [];
 	}
@@ -20,7 +20,7 @@ module.exports = class Normal{
 	}
 	clone(){
 		var normal = new Normal();
-		normal.init(this.dump());
+		normal.init();
 		return normal;
 	}
 }

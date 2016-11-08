@@ -1,13 +1,13 @@
 module.exports = class EWO{
-	static create(param){
+	static create(){
 		var ewo = new EWO();
-		ewo.init(param);
+		ewo.init();
 		return ewo;
 	}
 	constructor(){
 	}
-	init(param){
-		this.type = param.type;
+	init(){
+		this.type = 1;
 		this.sheets = [];
 		this.sheetNames = [];
 	}
@@ -20,7 +20,7 @@ module.exports = class EWO{
 	}
 	clone(){
 		var ewo = new EWO();
-		ewo.init(this.dump())
+		ewo.init();
 		return ewo;
 	}
 }
